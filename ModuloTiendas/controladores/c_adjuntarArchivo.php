@@ -49,7 +49,7 @@ class ControladorAdjuntos{
 
           $objFile =  new ControladorWorkLogs();
           $objModel =  new modelosWork();
-          $resultReadFile = $objFile ->leerArchivoPlano($rutaArchivoAleer,"Si");
+          $resultReadFile = $objFile ->leerArchivoExcel($rutaArchivoAleer,"Si");
           $registrosPorLinea = array();
 
            if (count($resultReadFile)<2 && strlen($resultReadFile[0]) == 0){

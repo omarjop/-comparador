@@ -48,4 +48,40 @@ class ControladorWorkLogs{
 
      }
 
+          public function leerArchivoExcel($archivo,$eliminar){
+         
+         try{
+                     $registros = array();     
+                     require_once 'PHPExcel/Classes/PHPExcel.php';
+                     $inputFileType = PHPExcel_IOFactory::identify($archivo);
+                     $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                     $objPHPExcel = $objReader->load($archivo);
+                     $sheet = $objPHPExcel->getSheet(0); 
+                     
+                     $highestRow = $sheet->getHighestRow(); 
+                     $highestColumn = $sheet->getHighestColumn();
+
+                     echo $highestRow;
+                     for ($row = 2; $row <= $highestRow; $row++){ 
+
+                        $rgistro1=$sheet->getCell("A".$row)->getValue();
+                        $rgistro2=$sheet->getCell("B".$row)->getValue();
+                        $rgistro3=$sheet->getCell("C".$row)->getValue();
+                        $rgistro4=$sheet->getCell("D".$row)->getValue();
+                        $rgistro5=$sheet->getCell("E".$row)->getValue();
+                        $rgistro="";
+
+                        echo $rgistro = $rgistro1.";".$rgistro2.";".$rgistro3.";".$rgistro4.";".$rgistro5;
+                        array_push($registros, $rgistro);
+		               
+                     }
+
+
+                    return $registros;
+            }catch(Exception $e){
+                 return "Error leyendo el archivo: ".$rutaArchivo." El error: ".$e;
+			}
+
+     }
+
 }

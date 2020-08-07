@@ -2,14 +2,14 @@
 
   <div class="container" >
        <div class="row">
-                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="btn-center" >
                         <div class="row" class="bordes">
                         
                              <div class="col-md-12 bordesdivattach">
                                   
                                   <div class="bordesdivattach1">
-                                    <p class="colortexto">Adjuntar Archivo plano</p>
+                                    <p class="colortexto">Adjuntar Archivo excel</p>
                                   </div>
                                   
                                     <div class="well well-sm">
@@ -17,7 +17,7 @@
                                             <form class="form" method="post" enctype="multipart/form-data">
                                                   <div class="form-group">   
                                                   
-                                                              <input type="file" class="form-control-file" id="attachmentPlano"  name="attachmentPlano" accept="text/plain" action="addNewProduct">
+                                                              <input type="file" class="form-control-file" id="attachmentPlano"  name="attachmentPlano" accept="application/vnd.ms-Excel" action="addNewProduct">
                                                               <p></p>
                                                                  <div class="centrado">
                                                                     <button type="submit" class="btn btn-warning colorbotonamarillo" name="CargarPlano" action ="buttonAttach" >Cargar</button>
@@ -34,39 +34,6 @@
 
 
 
-                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="btn-center" >
-                        <div class="row" class="bordes">
-                        
-                             <div class="col-md-12 bordesdivattach">
-                                  
-                                  <div class="bordesdivattach1">
-                                     <p class="colortexto">Adjuntar Archivo Excel</p>
-                                  </div>
-                                  
-                                    <div class="well well-sm">
-                                            <p></p>
-                                            <form class="form" method="post" enctype="multipart/form-data">
-                                                  <div class="form-group">   
-                                                  
-                                                              <input type="file" class="form-control-file" id="attachmentExcel" name="attachmentExcel" accept="application/vnd.ms-Excel">
-                                                              <p></p>
-                                                                <div class="centrado">
-                                                                    <button type="submit" class="btn btn-warning colorbotonamarillo" name="Cargarexcel" action ="">Cargar</button>
-                                                                    <button type="submit" class="btn btn-warning colorbotonamarillo">Cancelar</button>
-                                                                 </div>
-
-
-
-                                                  </div>
-                                            </form>
-                                     </div>
-                                   
-                             </div>
-                       </div>
-                  </div>
-
-              </div>
 
 
        </div>
@@ -81,12 +48,8 @@
  //-----------------------Valida las acciones del boton de adjuntar---------------------------------------------    
 
       if(isset($_POST['CargarPlano'])){               
-              validarAccionBoton('attachmentPlano',"text/plain");
+              validarAccionBoton('attachmentPlano',"application/vnd.ms-excel");
        }
-
-      if(isset($_POST['Cargarexcel'])){               
-              validarAccionBoton('attachmentExcel',"application/vnd.ms-excel");
-      }
 
 
 
@@ -144,7 +107,7 @@
 
      function cargarArchivPlanoPExcel($ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo){
            try{
-                if($tipoArchivo == "Plano"){
+                if($tipoArchivo == "Excel"){
                         $valor =  $objetoAdjuntarArchivo ->validarSubirArchivoPlano($ruta.$nitUser."folder/".$archivo);
                       
 		        }

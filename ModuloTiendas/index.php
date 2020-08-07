@@ -7,6 +7,7 @@ require_once "controladores/c_tiendaProductos.php";
 require_once "controladores/c_plantilla.php";
 require_once "controladores/estructuras/estructuras.php";
 require_once "vistas/generales/modelGeneral.php";
+require_once "PHPExcel/Classes/PHPExcel.php";
 
 $plantilla =  new ControladorPlantilla();
 $plantilla -> plantilla();
