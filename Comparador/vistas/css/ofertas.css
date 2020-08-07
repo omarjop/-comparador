@@ -1,0 +1,31 @@
+
+.carousel {
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+}
+/* The controlsy */
+.carousel-control {
+	left: 35px;
+    height: 40px;
+	width: 40px;
+    background-color:  #1d8c01;
+	margin-top: -75px;
+	font-size: 26px;
+}
+.carousel-control.right {
+	right: 35px;
+}
+/* The indicators */
+.carousel-indicators {
+	right: 50%;
+	top: auto;
+	bottom: -10px;
+	margin-right: -19px;
+}
+/* The colour of the indicators */
+.carousel-indicators li {
+	background: #cecece;
+}
+.carousel-indicators .active {
+background: #428bca;
+}

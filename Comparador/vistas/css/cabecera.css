@@ -1,0 +1,314 @@
+#top ul{
+    padding-top: 8px;
+}
+.social ul li a i{
+    font-size: 18px;
+    margin: 0 1px;
+}
+.registro ul{
+    text-align: right;
+    font-size: 12px;
+    padding: 5px;
+}
+/*===================================================== 
+Cabecera 
+=======================================================*/
+
+header #btnCategorias{
+    margin: 20px 0;
+    
+}
+header #btnCategorias a{
+    line-height: 30px;
+    margin-bottom: 0px;
+}
+header #btnCategorias ul{
+    margin: 5px -8px;
+    
+}
+header #btnCategorias a span{
+    cursor: pointer;
+    
+} 
+header #btnCategorias ul li ul{
+    display:   none;
+    margin-bottom: -5px;
+}
+header #btnCategorias ul li:hover ul{
+    display:   block;
+    
+}
+header #btnCategorias ul li ul li a {
+    padding: 1rem 2rem;
+    line-height: unset;
+    white-space: nowrap;
+    display: block;
+    width: 300px;
+}
+header #btnCategorias ul li ul li a:hover {
+    background-color: #d4d80c;
+}
+header #btnCategorias ul li ul li{
+    width: 100%;
+}
+header #btnCategorias .dropdown-menu{
+    padding: 0px;
+}
+header #buscador{
+    margin: 20px 0;
+}
+header #buscador input{
+    padding: 19px;
+    border-radius: 0px;
+}
+header #buscador button{
+    padding: 10px 15px;
+    border: 1px solid silver;
+    border-radius: 0;
+}
+header #buscador button i{
+    font-size: 15px;
+} 
+header #carrito{
+    margin: 20px 0px;
+}
+header #carrito i{
+    font-size: 25px;
+    color:rgb(185, 179, 173);
+}
+header #carrito button{
+    border-color:#e76666;
+    border-radius: 100px;
+}
+header #carrito button:hover{
+    background-color:#FFFFFF;
+}
+/*=====================================================================
+VENTANAS MODALES
+======================================================================*/
+.modalTitulo{
+    padding: 5px 0px;
+}
+.modalTitulo h3{
+    text-align: center;
+    margin-top: -5px;
+    padding: 15px 0px;
+    border-radius: 5px 5px 0px 0px;
+    margin-bottom: 0px;
+}
+.modalFormulario .close{
+    position: absolute;
+    right: 27px;
+    top: 15px;
+    color:black;
+}
+/**  ===========================*/
+.form-control {
+    height: 37px;
+}
+.stepwizard-step p {
+    margin-top: 5px;
+}
+
+.stepwizard-row {
+    display: table-row;
+}
+
+.stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+    padding-top: 10px;
+    background-color: #d0a20e;
+}
+
+.stepwizard-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}
+
+.stepwizard-row:before {
+    top: 28px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    z-index: 0;
+}
+
+.stepwizard-step {
+    display: table-cell;
+    text-align: center;
+    position: relative;
+}
+
+.btn-circle {
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    padding: 0px 3PX;
+    font-size: 30px;
+    line-height: 1.428571429;
+    border-radius: 50px;
+}
+.controlar .espacio{
+    margin-left: 10px;
+    padding-right: 70px;
+
+}
+
+/**  ===========================*/
+#logreg-forms{
+    width:550px;
+    margin:5vh auto;
+    background-color:white;
+}
+#logreg-forms .social-login{
+    width:464px;
+    margin:-5px auto;
+    margin-bottom: 20px;
+}
+#logreg-forms .social-btn{
+    font-weight: 100;
+    color:white;
+    width:230px;
+    font-size: 1.9rem;
+}
+#logreg-forms .facebook-btn{  background-color:#3C589C; }
+#logreg-forms .form-signup .social-btn{ width:210px; }
+#logreg-forms .google-btn{ background-color: #DF4B3B; }
+
+.form-signup .social-login{
+    width:210px !important;
+    margin: 0 auto;
+}
+
+
+/*
+.modalFormulario .usuario, .modalFormulario .regTienda{
+    cursor: pointer;
+}
+.modalFormulario .usuario p{
+    background-color: rgb(223, 141, 49);
+}
+.modalFormulario .regTienda p{
+    background-color: rgb(53, 116, 24);
+}
+.modalFormulario .usuario p, .modalFormulario .regTienda p{
+    color: white;
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+.modalFormulario p i{
+    margin-right: 20px;
+    font-size: 20px;
+}*/
+
+/*=====================================================================
+Escritorios Grandes (LG revisamos en 1366px en adelante)
+======================================================================*/
+@media(min-width:1200px){
+    
+    header #logotipo img{
+        padding: 20px 60px;
+        padding-left: 0;
+    }
+    header #carrito{
+        padding-left: 0px;
+    }
+    .modalFormulario .usuario p{
+        margin-right: -15px;
+    }
+    .modalFormulario .regTienda p{
+        margin-left: -15px;
+    }
+}
+/*=====================================================================
+Escritorios Medianos o Tablet horizontal(MD revisamos en 1024px)
+======================================================================*/
+@media(max-width:1199px) and (min-width:992px){
+
+    header #logotipo img{
+        padding: 25px 60px;
+        padding-left: 0;
+    }
+    header #carrito{
+        padding-left: 70px;
+    }
+    .modalFormulario .usuario p{
+        margin-right: -15px;
+    }
+    .modalFormulario .regTienda p{
+        margin-left: -15px;
+    }
+    
+}
+/*=====================================================================
+Escritorio Pequeño o table vertical(SM revisamos en 768px)
+======================================================================*/
+@media(max-width:991px) and (min-width:768px){
+    #top{
+        text-align: center;
+    }
+    header #logotipo img{
+        padding: 30px 0px;
+    }
+    header #carrito{
+        padding-left: 20px;
+    }
+    header #carrito p{
+        display: none;
+    }
+    .modalFormulario .usuario p{
+        margin-right: -15px;
+    }
+    .modalFormulario .regTienda p{
+        margin-left: -15px;
+    }
+}
+/*=====================================================================
+Movil(XS revisamos en 320px)
+======================================================================*/
+@media(max-width:767px){
+
+    #top ul{
+        text-align: center;
+    }
+    #top #registro{
+        border-top: 1px solid #222;
+    }
+    header #logotipo img{
+        padding: 30px ;
+        padding-bottom: 10px;
+    }
+    header #catedorias{
+        margin-bottom: 10px;
+    }
+    header #btnCategorias ul li a{
+        display: none;
+        margin-right: 110px;
+        width: 30px;
+    } 
+    header #buscador{
+        margin-bottom: 10px;
+    } 
+    header #carrito{
+       margin:0px;
+    }
+    .modalFormulario .regTienda p{
+        margin-top: 0px;
+    }
+    .col-xs-5 {
+        width: 7.666667%;
+    }
+    .col-xs-7 {
+        width: 91.333337%;
+    }
+}
+
+
+

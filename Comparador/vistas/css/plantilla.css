@@ -1,0 +1,132 @@
+/** --------- Global ----------*/ 
+:root {
+    --main-color-Blanco:#FFFFFF;
+    --main-txt-color:#f5af02;
+    --main-color-bs: #05aba7;
+  
+    /*--Paleta de colores seleccionado--*/   
+    --main-color-principal:#d0a20e;
+    --main-color-secundario:#136574;
+
+    /*--Paleta de colores--*/
+    --main-color-uno:#00b0a6;
+    --main-color-dos:#055d6b;
+    --main-color-tres:#008089;
+    --main-color-cuatro:#e1aa12;
+    --main-color-cinco:#013a67;
+    --main-color-seis:#072446;
+
+    /***---- Adiciona les-*/
+    --main-adic-uno:#0b8cac;
+    --main-adic-dos:#40a190;
+    --main-adic-tres:#f0ba10;
+    --main-adic-cuatro:#023a64;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Ubunt', sans-serif;
+}
+
+body {
+    font-family: 'ubuntu Condensed',  sans-serif;
+}
+ul, ol, li{
+    padding: 0px;
+}
+a:visited, a:link, a:focus, a:focus, a:active{
+    list-style: none;
+    text-decoration: none;
+} 
+hr{
+    margin-top:0px;
+    margin-bottom: 0px;
+}
+#top ul li{
+    display: inline;
+    line-height: 30px;
+    margin: 0px 5px;
+    color:teal;
+}
+.barraSuperior{
+    background:  var(--main-color-principal);
+  
+}
+.barraSuperior a{
+    color: white;
+    font-size: 15px;
+}
+.backColor, .backColor a{
+    background: var(--main-color-secundario);
+    color:white;
+}
+.coloraux {
+    background: #002833;
+}
+.titulo .titulo-h2 {
+    margin-top: 10%;
+    margin-bottom: 3%;
+    color: #08abac;
+    text-transform:uppercase;
+}
+.titulo .subtitulo{
+    margin-bottom: 5%;
+}
+/*=====================================================================
+ESTILOS PARA  EL ERROR 404
+======================================================================*/
+
+.error404{
+    color: #333;
+}
+/*=====================================================================
+Escritorios Grandes (LG revisamos en 1366px en adelante)
+======================================================================*/
+@media(min-width:1200px){
+    .col-lg-0{
+        display: none;
+    }
+    .error404 h1{
+        font-size: 300px;
+        text-shadow: 8px 8px 1 px #d6213e;
+    }
+}
+/*=====================================================================
+Escritorios Medianos o Tablet horizontal(MD revisamos en 1024px)
+======================================================================*/
+@media(max-width:1199px) and (min-width:992px){
+    .col-md-0{
+        display: none;
+    }
+    .error404 h1{
+        font-size: 200px;
+        text-shadow: 6px 6px 1 px #d6213e;
+    }
+}
+/*=====================================================================
+Escritorio Pequeño o table vertical(SM revisamos en 768px)
+======================================================================*/
+@media(max-width:991px) and (min-width:768px){
+    .col-sm-0{
+        display: none;
+    }
+    .error404 h1{
+        font-size: 150px;
+        text-shadow: 4px 4px 1 px #d6213e;
+    }
+}
+/*=====================================================================
+Movil(XS revisamos en 320px)
+======================================================================*/
+@media(max-width:767px){
+    .col-xs-0{
+        display: none;
+    }
+    .error404 h1{
+        font-size: 750px;
+        text-shadow: 2px 2px 1 px #d6213e;
+    }
+}
