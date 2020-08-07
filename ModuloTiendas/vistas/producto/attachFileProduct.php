@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Cargar Producto por Archivo</h1>
+            <h1 class="m-0 text-dark">Cargar Producto por Archivo </h1><a title="Descargar formato excel" href="formatos descargar/ExcelDescarga.xlsx" download="formatos descargar/ExcelDescarga.xlsx" style="color: blue; font-size:18px;"> <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar formato excel</a>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

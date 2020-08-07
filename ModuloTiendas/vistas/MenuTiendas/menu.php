@@ -29,9 +29,27 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Categorias</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="producto" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Crear Producto</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="attachFileProduct" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cargar Archivo Excel</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="connectByApiRest" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cargar por API REST</p>
                 </a>
               </li>
               <li class="nav-item">
