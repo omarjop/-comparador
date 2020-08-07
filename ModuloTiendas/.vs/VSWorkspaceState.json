@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\archivos",
+    "\\archivos\\1234567folder",
+    "\\controladores",
+    "\\controladores\\estructuras",
+    "\\controladores\\registrarLogs",
+    "\\controladores\\rutas",
+    "\\vistas",
+    "\\vistas\\estilos",
+    "\\vistas\\generales",
+    "\\vistas\\producto"
+  ],
+  "SelectedNode": "\\controladores\\registrarLogs\\c_trabajo_con_logs.php",
+  "PreviewInSolutionExplorer": false
+}
