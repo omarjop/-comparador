@@ -116,7 +116,7 @@ class modelosWork{
       <div class="modal-body">       
             
             <div class="container">
-              <h2 style="text-alaing:center;">Informacion del archivo cargado</h2>
+              <h2 style="text-alaing:center;">Informacion del archivo excel cargado</h2>
                             
               <table class="table">
                   <tr>

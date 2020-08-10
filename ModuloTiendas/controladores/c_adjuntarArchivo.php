@@ -52,7 +52,7 @@ class ControladorAdjuntos{
           $resultReadFile = $objFile ->leerArchivoExcel($rutaArchivoAleer,"Si");
           $registrosPorLinea = array();
 
-           if (count($resultReadFile)<2 && strlen($resultReadFile[0]) == 0){
+           if (count($resultReadFile)==0 ){
     	          $objModel->modelVacio("El archivo se encuentra vacio");
 	       }else{
 
@@ -140,7 +140,7 @@ class ControladorAdjuntos{
             
                 if($requeridos=="Correcto"){
                       for ($i=0;$i<$tamanio;$i++) {
-                             if($i==0 ||$i==1 || $i==2){
+                             if($i==0 ||$i==1 || $i==2 || $i==3){
                                     $returnFormato = $this->comparatorIntFloat($estructura[$i],$registroSplit[$i]);   
                                     if($returnFormato!="Correcto"){
                                        $returnFormato = "(".$registroSplit[$i].") ".$returnFormato;
@@ -159,22 +159,52 @@ class ControladorAdjuntos{
           $tamanio = count($registroSplit);
 
           for ($i=0;$i<$tamanio;$i++) {
-                if($i==0 && $registroSplit[$i]==""){
-                            $returnFormato = "El nombre del producto es indispensable";
-                            break;
+                if(($i==0 || $i==1 || $i==4 || $i==5 || $i==6)&&$registroSplit[$i]==""){
+                            //$returnFormato = "El nombre del producto es indispensable";
+                            $returnFormato = $this->vakidaMensaje($i);
+                            if($returnFormato!="Correcto"){
+                               break;
+							}
 				}
           }
           return $returnFormato;
 	}
+
+    private function vakidaMensaje($i){
+       $returnFormato = "Correcto";
+              switch ($i) {
+                        case 0:
+                            $returnFormato = "La celda Nombre Producto no puede estar vacia ";
+                            break;
+                        case 1:
+                             $returnFormato =  "La celda Precio no puede estar vacia ";
+                            break;
+                        case 4:
+                             $returnFormato =  "La celda Referencia no puede estar vacia ";
+                            break;
+                        case 5:
+                             $returnFormato =  "La celda Marca no puede estar vacia ";
+                            break;
+                        case 6:
+                             $returnFormato =  "La celda Categoria no puede estar vacia ";
+                            break;
+                  }
+                  return $returnFormato;
+	}
 	
     private function comparatorIntFloat($stuct,$parteRegistro){
+       $valorReturn = "Correcto";
         if($stuct=="Int"){
-            return $this->isInt($parteRegistro," cantidad ");
+            $valorReturn = $this->isInt($parteRegistro," cantidad ");
 		}else if($stuct=="Float"){
-            return $this->isFloat($parteRegistro," precio ");
-		}else if($stuct=="String"){
-            return $this->isString($parteRegistro);
+            $valorReturn = $this->isFloat($parteRegistro," precio o valor numerico de peso o volumen ");
+		}else if($stuct=="String nombre"){
+            $valorReturn = $this->isString($parteRegistro);
+		}else if($stuct=="String unidad peso"&&$parteRegistro!=""){
+            $valorReturn = $this->isStringUnidad($parteRegistro);
 		}
+
+        return $valorReturn;
 	}
 
     public function isInt($parteRegistro,$mensaje){
@@ -218,6 +248,20 @@ class ControladorAdjuntos{
 		   }
 
 	}
+
+    
+    public function isStringUnidad($parteRegistro){
+         $unidades = Array("Kilogramo (Kg)","Gramos (gr)","Mililitros (ml)","Centímetros cúbicos (cm3)");
+         $valorReturn = "El valor de la unidad peso/volumen no cincide con la lista mostrada en el excel";
+         foreach($unidades as $unidad){
+              if($unidad==$parteRegistro){
+                  $valorReturn = "Correcto";
+                  break;
+              }
+		 }
+
+         return $valorReturn;
+	 }
     
 
 }
