@@ -3,7 +3,7 @@
 class ControladorEstructuras{
 
         public function estructuraArchivoPlano(){
-           return  array('String','Int','Float','String','String');
+           return  array('String','Float','String','Float','String','String','String','String');
         }       
 
 }

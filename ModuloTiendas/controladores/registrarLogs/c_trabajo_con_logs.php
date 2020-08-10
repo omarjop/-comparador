@@ -61,18 +61,25 @@ class ControladorWorkLogs{
                      $highestRow = $sheet->getHighestRow(); 
                      $highestColumn = $sheet->getHighestColumn();
 
-                     echo $highestRow;
+                     
                      for ($row = 2; $row <= $highestRow; $row++){ 
 
+                        $rgistro=""; 
                         $rgistro1=$sheet->getCell("A".$row)->getValue();
                         $rgistro2=$sheet->getCell("B".$row)->getValue();
                         $rgistro3=$sheet->getCell("C".$row)->getValue();
                         $rgistro4=$sheet->getCell("D".$row)->getValue();
                         $rgistro5=$sheet->getCell("E".$row)->getValue();
-                        $rgistro="";
-
-                        echo $rgistro = $rgistro1.";".$rgistro2.";".$rgistro3.";".$rgistro4.";".$rgistro5;
-                        array_push($registros, $rgistro);
+                        $rgistro6=$sheet->getCell("F".$row)->getValue();
+                        $rgistro7=$sheet->getCell("G".$row)->getValue();
+                        $rgistro8=$sheet->getCell("H".$row)->getValue();
+                       
+                        $rgistro = $sheet->getCell("A".$row)->getValue().";".$sheet->getCell("B".$row)->getValue().";".$sheet->getCell("C".$row)->getValue().";".$sheet->getCell("D".$row)->getValue().";".
+                           $sheet->getCell("E".$row)->getValue().";".$sheet->getCell("F".$row)->getValue().";".$sheet->getCell("G".$row)->getValue().";".$sheet->getCell("H".$row)->getValue();
+                           if(($rgistro1||$rgistro2||$rgistro3||$rgistro4||$rgistro5||$rgistro6||$rgistro7||$rgistro8)!=""){
+                             array_push($registros, $rgistro);
+					       }
+                       
 		               
                      }
 

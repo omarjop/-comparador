@@ -52,7 +52,7 @@ class modelosWork{
 
          for($j=0;$j<count($registro)-1;$j++){
              $aux1 = $registro[$j];
-             echo $aux1;
+             //echo $aux1;
              $aux1 = preg_replace("/[\r\n|\n|\r]+/", " ", $aux1);
              $final1.=$aux1."<br>";
 		}

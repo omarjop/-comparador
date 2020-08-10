@@ -9,7 +9,7 @@
                              <div class="col-md-12 bordesdivattach">
                                   
                                   <div class="bordesdivattach1">
-                                    <p class="colortexto">Adjuntar Archivo excel</p>
+                                    <p class="colortexto">Adjuntar Archivo Excel</p>
                                   </div>
                                   
                                     <div class="well well-sm">

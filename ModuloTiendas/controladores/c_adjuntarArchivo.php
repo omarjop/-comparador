@@ -118,7 +118,7 @@ class ControladorAdjuntos{
             $valorRegistro = str_replace('<br>', '', $valorRegistro);
             $valorRegistro = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $valorRegistro);
             
-            if(strpos($valorRegistro, ";")){                  
+                         
                  $porciones = explode(";", $valorRegistro);
                  
                       if(sizeof($porciones)>3){
@@ -128,28 +128,44 @@ class ControladorAdjuntos{
                             $resultadiFormato= " Registro incompleto ";                               
 				      }
 
-            }else{   
-                 $resultadiFormato =  "Error de estructura, falta el delimitador (;)";                
-			}
+
             return $resultadiFormato;
 	}
 
     private function validarFormato($registroSplit,$estructura,$valorRegistro){  
           $returnFormato = "Correcto";
           $tamanio = count($estructura);
+          $requeridos = $this->validarRequeridos($registroSplit);
+
+            
+                if($requeridos=="Correcto"){
+                      for ($i=0;$i<$tamanio;$i++) {
+                             if($i==0 ||$i==1 || $i==2){
+                                    $returnFormato = $this->comparatorIntFloat($estructura[$i],$registroSplit[$i]);   
+                                    if($returnFormato!="Correcto"){
+                                       $returnFormato = "(".$registroSplit[$i].") ".$returnFormato;
+                                       break;
+						            }
+				             }
+                      }
+                   }else{
+                            $returnFormato = $requeridos;
+				   }
+           return $returnFormato;
+	}
+       
+    private function validarRequeridos($registroSplit){
+          $returnFormato = "Correcto";
+          $tamanio = count($registroSplit);
 
           for ($i=0;$i<$tamanio;$i++) {
-                 if($i==0 ||$i==1 || $i==2){
-                        $returnFormato = $this->comparatorIntFloat($estructura[$i],$registroSplit[$i]);   
-                        if($returnFormato!="Correcto"){
-                           $returnFormato = "(".$registroSplit[$i].") ".$returnFormato;
-                           break;
-						}
-				 }
+                if($i==0 && $registroSplit[$i]==""){
+                            $returnFormato = "El nombre del producto es indispensable";
+                            break;
+				}
           }
           return $returnFormato;
 	}
-       
 	
     private function comparatorIntFloat($stuct,$parteRegistro){
         if($stuct=="Int"){

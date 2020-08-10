@@ -2,9 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\ModuloTiendas",
+    "\\ModuloTiendas\\archivos",
+    "\\ModuloTiendas\\archivos\\1234567folder",
     "\\ModuloTiendas\\controladores",
-    "\\ModuloTiendas\\controladores\\registrarLogs"
+    "\\ModuloTiendas\\controladores\\estructuras",
+    "\\ModuloTiendas\\controladores\\rutas",
+    "\\ModuloTiendas\\vistas",
+    "\\ModuloTiendas\\vistas\\generales",
+    "\\ModuloTiendas\\vistas\\producto"
   ],
-  "SelectedNode": "\\ModuloTiendas\\controladores\\registrarLogs\\c_trabajo_con_logs.php",
+  "SelectedNode": "\\ModuloTiendas\\archivos\\1234567folder",
   "PreviewInSolutionExplorer": false
 }
