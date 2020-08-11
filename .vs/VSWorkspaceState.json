@@ -2,15 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\ModuloTiendas",
-    "\\ModuloTiendas\\archivos",
-    "\\ModuloTiendas\\archivos\\1234567folder",
-    "\\ModuloTiendas\\controladores",
-    "\\ModuloTiendas\\controladores\\estructuras",
-    "\\ModuloTiendas\\controladores\\rutas",
+    "\\ModuloTiendas\\bug&logs",
     "\\ModuloTiendas\\vistas",
-    "\\ModuloTiendas\\vistas\\generales",
-    "\\ModuloTiendas\\vistas\\producto"
+    "\\ModuloTiendas\\vistas\\estilos",
+    "\\ModuloTiendas\\vistas\\generales"
   ],
-  "SelectedNode": "\\ModuloTiendas\\archivos\\1234567folder",
+  "SelectedNode": "\\ModuloTiendas\\vistas\\estilos\\Stilos.css",
   "PreviewInSolutionExplorer": false
 }

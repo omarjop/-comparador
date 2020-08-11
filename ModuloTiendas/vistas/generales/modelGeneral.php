@@ -86,8 +86,7 @@ class modelosWork{
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Resultado</h5>
-        <h5 class="modal-title" id="staticBackdropLabel">Resultado</h5>
+        <h5 class="modaltitulo" id="staticBackdropLabel">Informacion del archivo excel cargado</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -116,13 +115,17 @@ class modelosWork{
       <div class="modal-body">       
             
             <div class="container">
-              <h2 style="text-alaing:center;">Informacion del archivo excel cargado</h2>
-                            
+              <h2 class= " modaltitulo ">Informacion del archivo excel cargado</h2>
+
               <table class="table">
                   <tr>
                     <td id="totalRegistro"></td><td id="cantidadExito"></td>
                   </tr>
-                  <tr class="colorbotonamarillo">
+              </table>
+                            
+              <table class="table">
+
+                  <tr class="colormenuprincipal colortexto">
                     <th>Producto</th><th>Descripcion del error</th>
                   </tr>
                
@@ -141,3 +144,5 @@ class modelosWork{
     </div>
   </div>
 </div> 
+
+

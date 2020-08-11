@@ -88,3 +88,12 @@ position: relative;
 }
 
 
+/*-----------------------------------Estilos de modal de resultado de importar archivo */
+
+.modaltitulo{
+   background-color: #D0A20E;   
+   border:1px solid #D0A20E;
+   text-align:center;
+    font-size:-10px;
+    font-family:sans-serif;
+}

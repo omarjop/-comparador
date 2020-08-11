@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well well-sm">
-                <form class="form" method="post">
+                <form class="form needs-validation" method="post" novalidate>
                     
 
                     
@@ -16,44 +16,66 @@
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                             <div class="col-md-58">
-                                <input id="fname" name="name" type="text" placeholder="Nombre producto" class="form-control">
+                                <input id="fname" name="name" type="text" placeholder="Nombre producto" class="form-control" required>
+                                <div  class="invalid-tooltip">
+                                    Please provide a valid city.
+                                 </div>
                             </div>
                         </div>
 
-                    <div class="form-group">
-                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                    <div class="col-md-58">
-                        <select class="form-control">
-                          <option>Seleccione Peso/Volumen</option>
-                          <option>gramos (gr)</option>
-                          <option>kilogramos (kg)</option>
-                          <option>mililitros (ml)</option>
-                          <option>centimetros cubicos (cm3)</option>
-                        </select>
-                    </div>
-                     </div>
+
 
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                             <div class="col-md-58">
                                 <input id="lname" name="name" type="text" placeholder="Precio" class="form-control">
-                            </div>
                         </div>
 
-                        
-
-
+                        </div>
+                    <div class="form-group">
+                           <span class="col-md-1 col-md-offset-2 text-center"></span>
+                        <div class="col-md-58">
+                            <select class="form-control">
+                                  <option class="form-control">Seleccione Peso/Volumen</option>
+                                  <option>gramos (gr)</option>
+                                  <option>kilogramos (kg)</option>
+                                  <option>mililitros (ml)</option>
+                                  <option>centimetros cubicos (cm3)</option>
+                            </select>
+                        </div>
+                     </div>
 
 
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"></span>
-                            <div class="col-md-5">
-                                <input id="phone" name="phone" type="text" placeholder="Cantidad inventario" class="form-control">
-                            </div>
+                            <div class="col-md-58">
+                                <input id="lname" name="name" type="text" placeholder="Referencia" class="form-control">
                         </div>
 
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"></span>                            
+                                <input id="lname" name="name" type="text" placeholder="Marca" class="form-control">
+                        </div>
+
+                         <div class="form-group">
+                           <span class="col-md-1 col-md-offset-2 text-center"></span>
+                        <div class="col-md-58">
+                            <select class="form-control">
+                                  <option class="form-control">Categoria</option>
+                                  <option>Despensa</option>
+                                  <option>Bebidas</option>
+                                  <option>Vinos y Licores</option>
+                                  <option>Pollo, carnes y pescado</option>
+                                  <option>Pasabocas y dulces</option>
+                            </select>
+                        </div>
+                     </div>
 
 
+                     <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFileLangHTML">
+                      <label class="custom-file-label" for="customFileLangHTML" data-browse="Seleccionar">Seleccione imagen del producto</label>
+                    </div>
 
 
                         <div class="form-group">
@@ -67,7 +89,7 @@
 
                         <div class="form-group ">
                             <div class="col-md-12 text-center ">
-                                <button type="submit" class="btn btn-primary btn-lg colorbotonverde" name="guardar">Guardar</button>
+                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" name="guardar">Guardar</button>
                             </div>
                         </div>
                     
@@ -81,6 +103,6 @@
 
  <?php
       if(isset($_POST['guardar'])){
-         echo "funciona";
+         //echo "funciona";
       }
   ?>

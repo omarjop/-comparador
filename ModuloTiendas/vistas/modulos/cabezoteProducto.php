@@ -10,18 +10,7 @@
 
 
  <!-- menu de como cargar producto -->
- <?php  
-           if(isset($_GET['ruta'])){
-       if($_GET['ruta'] == "producto" ||
-          $_GET['ruta'] == "attachFileProduct"||
-          $_GET['ruta'] == "attachFileExcellProduct"||
-          $_GET['ruta'] == "connectByApiRest"){
-                       
-            include "vistas/MenuTiendas/menuCargarProduc.php";           
 
-	   }
-	}
- ?>
  <!-- menu de como cargar producto -->
 
 
