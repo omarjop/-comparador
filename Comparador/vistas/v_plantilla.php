@@ -13,8 +13,12 @@
         
     ?>
 
+    <!---   PLUGINS DE CSS-->
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/sweetalert.css">
+    
+    <!--  Hojas de Estilos personalizadas-->
 
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/cabecera.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plantilla.css">
@@ -23,6 +27,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/ofertas.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/productos.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/testimonio.css">
+    
 
     <script src="https://maps.googleapis.com/maps/api/js? key=3.exp&libraries=places"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
@@ -30,6 +35,8 @@
     <script src="<?php echo $url ?>vistas/js/plugins/jquery.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/popper.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/bootstrap.min.js"></script>
+    <script src="<?php echo $url ?>vistas/js/plugins/sweetalert.min.js"></script>
+    
 
     
 </head>
@@ -60,8 +67,16 @@
                 include "modulos/productos.php"; 
 
             } else{
+                
+                if($rutas[0] == "verificar"){
 
-                include "modulos/error404.php";
+                    include "modulos/".$rutas[0].".php";
+
+                }else{
+
+                    include "modulos/error404.php";
+
+                }
             }
         }else{
 
@@ -77,5 +92,6 @@
 <script src="<?php echo $url ?>vistas/js/slider.js"></script> 
 <script src="<?php echo $url ?>vistas/js/ofertas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/herramienta.js"></script> 
+<script src="<?php echo $url ?>vistas/js/usuario.js"></script> 
 </body>
 </html>

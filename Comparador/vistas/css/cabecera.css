@@ -71,18 +71,17 @@ header #buscador button i{
 } 
 header #carrito{
     margin: 20px 0px;
+    padding-right: 0px;
 }
-header #carrito i{
-    font-size: 25px;
-    color:rgb(185, 179, 173);
-}
-header #carrito button{
-    border-color:#e76666;
-    border-radius: 100px;
-}
-header #carrito button:hover{
-    background-color:#FFFFFF;
-}
+header #carrito li{
+    display: inline-flex;
+    float: right;
+    list-style-type: none;
+    text-align: center;
+} 
+header #carrito li ul{
+    padding-right: 25px;
+} 
 /*=====================================================================
 VENTANAS MODALES
 ======================================================================*/
@@ -157,8 +156,6 @@ VENTANAS MODALES
     padding-right: 70px;
 
 }
-
-/**  ===========================*/
 #logreg-forms{
     width:550px;
     margin:5vh auto;
@@ -166,8 +163,9 @@ VENTANAS MODALES
 }
 #logreg-forms .social-login{
     width:464px;
-    margin:-5px auto;
+    margin:0px auto;
     margin-bottom: 20px;
+     margin-top: 35px;
 }
 #logreg-forms .social-btn{
     font-weight: 100;

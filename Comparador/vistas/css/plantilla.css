@@ -52,7 +52,7 @@ hr{
     color:teal;
 }
 .barraSuperior{
-    background:  var(--main-color-principal);
+    background:  var(--main-color-secundario);
   
 }
 .barraSuperior a{
@@ -60,12 +60,14 @@ hr{
     font-size: 15px;
 }
 .backColor, .backColor a{
-    background: var(--main-color-secundario);
+    background: var(--main-adic-tres);
     color:white;
 }
-.coloraux {
-    background: #002833;
+.colorbarra{
+     background: #136574;
+     color:white;
 }
+
 .titulo .titulo-h2 {
     margin-top: 10%;
     margin-bottom: 3%;

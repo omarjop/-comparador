@@ -108,26 +108,43 @@
             MENU DE SERVICIOS
             ========================-->
             <div class="col-lg-3 col-md-3 col-sm-2 col-xs-12 " id="carrito">
-                <a href="#">
-                    <button class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Crea tus Listas">
-                        <i class="fa fa-list -alt" aria-hidden="true"style=" font-size:30px;"></i>
-                    </button>
-                </a>
-                <a href="#">
-                    <button class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Blog">
-                        <i class="fa fa-comments-o" aria-hidden="true" style=" font-size:30px;"></i>
-                    </button>
-                </a>
-                <a href="#">
-                    <button class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Controlar gastos">
-                        <i class="fa fa-money " aria-hidden="true"style=" font-size:30px;"></i>
-                    </button>
-                </a>
-                <a href="#">
-                    <button class="btn btn-default pull-right" data-toggle="tooltip" data-placement="bottom" title="Blog">
-                        <i class="fa fa-bullhorn" aria-hidden="true"style=" font-size:30px;"></i>
-                    </button>
-                </a>
+                <li>
+                    <ul  class="pull-right">
+                        <a href="#">
+                            <span  data-toggle="tooltip" title="Crea tus Listas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive img-thumbnail">
+                            </span>
+                           <!-- <h5>Listas</h5> -->
+                        </a>
+                    </ul>
+
+                    <ul class="pull-right">
+                        <a href="#">
+                            <span data-toggle="tooltip" title="Crea tus Listas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/blogs32.png" class="img-responsive img-thumbnail">
+                            </span>
+                           <!-- <h5>Blogs</h5> -->
+                        </a>
+                    </ul>
+
+                    <ul class="pull-right">
+                        <a href="#">
+                            <span data-toggle="tooltip" title="Crea tus Listas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/tienda32.png" class="img-responsive img-thumbnail">
+                            </span>
+                          <!--  <h5>Tiendas</h5> -->
+                        </a>
+                    </ul>
+
+                    <ul class="pull-right">
+                        <a href="#">
+                            <span data-toggle="tooltip" title="Crea tus Listas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/receta32.png" class="img-responsive img-thumbnail">
+                            </span>
+                            <!-- <h5>Recetas</h5>-->
+                        </a>
+                    </ul>
+                </li>
             </div>
             
         </div>
@@ -140,7 +157,7 @@ VENTANA MODAL PARA EL REGISTRO
     <div class="modal-content modal-dialog">
         <div class="modal-body modalTitulo">
 
-            <h3 class="backColor"> CREAR UNA CUENTA</h3>
+            <h3 class="colorbarra"> CREAR UNA CUENTA</h3>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
 
             <div class="stepwizard">
@@ -165,14 +182,66 @@ VENTANA MODAL PARA EL REGISTRO
                 <div class="row setup-content" id="usu">
                     <div class="col-xs-12  espacio">
                         <div class="col-md-12 espacio">
-                            <form  method="post" onclass="form-signin">
+                            <form  method="post" class="form-signin">
                                 <div id="logreg-forms">
                                    <!-- <h3>USUARIO</h3>  -->
                                     <div class="social-login">
-                                        <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook"></i> Sign in with Facebook</span> </button>
-                                        <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus"></i> Sign in with Google+</span> </button>
+                                        <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook"></i> Iniciar con Facebook</span> </button>
+                                        <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus"></i> Iniciar con Google+</span> </button>
                                         
-                                        <p style="text-align:center">   </p>
+                                        <p><br></p>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span  class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                                <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="Direccion de correo" required="" autofocus="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span  class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-envelope"></i>
+                                                </span>
+                                                <input type="password" id="inputPassword"  name="inputPassword" class="form-control" placeholder="Password" required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="regPoliticas">
+                                            <label class="form-check-label" for="exampleCheck1"><a href="">Politica y Condiciones de uso</a></label>
+                                            <h5>Al registrarse, Usted Acepta nuestras Condiciones de uso y politica de privacidad</h5>
+                                        </div>
+                                        <?php  
+                                            $registro  = new ControladorUsuarios();
+                                            $registro ->ctrlRegistroUsuario();
+                                        ?>
+                                       
+                                        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i> Registrarme</button>
+                                        
+                                    </div>
+                                </div>  
+                            </form>  
+                        </div>
+                    </div>
+                </div>
+                <!-- ==========================
+                REGISTRO PARA TIENDAS
+                =============================-->
+                <div class="row setup-content" id="tienda">
+                    <div class="col-xs-12 espacio">
+                        <div class="col-md-6 espacio">
+                            <form  method="post" onclass="form-signin">
+                                <div id="logreg-forms">
+                                    <div class="social-login">
+                                        <h3>Registra tu <b>Tienda<b></h3>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span  class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
+                                                <input type="text" class="form-control text-uppercase" id="inputEmail" name="inputEmail" placeholder="Email address" required="" autofocus="">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span  class="input-group-addon">
@@ -194,33 +263,9 @@ VENTANA MODAL PARA EL REGISTRO
                                             <label class="form-check-label" for="exampleCheck1"><a href="">Terminos y Condiciones de uso</a></label>
                                             <h5>Al registrarse, Usted Acepta nuestras Condiciones de uso y politica de privacidad</h5>
                                         </div>
-                                       
-                                        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i> Enviar</button>
-                                        
+                                        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in-alt"></i> Registrarse</button>
                                     </div>
-                                </div>  
-                            </form>  
-                        </div>
-                    </div>
-                </div>
-                <!-- ==========================
-                REGISTRO PARA TIENDAS
-                =============================-->
-                <div class="row setup-content" id="tienda">
-                    <div class="col-xs-12 espacio">
-                        <div class="col-md-6 espacio">
-                           <!-- Autocomplete location search input --> 
-                            <div class="form-group">
-                                <label>Location:</label>
-                                <input type="text" class="form-control" id="search_input" placeholder="Type address..." />
-                                <input type="hidden" id="loc_lat" />
-                                <input type="hidden" id="loc_long" />
-                            </div>
-
-                            <!-- Display latitude and longitude -->
-                            <div class="latlong-view">
-                                <p><b>Latitude:</b> <span id="latitude_view"></span></p>
-                                <p><b>Longitude:</b> <span id="longitude_view"></span></p>
+                                </div>
                             </div>
                         </div>
                     </div>
