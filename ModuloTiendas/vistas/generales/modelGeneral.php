@@ -19,6 +19,19 @@ class modelosWork{
            
 	}
 
+     public function modelInformativo($mensaje){
+        echo '    
+             <script>
+                          $(document).ready(function()
+                          {
+                             $("#textoGeneral2").modal("show");
+                             document.getElementById("textoGeneral").innerHTML="'.$mensaje.'";  
+
+                          });
+            </script>'; 
+           
+	}
+    
      public function modelRegistrosErroneo($returnMensaje){  
      
      $registro = $returnMensaje[0];
@@ -94,6 +107,27 @@ class modelosWork{
       <div class="modal-body">
        <!-- aqui va el mensaje que se pasa por parametro-->
                              <p id="codigo"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary colorbotonamarillo" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="textoGeneral2" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modaltitulo" id="staticBackdropLabel">Informacion general</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- aqui va el mensaje que se pasa por parametro-->
+                             <p id="textoGeneral"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary colorbotonamarillo" data-dismiss="modal">Cerrar</button>

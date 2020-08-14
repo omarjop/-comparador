@@ -52,17 +52,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
           $_GET['ruta'] == "attachFileProduct"||
           $_GET['ruta'] == "attachFileExcellProduct"||
           $_GET['ruta'] == "connectByApiRest"){
-            
+         
             include "vistas/modulos/cabezoteProducto.php";
             include "vistas/MenuTiendas/menu.php";
             include "vistas/producto/".$_GET['ruta'].".php";
-
+          
 	   }
 	}else{
-    
+        
         include "vistas/modulos/cabezote.php";
         include "vistas/MenuTiendas/menu.php";
         include "vistas/modulos/cuerpo.php";
+        
 	}
     
     include "vistas/modulos/footer.php";

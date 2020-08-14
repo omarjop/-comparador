@@ -2,7 +2,7 @@
 
 class ControladorPlantilla{
 
-    public function plantilla(){
+    public function plantilla($objTiendaInicial){
         include "vistas/v_plantilla.php";
     }
 }

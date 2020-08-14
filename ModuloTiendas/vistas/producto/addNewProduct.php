@@ -4,7 +4,7 @@
 <script type="text/javascript">
     function mostrar(id) {
 
-        var unidades = ["gramos","kilogramos","mililitros"];
+        var unidades = ["gramos","kilogramos","mililitros","centimetros"];
         unidades.forEach(function(valor) {
                 if(valor == id){
                    $("#".concat(valor)).show();               
@@ -16,13 +16,42 @@
     }
 </script>
 
+<?php 
+/*Funcion que retorna la primera palabra de las unidades en pesos para poder de value en el campo select recibe parametro el vector*/
+     function returnValues($arreglo){
+
+          $values = array();
+          for($i=0;$i<count($arreglo);$i++){
+             $aux = explode(" ", $arreglo[$i]);   
+             array_push($values, $aux[0]);
+             
+		  }
+
+          return $values;
+     
+	 }
+     
+     $objEstuctura =  new ControladorEstructuras();
+     $valorUnidades = $objEstuctura->unidadesProductos();
+     $values = returnValues($valorUnidades);
+
+     $gramos = $objEstuctura->unidadesProductosValues("gramos");
+     $kilogramos = $objEstuctura->unidadesProductosValues("kilogramos");
+     $mililitros = $objEstuctura->unidadesProductosValues("mililitros");
+     $centimetros = $objEstuctura->unidadesProductosValues("centimetros");
+
+     $objSelect =  new ControladorSelectsInTables();
+     $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
+     //echo $objTiendaInicial->getNombreEmpresa();
+?>
+
 
 <!------------------------------------------------------------------------------------------------------------------------>
   <div class="container">
   <div class="abs-center">
     <div class="row">
 
-                <form class="form needs-validation" method="post" novalidate>
+                <form class="form needs-validation" method="post" >
                     
 
                     
@@ -30,10 +59,7 @@
                                             <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-58">
-                                                    <input id="fname" name="name" type="text" placeholder="Nombre producto" class="form-control" required>
-                                                      <div class="valid-tooltip">
-                                                        Looks good!
-                                                      </div>
+                                                    <input id="validationServer03" name="nameProduct" type="text" placeholder="Nombre producto" class="form-control"  required oninput="check_text(this);">
                                                 </div>
                                             </div>
 
@@ -42,82 +68,66 @@
                                             <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-58">
-                                                    <input id="lname" name="name" type="text" placeholder="Precio" class="form-control">
+                                                    <input id="lname" name="price" type="text" placeholder="Precio" class="form-control" required>
                                             </div>
 
                                             <div class="form-group">
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-58">
-                                                <select class="form-control" onChange="mostrar(this.value);">
-                                                      <option class="form-control">Seleccione Peso/Volumen</option>
-                                                      <option value="gramos">gramos (gr)</option>
-                                                      <option value="kilogramos">kilogramos (kg)</option>
-                                                      <option value="mililitros">mililitros (ml)</option>
-                                                      <option>centimetros cubicos (cm3)</option>
+                                               <label  >Peso/Volumen</label>
+                                                <select class="form-control" onChange="mostrar(this.value);" name="unit">
+                                                      
+                                                       <?php for($i=0;$i<count($valorUnidades);$i++){?>
+                                                            <option value='<?php echo $values[$i];?>'><?php echo $valorUnidades[$i];?></option>
+                                                       <?php }?>
                                                 </select>
                                             </div>
                                          </div>
                                          
                                                             
-                                                                         <div class="form-group"  id= "gramos">
+                                                                         <div class="form-group"  id= "gramos" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control">                                                                                      
-                                                                                      <option>1,5</option>
-                                                                                      <option>10</option>
-                                                                                      <option>20</option>
-                                                                                      <option>25</option>
-                                                                                      <option>50</option>
-                                                                                      <option>75</option>
-                                                                                      <option>100</option>
-                                                                                      <option>125</option>
-                                                                                      <option>200</option>
-                                                                                      <option>250</option>
-                                                                                      <option>300</option>                                                                                      
-                                                                                      <option>500</option>
-                                                                                      <option>450</option>                                                                                      
+                                                                                <select class="form-control" name="grams">  
+                                                                                     <?php for($i=0;$i<count($gramos);$i++){?>
+                                                                                        <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
+                                                                                     <?php }?>
                                                                                 </select>
                                                                             </div>
                                                                          </div>
 
                                                                                                                                      
-                                                                         <div class="form-group" id= "kilogramos">
+                                                                         <div class="form-group" id= "kilogramos" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control">                                                                                      
-                                                                                      <option>1</option>
-                                                                                      <option>2</option>
-                                                                                      <option>2.5</option>
-                                                                                      <option>3</option>
-                                                                                      <option>4</option>
-                                                                                      <option>5</option>
-                                                                                      <option>5</option>
-                                                                                      <option>10</option>
-                                                                                      <option>12</option>
-                                                                                      <option>15</option>
-                                                                                      <option>20</option>                                                                                                                                                                                                                                                                 
+                                                                                <select class="form-control" name="kilograms">                                                                                      
+                                                                                     <?php for($i=0;$i<count($kilogramos);$i++){?>
+                                                                                        <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
+                                                                                     <?php }?>                                                                                                                                                                                                                                                                
                                                                                 </select>
                                                                             </div>
                                                                          </div>
 
-                                                                         <div class="form-group" id= "mililitros">
+                                                                         <div class="form-group" id= "mililitros" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control">                                                                                      
-                                                                                      <option>100</option>
-                                                                                      <option>125</option>
-                                                                                      <option>150</option>
-                                                                                      <option>200</option>
-                                                                                      <option>250</option>
-                                                                                      <option>300</option>
-                                                                                      <option>500</option>
-                                                                                      <option>1000</option>
-                                                                                      <option>1500</option>
-                                                                                      <option>2000</option>
-                                                                                      <option>2500</option>                                                                                      
-                                                                                      <option>3000</option>
-                                                                                      <option>4000</option> 
-                                                                                      <option>5000</option> 
+                                                                                <select class="form-control" name="milliliters">                                                                                      
+                                                                                     <?php for($i=0;$i<count($mililitros);$i++){?>
+                                                                                        <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
+                                                                                     <?php }?>  
+                                                                                </select>
+                                                                            </div>
+                                                                         </div>
+
+
+
+                                                                         <div class="form-group" id= "centimetros" >
+                                                                            <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                                                            <div class="col-md-58">
+                                                                                <select class="form-control" name="centimeters">                                                                                      
+                                                                                     <?php for($i=0;$i<count($centimetros);$i++){?>
+                                                                                        <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
+                                                                                     <?php }?>  
                                                                                 </select>
                                                                             </div>
                                                                          </div>
@@ -128,31 +138,30 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></span>
                                         <div class="col-md-58">
-                                            <input id="lname" name="name" type="text" placeholder="Referencia" class="form-control">
+                                            <input id="lname" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></span>                            
-                                            <input id="lname" name="name" type="text" placeholder="Marca" class="form-control">
+                                            <input id="lname" name="Brand" type="text" placeholder="Marca" class="form-control" required>
                                     </div>
 
                                      <div class="form-group">
                                        <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-58">
-                                        <select class="form-control">
-                                              <option class="form-control">Categoria</option>
-                                              <option>Despensa</option>
-                                              <option>Bebidas</option>
-                                              <option>Vinos y Licores</option>
-                                              <option>Pollo, carnes y pescado</option>
-                                              <option>Pasabocas y dulces</option>
-                                        </select>
-                                    </div>
+                                            <div class="col-md-58">
+                                            <label  >Categoria</label>
+                                                <select class="form-control" name="Category" required >
+                                                           
+                                                      <?php for($i=0;$i<count($resultSelect);$i++){?>
+                                                           <option value = "<?php echo $resultSelect[$i]["idsubCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
+                                                      <?php }?>
+                                                </select>
+                                            </div>
                                  </div>
 
 
                                  <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="customFileLangHTML">
+                                  <input type="file" class="custom-file-input" id="customFileLangHTML" name="image">
                                   <label class="custom-file-label" for="customFileLangHTML" data-browse="Seleccionar">Seleccione imagen del producto</label>
                                 </div>
 
@@ -160,18 +169,21 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-left"></span>
                                         <div class="col-md-100">
-                                            <textarea class="form-control" id="message" name="message" placeholder="Breve descripcion del producto" rows="7"></textarea>
+                                            <textarea class="form-control" id="message" name="description" placeholder="Breve descripcion del producto" rows="7"></textarea>
                                         </div>
                                     </div>
 
 
               
   
-
+                                         <?php  
+                                            $registro  = new ControladorProductosTienda();
+                                            $registro ->registrarProducto($objTiendaInicial);
+                                        ?>
 
                         <div class="form-group ">
                             <div class="col-md-12 text-center ">
-                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" name="guardar">Guardar</button>
+                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" id="guardar" name="guardar">Guardar</button>
                             </div>
                         </div>
                     
