@@ -30,5 +30,8 @@ class ControladorEstructuras{
            
            return $arrayReturn;
         }   
+        public function tiposDeImagen(){
+               return   array('png','jpg','jpeg');
+		}
 
 }

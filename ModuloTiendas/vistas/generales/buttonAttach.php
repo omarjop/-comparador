@@ -57,6 +57,7 @@
 
 
      function validarAccionBoton($archivo,$extension){
+           //echo "Archivo :".$archivo;
            $objRutas =  new ControladorRutasGenerales();
            $objAdjuntar =  new ControladorAdjuntos();
            $objLog =  new ControladorWorkLogs();

@@ -33,15 +33,58 @@ class ControladorAdjuntos{
 
     }
 
+        public function SubirArchivoImagen($archivo){
+        
+            $rutaFinal;
+            $rutaFinal= "../AdminComparador/imagenes_productos";
+            $path = $rutaFinal;
+
+            if (!file_exists($path)) {
+                            mkdir($path, 0777, true);
+                             $rutaFinal= $rutaFinal."/";
+                            $fichero_subido = $rutaFinal.basename($_FILES[$archivo]["name"]);          
+                            if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $fichero_subido)) {
+                                              return true;
+                             } else {
+                                              return false;
+                            }
+
+            }else{
+                        $rutaFinal= $rutaFinal."/";
+                        $fichero_subido = $rutaFinal.basename($_FILES[$archivo]["name"]);          
+                        if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $fichero_subido)) {
+                                          return true;
+                         } else {
+                                          return false;
+                        }
+                       
+			}
+
+
+    }
+
 
     public function validasiExtensionArchivo($archivo,$extension){
+       
         if($_FILES[$archivo]['type'] != $extension){
+          
            return false;  
 		}else{
+           
            return true;  
 		}
 	}
 
+     public function validaExtensionImagen($archivo,$extension){
+            $filename = $_FILES[$archivo]['name'];           
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if( $ext !== $extension) {
+               return false; 
+            }else{
+               return true; 
+			}
+
+	}
 
     public function validarSubirArchivoPlano($rutaArchivoAleer){
           

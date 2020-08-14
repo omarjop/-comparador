@@ -51,7 +51,7 @@
   <div class="abs-center">
     <div class="row">
 
-                <form class="form needs-validation" method="post" >
+                <form class="form needs-validation" method="post"  enctype="multipart/form-data">
                     
 
                     
@@ -161,7 +161,7 @@
 
 
                                  <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="customFileLangHTML" name="image">
+                                  <input type="file" class="custom-file-input" id="imageSubir" name="imageSubir">
                                   <label class="custom-file-label" for="customFileLangHTML" data-browse="Seleccionar">Seleccione imagen del producto</label>
                                 </div>
 
@@ -178,7 +178,7 @@
   
                                          <?php  
                                             $registro  = new ControladorProductosTienda();
-                                            $registro ->registrarProducto($objTiendaInicial);
+                                            $registro ->registrarProducto($objTiendaInicial,'imageSubir');
                                         ?>
 
                         <div class="form-group ">

@@ -2,13 +2,14 @@
 
 class ControladorProductosTienda{
 
-    public function registrarProducto($objTiendaInicial){
+    public function registrarProducto($objTiendaInicial,$imagenValue){
         if(isset($_POST["guardar"])){         
-            $this->validarCampos($objTiendaInicial);
+           // echo "imagen: ".$imagenValue;
+            $this->validarCampos($objTiendaInicial,$imagenValue);
         }
     }
 
-    private function validarCampos($objTiendaInicial){
+    private function validarCampos($objTiendaInicial,$imagenValue){
             $objModel =  new modelosWork();
         
             $nombreProducto =  $_POST["nameProduct"];
@@ -21,9 +22,9 @@ class ControladorProductosTienda{
             $referencia =  $_POST["Reference"];
             $marca =  $_POST["Brand"];
             $categoria = $_POST["Category"];
-            $imagen = "null"; //$_POST["image"];
+            $imagen = $_FILES[$imagenValue]['name'];
             $descripcion = $_POST["description"];
-
+            $resultadoImagen = "Correcto";
             $unidad = $this->returnVolumen($unidaVolumen,$volumenGrams,$volumenKiloGrams,$volumenMililitros,$volumenCntimetro);
 
       // Validar el precio que este bien el formato
@@ -32,23 +33,55 @@ class ControladorProductosTienda{
             $resultadoNombre = $objValidarDato->isString($nombreProducto);
 
 
-               if($resultadoNombre=="Correcto"){
 
-                        if($resultado!="Correcto"){
-                                $objModel->modelInformativo($resultado." por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
-			            }else{
-                                            $isMarca = $this->validarMarca($marca);
-                                            if($isMarca!="Falla en registro de base de datos"){
-                                                 $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio);
-								            }else{
-                                                 $objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
-								            } 
-			            }
-                   }else{
-                        $objModel->modelInformativo($resultadoNombre);
-				   }
+               if($imagen!=""){
+                    $resultadoImagen = $this->validarExtencionImagen($imagenValue);    
+			   }
+           
+
+            if($resultadoImagen == "Correcto"){
+
+                       if($resultadoNombre=="Correcto"){
+
+                                if($resultado!="Correcto"){
+                                        $objModel->modelInformativo($resultado." por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
+			                    }else{
+                                                    $isMarca = $this->validarMarca($marca);
+                                                    if($isMarca!="Falla en registro de base de datos"){
+                                                         $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue);
+								                    }else{
+                                                         $objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
+								                    } 
+			                    }
+                           }else{
+                                $objModel->modelInformativo($resultadoNombre);
+				           }
+
+               }else{
+                         $objModel->modelInformativo("No es una imagen correcta para subir");
+			   }
+
+	}
 
 
+    private function validarExtencionImagen($imagen){
+            $objEstructura = new ControladorEstructuras();
+            $objValidarAdjunto = new ControladorAdjuntos();
+            $returnValue = "Correcto";
+
+            $estructura = $objEstructura ->tiposDeImagen();
+            foreach($estructura as $valor){
+ //              echo $valor;
+                 $resultado = $objValidarAdjunto->validaExtensionImagen($imagen,$valor);
+                 //echo  "resultado ".$resultado;
+                  if($resultado == 1){
+                     $returnValue = "Correcto";
+                     break;
+			      }else{
+                     $returnValue = "In Correcto";     
+			      }
+		    }
+        return $returnValue ;
 	}
 
     private function returnVolumen($unidaVolumen,$volumenGrams,$volumenKiloGrams,$volumenMililitros,$volumenCntimetro){
@@ -107,13 +140,18 @@ class ControladorProductosTienda{
          return $idReturn;
 	}
 
-    private function validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio){
+    private function validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue){
 
              $objSelects  = new ControladorSelectsInTables();
+             $objValidarAdjunto = new ControladorAdjuntos();
              $campos = "idProducto";
              $condicion =" subCategoria_idsubCategoria = "."'$categoria'"." and "." Marca_idMarca = "."'$isMarca'"." and "." Nombre = "."'$nombreProducto'"." and "." Referencia = "."'$referencia'"." and "." pesoVolumen = "."'$unidad'";
              $resultado = $objSelects->returnSelectARowForField("producto",$campos,$condicion); 
              $idTienda = $objTiendaInicial->getIdEmpresa();
+
+           if($imagen!=""){
+                    $imagen = "../AdminComparador/imagenes_productos/".$imagen;
+             }
 
          if($resultado){
                  
@@ -128,7 +166,8 @@ class ControladorProductosTienda{
                            $value = "'$categoria'".","."'$isMarca'".","."'$nombreProducto'".","."'$referencia'".","."'$descripcion'".","."'$imagen'".","."'$unidad'";
                            $objInsert  = new ModeloInserttAllTables();
                            $result = $objInsert->insertInTable("Producto",$into,$value);
-                           $this->validarInsertInTable($result,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);                    
+                           $this->validarInsertInTable($result,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);  
+                           $objValidarAdjunto->SubirArchivoImagen($imagenValue);
 					}
          }else{
             
@@ -137,6 +176,7 @@ class ControladorProductosTienda{
                    $objInsert  = new ModeloInserttAllTables();
                    $result = $objInsert->insertInTable("Producto",$into,$value);
                    $this->validarInsertInTable($result,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);
+                   $objValidarAdjunto->SubirArchivoImagen($imagenValue);
                    
 		 }
 	}
