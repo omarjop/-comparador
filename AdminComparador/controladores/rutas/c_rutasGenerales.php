@@ -3,11 +3,11 @@
 class ControladorRutasGenerales{
 
         public function rutaArchivoAdjuntos(){
-           return "archivos/";
+           return "../AdminComparador/archivos/";
         }
 
         public function rutaArchivosLogs(){
-           return "bug&logs/";
+           return "../AdminComparador/bug&logs/";
         }
         public function nombreArchivoExcel($rturnName){
           if($rturnName=="Si"){
@@ -21,7 +21,7 @@ class ControladorRutasGenerales{
 
         public function extensionArchivosLogs($modulo){
 
-                switch ($$accionActua) {
+                switch ($accionActua) {
                         case "Adjuntar Archivo":
                             return "logTienda.log";
                             break;

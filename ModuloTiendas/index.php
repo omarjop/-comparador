@@ -1,7 +1,7 @@
 <?php
 /**se incluyen los controladores */
-require_once "controladores/rutas/c_rutasGenerales.php";
-require_once "controladores/registrarLogs/c_trabajo_con_logs.php";
+require_once "../AdminComparador/controladores/rutas/c_rutasGenerales.php";
+require_once "../AdminComparador/controladores/registrarLogs/c_trabajo_con_logs.php";
 require_once "controladores/productos/c_adjuntarArchivo.php";
 require_once "controladores/productos/c_tiendaProductos.php";
 require_once "controladores/c_plantilla.php";
@@ -13,6 +13,7 @@ require_once("../AdminComparador/modelos/m_insert_tables.php");
 require_once "../AdminComparador/controladores/c_tiendas.php";
 require_once "vistas/generales/modelGeneral.php";
 require_once "PHPExcel/Classes/PHPExcel.php";
+
 
 //cuando la tienda inicie session debe llamar el controlador $plantilla =  new ControladorPlantilla();
 
