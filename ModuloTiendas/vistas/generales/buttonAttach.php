@@ -48,7 +48,7 @@
  //-----------------------Valida las acciones del boton de adjuntar---------------------------------------------    
 
       if(isset($_POST['CargarPlano'])){               
-              validarAccionBoton('attachmentPlano',"application/vnd.ms-excel");
+              validarAccionBoton('attachmentPlano',"application/vnd.ms-excel",$objTiendaInicial);
        }
 
 
@@ -56,31 +56,32 @@
 //-----------------------Funciones del desarrollo-----------------------------------------------------------------
 
 
-     function validarAccionBoton($archivo,$extension){
+     function validarAccionBoton($archivo,$extension,$objTiendaInicial){
            //echo "Archivo :".$archivo;
            $objRutas =  new ControladorRutasGenerales();
            $objAdjuntar =  new ControladorAdjuntos();
            $objLog =  new ControladorWorkLogs();
-           $objLog-> escribirEnLog("Adjuntar Archivo","INFO","1234567","Se inicia el proceso de adjuntar el archivo: ".$_FILES[$archivo]["name"]);
+           $idTienda = $objTiendaInicial->getNitEmpresa();
+           $objLog-> escribirEnLog("Adjuntar Archivo","INFO",$idTienda,"Se inicia el proceso de adjuntar el archivo: ".$_FILES[$archivo]["name"]);
            $ruta = $objRutas -> rutaArchivoAdjuntos();
            $resultado = $objAdjuntar ->validasiExtensionArchivo($archivo,$extension);
            if($extension=="text/plain"){
-                   validasiExtensionArchivo($archivo,$resultado,$ruta,$objAdjuntar,$objLog,/*este campo es el nit*/"1234567",/*tipo de archivo plano o excel*/"Plano");
+                   validasiExtensionArchivo($objTiendaInicial,$archivo,$resultado,$ruta,$objAdjuntar,$objLog,/*este campo es el nit*/$idTienda,/*tipo de archivo plano o excel*/"Plano");
             }else{
-                   validasiExtensionArchivo($archivo,$resultado,$ruta,$objAdjuntar,$objLog,/*este campo es el nit*/"1234567",/*tipo de archivo plano o excel*/"Excel");
+                   validasiExtensionArchivo($objTiendaInicial,$archivo,$resultado,$ruta,$objAdjuntar,$objLog,/*este campo es el nit*/$idTienda,/*tipo de archivo plano o excel*/"Excel");
 			}
-            $objLog-> escribirEnLog("Adjuntar Archivo","INFO","1234567","Se finaliza el proceso de adjuntar el archivo: ".$_FILES[$archivo]["name"]);
+            $objLog-> escribirEnLog("Adjuntar Archivo","INFO",$idTienda,"Se finaliza el proceso de adjuntar el archivo: ".$_FILES[$archivo]["name"]);
             
 
 	 }
 
-      function validasiExtensionArchivo($archivo,$resultadoValidaExt,$ruta,$objAdjuntar,$objLog,$nitUser,$tipoArchivo){
+      function validasiExtensionArchivo($objTiendaInicial,$archivo,$resultadoValidaExt,$ruta,$objAdjuntar,$objLog,$nitUser,$tipoArchivo){
       $objModel =  new modelosWork();
             try{
                     if($resultadoValidaExt == 1){                  
                           $resultado = $objAdjuntar -> SubirArchivoPlano($archivo,$ruta,$nitUser);
                           $objLog-> escribirEnLog("Adjuntar Archivo","INFO",$nitUser,"La extension de el archivo es correcta");
-                          cargarArchivo($resultado,$ruta,$_FILES[$archivo]["name"],$objAdjuntar,$objLog,$nitUser,$tipoArchivo);                          
+                          cargarArchivo($objTiendaInicial,$resultado,$ruta,$_FILES[$archivo]["name"],$objAdjuntar,$objLog,$nitUser,$tipoArchivo);                          
 			        }else{
                           $objLog-> escribirEnLog("Adjuntar Archivo","WARN",$nitUser,"La extension del archivo es erronea");
                           $objModel -> modelVacio("Tipo de archivo incorrecto, por favor seleccione un archivo ".$tipoArchivo); 
@@ -92,10 +93,10 @@
 			 }       
      }
 
-     function cargarArchivo($resultado,$ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo){
+     function cargarArchivo($objTiendaInicial,$resultado,$ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo){
          try{
                 if($resultado == 1){
-                          cargarArchivPlanoPExcel($ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo);             
+                          cargarArchivPlanoPExcel($objTiendaInicial,$ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo);             
 		        }else{
                     echo "No se pudo subir el archivo";  
                     $objLog-> escribirEnLog("Adjuntar Archivo","WARN",$nitUser,"No es posible procesar los registros del archivo");
@@ -106,10 +107,10 @@
             }    
 	 }
 
-     function cargarArchivPlanoPExcel($ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo){
+     function cargarArchivPlanoPExcel($objTiendaInicial,$ruta,$archivo,$objetoAdjuntarArchivo,$objLog,$nitUser,$tipoArchivo){
            try{
                 if($tipoArchivo == "Excel"){
-                        $valor =  $objetoAdjuntarArchivo ->validarSubirArchivoPlano($ruta.$nitUser."folder/".$archivo);
+                        $valor =  $objetoAdjuntarArchivo ->validarSubirArchivoPlano($objTiendaInicial,$ruta.$nitUser."folder/".$archivo);
                       
 		        }
             }catch(Exception $e){

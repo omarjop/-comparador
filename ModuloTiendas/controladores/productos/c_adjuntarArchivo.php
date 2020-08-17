@@ -86,7 +86,7 @@ class ControladorAdjuntos{
 
 	}
 
-    public function validarSubirArchivoPlano($rutaArchivoAleer){
+    public function validarSubirArchivoPlano($objTiendaInicial,$rutaArchivoAleer){
           
           $returnMensaje = array();
 
@@ -108,7 +108,7 @@ class ControladorAdjuntos{
                     }
 
                     
-                    $returnMensaje = $this->validarRegistros($registrosPorLinea); 
+                    $returnMensaje = $this->validarRegistros($objTiendaInicial,$registrosPorLinea); 
                     $returnMensaje[0] = str_replace('<br>', '', $returnMensaje[0]);
                     $objModel->modelRegistrosErroneo($returnMensaje);
                     
@@ -119,7 +119,7 @@ class ControladorAdjuntos{
       
 	}
 
-    public function validarRegistros($resultReadFile){
+    public function validarRegistros($objTiendaInicial,$resultReadFile){
          $registrosErroneos = array();
          $enviarRegistro = array();
          $enviarArregloDeArreglo = array();
@@ -140,7 +140,8 @@ class ControladorAdjuntos{
 			     }else{
                     // se envia el registro a la tabla de la base de datos y retornar mensaje de exito
                     $countRegistrosExitosos+=1;
-                    echo $registrosReturn."Registro a base de datos"."<br>";
+                    $this->ValidaYRegistraEnBaseDatos($objTiendaInicial,$resultReadFile[$i]);
+                    //echo $registrosReturn."Registro a base de datos"."<br>";
 				 }   
                   $totalRegistros+=1;
          }
@@ -152,17 +153,41 @@ class ControladorAdjuntos{
          return $enviarArregloDeArreglo;
     	                     
     }
+//Desde aqui se inicia el registro en base de datos.
+    private function ValidaYRegistraEnBaseDatos($objTiendaInicial,$valorRegistro){
+            $imagen=null;
+            $porciones="";            
+            $objRegistroProdcut = new ControladorProductosTienda();
+            $objSelect = new ControladorSelectsInTables();
+            $objModel =  new modelosWork();
+            $porciones = $this->lismpiarString($valorRegistro);
+            $idMarca = $objRegistroProdcut->validarMarca($porciones[5]);
+            $aux = $porciones[6];
 
+            $ValueCampo = " nombre = "."'$aux'";
+            $idCategoria = $objSelect->returnSelectARowForField("subcategoria","idsubCategoria",$ValueCampo);
+            
+            $auxUnidad = $porciones[3];
+                $auxUnidad = str_replace('<br>', '', $auxUnidad);
+                $auxUnidad = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $auxUnidad);  
+                
+            
+             if($idMarca!="Falla en registro de base de datos"){
+                  $returnrValue = $objRegistroProdcut->validarExisteProducto($idCategoria[0]["idsubCategoria"],$idMarca,$porciones[0],$porciones[4],$porciones[7],$imagen,$auxUnidad,$objModel,$porciones[2],$objTiendaInicial,$porciones[1],$imagen);                  
+                 // echo $returnrValue;
+			 }else{
+                  //$objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
+			 } 
+            
+	}
+
+//todos los siguientes metodos son los de valdar si el registro cumple con el minimo requerido para poder ser registrado en base detos
     private function validarFormatoRegistro($valorRegistro,$estructura){
             $valorOriginal = "";
             $porciones="";
             
             $resultadiFormato="";
-            $valorRegistro = str_replace('<br>', '', $valorRegistro);
-            $valorRegistro = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $valorRegistro);
-            
-                         
-                 $porciones = explode(";", $valorRegistro);
+            $porciones = $this->lismpiarString($valorRegistro);
                  
                       if(sizeof($porciones)>3){
                             $resultadiFormato = $this->validarFormato($porciones,$estructura,$valorRegistro);
@@ -170,9 +195,18 @@ class ControladorAdjuntos{
 				      }else{
                             $resultadiFormato= " Registro incompleto ";                               
 				      }
-
-
             return $resultadiFormato;
+	}
+
+    private function lismpiarString($valorRegistro){           
+            
+         $porciones="";
+         if($valorRegistro!=null){
+                $valorRegistro = str_replace('<br>', '', $valorRegistro);
+                $valorRegistro = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $valorRegistro);                        
+                $porciones = explode(";", $valorRegistro);        
+		 }       
+         return $porciones;   
 	}
 
     private function validarFormato($registroSplit,$estructura,$valorRegistro){  
