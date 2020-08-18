@@ -25,7 +25,8 @@ class ControladorProductosTienda{
             $descripcion = $_POST["description"];
             $resultadoImagen = "Correcto";
             $unidad = $this->returnVolumen($unidaVolumen,$volumenGrams,$volumenKiloGrams,$volumenMililitros,$volumenCntimetro);
-
+            $porciones = explode("-", $categoria);    
+            $categoria = $porciones[0];
       // Validar el precio que este bien el formato
             $objValidarDato  = new ControladorAdjuntos();
             $resultado = $objValidarDato->isFloat($precio,"Precio");

@@ -17,9 +17,10 @@
 
      function mostrarNuevaCategoria(id) {
 
-        var unidades = [6];
+         var nombres = id.split("-");
+        var unidades = ["Otros"];
         unidades.forEach(function(valor) {
-                if(valor == id){
+                if(valor == nombres[1]){
                    $("#".concat("NewCategory")).show();               
 			    }else{
                     $("#".concat("NewCategory")).hide();  
@@ -172,7 +173,7 @@
                                                 <select class="form-control" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
                                                       <option value = "seleccion">Seleccione Categoria</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
-                                                           <option value = "<?php echo $resultSelect[$i]["idsubCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
+                                                           <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
                                                       <?php }?>
                                                 </select>
                                             </div>
