@@ -98,7 +98,7 @@ class modelosWork{
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modaltitulo" >
         <h5 class="modaltitulo" id="staticBackdropLabel">Informacion del archivo excel cargado</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -116,10 +116,11 @@ class modelosWork{
 </div>
 
 
+
 <div class="modal fade" id="textoGeneral2" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modaltitulo">
         <h5 class="modaltitulo" id="staticBackdropLabel">Informacion general</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

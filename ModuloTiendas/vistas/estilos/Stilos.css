@@ -93,7 +93,9 @@ position: relative;
 .modaltitulo{
    background-color: #D0A20E;   
    border:1px solid #D0A20E;
+   position:relative;
    text-align:center;
-    font-size:-10px;
-    font-family:sans-serif;
+   font-size:-10px;
+   font-family:sans-serif;
+
 }

@@ -15,14 +15,22 @@
 
     }
 
-    function alerta(){
-              var unidades = ["gramos","kilogramos","mililitros","centimetros"];
-                unidades.forEach(function(valor) {
-                $("#".concat(valor)).hide();                 
-        });
-	}
-</script>
+     function mostrarNuevaCategoria(id) {
 
+        var unidades = [6];
+        unidades.forEach(function(valor) {
+                if(valor == id){
+                   $("#".concat("NewCategory")).show();               
+			    }else{
+                    $("#".concat("NewCategory")).hide();  
+               }
+        });
+
+         // $("#".concat("NewCategory")).hide();  
+
+    }
+
+</script>
 <?php 
 
 
@@ -85,9 +93,9 @@
                                             <div class="form-group">
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-58">
-                                               <label  >Peso/Volumen</label>
+                                             
                                                 <select class="form-control" onChange="mostrar(this.value);" name="unit">
-                                                      
+                                                      <option value = "seleccion">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
                                                             <option value='<?php echo $values[$i];?>'><?php echo $valorUnidades[$i];?></option>
                                                        <?php }?>
@@ -160,18 +168,24 @@
                                      <div class="form-group">
                                        <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-58">
-                                            <label  >Categoria</label>
-                                                <select class="form-control" name="Category" required >
-                                                           
+                                            
+                                                <select class="form-control" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
+                                                      <option value = "seleccion">Seleccione Categoria</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
                                                            <option value = "<?php echo $resultSelect[$i]["idsubCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
                                                       <?php }?>
                                                 </select>
                                             </div>
-                                 </div>
+                                     </div>
+
+                                    <div class="form-group" id ="NewCategory">
+                                        <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                        
+                                            <input id="lname" name="NewCategory" type="text" placeholder="Escriba nueva categoria" class="form-control" >
+                                    </div>
 
 
-                                 <div class="custom-file">
+                               <div class="custom-file">
                                   <input type="file" class="custom-file-input" id="imageSubir" name="imageSubir">
                                   <label class="custom-file-label" for="customFileLangHTML" data-browse="Seleccionar">Seleccione imagen del producto</label>
                                 </div>
@@ -211,9 +225,8 @@
      echo '    
              <script type="text/javascript">
                       mostrar("gramos");
+                      mostrarNuevaCategoria("c");
             </script>'; 
 
-      if(isset($_POST['guardar'])){
-         //echo "funciona";
-      }
+
   ?>

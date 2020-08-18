@@ -37,29 +37,32 @@ class ControladorProductosTienda{
                     $resultadoImagen = $this->validarExtencionImagen($imagenValue);    
 			   }
            
+          if($unidaVolumen!="seleccion"&&$categoria!="seleccion"){
+                if($resultadoImagen == "Correcto"){
 
-            if($resultadoImagen == "Correcto"){
+                           if($resultadoNombre=="Correcto"){
 
-                       if($resultadoNombre=="Correcto"){
+                                    if($resultado!="Correcto"){
+                                            $objModel->modelInformativo($resultado." Por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
+			                        }else{
+                                                        $isMarca = $this->validarMarca($marca);
+                                                        if($isMarca!="Falla en registro de base de datos"){
+                                                             $returnrValue = $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue);
+                                                             $objModel->modelInformativo($returnrValue);
+								                        }else{
+                                                             $objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
+								                        } 
+			                        }
+                               }else{
+                                    $objModel->modelInformativo($resultadoNombre);
+				               }
 
-                                if($resultado!="Correcto"){
-                                        $objModel->modelInformativo($resultado." Por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
-			                    }else{
-                                                    $isMarca = $this->validarMarca($marca);
-                                                    if($isMarca!="Falla en registro de base de datos"){
-                                                         $returnrValue = $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue);
-                                                         $objModel->modelInformativo($returnrValue);
-								                    }else{
-                                                         $objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
-								                    } 
-			                    }
-                           }else{
-                                $objModel->modelInformativo($resultadoNombre);
-				           }
-
-               }else{
-                         $objModel->modelInformativo("No es una imagen correcta para adjuntar");
-			   }
+                   }else{
+                             $objModel->modelInformativo("No es una imagen correcta para adjuntar");
+			       }
+           }else{
+                      $objModel->modelInformativo("Peso/Volumen o Categoria, seleccione una opcion valida");  
+		   }
 
 	}
 
