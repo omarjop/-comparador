@@ -13,7 +13,7 @@ class ControladorRutasGenerales{
           if($rturnName=="Si"){
             return "NombreAPP Formato de carga.xls";
 		  }else{
-            return "formatos descargar/NombreAPP Formato de carga.xls";
+            return "../AdminComparador/formatos descargar/NombreAPP Formato de carga.xls";
 		  }
            
         }

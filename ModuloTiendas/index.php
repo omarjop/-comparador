@@ -5,7 +5,7 @@ require_once "../AdminComparador/controladores/registrarLogs/c_trabajo_con_logs.
 require_once "controladores/productos/c_adjuntarArchivo.php";
 require_once "controladores/productos/c_tiendaProductos.php";
 require_once "controladores/c_plantilla.php";
-require_once "controladores/estructuras/estructuras.php";
+require_once "../AdminComparador/controladores/estructuras/estructuras.php";
 require_once "../AdminComparador/controladores/c_select_int_tables.php"; // asi se incluye controlador desde otro controlador
 require_once("../AdminComparador/modelos/m_select_all_tables.php");
 require_once "../AdminComparador/controladores/c_insert_in_tables.php"; // asi se incluye controlador desde otro controlador

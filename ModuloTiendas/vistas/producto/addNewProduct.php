@@ -14,9 +14,18 @@
         });
 
     }
+
+    function alerta(){
+              var unidades = ["gramos","kilogramos","mililitros","centimetros"];
+                unidades.forEach(function(valor) {
+                $("#".concat(valor)).hide();                 
+        });
+	}
 </script>
 
 <?php 
+
+
 /*Funcion que retorna la primera palabra de las unidades en pesos para poder de value en el campo select recibe parametro el vector*/
      function returnValues($arreglo){
 
@@ -43,6 +52,8 @@
      $objSelect =  new ControladorSelectsInTables();
      $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
      //echo $objTiendaInicial->getNombreEmpresa();
+
+
 ?>
 
 
@@ -196,6 +207,12 @@
 
 
  <?php
+
+     echo '    
+             <script type="text/javascript">
+                      mostrar("gramos");
+            </script>'; 
+
       if(isset($_POST['guardar'])){
          //echo "funciona";
       }

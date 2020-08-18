@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
+    "\\AdminComparador\\controladores\\rutas",
     "\\ModuloTiendas",
-    "\\ModuloTiendas\\controladores",
-    "\\ModuloTiendas\\controladores\\rutas",
     "\\ModuloTiendas\\vistas",
     "\\ModuloTiendas\\vistas\\generales"
   ],
