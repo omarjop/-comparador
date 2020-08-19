@@ -2,7 +2,7 @@
 class ControladorProductos{
     
     static public function CtrlMostrarCategorias( $item, $valor){
-        $tabla = "tipotienda";
+        $tabla = "categoria";
         $respuesta = ModeloProductos::mdlMostrarCategorias($tabla, $item, $valor);
         return $respuesta;
     }

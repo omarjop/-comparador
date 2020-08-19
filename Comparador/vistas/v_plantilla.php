@@ -29,11 +29,9 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/testimonio.css">
     
 
-    <script src="https://maps.googleapis.com/maps/api/js? key=3.exp&libraries=places"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
    
     <script src="<?php echo $url ?>vistas/js/plugins/jquery.min.js"></script>
-    <script src="<?php echo $url ?>vistas/js/plugins/popper.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/bootstrap.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/sweetalert.min.js"></script>
     
@@ -53,7 +51,7 @@
         if(isset($_GET["ruta"])){
 
             $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
-            
+            var_dump($_GET["ruta"]);
             $item = "ruta";
             $valor = $_GET["ruta"];
 

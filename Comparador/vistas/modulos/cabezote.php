@@ -74,10 +74,9 @@
                             <li class="upper-links dropdown"><a class="links" href="#">CATEGORÍAS<span class="pull-right"><i class="fa fa-bars" aria-hidden="true"></i></span> </a> 
                                 <ul class="dropdown-menu">
                                     <?php 
-                                        $item = null;
-                                        $valor =   null;
+                                        $item = "control";
+                                        $valor = 1;
                                         $categorias = ControladorProductos::CtrlMostrarCategorias($item, $valor);
-                                        
                                         foreach ($categorias as $key => $value) {
                                             echo '
                                             <li><a href="'.$value["ruta"].'"  class="pixelCategorias"> '.$value["nombre"].'</a></li>                                 
@@ -239,23 +238,16 @@ VENTANA MODAL PARA EL REGISTRO
                                                 <span  class="input-group-addon">
                                                     <i class="glyphicon glyphicon-user"></i>
                                                 </span>
-                                                <input type="text" class="form-control text-uppercase" id="inputEmail" name="inputEmail" placeholder="Email address" required="" autofocus="">
+                                                <input type="text" class="form-control text-uppercase" id="emailTienda" name="emailTienda" placeholder="Email address" required="" autofocus="">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span  class="input-group-addon">
-                                                    <i class="glyphicon glyphicon-user"></i>
-                                                </span>
-                                                <input type="email" class="form-control text-uppercase" id="inputEmail" name="inputEmail" placeholder="Email address" required="" autofocus="">
-                                            </div>
-                                        </div>
+                                    
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span  class="input-group-addon">
                                                     <i class="glyphicon glyphicon-envelope"></i>
                                                 </span>
-                                                <input type="password" id="inputPassword"  name="inputPassword" class="form-control" placeholder="Password" required="">
+                                                <input type="password" id="passwordTienda" name="passwordTienda" class="form-control" placeholder="Password" required="">
                                             </div>
                                         </div>
                                         <div class="form-group form-check">
