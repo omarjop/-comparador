@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 	<script src="http://cdn.static.w3big.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.w3big.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <script src="..AdminComparador/vistas/js/validacionesGenerales.js"></script>
 
   <!-- jQuery -->
 <script src="vistas/plugins/jquery/jquery.min.js"></script>
