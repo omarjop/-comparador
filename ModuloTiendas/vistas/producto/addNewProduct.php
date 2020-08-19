@@ -27,13 +27,11 @@
                }
         });
 
-         // $("#".concat("NewCategory")).hide();  
 
     }
 
 </script>
 <?php 
-
 
 /*Funcion que retorna la primera palabra de las unidades en pesos para poder de value en el campo select recibe parametro el vector*/
      function returnValues($arreglo){
@@ -60,9 +58,6 @@
 
      $objSelect =  new ControladorSelectsInTables();
      $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
-     //echo $objTiendaInicial->getNombreEmpresa();
-
-
 ?>
 
 
@@ -72,9 +67,6 @@
     <div class="row">
 
                 <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-                    
-
-                    
 
                                             <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -109,6 +101,7 @@
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
                                                                                 <select class="form-control" name="grams">  
+                                                                                        <option value='seleccione'>Seleccione Gramos</option> 
                                                                                      <?php for($i=0;$i<count($gramos);$i++){?>
                                                                                         <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
                                                                                      <?php }?>
@@ -120,7 +113,8 @@
                                                                          <div class="form-group" id= "kilogramos" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control" name="kilograms">                                                                                      
+                                                                                <select class="form-control" name="kilograms">   
+                                                                                        <option value='seleccione'>Seleccione Kilogramos</option> 
                                                                                      <?php for($i=0;$i<count($kilogramos);$i++){?>
                                                                                         <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
                                                                                      <?php }?>                                                                                                                                                                                                                                                                
@@ -131,7 +125,8 @@
                                                                          <div class="form-group" id= "mililitros" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control" name="milliliters">                                                                                      
+                                                                                <select class="form-control" name="milliliters">         
+                                                                                        <option value='seleccione'>Seleccione Mililitros</option> 
                                                                                      <?php for($i=0;$i<count($mililitros);$i++){?>
                                                                                         <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
                                                                                      <?php }?>  
@@ -144,7 +139,8 @@
                                                                          <div class="form-group" id= "centimetros" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control" name="centimeters">                                                                                      
+                                                                                <select class="form-control" name="centimeters">   
+                                                                                        <option value='seleccione'>Seleccione cm3</option> 
                                                                                      <?php for($i=0;$i<count($centimetros);$i++){?>
                                                                                         <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
                                                                                      <?php }?>  
@@ -171,7 +167,7 @@
                                             <div class="col-md-58">
                                             
                                                 <select class="form-control" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
-                                                      <option value = "seleccion">Seleccione Categoria</option>     
+                                                      <option value = "seleccion">Seleccione Categor&iacutea</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
                                                            <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
                                                       <?php }?>
@@ -182,7 +178,7 @@
                                     <div class="form-group" id ="NewCategory">
                                         <span class="col-md-1 col-md-offset-2 text-center"></span>
                                         
-                                            <input id="lname" name="NewCategory" type="text" placeholder="Escriba nueva categoria" class="form-control" >
+                                            <input id="lname" name="NewCategory" type="text" placeholder="Escriba nueva categor&iacute;a" class="form-control" >
                                     </div>
 
 
@@ -195,7 +191,7 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-left"></span>
                                         <div class="col-md-100">
-                                            <textarea class="form-control" id="message" name="description" placeholder="Breve descripcion del producto" rows="7"></textarea>
+                                            <textarea class="form-control" id="message" name="description" placeholder="Breve descripci&oacute;n del producto" rows="7"></textarea>
                                         </div>
                                     </div>
 
@@ -225,9 +221,7 @@
 
      echo '    
              <script type="text/javascript">
-                      mostrar("gramos");
+                      mostrar("l");
                       mostrarNuevaCategoria("c");
             </script>'; 
-
-
   ?>

@@ -19,7 +19,7 @@ require_once "PHPExcel/Classes/PHPExcel.php";
 
 $objTiendaInicial =  new Tiendas();
 $objTiendaInicial->setIdEmpresa("1");
-$objTiendaInicial->setNombreEmpresa("Empresa de prueba");
+$objTiendaInicial->setNombreEmpresa("Empresa de morita");
 $objTiendaInicial->setNitEmpresa("5555");
 $plantilla =  new ControladorPlantilla();
 $valor = "prueba de objeto";

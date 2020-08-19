@@ -44,14 +44,14 @@ class ControladorProductosTienda{
                            if($resultadoNombre=="Correcto"){
 
                                     if($resultado!="Correcto"){
-                                            $objModel->modelInformativo($resultado." Por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
+                                            $objModel->modelInformativo($resultado."<br> Por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
 			                        }else{
                                                         $isMarca = $this->validarMarca($marca);
                                                         if($isMarca!="Falla en registro de base de datos"){
                                                              $returnrValue = $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue);
                                                              $objModel->modelInformativo($returnrValue);
 								                        }else{
-                                                             $objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
+                                                             $objModel->modelInformativo("Error al registrar producto. Por favor comunicarse con el administrador."); 
 								                        } 
 			                        }
                                }else{
@@ -196,7 +196,7 @@ class ControladorProductosTienda{
                    $valueAsociada2 = "'$resultado'".","."'$idTienda'".","."'$precio'";
                    $objInsert->insertInTable("producto_has_empresa",$intoAsociada2,$valueAsociada2);
                          if($result!="Fallo"){
-                                $returnValue = "Se registra con exito el Producto";
+                                $returnValue = "Se registra el producto exitosamente";
 						 }
 
 
