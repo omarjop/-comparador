@@ -16,7 +16,7 @@
     }
 
      function mostrarNuevaCategoria(id) {
-
+         
          var nombres = id.split("-");
         var unidades = ["Otros"];
         unidades.forEach(function(valor) {
@@ -27,13 +27,124 @@
                }
         });
 
-         // $("#".concat("NewCategory")).hide();  
+
+
 
     }
 
+    
+ function validarFormulario(formulario){
+         
+         var nombre = formulario.nameProduct.value;
+         var precio = formulario.price.value;
+         var pesoVolumen = formulario.unit.value;
+         var marca = formulario.Brand.value;
+         var categoria = formulario.Category.value;
+         var gramos = formulario.grams.value;
+         var kilogramos = formulario.kilograms.value;
+         var mililitros = formulario.milliliters.value;
+         var centimetros = formulario.centimeters.value;
+         var nuevaCategoria = formulario.NewCategory.value;
+         
+         if(validarNombreAndMarca(nombre,"No es un nombre de producto válido")!=true){
+             return false;
+		 }
+         if(validarPrecio(precio)!=true){
+             return false;
+		 }
+         if(validarPesoVolumenAndCategoria(pesoVolumen,"Peso/Volumen, seleccione una opcion valida")!=true){
+             return false;
+		 }
+         if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
+             return false;
+		 }
+         if(validarNombreAndMarca(marca,"No es un nombre de marca válido")!=true){
+             return false;
+		 }
+         if(validarPesoVolumenAndCategoria(categoria,"Categoria, seleccione una opcion valida")!=true){
+             return false;
+		 }
+         if(validarNuevaCategoria(categoria,nuevaCategoria)!=true){
+             return false;
+		 }
+
+         
+     return true;
+ }
+ //------funciones de validacion de cada uno de los campos
+ function validarNombreAndMarca(valor,mensaje){
+         if (isNaN(parseInt(valor))) {
+              return true;
+         }else{
+              // $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No es un nombre de producto válido</div>');
+              alert(mensaje);
+              return false;
+		 } 
+ }
+
+  function validarPrecio(valor){
+            if(!valor.includes(',')){
+                 if (isNaN(parseFloat(valor))) {
+                      alert("No es un precio válido Por favor ingresar un valor numerico y los decimales con el caracter(.)");
+                      return false;
+                 }else{
+                      // $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No es un nombre de producto válido</div>');
+                      return true;
+		         } 
+            }else{
+                       alert("No es un precio válido Por favor ingresar un valor numerico y los decimales con el caracter(.)");
+                      return false;           
+			}
+ }
+
+ function validarPesoVolumenAndCategoria(valor,mensaje){
+        if(valor == "seleccion"){
+           alert(mensaje);
+           return false; 
+		}else{
+           return true;  
+		}
+ }
+
+  function validarUnidades(valorPesoVolumen,gramos,kilogramos,mililitros,centimetros){
+    
+        if(valorPesoVolumen == "gramos"){
+            if(gramos == "seleccione"){
+               alert("Gramos, seleccione una opcion valida");
+               return false; 
+		    }
+		}else if(valorPesoVolumen == "kilogramos"){
+            if(kilogramos == "seleccione"){
+               alert("Kilogramos, seleccione una opcion valida");
+               return false; 
+		    }
+		}else if(valorPesoVolumen == "mililitros"){
+            if(mililitros == "seleccione"){
+               alert("Mililitros, seleccione una opcion valida");
+               return false; 
+		    }
+		}else if(valorPesoVolumen == "centimetros"){
+            if(centimetros == "seleccione"){
+               alert("Centimetros cubicos, seleccione una opcion valida");
+               return false; 
+		    }
+		}  
+  return true;
+ }
+
+ function validarNuevaCategoria(categoria,nuevaCategoria){
+ 
+ var cate = categoria.split("-");
+         if(cate[1] == "Otros"){
+                if(!nuevaCategoria){
+                    alert("El campo nueva categoria se debe diligenciar");
+                    return false;       
+			    }
+		 }
+         return true;
+ }
 </script>
 <?php 
-
 
 /*Funcion que retorna la primera palabra de las unidades en pesos para poder de value en el campo select recibe parametro el vector*/
      function returnValues($arreglo){
@@ -60,9 +171,6 @@
 
      $objSelect =  new ControladorSelectsInTables();
      $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
-     //echo $objTiendaInicial->getNombreEmpresa();
-
-
 ?>
 
 
@@ -71,15 +179,12 @@
   <div class="abs-center">
     <div class="row">
 
-                <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-                    
-
-                    
+                <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);">
 
                                             <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-58">
-                                                    <input id="validationServer03" name="nameProduct" type="text" placeholder="Nombre producto" class="form-control"  required oninput="check_text(this);">
+                                                    <input id="nameProduct" name="nameProduct" type="text" placeholder="Nombre producto" class="form-control"  required oninput="check_text(this);" >
                                                 </div>
                                             </div>
 
@@ -88,7 +193,7 @@
                                             <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-58">
-                                                    <input id="lname" name="price" type="text" placeholder="Precio" class="form-control" required>
+                                                    <input id="price" name="price" type="text" placeholder="Precio" class="form-control" required>
                                             </div>
 
                                             <div class="form-group">
@@ -109,6 +214,7 @@
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
                                                                                 <select class="form-control" name="grams">  
+                                                                                        <option value='seleccione'>Seleccione Gramos</option> 
                                                                                      <?php for($i=0;$i<count($gramos);$i++){?>
                                                                                         <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
                                                                                      <?php }?>
@@ -120,7 +226,8 @@
                                                                          <div class="form-group" id= "kilogramos" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control" name="kilograms">                                                                                      
+                                                                                <select class="form-control" name="kilograms">   
+                                                                                        <option value='seleccione'>Seleccione Kilogramos</option> 
                                                                                      <?php for($i=0;$i<count($kilogramos);$i++){?>
                                                                                         <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
                                                                                      <?php }?>                                                                                                                                                                                                                                                                
@@ -131,7 +238,8 @@
                                                                          <div class="form-group" id= "mililitros" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control" name="milliliters">                                                                                      
+                                                                                <select class="form-control" name="milliliters">         
+                                                                                        <option value='seleccione'>Seleccione Mililitros</option> 
                                                                                      <?php for($i=0;$i<count($mililitros);$i++){?>
                                                                                         <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
                                                                                      <?php }?>  
@@ -144,7 +252,8 @@
                                                                          <div class="form-group" id= "centimetros" >
                                                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                                             <div class="col-md-58">
-                                                                                <select class="form-control" name="centimeters">                                                                                      
+                                                                                <select class="form-control" name="centimeters">   
+                                                                                        <option value='seleccione'>Seleccione cm3</option> 
                                                                                      <?php for($i=0;$i<count($centimetros);$i++){?>
                                                                                         <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
                                                                                      <?php }?>  
@@ -171,7 +280,7 @@
                                             <div class="col-md-58">
                                             
                                                 <select class="form-control" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
-                                                      <option value = "seleccion">Seleccione Categoria</option>     
+                                                      <option value = "seleccion">Seleccione Categor&iacutea</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
                                                            <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
                                                       <?php }?>
@@ -182,7 +291,7 @@
                                     <div class="form-group" id ="NewCategory">
                                         <span class="col-md-1 col-md-offset-2 text-center"></span>
                                         
-                                            <input id="lname" name="NewCategory" type="text" placeholder="Escriba nueva categoria" class="form-control" >
+                                            <input id="lname" name="NewCategory" type="text" placeholder="Escriba nueva categor&iacute;a" class="form-control" >
                                     </div>
 
 
@@ -195,7 +304,7 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-left"></span>
                                         <div class="col-md-100">
-                                            <textarea class="form-control" id="message" name="description" placeholder="Breve descripcion del producto" rows="7"></textarea>
+                                            <textarea class="form-control" id="message" name="description" placeholder="Breve descripci&oacute;n del producto" rows="7"></textarea>
                                         </div>
                                     </div>
 
@@ -203,13 +312,13 @@
               
   
                                          <?php  
-                                            $registro  = new ControladorProductosTienda();
-                                            $registro ->registrarProducto($objTiendaInicial,'imageSubir');
+                                            /*$registro  = new ControladorProductosTienda();
+                                            $registro ->registrarProducto($objTiendaInicial,'imageSubir');*/
                                         ?>
 
                         <div class="form-group ">
                             <div class="col-md-12 text-center ">
-                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" id="guardar" name="guardar">Guardar</button>
+                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" id="guardar" name="guardar" >Guardar</button>
                             </div>
                         </div>
                     
@@ -225,8 +334,9 @@
 
      echo '    
              <script type="text/javascript">
-                      mostrar("gramos");
+                      mostrar("l");
                       mostrarNuevaCategoria("c");
+                      
             </script>'; 
 
 
