@@ -1,196 +1,15 @@
 
 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript">
-    function mostrar(id) {
-
-        var unidades = ["gramos","kilogramos","mililitros","centimetros"];
-        unidades.forEach(function(valor) {
-                if(valor == id){
-                   $("#".concat(valor)).show();               
-			    }else{
-                    $("#".concat(valor)).hide();  
-               }
-        });
-
-    }
-
-     function mostrarNuevaCategoria(id) {
-         
-         var nombres = id.split("-");
-        var unidades = ["Otros"];
-        unidades.forEach(function(valor) {
-                if(valor == nombres[1]){
-                   $("#".concat("NewCategory")).show();               
-			    }else{
-                    $("#".concat("NewCategory")).hide();  
-               }
-        });
-
-
-
-
-    }
-
-    
- function validarFormulario(formulario){
-         
-         var nombre = formulario.nameProduct.value;
-         var precio = formulario.price.value;
-         var pesoVolumen = formulario.unit.value;
-         var marca = formulario.Brand.value;
-         var categoria = formulario.Category.value;
-         var gramos = formulario.grams.value;
-         var kilogramos = formulario.kilograms.value;
-         var mililitros = formulario.milliliters.value;
-         var centimetros = formulario.centimeters.value;
-         var nuevaCategoria = formulario.NewCategory.value;
-         
-         if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido")!=true){
-             return false;
-		 }
-         if(validarPrecio(precio)!=true){
-             return false;
-		 }
-         if(validarPesoVolumenAndCategoria(pesoVolumen,"La unidad de peso o volumen no es v&aacute;lida")!=true){
-             return false;
-		 }
-         if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
-             return false;
-		 }
-         if(validarNombreAndMarca(marca,"No es un nombre de marca v&aacute;lido")!=true){
-             return false;
-		 }
-         if(validarPesoVolumenAndCategoria(categoria,"Categor&iacute;a, seleccione una opci&oacute;n valida")!=true){
-             return false;
-		 }
-         if(validarNuevaCategoria(categoria,nuevaCategoria)!=true){
-             return false;
-		 }
-
-         
-     return true;
- }
- //------funciones de validacion de cada uno de los campos
- function validarNombreAndMarca(valor,mensaje){
-         if (isNaN(parseInt(valor))) {
-              return true;
-         }else{              
-              toastr.error(mensaje);                        
-               return false;
-		 } 
- }
- 
-  function validarPrecio(valor){
-            if(!valor.includes(',')){
-                 if (isNaN(parseFloat(valor))) {
-                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                      return false;
-                 }else{
-                      
-                      return true;
-		         } 
-            }else{
-                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                      return false;           
-			}
- }
-
- function validarPesoVolumenAndCategoria(valor,mensaje){
-        if(valor == "seleccion"){
-           toastr.error(mensaje);
-           return false; 
-		}else{
-           return true;  
-		}
- }
-
-  function validarUnidades(valorPesoVolumen,gramos,kilogramos,mililitros,centimetros){
-    
-        if(valorPesoVolumen == "gramos"){
-            if(gramos == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "kilogramos"){
-            if(kilogramos == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "mililitros"){
-            if(mililitros == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "centimetros"){
-            if(centimetros == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               return false; 
-		    }
-		}  
-  return true;
- }
-
- function validarNuevaCategoria(categoria,nuevaCategoria){
- 
- var cate = categoria.split("-");
-         if(cate[1] == "Otros"){
-                if(!nuevaCategoria){
-                    toastr.error('El campo nueva categor&iacute;a es requerido');                    
-                    return false;       
-			    }
-		 }
-         return true;
- }
-
-     
-</script>
-
-<?php 
-
-/*Funcion que retorna la primera palabra de las unidades en pesos para poder de value en el campo select recibe parametro el vector*/
-     function returnValues($arreglo){
-
-          $values = array();
-          for($i=0;$i<count($arreglo);$i++){
-             $aux = explode(" ", $arreglo[$i]);   
-             array_push($values, $aux[0]);
-             
-		  }
-
-          return $values;
-     
-	 }
-     
-     $objEstuctura =  new ControladorEstructuras();
-     $valorUnidades = $objEstuctura->unidadesProductos();
-     $values = returnValues($valorUnidades);
-
-     $gramos = $objEstuctura->unidadesProductosValues("gramos");
-     $kilogramos = $objEstuctura->unidadesProductosValues("kilogramos");
-     $mililitros = $objEstuctura->unidadesProductosValues("mililitros");
-     $centimetros = $objEstuctura->unidadesProductosValues("centimetros");
-
-     $objSelect =  new ControladorSelectsInTables();
-     $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
-?>
-
-
 <!------------------------------------------------------------------------------------------------------------------------>
 
 
 
 
   <div class="container">
-  <div class="abs-center">
-  
+  <div class="abs-center">  
     <div class="row">
-
                 <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);">
-                
-           
-
-                                            <div class="form-group">
+                                           <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-58">
                                                     <input id="nameProduct" name="nameProduct" type="text" placeholder="Nombre producto" class="form-control"  required oninput="check_text(this);" >
@@ -203,7 +22,8 @@
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-58">
                                                     <input id="price" name="price" type="text" placeholder="Precio" class="form-control" required>
-                                            </div>
+                                                </div>
+                                           </div>
 
                                             <div class="form-group">
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -277,6 +97,7 @@
                                         <span class="col-md-1 col-md-offset-2 text-center"></span>
                                         <div class="col-md-58">
                                             <input id="lname" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -316,9 +137,6 @@
                                             <textarea class="form-control" id="message" name="description" placeholder="Breve descripci&oacute;n del producto" rows="7"></textarea>
                                         </div>
                                     </div>
-
-
-              
   
                                          <?php  
                                             $registro  = new ControladorProductosTienda();
@@ -335,12 +153,7 @@
        
         </div>
     </div>
-
-
 </div>
-
-
-
  <?php
 
      echo '    
@@ -352,5 +165,3 @@
 
 
   ?>
-
-

@@ -1,7 +1,4 @@
 ﻿<!DOCTYPE html>
-
-
-
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -14,9 +11,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
   <title>AdminLTE 3 | Starter</title>
-
-
-
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="vistas/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
@@ -36,7 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-<
+
 
   <!-- jQuery -->
 <script src="vistas/plugins/jquery/jquery.min.js"></script>
@@ -89,6 +83,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 
-
+</div>
 </body>
 </html>

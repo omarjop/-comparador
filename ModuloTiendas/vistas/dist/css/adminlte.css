@@ -31095,3 +31095,110 @@ a.text-muted:hover {
   color: #ffffff;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+
+
+
+
+.abs-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+ .btn-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  
+ }
+
+ .bordesdivattach{
+     border: 1px;
+     position:relative; 
+     top:-150px;
+     border-style: solid;
+     border-color: #136574;
+
+ }
+
+
+  .bordesdivattach1{
+position: relative;
+	 top:0px;
+	border:0px solid #808080;
+	padding:3px;
+    left:0px;
+    background-color:#136574;
+    justify-content: center;
+    align-content: center;
+      justify-content: center;
+      min-height: -80vh;
+      height:-350px;
+      min-width:15vh;
+      text-align: center;
+
+ }
+
+.form {
+  width: 450px;
+}
+
+/*-----------------------------------Estilos de colores para botones*/
+
+.colorbotonverde{
+    background-color: #136574;
+}
+.colorbotonamarillo{
+    background-color: #D0A20E;
+    border:0px solid #D0A20E;
+}
+
+
+/*-----------------------------------Estilos de los menu*/
+
+.colormenuprincipal{
+    background-color: #136574;
+}
+
+
+/*-----------------------------------estilos de colores de textos*/
+
+.colortexto{
+    color:#D0A20E; 
+    font-weight: bold;
+}
+
+.colortextomenucabezote{
+    color:#136574; 
+    font-size:19px;
+    font-family:sans-serif;
+}
+
+
+/*-----------------------------------estilos generales*/
+
+.centrado{
+    text-align: center;
+        justify-content: center;
+    align-content: center;
+}
+
+.colores{
+    background-color: #D0A20E;
+}
+
+
+/*-----------------------------------Estilos de modal de resultado de importar archivo */
+
+.modaltitulo{
+   background-color: #D0A20E;   
+   border:1px solid #D0A20E;
+   position:relative;
+   text-align:center;
+   font-size:-10px;
+   font-family:sans-serif;
+
+}
+
