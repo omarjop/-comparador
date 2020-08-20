@@ -27,11 +27,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   	<link rel="stylesheet" href="http://cdn.static.w3big.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="alert/jAlert-v3.min.js"></script>
+<link rel="stylesheet" href="alert/jAlert-v3.css" />
 
 
-	<script src="http://cdn.static.w3big.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://cdn.static.w3big.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="..AdminComparador/vistas/js/validacionesGenerales.js"></script>
+ <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<
 
   <!-- jQuery -->
 <script src="vistas/plugins/jquery/jquery.min.js"></script>

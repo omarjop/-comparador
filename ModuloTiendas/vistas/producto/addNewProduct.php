@@ -46,22 +46,22 @@
          var centimetros = formulario.centimeters.value;
          var nuevaCategoria = formulario.NewCategory.value;
          
-         if(validarNombreAndMarca(nombre,"No es un nombre de producto válido")!=true){
+         if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido")!=true){
              return false;
 		 }
          if(validarPrecio(precio)!=true){
              return false;
 		 }
-         if(validarPesoVolumenAndCategoria(pesoVolumen,"Peso/Volumen, seleccione una opcion valida")!=true){
+         if(validarPesoVolumenAndCategoria(pesoVolumen,"La unidad de peso o volumen no es v&aacute;lida")!=true){
              return false;
 		 }
          if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
              return false;
 		 }
-         if(validarNombreAndMarca(marca,"No es un nombre de marca válido")!=true){
+         if(validarNombreAndMarca(marca,"No es un nombre de marca v&aacute;lido")!=true){
              return false;
 		 }
-         if(validarPesoVolumenAndCategoria(categoria,"Categoria, seleccione una opcion valida")!=true){
+         if(validarPesoVolumenAndCategoria(categoria,"Categor&iacute;a, seleccione una opci&oacute;n valida")!=true){
              return false;
 		 }
          if(validarNuevaCategoria(categoria,nuevaCategoria)!=true){
@@ -75,31 +75,30 @@
  function validarNombreAndMarca(valor,mensaje){
          if (isNaN(parseInt(valor))) {
               return true;
-         }else{
-              // $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No es un nombre de producto válido</div>');
-              alert(mensaje);
-              return false;
+         }else{              
+              toastr.error(mensaje);                        
+               return false;
 		 } 
  }
-
+ 
   function validarPrecio(valor){
             if(!valor.includes(',')){
                  if (isNaN(parseFloat(valor))) {
-                      alert("No es un precio válido Por favor ingresar un valor numerico y los decimales con el caracter(.)");
+                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
                       return false;
                  }else{
-                      // $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No es un nombre de producto válido</div>');
+                      
                       return true;
 		         } 
             }else{
-                       alert("No es un precio válido Por favor ingresar un valor numerico y los decimales con el caracter(.)");
+                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
                       return false;           
 			}
  }
 
  function validarPesoVolumenAndCategoria(valor,mensaje){
         if(valor == "seleccion"){
-           alert(mensaje);
+           toastr.error(mensaje);
            return false; 
 		}else{
            return true;  
@@ -110,22 +109,22 @@
     
         if(valorPesoVolumen == "gramos"){
             if(gramos == "seleccione"){
-               alert("Gramos, seleccione una opcion valida");
+               toastr.error("El valor de peso o volumen no es v&aacute;lido");
                return false; 
 		    }
 		}else if(valorPesoVolumen == "kilogramos"){
             if(kilogramos == "seleccione"){
-               alert("Kilogramos, seleccione una opcion valida");
+               toastr.error("El valor de peso o volumen no es v&aacute;lido");
                return false; 
 		    }
 		}else if(valorPesoVolumen == "mililitros"){
             if(mililitros == "seleccione"){
-               alert("Mililitros, seleccione una opcion valida");
+               toastr.error("El valor de peso o volumen no es v&aacute;lido");
                return false; 
 		    }
 		}else if(valorPesoVolumen == "centimetros"){
             if(centimetros == "seleccione"){
-               alert("Centimetros cubicos, seleccione una opcion valida");
+               toastr.error("El valor de peso o volumen no es v&aacute;lido");
                return false; 
 		    }
 		}  
@@ -137,13 +136,16 @@
  var cate = categoria.split("-");
          if(cate[1] == "Otros"){
                 if(!nuevaCategoria){
-                    alert("El campo nueva categoria se debe diligenciar");
+                    toastr.error('El campo nueva categor&iacute;a es requerido');                    
                     return false;       
 			    }
 		 }
          return true;
  }
+
+     
 </script>
+
 <?php 
 
 /*Funcion que retorna la primera palabra de las unidades en pesos para poder de value en el campo select recibe parametro el vector*/
@@ -175,11 +177,18 @@
 
 
 <!------------------------------------------------------------------------------------------------------------------------>
+
+
+
+
   <div class="container">
   <div class="abs-center">
+  
     <div class="row">
 
                 <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);">
+                
+           
 
                                             <div class="form-group">
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -312,8 +321,8 @@
               
   
                                          <?php  
-                                            /*$registro  = new ControladorProductosTienda();
-                                            $registro ->registrarProducto($objTiendaInicial,'imageSubir');*/
+                                            $registro  = new ControladorProductosTienda();
+                                            $registro ->registrarProducto($objTiendaInicial,'imageSubir');
                                         ?>
 
                         <div class="form-group ">
@@ -327,7 +336,9 @@
         </div>
     </div>
 
+
 </div>
+
 
 
  <?php
@@ -341,3 +352,5 @@
 
 
   ?>
+
+

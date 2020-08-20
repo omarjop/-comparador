@@ -99,3 +99,26 @@ position: relative;
    font-family:sans-serif;
 
 }
+
+
+
+
+html {
+  padding: 20px;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+hr {
+  border: none;
+  border-top: solid 1px #eee;
+  margin: 40px 0;
+}
+
+button {
+  font-size: inherit;
+  border: none;
+  background: #09d;
+  color: white;
+  padding: 10px 20px;
+}
