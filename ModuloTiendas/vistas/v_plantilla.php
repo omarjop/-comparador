@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="vistas/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="vistas/dist/css/adminlte.min.css">
-  <link href="vistas/estilos/Stilos.css" rel="stylesheet" type="text/css" />
+  <link href="../AdminComparador/vistas/estilos/Stilos.css" rel="stylesheet" type="text/css" />
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -38,6 +38,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="vistas/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="vistas/dist/js/adminlte.min.js"></script>
+
+
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
