@@ -1,3 +1,13 @@
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+     function mensajeCorrecto(mensaje){
+        toastr.info(mensaje); 
+	 }
+     function mensajeError(mensaje){
+        toastr.error(mensaje); 
+	 }
+</script>
+
 <?php
 
 class ControladorProductosTienda{
@@ -21,6 +31,7 @@ class ControladorProductosTienda{
             $referencia =  $_POST["Reference"];
             $marca =  $_POST["Brand"];
             $categoria = $_POST["Category"];
+            $newCategory = $_POST["NewCategory"];
             $imagen = $_FILES[$imagenValue]['name'];
             $descripcion = $_POST["description"];
             $resultadoImagen = "Correcto";
@@ -31,43 +42,63 @@ class ControladorProductosTienda{
             $objValidarDato  = new ControladorAdjuntos();
             $resultado = $objValidarDato->isFloat($precio,"Precio");
             $resultadoNombre = $objValidarDato->isString($nombreProducto);
-
-
-
+             
+             
                if($imagen!="" ){
                     $resultadoImagen = $this->validarExtencionImagen($imagenValue);    
 			   }
            
-          if($unidaVolumen!="seleccion"&&$categoria!="seleccion"){
-                if($resultadoImagen == "Correcto"){
+          
+               $categoria = $this->validarCategoria($categoria,$objTiendaInicial,$newCategory);
 
-                           if($resultadoNombre=="Correcto"){
+                  if($categoria!="Error al registrar producto. Por favor comunicarse con el administrador."){
+                           if($resultadoImagen == "Correcto"){
+                                     $isMarca = $this->validarMarca($marca);
+                                     if($isMarca!="Error al registrar producto. Por favor comunicarse con el administrador."){
+                                          $returnrValue = $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue);                                                             
+                                               if($returnrValue!="Error al registrar producto. Por favor comunicarse con el administrador."){     
+                                                        echo "<script> mensajeCorrecto('".$returnrValue."'); </script>"; 
+                                                    }else{
+                                                       echo "<script> mensajeError('".$returnrValue."'); </script>";
+													}           
+							         }else{                                                             
+                                          echo "<script> mensajeError('".$categoria."'); </script>";
+							         }                
 
-                                    if($resultado!="Correcto"){
-                                            $objModel->modelInformativo($resultado."<br> Por favor ingresar un valor numerico y los decimales con el caracter(.)"); 
-			                        }else{
-                                                        $isMarca = $this->validarMarca($marca);
-                                                        if($isMarca!="Falla en registro de base de datos"){
-                                                             $returnrValue = $this->validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue);
-                                                             $objModel->modelInformativo($returnrValue);
-								                        }else{
-                                                             $objModel->modelInformativo("Error al registrar producto. Por favor comunicarse con el administrador."); 
-								                        } 
-			                        }
-                               }else{
-                                    $objModel->modelInformativo($resultadoNombre);
-				               }
-
+                           }else{                      
+                                      echo "<script> mensajeError('No es una imagen correcta para adjuntar'); </script>"; 			      
+                           }
                    }else{
-                             $objModel->modelInformativo("No es una imagen correcta para adjuntar");
-			       }
-           }else{
-                      $objModel->modelInformativo("Peso/Volumen o Categoria, seleccione una opcion valida");  
-		   }
+                                echo "<script> mensajeError('".$categoria."'); </script>";
+				   } 
 
 	}
 
+    private function validarCategoria($categoria,$objTiendaInicial,$newCategory){
+             $returnValue="Error al registrar producto. Por favor comunicarse con el administrador.";
+             $objSelects  = new ControladorSelectsInTables();
+             $objInsert  = new ControladorInserttAllTables();
+         
+             $campos = "nombre";
+             $condicion =" idsubCategoria = ".$categoria;
+             $resultado = $objSelects->returnSelectARowForField("subcategoria",$campos,$condicion); 
+             if($resultado!="Fallo"){
+                       $idCategoriTienda = $objTiendaInicial->getIdCategoria();
+                       if($resultado[0]["nombre"]!="Otros"){
+                          $returnValue = $categoria;
+			           }else{
+                             $into = "Categoria_idCategoria,nombre,ruta";
+                             $value = "'$idCategoriTienda'".","."'$newCategory'".","."'$newCategory'";
+                             $result = $objInsert->insertInTable("subcategoria",$into,$value);
+                             if($result!="Fallo"){
+                                $returnValue = $result;
+							 }
+                             
+			           }
+			 }
 
+       return $returnValue;
+	}
     private function validarExtencionImagen($imagen){
             $objEstructura = new ControladorEstructuras();
             $objValidarAdjunto = new ControladorAdjuntos();
@@ -111,16 +142,20 @@ class ControladorProductosTienda{
              $marca = strtolower($marca);    
              $marca = ucwords($marca);
              $objSelects  = new ControladorSelectsInTables();
-             $idReturn="";
+             $idReturn="Error al registrar producto. Por favor comunicarse con el administrador.";
 
              $campos = "idMarca";
              $condicion =" Descripcion = "."'$marca'";
              $resultado = $objSelects->returnSelectARowForField("marca",$campos,$condicion); 
-             if($resultado){
-                $idReturn = $resultado[0]["idMarca"];
-			 }else{
-                 $idReturn = $this->registrarMarca($marca,$objSelects); 
-			 }
+
+               if($resultado!="Fallo"){
+                     if($resultado){
+                        $idReturn = $resultado[0]["idMarca"];
+			         }else{
+                         $idReturn = $this->registrarMarca($marca,$objSelects); 
+			         }
+               }
+
        return $idReturn;
 	}
 
@@ -128,7 +163,7 @@ class ControladorProductosTienda{
          $idReturn="";
          $into = "Descripcion";
          $value = "'$marca'";
-         $objInsert  = new ModeloInserttAllTables();
+         $objInsert  = new ControladorInserttAllTables();
          $result = $objInsert->insertInTable("marca",$into,$value);
          if( $result != "Fallo"){
              $campos = "idMarca";
@@ -137,13 +172,13 @@ class ControladorProductosTienda{
              $idReturn = $resultado[0]["idMarca"];
              
 		 }else{
-            $idReturn = "Falla en registro de base de datos";           
+            $idReturn = "Error al registrar producto. Por favor comunicarse con el administrador.";           
 		 }
          return $idReturn;
 	}
 
     public function validarExisteProducto($categoria,$isMarca,$nombreProducto,$referencia,$descripcion,$imagen,$unidad,$objModel,$unidaVolumen,$objTiendaInicial,$precio,$imagenValue){
-             $returnValue ="";
+             $returnValue ="Error al registrar producto. Por favor comunicarse con el administrador.";
              $objSelects  = new ControladorSelectsInTables();
              $objValidarAdjunto = new ControladorAdjuntos();
              $campos = "idProducto";
@@ -155,33 +190,36 @@ class ControladorProductosTienda{
                     $imagen = "../AdminComparador/imagenes_productos/".$imagen;
              }
 
-         if($resultado){
+     if($resultado!="Fallo"){
+                     if($resultado){
                  
-                  $idProducto =$resultado[0]["idProducto"];
-                  $campos2 = "*";
-                  $condicion2 =" Producto_idProducto = "."'$idProducto'"." and "." Empresa_idEmpresa = "."'$idTienda'";
-                  $resultado2 = $objSelects->returnSelectARowForField("producto_has_empresa",$campos2,$condicion2); 
+                              $idProducto =$resultado[0]["idProducto"];
+                              $campos2 = "*";
+                              $condicion2 =" Producto_idProducto = "."'$idProducto'"." and "." Empresa_idEmpresa = "."'$idTienda'";
+                              $resultado2 = $objSelects->returnSelectARowForField("producto_has_empresa",$campos2,$condicion2); 
 
-                    if($resultado2){
-                       $returnValue = "No se registra el producto, ya existe un producto con las mismas caracteristicas";
-					}else{
-                           $returnValue = $this->validarInsertInTable($idProducto,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);  
-                           if($imagen!=""&&$imagen!=null){
-                               $objValidarAdjunto->SubirArchivoImagen($imagenValue);
-                           }
-					}
-         }else{
+                                if($resultado2){
+                                   $returnValue = "No se registra el producto, ya existe un producto con las mismas caracteristicas";
+					            }else{
+                                       $returnValue = $this->validarInsertInTable($idProducto,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);  
+                                       if($imagen!=""&&$imagen!=null){
+                                           $objValidarAdjunto->SubirArchivoImagen($imagenValue);
+                                       }
+					            }
+                     }else{
             
-                   $into = "subCategoria_idsubCategoria,Marca_idMarca,Nombre,Referencia,Descripcion,FotoPrincipal,pesoVolumen";
-                   $value = "'$categoria'".","."'$isMarca'".","."'$nombreProducto'".","."'$referencia'".","."'$descripcion'".","."'$imagen'".","."'$unidad'";
-                   $objInsert  = new ModeloInserttAllTables();
-                   $result = $objInsert->insertInTable("Producto",$into,$value);
-                   $returnValue = $this->validarInsertInTable($result,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);
-                   if($imagen!=""&&$imagen!=null){
-                               $objValidarAdjunto->SubirArchivoImagen($imagenValue);
-                   }
+                               $into = "subCategoria_idsubCategoria,Marca_idMarca,Nombre,Referencia,Descripcion,FotoPrincipal,pesoVolumen";
+                               $value = "'$categoria'".","."'$isMarca'".","."'$nombreProducto'".","."'$referencia'".","."'$descripcion'".","."'$imagen'".","."'$unidad'";
+                               $objInsert  = new ControladorInserttAllTables();
+                               $result = $objInsert->insertInTable("Producto",$into,$value);
+                               $returnValue = $this->validarInsertInTable($result,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);
+                               if($imagen!=""&&$imagen!=null){
+                                           $objValidarAdjunto->SubirArchivoImagen($imagenValue);
+                               }
                    
-		 }
+		             }
+             
+             }
          return $returnValue;
 	}
 

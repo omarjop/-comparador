@@ -7,6 +7,7 @@ class Tiendas
     private $nombreEmpresa;
     private $Direccion;
     private $nitEmpresa;
+    private $idCategoria;
  
     public function __construct()
     {
@@ -35,6 +36,10 @@ class Tiendas
     {
        return $this->nitEmpresa;
     }
+    public function getIdCategoria()
+    {
+       return $this->idCategoria;
+    }
 //--------------------------------------------------
     public function setIdEmpresa($id_empresa){
         $this->idEmpresa = $id_empresa;
@@ -51,4 +56,8 @@ class Tiendas
     public function setNitEmpresa($nit_empresa){
         $this->nitEmpresa = $nit_empresa;
 	}
+    public function setIdCategoria($id_Categoria)
+    {
+        $this->idCategoria = $id_Categoria;
+    }
 }

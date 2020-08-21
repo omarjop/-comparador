@@ -109,8 +109,13 @@ class ControladorAdjuntos{
 
                     
                     $returnMensaje = $this->validarRegistros($objTiendaInicial,$registrosPorLinea); 
-                    $returnMensaje[0] = str_replace('<br>', '', $returnMensaje[0]);
-                    $objModel->modelRegistrosErroneo($returnMensaje);
+
+                       if($returnMensaje!="Falla"){
+                              $returnMensaje[0] = str_replace('<br>', '', $returnMensaje[0]);
+                              $objModel->modelRegistrosErroneo($returnMensaje);
+                        }else{
+                             $objModel->modelVacio("Error al registrar producto. Por favor comunicarse con el administrador.");
+						}
                     
 	       }
 
@@ -128,7 +133,7 @@ class ControladorAdjuntos{
          $estructura = $objEstructura -> estructuraArchivoPlano();
          $countRegistrosExitosos=0;
          $totalRegistros=0;
-
+         $returnrValueInsert ="";
          for ($i=0;$i<count($resultReadFile);$i++) {
                  $registrosReturn = $this->validarFormatoRegistro($resultReadFile[$i],$estructura);
                  
@@ -140,17 +145,24 @@ class ControladorAdjuntos{
 			     }else{
                     // se envia el registro a la tabla de la base de datos y retornar mensaje de exito
                     $countRegistrosExitosos+=1;
-                    $this->ValidaYRegistraEnBaseDatos($objTiendaInicial,$resultReadFile[$i]);
-                    //echo $registrosReturn."Registro a base de datos"."<br>";
+                    $returnrValueInsert = $this->ValidaYRegistraEnBaseDatos($objTiendaInicial,$resultReadFile[$i]);
+                      if($returnrValueInsert == "Error al registrar producto. Por favor comunicarse con el administrador."){
+                          break;
+					  }
 				 }   
                   $totalRegistros+=1;
          }
+
+         if($returnrValueInsert!="Error al registrar producto. Por favor comunicarse con el administrador."){
       
-         array_push($registrosErroneos, strval($countRegistrosExitosos));
-         array_push($enviarRegistro, strval($totalRegistros));
-         array_push($enviarArregloDeArreglo, $enviarRegistro);
-         array_push($enviarArregloDeArreglo, $registrosErroneos);
-         return $enviarArregloDeArreglo;
+                 array_push($registrosErroneos, strval($countRegistrosExitosos));
+                 array_push($enviarRegistro, strval($totalRegistros));
+                 array_push($enviarArregloDeArreglo, $enviarRegistro);
+                 array_push($enviarArregloDeArreglo, $registrosErroneos);
+                 return $enviarArregloDeArreglo;
+         }else{
+              return "Falla";  
+		 }
     	                     
     }
 //Desde aqui se inicia el registro en base de datos.
@@ -172,13 +184,13 @@ class ControladorAdjuntos{
                 $auxUnidad = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $auxUnidad);  
                 
             
-             if($idMarca!="Falla en registro de base de datos"){
+             if($idMarca!="Error al registrar producto. Por favor comunicarse con el administrador."){
                   $returnrValue = $objRegistroProdcut->validarExisteProducto($idCategoria[0]["idsubCategoria"],$idMarca,$porciones[0],$porciones[4],$porciones[7],$imagen,$auxUnidad,$objModel,$porciones[2],$objTiendaInicial,$porciones[1],$imagen);                  
                  // echo $returnrValue;
 			 }else{
-                  //$objModel->modelInformativo("No se puede registrar el producto se presentaron problemas con la Marca comunicarse con el administrador"); 
+                 $returnrValue  = $idMarca;
 			 } 
-            
+          return $returnrValue;  
 	}
 
 //todos los siguientes metodos son los de valdar si el registro cumple con el minimo requerido para poder ser registrado en base detos

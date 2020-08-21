@@ -20,7 +20,7 @@ private $servicio;
                         return "Fallo";
                     }
                }catch(Exception $e){
-                   return $e;
+                   return "Fallo";
 			   }
     }
 

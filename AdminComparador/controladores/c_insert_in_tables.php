@@ -1,7 +1,7 @@
 <?php
 
 
-class ModeloInserttAllTables{
+class ControladorInserttAllTables{
 
 private $db;
 private $servicio;
