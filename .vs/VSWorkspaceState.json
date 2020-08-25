@@ -1,11 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdminComparador",
-    "\\ModuloTiendas\\controladores",
+    "\\AdminComparador\\controladores\\estructuras",
+    "\\AdminComparador\\vistas\\estilos",
+    "\\ModuloTiendas",
+    "\\ModuloTiendas\\controladores\\productos",
     "\\ModuloTiendas\\vistas",
+    "\\ModuloTiendas\\vistas\\generales",
+    "\\ModuloTiendas\\vistas\\MenuTiendas",
     "\\ModuloTiendas\\vistas\\producto"
   ],
-  "SelectedNode": "\\ModuloTiendas",
+  "SelectedNode": "\\ModuloTiendas\\vistas\\v_plantilla.php",
   "PreviewInSolutionExplorer": false
 }

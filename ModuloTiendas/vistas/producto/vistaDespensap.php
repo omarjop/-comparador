@@ -1,23 +1,14 @@
-
-  <?php 
-      $valo = "no";
-
+  
+  
+    <?php 
       $idTienda = $objTiendaInicial->getIdCategoria();
       $objSelect = new ControladorSelectsInTables();
       $objFinP = new ControladorFindProductosTienda();
-      $valorResult = null;
       $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto t1 INNER JOIN ( SELECT Producto_idProducto FROM producto_has_empresa  where Empresa_idEmpresa = ".$idTienda." ) t2 ON t1.idProducto  = t2.Producto_idProducto) t4 ON t3.idsubCategoria  = t4.subCategoria_idsubCategoria";
       $resultado = $objSelect->selectARowsInDb($sql);
-      $mensaje ="";
-
-      if(isset($valorDeUrl)){
-           $valorDeUrl = "'".$valorDeUrl."'";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
-           $valorResult = $objFinP->returnXSubCategoria($squl1);
-           $mensaje = "Categoria  ".$nombreSubCate;
-	  }
-   
-
+         
+       $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and nombre = 'Despensa') t2        ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
+       $valorResult = $objFinP->returnXSubCategoria($squl1);
   ?>
   
   <div class="content-wrapper">
@@ -69,16 +60,10 @@
 
     <!-- Main content -->
     <div class="content">
-           <?php if($valorResult!=null){?>
-               <div class="card" style="color:#AB6F14;font-size:140%;">
-                  <div class="card-body">                                          
-                      <footer class="" style="color:#AB6F14;font-size:110%;"><cite title="Source Title"><?php echo $mensaje;?></cite></footer>                    
-                  </div>
-                </div>
-            <?php }?>
+
       <div class="container-fluid">
         <div class="row">
-        <?php if($valorResult!=null){for($j=0;$j<count($valorResult);$j++){?>
+        <?php for($j=0;$j<count($valorResult);$j++){?>
               <div class="col-lg-3">
                         <div class="card">
                               <!--Imagen del producto-->
@@ -87,7 +72,7 @@
                                           if(!empty($valorResult[$j]["FotoPrincipal"])){
                                                $imagen =$valorResult[$j]["FotoPrincipal"];
 									      }else{
-                                               $imagen ='../AdminComparador/imagenes_productos/producto.png';                          
+                                               $imagen ='../AdminComparador/imagenes_productos/producto.jpg';                          
 										  }
                                           echo $imagen;
                                       ?>" alt="Card image cap" style="width:160px;alaing:center;height:160px; display: flex;align-items: center;justify-content: center;"  precio = "<?php echo "$".$valorResult[$j]["precioReal"];?>" nombreproducto ="<?php echo $valorResult[$j]["Nombre"];?>" descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" pesovolumen = "<?php  
@@ -101,7 +86,7 @@
 											  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
                                                           $unidad ="ml";
 											  }
-                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" referencia = "<?php if($valorResult[$j]["Referencia"]!=""){echo $valorResult[$j]["Referencia"];}else {echo "Sin referencia";}?>">
+                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>">
                                 </div>
                               <div class="card-body">
                                     <h5 class="m-0"style="color:#136574;"></h5> <!--Nombre de tienda-->
@@ -129,7 +114,7 @@
              
               </div>
 
-         <?php }}?>
+         <?php }?>
           <!-- /.col-md-6 -->
 
 		  
@@ -142,20 +127,16 @@
   </div>
   <!-- /.content-wrapper -->
 
-
-
-
 <script type="text/javascript">
 
 $(function(){
      $(".imagen").click(function(){
       var imagenValue = $(this).attr('src');
       $(".imagepreview").attr('src',imagenValue);
-      document.getElementById("precio").innerHTML= "Hoy "+$(this).attr('precio'); 
+      document.getElementById("precio").innerHTML= $(this).attr('precio')+"<br/>"; 
       document.getElementById("productoname").innerHTML= $(this).attr('nombreproducto');
       document.getElementById("description").innerHTML= $(this).attr('descripcion');
       document.getElementById("pesovolumenes").innerHTML= $(this).attr('pesovolumen');
-      document.getElementById("referenciavalue").innerHTML= "Referencia "+$(this).attr('referencia');
       $('#imagemodal').modal('show');
   });
 });
@@ -174,13 +155,10 @@ $(function(){
       <div class="modal-body" style="background-image: url('../AdminComparador/imagenes_productos/fondo.jpg');width:100%; height: 50%;">
       <div  style="alaing:left;display: flex;align-items: left;justify-content: left;">
         <img src="" class="imagepreview" style="width: 200px; height: 240px;" >
-
-            <div>
-             <b> <i id="precio" style="color:#0AA778;font-size:140%;"></i></b><br>        
-             <b id="pesovolumenes" style="color:#AB6F14;font-size:110%;"></b>
-             <p id="description" style="color:#AB6F14;font-size:100%;font-family: Calibri"></p> 
-             <b id="referenciavalue" style="color:#AB6F14;font-size:100%;font-family: Calibri"></b> 
-            </div>
+         <p id="precio" style="color:#0AA778;font-size:120%;"></p>
+        
+         <p id="pesovolumenes" style="color:#AB6F14;font-size:110%;"></p>
+         <p id="description" style="color:#AB6F14;font-size:100%;"></p> 
       </div>
           
          

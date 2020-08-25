@@ -28,6 +28,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
 
+ <!--librerias para el autocompletar del consultar------------>
+     <script src="bootstrap-autocomplete.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.5/dist/latest/bootstrap-autocomplete.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script> 
+
+
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 
@@ -50,16 +56,44 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     if(isset($_GET['ruta'])){
-       if($_GET['ruta'] == "producto" || $_GET['ruta'] == "findProduct"|| 
-          $_GET['ruta'] == "attachFileProduct"||
-          $_GET['ruta'] == "attachFileExcellProduct"||
-          $_GET['ruta'] == "connectByApiRest"){
+               if($_GET['ruta'] == "producto" || $_GET['ruta'] == "findProduct"|| 
+                  $_GET['ruta'] == "attachFileProduct"||
+                  $_GET['ruta'] == "attachFileExcellProduct"||
+                  $_GET['ruta'] == "connectByApiRest" ){
          
-            include "vistas/modulos/cabezoteProducto.php";
-            include "vistas/MenuTiendas/menu.php";
-            include "vistas/producto/".$_GET['ruta'].".php";
+                    include "vistas/modulos/cabezoteProducto.php";
+                    include "vistas/MenuTiendas/menu.php";
+                    include "vistas/producto/".$_GET['ruta'].".php";
           
-	   }
+	           }else{
+
+                            $rutas = array();
+                            $ruta =  null;
+                            $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
+                            var_dump($_GET["ruta"]);
+                            $item = "*";
+                            $valorDeUrl = null;
+                            $valorDeUrl = $_GET["ruta"];
+                            $valorAux = "'".$valorDeUrl."'";
+                            $condicion =" ruta = ".$valorAux;
+
+                            $objSelect = new ControladorSelectsInTables();
+                            $resultSubCategoria = $objSelect->returnSelectARowForField("subcategoria",$item,$condicion);
+                            $nombreSubCate = $resultSubCategoria[0]["nombre"] ;
+                            
+                            if($valorDeUrl == $resultSubCategoria[0]["ruta"]){
+                                    $ruta = $valorDeUrl;
+                             }
+                                if($ruta != null){   
+                                      include "vistas/modulos/cabezoteProducto.php";
+                                      include "vistas/MenuTiendas/menu.php";
+                                      include "vistas/producto/findProduct.php"; 
+                                }else{
+                                    include "vistas/modulos/cabezoteProducto.php";
+                                    include "vistas/MenuTiendas/menu.php";
+                                    include "vistas/error404.php";
+                                }
+	           }
 	}else{
         
         include "vistas/modulos/cabezote.php";

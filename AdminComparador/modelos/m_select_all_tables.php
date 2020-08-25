@@ -38,6 +38,20 @@ private $servicio;
 		}
 
     }
+
+     public function selectARowsInDb($sql){
+             try{
+                   $this->db = Conexion::conectar();                  
+                   foreach ($this->db->query($sql) as $res) {
+                        $this->servicio[] = $res;
+                    }
+                    return $this->servicio;
+                    $this->db = null;
+            }catch(Exception $e){
+                   return "Fallo";
+		    }
+
+     }
         
 
 }

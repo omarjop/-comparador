@@ -73,7 +73,17 @@ position: relative;
     font-size:19px;
     font-family:sans-serif;
 }
+.textounidad{
+    color:#136574; 
+    font-weight: bold;
+}
 
+.textoprecioproducto{
+    color:#D0A20E; 
+    font-weight: bold;
+    font-size:19px;
+    font-family:sans-serif;
+}
 
 /*-----------------------------------estilos generales*/
 

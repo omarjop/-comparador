@@ -13,7 +13,7 @@ require_once("../AdminComparador/modelos/m_insert_tables.php");
 require_once "../AdminComparador/controladores/c_tiendas.php";
 require_once "vistas/generales/modelGeneral.php";
 require_once "PHPExcel/Classes/PHPExcel.php";
-
+require_once "controladores/productos/c_findProductos.php";
 
 //cuando la tienda inicie session debe llamar el controlador $plantilla =  new ControladorPlantilla();
 

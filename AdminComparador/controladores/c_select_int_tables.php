@@ -14,4 +14,12 @@ class ControladorSelectsInTables{
                 $resultado =  $objSelect->selectARowForField($tabla,$campo,$valueCampare);
                 return $resultado;
         }
+
+         public function selectARowsInDb($sql){
+                $objSelect = new ModeloSelectAllTables();
+                $resultado =  $objSelect->selectARowsInDb($sql);
+                return $resultado;
+        }
+
+        
 }
