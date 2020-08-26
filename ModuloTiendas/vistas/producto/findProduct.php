@@ -8,7 +8,7 @@
       $valorResult = null;
       $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto t1 INNER JOIN ( SELECT Producto_idProducto FROM producto_has_empresa  where Empresa_idEmpresa = ".$idTienda." ) t2 ON t1.idProducto  = t2.Producto_idProducto) t4 ON t3.idsubCategoria  = t4.subCategoria_idsubCategoria";
       $resultado = $objSelect->selectARowsInDb($sql);
-      $mensaje ="";
+      $mensaje ="Productos a Consultar";
 
       if(isset($valorDeUrl)){
            $valorDeUrl = "'".$valorDeUrl."'";
@@ -19,9 +19,9 @@
    
 
   ?>
-  
+
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+               <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -31,18 +31,32 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             
+<div class="container">
+  <input class="form-control" id="listSearch" type="text" placeholder="Type something to search list items">
+  <br>
+  <ul class="list-group" id="myList">
+    <li class="list-group-item" >First item</li>
+    <li class="list-group-item">Second item</li>
+    <li class="list-group-item">Third item</li>
+    <li class="list-group-item">Fourth item</li>
+  </ul>
+</div>
+              
 
                     <li class="nav-item dropdown breadcrumb-item activ">
-                                <a class="nav-link" data-toggle="dropdown" href="#">
-                                  <i class="fa fa-search" aria-hidden="true"> Consultar mis producto</i>                                 
+
+                               <a class="nav-link" data-toggle="dropdown" href="#">
+                                  <i class="fa fa-search" aria-hidden="true"> Consultar Mis Productos</i>                                 
                                 </a>
-                           
+
+                               <!-- SEARCH FORM -->
+
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                    <?php for($i=0;$i<count($resultado);$i++){?>
                                       <a href="<?php echo $resultado[$i]["ruta"];?>" onclick="searchForCategory(<?php $resultado[$i]["idsubCategoria"];?>)" class="dropdown-item">
                                         <!-- Message Start -->
                                             <div class="media">
-                                                  <img src="../AdminComparador/imagenes_productos/Producto.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                                  <img src="../AdminComparador/imagenes_productos/Producto.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                                   <div class="media-body">
                                                         <h3 class="dropdown-item-title">
                                                           <?php echo $resultado[$i]["nombre"];?>
@@ -69,13 +83,14 @@
 
     <!-- Main content -->
     <div class="content">
-           <?php if($valorResult!=null){?>
+
                <div class="card" style="color:#AB6F14;font-size:140%;">
                   <div class="card-body">                                          
                       <footer class="" style="color:#AB6F14;font-size:110%;"><cite title="Source Title"><?php echo $mensaje;?></cite></footer>                    
                   </div>
                 </div>
-            <?php }?>
+
+
       <div class="container-fluid">
         <div class="row">
         <?php if($valorResult!=null){for($j=0;$j<count($valorResult);$j++){?>
@@ -90,7 +105,11 @@
                                                $imagen ='../AdminComparador/imagenes_productos/producto.png';                          
 										  }
                                           echo $imagen;
-                                      ?>" alt="Card image cap" style="width:160px;alaing:center;height:160px; display: flex;align-items: center;justify-content: center;"  precio = "<?php echo "$".$valorResult[$j]["precioReal"];?>" nombreproducto ="<?php echo $valorResult[$j]["Nombre"];?>" descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" pesovolumen = "<?php  
+                                      ?>" alt="Card image cap" style="width:160px;alaing:center;height:160px; display: flex;align-items: center;justify-content: center;"  
+                                           precio = "<?php echo "$".$valorResult[$j]["precioReal"];?>" 
+                                           nombreproducto ="<?php echo $valorResult[$j]["Nombre"];?>" 
+                                           descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
+                                           pesovolumen = "<?php  
                                              $unidad =""; 
                                               if ($valorResult[$j]["nombreMedida"]== 'gramos') {
                                                          $unidad ="g";
@@ -101,7 +120,12 @@
 											  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
                                                           $unidad ="ml";
 											  }
-                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" referencia = "<?php if($valorResult[$j]["Referencia"]!=""){echo $valorResult[$j]["Referencia"];}else {echo "Sin referencia";}?>">
+                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
+                                              referencia = "<?php if($valorResult[$j]["Referencia"]!=""){echo $valorResult[$j]["Referencia"];}else {echo "Sin referencia";}?>"
+                                              marca ="<?php
+                                                  $marcaDes = $objSelect->selectARowsInDb("select Descripcion from marca where idMarca = ".$valorResult[$j]["Marca_idMarca"]);
+                                                  echo $marcaDes[0]["Descripcion"];
+                                              ?>">
                                 </div>
                               <div class="card-body">
                                     <h5 class="m-0"style="color:#136574;"></h5> <!--Nombre de tienda-->
@@ -156,18 +180,29 @@ $(function(){
       document.getElementById("description").innerHTML= $(this).attr('descripcion');
       document.getElementById("pesovolumenes").innerHTML= $(this).attr('pesovolumen');
       document.getElementById("referenciavalue").innerHTML= "Referencia "+$(this).attr('referencia');
+      document.getElementById("marcavalue").innerHTML= "Marca "+$(this).attr('marca');
       $('#imagemodal').modal('show');
   });
-});
+  });
 
+ $(document).ready(function(){
+  $("#listSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myList li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 </script>
+
+
 
   <!-- Creates the bootstrap modal where the image will appear -->
 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-      <h4 id="productoname" style="color:#136574;" ></h4>
+      <h4  style="color:#136574;" ><i id="productoname"></i></h4>
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         
       </div>
@@ -179,7 +214,8 @@ $(function(){
              <b> <i id="precio" style="color:#0AA778;font-size:140%;"></i></b><br>        
              <b id="pesovolumenes" style="color:#AB6F14;font-size:110%;"></b>
              <p id="description" style="color:#AB6F14;font-size:100%;font-family: Calibri"></p> 
-             <b id="referenciavalue" style="color:#AB6F14;font-size:100%;font-family: Calibri"></b> 
+             <b id="referenciavalue" style="color:#AB6F14;font-size:100%;font-family: Calibri"></b><br> 
+             <b id="marcavalue" style="color:#AB6F14;font-size:100%;font-family: Calibri"></b>
             </div>
       </div>
           

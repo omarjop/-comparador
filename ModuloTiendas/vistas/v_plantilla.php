@@ -34,6 +34,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
      <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script> 
 
 
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="jqueryui/style.css">
+
+
+
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 
@@ -79,20 +86,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             $objSelect = new ControladorSelectsInTables();
                             $resultSubCategoria = $objSelect->returnSelectARowForField("subcategoria",$item,$condicion);
-                            $nombreSubCate = $resultSubCategoria[0]["nombre"] ;
                             
-                            if($valorDeUrl == $resultSubCategoria[0]["ruta"]){
-                                    $ruta = $valorDeUrl;
-                             }
-                                if($ruta != null){   
-                                      include "vistas/modulos/cabezoteProducto.php";
-                                      include "vistas/MenuTiendas/menu.php";
-                                      include "vistas/producto/findProduct.php"; 
-                                }else{
-                                    include "vistas/modulos/cabezoteProducto.php";
-                                    include "vistas/MenuTiendas/menu.php";
-                                    include "vistas/error404.php";
-                                }
+                         if($resultSubCategoria){
+                                    $nombreSubCate = $resultSubCategoria[0]["nombre"] ;
+                            
+                                    if($valorDeUrl == $resultSubCategoria[0]["ruta"]){
+                                            $ruta = $valorDeUrl;
+                                     }
+                                        if($ruta != null){   
+                                              include "vistas/modulos/cabezoteProducto.php";
+                                              include "vistas/MenuTiendas/menu.php";
+                                              include "vistas/producto/findProduct.php"; 
+                                        }else{
+                                            include "vistas/modulos/cabezoteProducto.php";
+                                            include "vistas/MenuTiendas/menu.php";
+                                            include "vistas/error404.php";
+                                        }
+                          }else{
+                                            include "vistas/modulos/cabezoteProducto.php";
+                                            include "vistas/MenuTiendas/menu.php";
+                                            include "vistas/error404.php";                                
+							}
 	           }
 	}else{
         
