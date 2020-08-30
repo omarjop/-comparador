@@ -4,8 +4,6 @@ VERIFICAR
 
 <?php
 	
-    $url = Ruta::ctrlRuta();    
-
 	$usuarioVerificado = false;
 	
 	$item = "emailEncriptado";

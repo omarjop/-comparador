@@ -51,12 +51,12 @@
         if(isset($_GET["ruta"])){
 
             $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
-            var_dump($_GET["ruta"]);
+            
             $item = "ruta";
             $valor = $_GET["ruta"];
 
             $rutaCategoria = ControladorProductos::CtrlMostrarCategorias($item, $valor);
-        
+            
             if($valor == $rutaCategoria["ruta"]){
                 $ruta = $valor;
             }
@@ -66,7 +66,7 @@
 
             } else{
                 
-                if($rutas[0] == "verificar"){
+                if($rutas[0] == "verificar" || $rutas[0] == "salir"){
 
                     include "modulos/".$rutas[0].".php";
 
@@ -86,7 +86,11 @@
         }
 
     ?>
+<input type="hidden" value="<?php echo $url; ?>" id="rutaOculta">
 
+<!--=====================================
+JAVASCRIPT PERSONALIZADO
+======================================--> 
 <script src="<?php echo $url ?>vistas/js/slider.js"></script> 
 <script src="<?php echo $url ?>vistas/js/ofertas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/herramienta.js"></script> 

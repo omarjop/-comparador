@@ -8,6 +8,7 @@ class Ruta{
 
     /**ruta lado del Servidor */
     public function ctrlRutaServidor(){
-        return "http://localhost/adminogamoda/";
+        return "http://localhost/AdminComparador/";
     }
+    
 }

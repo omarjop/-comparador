@@ -20,13 +20,13 @@ SLIDESHOW
 
 				<div class="slideOpciones slideOpcion1">
 					
-					<img class="imgProducto" src="http://localhost/backend/vistas/img/slide/slide1/calzado.png" style="top:15%; right:10%; width:45%">
+					<img class="imgProducto" src="http://localhost/AdminComparador/vistas/img/slide/slide1/calzado.png" style="top:15%; right:10%; width:45%">
 
 					<div class="textosSlide" style="top:20%; left:10%; width:40%">
 						
-            <h1 style="color:#08abac">Lorem ipsum dolor sit amet</h1>
-            <h2 style="color:#777">Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
-            <h3 style="color:#888">amet consectetur adipisicing elit</h3>
+						<h1 style="color:#08abac">Lorem ipsum dolor sit amet</h1>
+						<h2 style="color:#777">Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
+						<h3 style="color:#888">amet consectetur adipisicing elit</h3>
 
 						<a href="#">
 							

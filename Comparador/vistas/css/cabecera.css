@@ -156,9 +156,10 @@ VENTANAS MODALES
     padding-right: 70px;
 
 }
+
 #logreg-forms{
-    width:550px;
-    margin:5vh auto;
+    width:500px;
+    margin:8vh auto;
     background-color:white;
 }
 #logreg-forms .social-login{
