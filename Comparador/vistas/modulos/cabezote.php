@@ -218,7 +218,7 @@ VENTANA MODAL PARA EL INICIO DE SESÍON
                 <form method="post" class="form-signin">
                     <div id="logreg-forms">     
                                     
-                        <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook"></i> Iniciar con Facebook</span> </button>
+                        <button class="btn facebook-btn social-btn facebook" type="button"><span><i class="fa fa-facebook"></i> Iniciar con Facebook</span> </button>
                         <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus"></i> Iniciar con Google+</span> </button>
                         <p><br></p>
                         <div class="form-group">
@@ -263,8 +263,8 @@ VENTANA MODAL PARA EL INICIO DE SESÍON
 </div>
 
 
-<!-- =====================================
-VENTANA MODAL PARA RECUPERAR LA CNTRASEÑA
+<!-- ======================================
+VENTANA MODAL PARA RECUPERAR LA CONTRASEÑA
 ==========================================-->
 <div class="modal fade modalFormulario" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="modalPassword" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -342,8 +342,8 @@ VENTANA MODAL PARA EL REGISTRO
                                 <div id="logreg-forms">
                                    <!-- <h3>USUARIO</h3>  -->
                                     <div class="social-login">
-                                        <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook"></i> Iniciar con Facebook</span> </button>
-                                        <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google-plus"></i> Iniciar con Google+</span> </button>
+                                        <button class="btn facebook-btn social-btn facebook" type="button"><span><i class="fa fa-facebook"></i> Iniciar con Facebook</span> </button>
+                                        <button class="btn google-btn social-btn google" type="button"><span><i class="fa fa-google-plus"></i> Iniciar con Google+</span> </button>
                                         
                                         <p><br></p>
                                         <div class="form-group">

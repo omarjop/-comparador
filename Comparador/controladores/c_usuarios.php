@@ -19,6 +19,7 @@
                $hoy = getdate();
                 
                 $encriptarEmail  =   md5($_POST["inputEmail"]);
+
                 $datos = array("perfil"=>1,
                                "email"=>$_POST["inputEmail"],
                                "clave"=>$encriptar,
@@ -445,6 +446,15 @@
             }
         }
 
+    }
+     /********************************************
+     *  REGISTRO CON REDES SOCIALES
+     * ******************************************/
+
+    static public function ctrlResgistroRedesSociales($datos){
+        $tabla= "usuario";
+        $respuesta = ModeloUsuarios::mdlRegistroUsuario($tabla , $datos);
+        return $respuesta;     
     }
 
 
