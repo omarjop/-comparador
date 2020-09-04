@@ -335,11 +335,7 @@
                                     </div>
 
 
-                               <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="imageSubir" name="imageSubir">
-                                  <label class="custom-file-label" for="customFileLangHTML" data-browse="Seleccionar">Seleccione imagen del producto</label>
-                                </div>
-
+           
 
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-left"></span>
@@ -350,7 +346,7 @@
   
                                          <?php  
                                             $registro  = new ControladorProductosTienda();
-                                            $registro ->registrarProducto($objTiendaInicial,'imageSubir');
+                                            $registro ->registrarProducto($objTiendaInicial);
                                         ?>
 
                         <div class="form-group ">

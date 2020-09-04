@@ -12,13 +12,13 @@
 
 class ControladorProductosTienda{
 
-    public function registrarProducto($objTiendaInicial,$imagenValue){
+    public function registrarProducto($objTiendaInicial){
         if(isset($_POST["guardar"])){         
-            $this->validarCampos($objTiendaInicial,$imagenValue);
+            $this->validarCampos($objTiendaInicial);
         }
     }
 
-    private function validarCampos($objTiendaInicial,$imagenValue){
+    private function validarCampos($objTiendaInicial){
             $objModel =  new modelosWork();
         
             $nombreProducto =  $_POST["nameProduct"];
@@ -32,7 +32,6 @@ class ControladorProductosTienda{
             $marca =  $_POST["Brand"];
             $categoria = $_POST["Category"];
             $newCategory = $_POST["NewCategory"];
-            $imagen = $_FILES[$imagenValue]['name'];
             $descripcion = $_POST["description"];
             $resultadoImagen = "Correcto";
             $unidad = $this->returnVolumen($unidaVolumen,$volumenGrams,$volumenKiloGrams,$volumenMililitros,$volumenCntimetro);
@@ -43,11 +42,6 @@ class ControladorProductosTienda{
             $resultado = $objValidarDato->isFloat($precio,"Precio");
             $resultadoNombre = $objValidarDato->isString($nombreProducto);
              
-             
-               if($imagen!="" ){
-                    $resultadoImagen = $this->validarExtencionImagen($imagenValue);    
-			   }
-           
           
                $categoria = $this->validarCategoria($categoria,$objTiendaInicial,$newCategory);
 
@@ -202,9 +196,6 @@ class ControladorProductosTienda{
                                    $returnValue = "No se registra el producto, ya existe un producto con las mismas caracteristicas";
 					            }else{
                                        $returnValue = $this->validarInsertInTable($idProducto,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);  
-                                       if($imagen!=""&&$imagen!=null){
-                                           $objValidarAdjunto->SubirArchivoImagen($imagenValue);
-                                       }
 					            }
                      }else{
             
@@ -213,9 +204,7 @@ class ControladorProductosTienda{
                                $objInsert  = new ControladorInserttAllTables();
                                $result = $objInsert->insertInTable("Producto",$into,$value);
                                $returnValue = $this->validarInsertInTable($result,$objModel,$unidaVolumen,$objInsert,$objTiendaInicial,$precio);
-                               if($imagen!=""&&$imagen!=null){
-                                           $objValidarAdjunto->SubirArchivoImagen($imagenValue);
-                               }
+
                    
 		             }
              
