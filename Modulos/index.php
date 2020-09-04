@@ -27,6 +27,11 @@ $objTiendaInicial->setNitEmpresa("5555");
 $objTiendaInicial->setIdCategoria("1");
 $plantilla =  new ControladorPlantilla();
 $valor = "prueba de objeto";
-$plantilla -> plantilla($objTiendaInicial);
+
+/*
+   se envia el tipo de usuario en  una variable donde se definio que 1 es tienda ojo validar eso
+*/
+$tipoUser = 1;
+$plantilla -> plantilla($objTiendaInicial,$tipoUser);
 
 
