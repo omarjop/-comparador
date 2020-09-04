@@ -110,7 +110,22 @@ position: relative;
 
 }
 
+
+.modaltitulorojo{
+   background-color: #FD0000;   
+   border:1px solid #FD0000;
+   position:relative;
+   text-align:center;
+   font-size:-10px;
+   font-family:sans-serif;
+
+}
+
 /*-------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
 
 
 

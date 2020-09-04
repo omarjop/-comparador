@@ -69,8 +69,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   $_GET['ruta'] == "connectByApiRest" ){
          
                     include "vistas/modulos/cabezoteProducto.php";
-                    include "vistas/MenuTiendas/menu.php";
-                    include "vistas/producto/".$_GET['ruta'].".php";
+                    include "vistas/Menus/menu.php";
+                    include "vistas/ModuloTiendas/producto/".$_GET['ruta'].".php";
           
 	           }else{
 
@@ -95,23 +95,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                      }
                                         if($ruta != null){   
                                               include "vistas/modulos/cabezoteProducto.php";
-                                              include "vistas/MenuTiendas/menu.php";
-                                              include "vistas/producto/findProduct.php"; 
+                                              include "vistas/Menus/menu.php";
+                                              include "vistas/ModuloTiendas/producto/findProduct.php"; 
                                         }else{
                                             include "vistas/modulos/cabezoteProducto.php";
-                                            include "vistas/MenuTiendas/menu.php";
+                                            include "vistas/Menus/menu.php";
                                             include "vistas/error404.php";
                                         }
                           }else{
                                             include "vistas/modulos/cabezoteProducto.php";
-                                            include "vistas/MenuTiendas/menu.php";
+                                            include "vistas/Menus/menu.php";
                                             include "vistas/error404.php";                                
 							}
 	           }
 	}else{
         
         include "vistas/modulos/cabezote.php";
-        include "vistas/MenuTiendas/menu.php";
+        include "vistas/Menus/menu.php";
         include "vistas/modulos/cuerpo.php";
         
 	}

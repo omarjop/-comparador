@@ -21,7 +21,7 @@
            if(isset($_GET['ruta'])){
                if($_GET['ruta'] == "producto"){
                        
-                    include "vistas/producto/addNewProduct.php";           
+                    include "vistas/ModuloTiendas/producto/addNewProduct.php";           
 
 	           }
 	       }

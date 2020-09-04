@@ -1,12 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdminComparador",
-    "\\AdminComparador\\vistas",
-    "\\AdminComparador\\vistas\\estilos",
-    "\\ModuloTiendas\\vistas",
-    "\\ModuloTiendas\\vistas\\modulos"
+    "\\Modulos",
+    "\\Modulos\\controladores"
   ],
-  "SelectedNode": "\\AdminComparador\\vistas\\estilos\\Stilos.css",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }
