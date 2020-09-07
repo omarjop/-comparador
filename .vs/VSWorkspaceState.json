@@ -1,9 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\AdminComparador\\controladores",
+    "\\AdminComparador\\controladores\\rutas",
     "\\Modulos",
-    "\\Modulos\\controladores"
+    "\\Modulos\\controladores",
+    "\\Modulos\\controladores\\ModuloTiendas",
+    "\\Modulos\\controladores\\ModuloTiendas\\productos",
+    "\\Modulos\\vistas\\ModuloTiendas",
+    "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\Modulos\\controladores\\ModuloTiendas\\productos\\c_tiendaProductos.php",
   "PreviewInSolutionExplorer": false
 }

@@ -1,10 +1,12 @@
 
   <?php 
   $valuesMal = "cosa";
-   if(isset($_POST["campoOculto2"])){
-                            $ingreso  = new ControladorEliminarProductosTienda();
-                            $ingreso ->EliminarProducto($_POST["campoOculto2"]);
-            }
+   if(isset($_POST["btnEliminarValue"])){                           
+           /* $ingreso  = new ControladorEliminarProductosTienda();
+            $ingreso ->EliminarProducto($_POST["campoOculto2"]);*/
+            echo '<script>toastr.info('.$_POST["campoOculto2"].');</script>';
+                            
+    }
   
       $idTienda = $objTiendaInicial->getIdCategoria();
       $objSelect = new ControladorSelectsInTables();
@@ -118,8 +120,10 @@
 
                       <div class="container-fluid">
                         <div class="row">
-                        <?php if($valorResult!=null){for($j=0;$j<count($valorResult);$j++){?>
+                        <form class="form needs-validation" method="post"  enctype="multipart/form-data"  > 
+                         <?php if($valorResult!=null){for($j=0;$j<count($valorResult);$j++){?>
                               <div class="col-lg-3">
+                                   
                                         <div class="card">
                                               <!--Imagen del producto-->
                                                     <div  style="alaing:center;display: flex;align-items: center;justify-content: center;">
@@ -177,7 +181,8 @@
                                                                                                               
                                               </div>
 
-                                         </div>      
+                                         </div> 
+                                         
              
                               </div>
                                
@@ -261,7 +266,7 @@
                           <?php }}?>
                     <?php }?> 
           <!-- /.col-md-6 -->
-
+          </form>
 		        <div class="modal-footer">
 
           <!-- /.col-md-6 -->
@@ -303,7 +308,7 @@ $(function(){
       });
   });
 
-function eliminarProducto(id){
+function eliminarProducto(){
 
 }
 
@@ -345,30 +350,31 @@ function eliminarProducto(id){
 
 
 
- <form method="post" class="form-signin">
-<div class="modal fade" id="eliminarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ <form class="form needs-validation" method="post"  enctype="multipart/form-data"">
+        <div class="modal fade" id="eliminarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
-  <div class="modal-dialog">
-   <div class="modal-content">
-      <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF";" >
-        <h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <!-- aqui va el mensaje que se pasa por parametro-->
-        <input   type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
+          <div class="modal-dialog">
+           <div class="modal-content">
+              <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF";" >
+                <h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+               <!-- aqui va el mensaje que se pasa por parametro-->
+                <input   type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
                        
-      </div>
-                      
-      <div class="modal-footer">
-         
-            <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-            <button type="submit"  class="btnEliminar btn btn-primary"style ="background-color: #D64646;width:48%;">Eliminar</button>
-      </div>
-    </div>
-  </div>
+              </div>
+                  
+                <div class="form-group">  
+                      <div class="modal-footer">         
+                            <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                            <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-primary"style ="background-color: #D64646;width:48%;">Eliminar</button>
+                      </div>
+                </div>
+            </div>
+          </div>
    
-</div>
+        </div>
   </form> 

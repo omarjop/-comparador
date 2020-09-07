@@ -9,9 +9,11 @@ require_once "controladores/ModuloTiendas/productos/c_elimarProducto.php";
 require_once "../AdminComparador/controladores/estructuras/estructuras.php";
 require_once "../AdminComparador/controladores/c_select_int_tables.php"; // asi se incluye controlador desde otro controlador
 require_once("../AdminComparador/modelos/m_select_all_tables.php");
+require_once("../AdminComparador/modelos/m_update_delete_tables.php");
 require_once "../AdminComparador/controladores/c_insert_in_tables.php"; // asi se incluye controlador desde otro controlador
 require_once("../AdminComparador/modelos/m_insert_tables.php");
 require_once "../AdminComparador/controladores/c_tiendas.php";
+require_once "../AdminComparador/controladores/c_update_delete_in_tables.php";
 require_once "vistas/generales/modelGeneral.php";
 require_once "PHPExcel/Classes/PHPExcel.php";
 require_once "controladores/ModuloTiendas/productos/c_findProductos.php";

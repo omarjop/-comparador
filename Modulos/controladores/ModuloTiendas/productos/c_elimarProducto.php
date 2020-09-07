@@ -3,8 +3,10 @@
 class ControladorEliminarProductosTienda{
 
          public function EliminarProducto($valor){
-            $objSelect = new ControladorSelectsInTables();
-            $sql ="select * from producto where idProducto = "+$valor;
-            $resultado = $objSelect->selectARowsInDb($sql);
+            
+            $objDelete = new ControladorUpdateDeleteInTables();
+            $sql ="delete from  producto_has_empresa where Producto_idProducto = "+$valor;
+            $resultado = $objDelete->deleteInTables($sql);
+            echo "Valor: ".$valor." ".$resultado;
 		 }
 }
