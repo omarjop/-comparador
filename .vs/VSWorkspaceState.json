@@ -1,15 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdminComparador\\controladores",
-    "\\AdminComparador\\controladores\\rutas",
+    "\\AdminComparador\\modelos",
     "\\Modulos",
-    "\\Modulos\\controladores",
     "\\Modulos\\controladores\\ModuloTiendas",
     "\\Modulos\\controladores\\ModuloTiendas\\productos",
-    "\\Modulos\\vistas\\ModuloTiendas",
+    "\\Modulos\\vistas",
+    "\\Modulos\\vistas\\estilos",
     "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\Modulos\\controladores\\ModuloTiendas\\productos\\c_tiendaProductos.php",
+  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
   "PreviewInSolutionExplorer": false
 }

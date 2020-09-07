@@ -183,7 +183,7 @@
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt"></span></p>
+                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt editar"></span></p>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
                                                                                                               
                                               </div>
@@ -304,26 +304,29 @@ $(function(){
   });
   });
 
- 
+/*LLama el modal de eliminar producto*/ 
  $(function(){
      $(".eliminar").click(function(){
-          //document.getElementById("idproduct").innerHTML= $(this).attr('id'); 
-          //alert($(this).attr('id'));
-          //$(".btnEliminar").attr('id',$(this).attr('id'));
-          $(".campoOculto").attr('value',$(this).attr('id'));
+         $(".campoOculto").attr('value',$(this).attr('id'));
          $("#eliminarp").modal("show");  
       });
   });
 
-function eliminarProducto(){
+  /*Llama el modal de editar producto*/
+  $(function(){
+     $(".editar").click(function(){
+         //$(".campoOculto").attr('value',$(this).attr('id'));
+         $("#modificarp").modal("show");  
+      });
+  });
 
-}
+
 
 </script>
 
 
 
-  <!-- Creates the bootstrap modal where the image will appear -->
+  <!-- Modal que muestra producto al dar click en la imagen -->
 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -356,32 +359,60 @@ function eliminarProducto(){
 </div>
 
 
-
- <form class="form needs-validation" method="post"  enctype="multipart/form-data"">
+<!-- Modal que muestra el confirmar cuando se elimina un producto -->
+ <form class="form needs-validation" method="post"  enctype="multipart/form-data">
         <div class="modal fade" id="eliminarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
-              <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF";" >
-                <h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-               <!-- aqui va el mensaje que se pasa por parametro-->
-                <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
+                 <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
+                        <h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+                   <div class="modal-body">
+                    <!-- aqui va el mensaje que se pasa por parametro-->
+                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
                        
-              </div>
+                   </div>
                   
-                <div class="form-group">  
-                      <div class="modal-footer">         
-                            <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                            <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Eliminar</button>
-                      </div>
-                </div>
+                    <div class="form-group">  
+                          <div class="modal-footer">         
+                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Eliminar</button>
+                          </div>
+                    </div>
             </div>
-          </div>
-   
+          </div>   
         </div>
   </form> 
+
+
+  <!-- Modal que muestra producto al dar click en el boton de editar -->
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
+        <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+          <div class="modal-dialog">
+           <div class="modal-content">
+                 <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
+                        <h5  id="staticBackdropLabel" > Datos editables por producto </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+                   <div class="modal-body">
+                        <!-- aqui va el mensaje que se pasa por parametro-->
+                         <input   type="text" value ="" class="form-control" id="precioEdit" name ="precioEdit">  
+                   </div>
+                  
+                    <div class="form-group">  
+                          <div class="modal-footer">         
+                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
+                          </div>
+                    </div>
+            </div>
+          </div>   
+        </div>
+  </form>
