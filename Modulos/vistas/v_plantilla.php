@@ -63,16 +63,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     if(isset($_GET['ruta'])){
-               if($_GET['ruta'] == "producto" || $_GET['ruta'] == "findProduct"|| 
+               if(($_GET['ruta'] == "producto" || $_GET['ruta'] == "findProduct"|| 
                   $_GET['ruta'] == "attachFileProduct"||
                   $_GET['ruta'] == "attachFileExcellProduct"||
-                  $_GET['ruta'] == "connectByApiRest" ){
+                  $_GET['ruta'] == "connectByApiRest") && $tipoUser == 1){
          
                     include "vistas/modulos/cabezoteProducto.php";
                     include "vistas/Menus/menu.php";
                     include "vistas/ModuloTiendas/producto/".$_GET['ruta'].".php";
           
-	           }else{
+	           }else if(($_GET['ruta'] == "addmarca")&& $tipoUser == 2){
+                    include "vistas/modulos/cabezoteProducto.php";
+                    include "vistas/Menus/menu.php";
+                    include "vistas/ModuloAdmin/".$_GET['ruta'].".php";
+               }else{
 
                             $rutas = array();
                             $ruta =  null;
