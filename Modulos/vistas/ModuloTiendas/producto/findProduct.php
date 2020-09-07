@@ -1,11 +1,18 @@
 
   <?php 
   $valuesMal = "cosa";
-   if(isset($_POST["btnEliminarValue"])){                           
-           /* $ingreso  = new ControladorEliminarProductosTienda();
-            $ingreso ->EliminarProducto($_POST["campoOculto2"]);*/
-            echo '<script>toastr.info('.$_POST["campoOculto2"].');</script>';
-                            
+   if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){                           
+            $ingreso  = new ControladorEliminarProductosTienda();
+            $id = $_POST["campoOculto2"]; 
+            $idEmpresa = $objTiendaInicial->getIdEmpresa();
+            $resultadoEliminar = $ingreso ->EliminarProducto($id,$idEmpresa);          
+            
+              if($resultadoEliminar=="Exitoso"){
+                 echo "<script>toastr.info('Se elimina correctamente el producto');</script>";                              
+			  }else{
+                 echo "<script>toastr.error('Se presenta un error para eliminar el producto.');</script>";                             
+			  }
+            
     }
   
       $idTienda = $objTiendaInicial->getIdCategoria();
@@ -127,7 +134,7 @@
                                         <div class="card">
                                               <!--Imagen del producto-->
                                                     <div  style="alaing:center;display: flex;align-items: center;justify-content: center;">
-                                                     <img  class="img-responsive imagen"  src="<?php 
+                                                   <a href="#">  <img  class="img-responsive imagen"  src="<?php 
                                                           if(!empty($valorResult[$j]["FotoPrincipal"])){
                                                                $imagen =$valorResult[$j]["FotoPrincipal"];
 									                      }else{
@@ -154,7 +161,7 @@
                                                               marca ="<?php
                                                                   $marcaDes = $objSelect->selectARowsInDb("select Descripcion from marca where idMarca = ".$valorResult[$j]["Marca_idMarca"]);
                                                                   echo $marcaDes[0]["Descripcion"];
-                                                              ?>">
+                                                              ?>"</a>
                                                 </div>
                                               <div class="card-body">
                                                     <h5 class="m-0"style="color:#136574;"></h5> <!--Nombre de tienda-->
@@ -177,7 +184,7 @@
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
                                                         <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt"></span></p>
-                                                        <p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p>      
+                                                        <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
                                                                                                               
                                               </div>
 
@@ -206,7 +213,7 @@
                                         <div class="card">
                                               <!--Imagen del producto-->
                                                     <div  style="alaing:center;display: flex;align-items: center;justify-content: center;">
-                                                     <img  class="img-responsive imagen"  src="<?php 
+                                                    <a href="#"> <img  class="img-responsive imagen"  src="<?php 
                                                           if(!empty($valorResult[$j]["FotoPrincipal"])){
                                                                $imagen =$valorResult[$j]["FotoPrincipal"];
 									                      }else{
@@ -233,7 +240,7 @@
                                                               marca ="<?php
                                                                   $marcaDes = $objSelect->selectARowsInDb("select Descripcion from marca where idMarca = ".$valorResult[$j]["Marca_idMarca"]);
                                                                   echo $marcaDes[0]["Descripcion"];
-                                                              ?>">
+                                                              ?>"></a>
                                                 </div>
                                               <div class="card-body">
                                                     <h5 class="m-0"style="color:#136574;"></h5> <!--Nombre de tienda-->
@@ -255,7 +262,7 @@
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
                                                       <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt"></span></p>
-                                                        <p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p>      
+                                                      <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
       
                                               </div>
 
@@ -363,14 +370,14 @@ function eliminarProducto(){
               </div>
               <div class="modal-body">
                <!-- aqui va el mensaje que se pasa por parametro-->
-                <input   type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
+                <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
                        
               </div>
                   
                 <div class="form-group">  
                       <div class="modal-footer">         
                             <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                            <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-primary"style ="background-color: #D64646;width:48%;">Eliminar</button>
+                            <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Eliminar</button>
                       </div>
                 </div>
             </div>
