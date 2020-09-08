@@ -329,9 +329,51 @@ $(function(){
          $("#modificarp").modal("show");  
       });
   });
+  //precioEdit
 
 
+  function validarFormulario(formulario){
+       var precio = formulario.precioEdit.value;
+         if(validarPrecio(precio,"precioEdit")!=true){
+             return false;
+		 }
+ }
 
+   function validarPrecio(valor,campoForm){
+            if(!valor.includes(',')){
+                 if (isNaN(parseFloat(valor))) {
+                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
+                      document.getElementById(campoForm).value = "";
+                      return false;
+                 }else{
+                      
+                      return true;
+		         } 
+            }else{
+                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
+                       document.getElementById(campoForm).value = "";
+                      return false;           
+			}
+ }
+
+// Valida si el campo esta vacio y es requerido ponerlo en rojo cuando se da click
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 </script>
 
 
@@ -400,8 +442,8 @@ $(function(){
 
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-        <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+        <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
            <div class="modal-content">
@@ -418,7 +460,7 @@ $(function(){
                                 <h5 class="colortextoformulariosetiquetas">Precio</h5>
                             </div>
                             <div class="col-sm-10">
-                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit">  
+                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit" required>  
                              </div>
                         </div>
                         
