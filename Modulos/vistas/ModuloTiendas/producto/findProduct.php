@@ -2,18 +2,26 @@
   <?php 
   $valuesMal = "cosa";
    if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){                           
-            $ingreso  = new ControladorEliminarProductosTienda();
+            $ingreso  = new ControladorEliminarEditarProductosTienda();
             $id = $_POST["campoOculto2"]; 
             $idEmpresa = $objTiendaInicial->getIdEmpresa();
             $resultadoEliminar = $ingreso ->EliminarProducto($id,$idEmpresa);          
             
               if($resultadoEliminar=="Exitoso"){
-                 echo "<script>toastr.info('Se elimina correctamente el producto');</script>";                              
+                 echo "<script>toastr.info('Producto eliminado exitosamente');</script>";                              
 			  }else{
-                 echo "<script>toastr.error('Se presenta un error para eliminar el producto.');</script>";                             
+                 echo "<script>toastr.error('Error al eliminar producto, por favor intente nuevamente);</script>";                             
 			  }
             
     }
+
+        if(isset($_POST["btnEditarValue"])){
+             $id = $_POST["idProduct"]; 
+             $precio = $_POST["precioEdit"];
+             $idEmpresa = $objTiendaInicial->getIdEmpresa();
+             $objActualizar  = new ControladorEliminarEditarProductosTienda();
+             $objActualizar ->EditarProducto($id,$precio,$idEmpresa); 
+	    }
   
       $idTienda = $objTiendaInicial->getIdCategoria();
       $objSelect = new ControladorSelectsInTables();
@@ -77,7 +85,7 @@
                                    <!-- SEARCH FORM -->
 
                                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                       <?php for($i=0;$i<count($resultado);$i++){?>
+                                       <?php if($resultado!="Fallo"){ for($i=0;$i<count($resultado);$i++){?>
                                           <a href="<?php echo $resultado[$i]["ruta"];?>" onclick="searchForCategory(<?php $resultado[$i]["idsubCategoria"];?>)" class="dropdown-item">
                                             <!-- Message Start -->
                                                 <div class="media">
@@ -91,7 +99,7 @@
                                                 </div>
                                             <!-- Message End -->
                                           </a>
-                                       <?php }?>
+                                       <?php }}?>
                                     </div>                            
                          </li> 
                 </ol>
@@ -106,7 +114,7 @@
     <!-- Main content -->
     <div class="content">
 
-    <?php if(!isset($valorDeUrl)){
+    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"){
           for($i=0;$i<count($resultado);$i++){
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
@@ -183,7 +191,8 @@
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt editar"></span></p>
+                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
                                                                                                               
                                               </div>
@@ -206,7 +215,7 @@
 
                       <div class="container-fluid">
                         <div class="row">
-                        <?php if($valorResult!=null){for($j=0;$j<count($valorResult);$j++){?>
+                        <?php if($valorResult!=null&& $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
 
 
                               <div class="col-lg-3">
@@ -261,7 +270,8 @@
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                      <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt"></span></p>
+                                                      <a href="#"><p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p></a>
                                                       <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
       
                                               </div>
@@ -315,13 +325,56 @@ $(function(){
   /*Llama el modal de editar producto*/
   $(function(){
      $(".editar").click(function(){
-         //$(".campoOculto").attr('value',$(this).attr('id'));
+         $(".precioEdit").attr('value',$(this).attr('precio'));
+         $(".idProduct").attr('value',$(this).attr('id'));
          $("#modificarp").modal("show");  
       });
   });
+  //precioEdit
 
 
+  function validarFormulario(formulario){
+       var precio = formulario.precioEdit.value;
+         if(validarPrecio(precio,"precioEdit")!=true){
+             return false;
+		 }
+ }
 
+   function validarPrecio(valor,campoForm){
+            if(!valor.includes(',')){
+                 if (isNaN(parseFloat(valor))) {
+                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
+                      document.getElementById(campoForm).value = "";
+                      return false;
+                 }else{
+                      
+                      return true;
+		         } 
+            }else{
+                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
+                       document.getElementById(campoForm).value = "";
+                      return false;           
+			}
+ }
+
+// Valida si el campo esta vacio y es requerido ponerlo en rojo cuando se da click
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 </script>
 
 
@@ -380,7 +433,7 @@ $(function(){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Eliminar</button>
+                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
                           </div>
                     </div>
             </div>
@@ -390,8 +443,8 @@ $(function(){
 
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-        <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+        <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
            <div class="modal-content">
@@ -403,7 +456,16 @@ $(function(){
                   </div>
                    <div class="modal-body">
                         <!-- aqui va el mensaje que se pasa por parametro-->
-                         <input   type="text" value ="" class="form-control" id="precioEdit" name ="precioEdit">  
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h5 class="colortextoformulariosetiquetas">Precio</h5>
+                            </div>
+                            <div class="col-sm-10">
+                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit" required>  
+                             </div>
+                        </div>
+                        
+                        <input  style="visibility: hidden;" type="text" value ="" placeholder="Precio producto" class="form-control idProduct" id="idProduct" name ="idProduct">  
                    </div>
                   
                     <div class="form-group">  

@@ -5,7 +5,7 @@ require_once "../AdminComparador/controladores/registrarLogs/c_trabajo_con_logs.
 require_once "controladores/ModuloTiendas/productos/c_adjuntarArchivo.php";
 require_once "controladores/ModuloTiendas/productos/c_tiendaProductos.php";
 require_once "controladores/c_plantilla.php";
-require_once "controladores/ModuloTiendas/productos/c_elimarProducto.php";
+require_once "controladores/ModuloTiendas/productos/c_elimarEditarProducto.php";
 require_once "../AdminComparador/controladores/estructuras/estructuras.php";
 require_once "../AdminComparador/controladores/c_select_int_tables.php"; // asi se incluye controlador desde otro controlador
 require_once("../AdminComparador/modelos/m_select_all_tables.php");
@@ -33,7 +33,7 @@ $valor = "prueba de objeto";
 /*
    se envia el tipo de usuario en  una variable donde se definio que 1 es tienda ojo validar eso
 */
-$tipoUser = 2;
+$tipoUser = 1;
 $plantilla -> plantilla($objTiendaInicial,$tipoUser);
 
 
