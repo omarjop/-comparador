@@ -8,7 +8,29 @@ if(isset($_POST["btnaddmarca"])){
             
     }  
 ?>
+<script type="text/javascript">
 
+  function validarFormulario(formulario){
+       var marca = formulario.addmarcas.value;
+        if(validarNombreAndMarca(marca,"No es una marca v&aacute;lida","addmarcas")!=true){
+             return false;
+		}
+  return true;
+ }
+        
+ //------funciones de validacion de cada uno de los campos
+ function validarNombreAndMarca(valor,mensaje,campoForm){
+      
+         if (isNaN(parseInt(valor)) && (valor.length > 0)){
+              return true;
+         }else{       
+             toastr.error(mensaje);
+             document.getElementById(campoForm).value = "";
+             return false;
+		 } 
+ }
+
+</script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -51,7 +73,7 @@ if(isset($_POST["btnaddmarca"])){
 
 
   <!-- Modal para agregar nueva marca -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
         <div class="modal fade" id="modaddmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
@@ -63,8 +85,8 @@ if(isset($_POST["btnaddmarca"])){
                         </button>
                   </div>
                    <div class="modal-body">
-                        <!-- aqui va el mensaje que se pasa por parametro-->
-                         <input   type="text" class="form-control" id="addmarcas" name ="addmarcas" placeholder="Agregue nombre de marca">  
+                       
+                         <input   type="text" class="form-control" id="addmarcas" name ="addmarcas" placeholder="Agregue nombre de marca" >  
                    </div>
                   
                     <div class="form-group">  
@@ -77,3 +99,4 @@ if(isset($_POST["btnaddmarca"])){
           </div>   
         </div>
   </form>
+
