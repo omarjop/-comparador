@@ -270,7 +270,8 @@
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                      <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt"></span></p>
+                                                      <a href="#"><p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p></a>
                                                       <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
       
                                               </div>
