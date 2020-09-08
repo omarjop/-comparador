@@ -14,9 +14,9 @@ class ControladorEliminarEditarProductosTienda{
             $sql ='update  producto_has_empresa set precioReal = '.$valor; ' where Producto_idProducto ='.$id.' and Empresa_idEmpresa = '.$idEmpresaValue;
             $resultado = $objUpdate->UpdateInTable($sql);
              if($resultado=="Exitoso"){
-                 echo "<script>toastr.info('Se actualiza correctamente el producto');</script>";                              
+                 echo "<script>toastr.info('Producto modificado exitosamente');</script>";                              
 			  }else{
-                 echo "<script>toastr.error('Se presenta un error para actualizar el producto.');</script>";                             
+                 echo "<script>toastr.error('Error al modificar producto, por favor intente nuevamente.');</script>";                             
 			  }
 		 }
 }

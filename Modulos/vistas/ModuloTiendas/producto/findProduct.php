@@ -8,9 +8,9 @@
             $resultadoEliminar = $ingreso ->EliminarProducto($id,$idEmpresa);          
             
               if($resultadoEliminar=="Exitoso"){
-                 echo "<script>toastr.info('Se elimina correctamente el producto');</script>";                              
+                 echo "<script>toastr.info('Producto eliminado exitosamente');</script>";                              
 			  }else{
-                 echo "<script>toastr.error('Se presenta un error para eliminar el producto.');</script>";                             
+                 echo "<script>toastr.error('Error al eliminar producto, por favor intente nuevamente);</script>";                             
 			  }
             
     }
@@ -85,7 +85,7 @@
                                    <!-- SEARCH FORM -->
 
                                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                       <?php for($i=0;$i<count($resultado);$i++){?>
+                                       <?php if($resultado!="Fallo"){ for($i=0;$i<count($resultado);$i++){?>
                                           <a href="<?php echo $resultado[$i]["ruta"];?>" onclick="searchForCategory(<?php $resultado[$i]["idsubCategoria"];?>)" class="dropdown-item">
                                             <!-- Message Start -->
                                                 <div class="media">
@@ -99,7 +99,7 @@
                                                 </div>
                                             <!-- Message End -->
                                           </a>
-                                       <?php }?>
+                                       <?php }}?>
                                     </div>                            
                          </li> 
                 </ol>
@@ -114,7 +114,7 @@
     <!-- Main content -->
     <div class="content">
 
-    <?php if(!isset($valorDeUrl)){
+    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"){
           for($i=0;$i<count($resultado);$i++){
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
@@ -215,7 +215,7 @@
 
                       <div class="container-fluid">
                         <div class="row">
-                        <?php if($valorResult!=null){for($j=0;$j<count($valorResult);$j++){?>
+                        <?php if($valorResult!=null&& $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
 
 
                               <div class="col-lg-3">
@@ -433,7 +433,7 @@ $(function(){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Eliminar</button>
+                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
                           </div>
                     </div>
             </div>

@@ -180,9 +180,9 @@ class ControladorProductosTienda{
              $resultado = $objSelects->returnSelectARowForField("producto",$campos,$condicion); 
              $idTienda = $objTiendaInicial->getIdEmpresa();
 
-           if($imagen!=""&&$imagen!=null){
-                    $imagen = "../AdminComparador/imagenes_productos/".$imagen;
-             }
+
+                    $imagen = "../AdminComparador/imagenes_productos/producto.png";
+
 
      if($resultado!="Fallo"){
                      if($resultado){
