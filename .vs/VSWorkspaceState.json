@@ -1,14 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdminComparador\\modelos",
-    "\\Modulos",
-    "\\Modulos\\controladores\\ModuloTiendas",
+    "\\AdminComparador",
+    "\\AdminComparador\\controladores",
+    "\\Modulos\\controladores",
     "\\Modulos\\controladores\\ModuloTiendas\\productos",
     "\\Modulos\\vistas",
     "\\Modulos\\vistas\\estilos",
     "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
+  "SelectedNode": "\\AdminComparador\\controladores\\c_update_delete_in_tables.php",
   "PreviewInSolutionExplorer": false
 }

@@ -2,7 +2,7 @@
   <?php 
   $valuesMal = "cosa";
    if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){                           
-            $ingreso  = new ControladorEliminarProductosTienda();
+            $ingreso  = new ControladorEliminarEditarProductosTienda();
             $id = $_POST["campoOculto2"]; 
             $idEmpresa = $objTiendaInicial->getIdEmpresa();
             $resultadoEliminar = $ingreso ->EliminarProducto($id,$idEmpresa);          
@@ -14,6 +14,14 @@
 			  }
             
     }
+
+        if(isset($_POST["btnEditarValue"])){
+             $id = $_POST["idProduct"]; 
+             $precio = $_POST["precioEdit"];
+             $idEmpresa = $objTiendaInicial->getIdEmpresa();
+             $objActualizar  = new ControladorEliminarEditarProductosTienda();
+             $objActualizar ->EditarProducto($id,$precio,$idEmpresa); 
+	    }
   
       $idTienda = $objTiendaInicial->getIdCategoria();
       $objSelect = new ControladorSelectsInTables();
@@ -183,7 +191,8 @@
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span class="fas fa-pen-alt editar"></span></p>
+                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
                                                                                                               
                                               </div>
@@ -315,7 +324,8 @@ $(function(){
   /*Llama el modal de editar producto*/
   $(function(){
      $(".editar").click(function(){
-         //$(".campoOculto").attr('value',$(this).attr('id'));
+         $(".precioEdit").attr('value',$(this).attr('precio'));
+         $(".idProduct").attr('value',$(this).attr('id'));
          $("#modificarp").modal("show");  
       });
   });
@@ -403,7 +413,16 @@ $(function(){
                   </div>
                    <div class="modal-body">
                         <!-- aqui va el mensaje que se pasa por parametro-->
-                         <input   type="text" value ="" class="form-control" id="precioEdit" name ="precioEdit">  
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h5 class="colortextoformulariosetiquetas">Precio</h5>
+                            </div>
+                            <div class="col-sm-10">
+                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit">  
+                             </div>
+                        </div>
+                        
+                        <input  style="visibility: hidden;" type="text" value ="" placeholder="Precio producto" class="form-control idProduct" id="idProduct" name ="idProduct">  
                    </div>
                   
                     <div class="form-group">  
