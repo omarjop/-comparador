@@ -7,9 +7,9 @@ class ControladorAdminInsert{
 
 
    /*Este metodo retorna resultado del insert hecho en tabla*/
-    public function agregaMarca($valorMarca){
+    public function agregarCampos($tabla,$columna,$valorAgregar){
             $objAdminAgregar  = new ControladorInserttAllTables();
-            $resultado= $objAdminAgregar->insertInTable("marca","Descripcion","'$valorMarca'");
+            $resultado= $objAdminAgregar->insertInTable("marca","Descripcion","'$valorAgregar'");
             if ($resultado!='Fallo') {
                 echo "<script>toastr.info('Se agrego la marca correctamente');</script>";    
          

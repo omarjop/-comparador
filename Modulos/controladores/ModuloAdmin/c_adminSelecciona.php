@@ -2,21 +2,19 @@
 
 
 class ControladorAdminSelect{
-        public function buscaMarca($valorMarca){
+        public function buscaTabla($valorConsultar,$tabla,$columnaRetorna,$columnaCompara){
                  
            $objAdminSeleccionar  = new ControladorSelectsInTables();
-           $valorMarca = "'%".$valorMarca."%'";
-          // $sql= "SELECT Descripcion FROM marca WHERE Descripcion LIKE %".$valorMarca."%";
-            $sql= "select Descripcion from marca where Descripcion  LIKE ".$valorMarca;
-           //$sql= "select  * from marca";
-            $resultado = $objAdminSeleccionar->selectARowsInDb($sql);
+           $valorConsultar = "'%".$valorConsultar."%'";
+           $sql= "select ".$columnaRetorna." from ".$tabla." where ".$columnaCompara."  LIKE ".$valorConsultar;
+           $resultado = $objAdminSeleccionar->selectARowsInDb($sql);
 
             return $resultado;
          }
-         public function buscarAllMarca(){
+         public function buscarAll($tabla){
                  
            $objAdminSeleccionar  = new ControladorSelectsInTables();
-           $sql= "select  * from marca";
+           $sql= "select  * from ".$tabla."";
            $resultado = $objAdminSeleccionar->selectARowsInDb($sql);
            return $resultado;
          }

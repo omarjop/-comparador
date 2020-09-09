@@ -2,30 +2,57 @@
 
 <?php 
 $resultado=null;
-//-- Al entrar se visualizan todas las marcas existentes
- $objAdminSeleccionaTodos  = new ControladorAdminSelect();
-$resultado=$objAdminSeleccionaTodos->buscarAllMarca();
+
 
   //--Boton del modal de agregar marca, crea objeto de la clase controlador
 if(isset($_POST["btnaddmarca"])){                           
-            $objAdminAgregar  = new ControladorAdminInsert();
-            $valorMarca = $_POST["addmarcas"]; 
-
-               $objAdminAgregar->agregaMarca($valorMarca);
-           
-            
+    $objAdminAgregar  = new ControladorAdminInsert();
+    $valorMarca = $_POST["addmarcas"]; 
+     $objAdminAgregar->agregarCampos("marca","Descripcion",$valorMarca);
+                       
     } 
+
+//--Boton del modal de eliminar marca, crea objeto de la clase controlador
+if(isset($_POST["btnEliminarMarca"])){                           
+     $objAdminEliminar  = new ControladorAdminEliminar();
+     $valorMarca = $_POST["campoOculto2"]; 
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");
+     echo "<script>toastr.info($resultadoEliminar);</script>";  
+        if($resultadoEliminar=="Exitoso"){
+           echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
+	    }else{
+           echo "<script>toastr.error('Error al eliminar marca, por favor intente nuevamente);</script>";                             
+	    }          
+    } 
+
+ //--Boton del modal de editar marca, crea objeto de la clase controlador
+if(isset($_POST["btnEliminarMarca"])){                           
+     $objAdminEliminar  = new ControladorAdminEliminar();
+     $valorMarca = $_POST["campoOculto2"]; 
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");
+     echo "<script>toastr.info($resultadoEliminar);</script>";  
+        if($resultadoEliminar=="Exitoso"){
+           echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
+	    }else{
+           echo "<script>toastr.error('Error al eliminar marca, por favor intente nuevamente);</script>";                             
+	    }          
+    } 
+//-- Al entrar se visualizan todas las marcas existentes
+ $objAdminSeleccionaTodos  = new ControladorAdminSelect();
+$resultado=$objAdminSeleccionaTodos->buscarAll("marca");
+
 //--Boton lupa consulta marca
 
 if(isset($_POST["lupamarca"])){                           
             $objAdminSelecciona  = new ControladorAdminSelect();
             $valorMarca = $_POST["buscamarcas"]; 
-            $resultado=$objAdminSelecciona->buscaMarca($valorMarca);
+            $resultado=$objAdminSelecciona->buscaTabla($valorMarca,"marca","*","Descripcion");;
        
              if ($resultado==null){
                echo "<script>toastr.warning('La marca no existe');</script>"; 
              }
     } 
+
 ?>
 
 <script type="text/javascript">
@@ -58,7 +85,7 @@ if(isset($_POST["lupamarca"])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Crear Marca</h1>
+            <h1 class="m-0 text-dark">Administraci&oacute;n Marca</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -86,8 +113,8 @@ if(isset($_POST["lupamarca"])){
         ?> 
             <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Descripcion"];?>
-                  <span class="badge badge-primary badge-pill">2</span>
-                  <span class="badge badge-primary badge-pill" style=" text-align: right;">2</span>
+                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span marca = "<?php echo $resultado[$i]["Descripcion"];?>" id ="<?php echo $resultado[$i]["idMarca"];?>" class="fas fa-pen-alt editar"></span></p>
+                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $resultado[$i]["idMarca"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
               </li>
 
             </ul>
@@ -113,6 +140,24 @@ if(isset($_POST["lupamarca"])){
  $(function(){
      $(".botaddmarca").click(function(){
          $("#modaddmarca").modal("show");  
+      });
+  });
+
+  /*LLama el modal de editar marca*/ 
+ $(function(){
+     $(".editar").click(function(){
+         $(".idMarca").attr('value',$(this).attr('id'));
+         $(".marcaEdit").attr('value',$(this).attr('marca'));
+         $("#modifiMarca").modal("show");
+         
+      });
+  });
+
+  /*LLama el modal de eliminar marca*/ 
+ $(function(){
+     $(".eliminar").click(function(){
+         $(".campoOculto").attr('value',$(this).attr('id'));
+         $("#eliminarmarca").modal("show");  
       });
   });
 
@@ -146,3 +191,71 @@ if(isset($_POST["lupamarca"])){
         </div>
   </form>
 
+
+
+  <!-- Modal que muestra el confirmar cuando se elimina una marca -->
+ <form class="form needs-validation" method="post"  enctype="multipart/form-data">
+        <div class="modal fade" id="eliminarmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+          <div class="modal-dialog">
+           <div class="modal-content">
+                 <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
+                        <h5  id="staticBackdropLabel" > Esta seguro que desea eliminar la marca? </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+                   <div class="modal-body">
+                    <!-- aqui va el mensaje que se pasa por parametro-->
+                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
+                       
+                   </div>
+                  
+                    <div class="form-group">  
+                          <div class="modal-footer">         
+                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="submit" name = "btnEliminarMarca" id = "btnEliminarMarca" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
+                          </div>
+                    </div>
+            </div>
+          </div>   
+        </div>
+  </form> 
+
+
+  <!-- Modal que muestra producto al dar click en el boton de editar -->
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+        <div class="modal fade" id="modifiMarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+
+          <div class="modal-dialog">
+           <div class="modal-content">
+                 <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
+                        <h5  id="staticBackdropLabel" > Editar Marca </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+                   <div class="modal-body">
+                        <!-- aqui va el mensaje que se pasa por parametro-->
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h5 class="colortextoformulariosetiquetas">Marca</h5>
+                            </div>
+                            <div class="col-sm-10">
+                                <input   type="text" value ="" placeholder="Nombre Marca" class="form-control marcaEdit" id="marcaEdit" name ="marcaEdit" required>  
+                             </div>
+                        </div>
+                        
+                        <input  style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idMarca" id="idMarca" name ="idMarca">  
+                   </div>
+                  
+                    <div class="form-group">  
+                          <div class="modal-footer">         
+                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
+                          </div>
+                    </div>
+            </div>
+          </div>   
+        </div>
+  </form>

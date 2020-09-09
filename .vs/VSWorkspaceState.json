@@ -3,15 +3,14 @@
     "",
     "\\AdminComparador",
     "\\AdminComparador\\controladores",
-    "\\Comparador",
-    "\\Comparador\\vistas\\modulos",
     "\\Modulos",
     "\\Modulos\\controladores",
-    "\\Modulos\\controladores\\ModuloAdmin",
+    "\\Modulos\\controladores\\ModuloTiendas",
     "\\Modulos\\vistas",
-    "\\Modulos\\vistas\\estilos",
-    "\\Modulos\\vistas\\ModuloAdmin"
+    "\\Modulos\\vistas\\ModuloAdmin",
+    "\\Modulos\\vistas\\ModuloTiendas",
+    "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
+  "SelectedNode": "\\Modulos\\vistas\\ModuloTiendas\\producto\\findProduct.php",
   "PreviewInSolutionExplorer": false
 }
