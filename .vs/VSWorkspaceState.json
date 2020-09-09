@@ -1,14 +1,28 @@
 {
   "ExpandedNodes": [
     "",
+<<<<<<< HEAD
     "\\Modulos",
     "\\Modulos\\controladores",
     "\\Modulos\\controladores\\ModuloTiendas",
     "\\Modulos\\controladores\\ModuloTiendas\\productos",
+=======
+    "\\AdminComparador",
+    "\\AdminComparador\\controladores",
+    "\\Comparador",
+    "\\Comparador\\vistas\\modulos",
+    "\\Modulos",
+    "\\Modulos\\controladores",
+    "\\Modulos\\controladores\\ModuloAdmin",
+>>>>>>> c13ea04ff66c574759a8593b9bc49ae897295e5d
     "\\Modulos\\vistas",
     "\\Modulos\\vistas\\estilos",
     "\\Modulos\\vistas\\ModuloAdmin"
   ],
+<<<<<<< HEAD
   "SelectedNode": "\\Modulos\\controladores\\ModuloTiendas\\productos\\c_elimarEditarProducto.php",
+=======
+  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
+>>>>>>> c13ea04ff66c574759a8593b9bc49ae897295e5d
   "PreviewInSolutionExplorer": false
 }
