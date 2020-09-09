@@ -16,8 +16,7 @@ if(isset($_POST["btnaddmarca"])){
 if(isset($_POST["btnEliminarMarca"])){                           
      $objAdminEliminar  = new ControladorAdminEliminar();
      $valorMarca = $_POST["campoOculto2"]; 
-     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");
-     echo "<script>toastr.info($resultadoEliminar);</script>";  
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");  
         if($resultadoEliminar=="Exitoso"){
            echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
 	    }else{
@@ -26,16 +25,14 @@ if(isset($_POST["btnEliminarMarca"])){
     } 
 
  //--Boton del modal de editar marca, crea objeto de la clase controlador
-if(isset($_POST["btnEliminarMarca"])){                           
-     $objAdminEliminar  = new ControladorAdminEliminar();
-     $valorMarca = $_POST["campoOculto2"]; 
-     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");
-     echo "<script>toastr.info($resultadoEliminar);</script>";  
-        if($resultadoEliminar=="Exitoso"){
-           echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
-	    }else{
-           echo "<script>toastr.error('Error al eliminar marca, por favor intente nuevamente);</script>";                             
-	    }          
+if(isset($_POST["btnEditarMarca"])){                           
+     $objAdminModificar  = new ControladorAdminModificar();
+     $idMarkModif = $_POST["idMarca"];
+     $valorMarca = $_POST["marcaEdit"];  
+     $resultadoModificar=$objAdminModificar->modificarCampo("marca","idMarca","Descripcion",$valorMarca,$idMarkModif);
+                                                                                                            
+      
+        
     } 
 //-- Al entrar se visualizan todas las marcas existentes
  $objAdminSeleccionaTodos  = new ControladorAdminSelect();
@@ -246,7 +243,7 @@ if(isset($_POST["lupamarca"])){
                              </div>
                         </div>
                         
-                        <input  style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idMarca" id="idMarca" name ="idMarca">  
+                        <input   style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idMarca" id="idMarca" name ="idMarca">  
                    </div>
                   
                     <div class="form-group">  

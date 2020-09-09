@@ -10,8 +10,9 @@ class ControladorEliminarEditarProductosTienda{
 		 }
 
          public function EditarProducto($id,$valor,$idEmpresaValue){
+         
             $objUpdate = new ControladorUpdateDeleteInTables();//UpdateInTable
-            $sql ='update  producto_has_empresa set precioReal = '.$valor; ' where Producto_idProducto ='.$id.' and Empresa_idEmpresa = '.$idEmpresaValue;
+            $sql ='update  producto_has_empresa set precioReal = '.$valor.' where Producto_idProducto ='.$id.' and Empresa_idEmpresa = '.$idEmpresaValue;
             $resultado = $objUpdate->UpdateInTable($sql);
              if($resultado=="Exitoso"){
                  echo "<script>toastr.info('Producto modificado exitosamente');</script>";                              

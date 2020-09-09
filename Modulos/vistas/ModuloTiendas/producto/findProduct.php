@@ -1,6 +1,12 @@
 
   <?php 
   $valuesMal = "cosa";
+  $idTienda = $objTiendaInicial->getIdCategoria();
+  $objSelect = new ControladorSelectsInTables();
+  $objFinP = new ControladorFindProductosTienda();
+  $valorResult = null;
+
+
    if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){                           
             $ingreso  = new ControladorEliminarEditarProductosTienda();
             $id = $_POST["campoOculto2"]; 
@@ -23,11 +29,7 @@
              $objActualizar ->EditarProducto($id,$precio,$idEmpresa); 
 	    }
   
-      $idTienda = $objTiendaInicial->getIdCategoria();
-      $objSelect = new ControladorSelectsInTables();
-      $objFinP = new ControladorFindProductosTienda();
-      
-      $valorResult = null;
+
       $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto t1 INNER JOIN ( SELECT Producto_idProducto FROM producto_has_empresa  where Empresa_idEmpresa = ".$idTienda." ) t2 ON t1.idProducto  = t2.Producto_idProducto) t4 ON t3.idsubCategoria  = t4.subCategoria_idsubCategoria";
       $resultado = $objSelect->selectARowsInDb($sql);
       $mensaje ="Productos a Consultar";
@@ -37,12 +39,13 @@
            $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$nombreSubCate;
-	  }else{
-           
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
-           $valorResult = $objFinP->returnXSubCategoria($squl1);
 	  }
    
+        if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
+             $palabraclave = strval($_POST['BtnMiProducto']);
+             $valorResult = $objFinP->autocompletar($palabraclave,$idTienda);
+             $mensaje ="Productos a Consultar";
+	    }  
 
   ?>
 
@@ -59,16 +62,10 @@
 
 <div class="row">
 		                <div class="col-sm-5">
-                                <form class="form-horizontal" role="form">
+                                <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
                                       <div class="form-group">                                        
-                                          <input type="text" class="autocomplete form-control" id="sampleAutocomplete" data-toggle="dropdown" />
-                                          <ul class="dropdown-menu" role="menu">
-                                              <li><a>Action</a></li>
-                                              <li><a>Another action</a></li>
-                                              <li><a>Something else here</a></li>
-                                              <li><a>Separated link</a></li>
-                                          </ul>
-                                     
+                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Que quieres buscar..."/>   
+                                          
                                       </div>
                                     <form>
                         </div>
@@ -114,7 +111,7 @@
     <!-- Main content -->
     <div class="content">
 
-    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"){
+    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"&& $valorResult ==null){
           for($i=0;$i<count($resultado);$i++){
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
@@ -193,7 +190,19 @@
                                                     </p>
                                                         <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
                                                                                                                                                                    id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p>
-                                                        <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+                                                        <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                                                                                                                                            unidad = "<?php  
+                                                             $unidad =""; 
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                                         $unidad ="g";
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                                          $unidad ="kg";
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+                                                                          $unidad ="cm3";
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+                                                                          $unidad ="ml";
+											                  }
+                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
                                                                                                               
                                               </div>
 
@@ -317,7 +326,9 @@ $(function(){
 /*LLama el modal de eliminar producto*/ 
  $(function(){
      $(".eliminar").click(function(){
-         $(".campoOculto").attr('value',$(this).attr('id'));
+         $(".campoOculto").attr('value',$(this).attr('id'));         
+         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta')+'  '+$(this).attr('unidad'); 
+        $(".imagedelete").attr('src', $(this).attr('src'));
          $("#eliminarp").modal("show");  
       });
   });
@@ -375,6 +386,27 @@ $(function(){
     });
   }, false);
 })();
+
+
+
+//----------------------------------funcion para autocompletar
+    $(document).ready(function () {
+        $('#miProducto').typeahead({
+            source: function (busqueda, resultado) {
+                $.ajax({
+                    url: "findProduct.php",
+					data: 'busqueda=' + busqueda,            
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+						resultado($.map(data, function (item) {
+							return item;
+                        }));
+                    }
+                });
+            }
+        });
+    });
 </script>
 
 
@@ -419,15 +451,24 @@ $(function(){
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5>
+                        <i><h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5></i>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
                    <div class="modal-body">
                     <!-- aqui va el mensaje que se pasa por parametro-->
-                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
-                       
+                        <div class="row">
+                                <div class="col-sm-12">
+                                   <div class="card" style="background-color: #E5E5E5;font-size:140%;">
+                                      <div class="card-body">                                          
+                                          <footer class="" style="font-size:110%;"><cite title="Source Title" id="etiquetaEliminar"></cite><img src="" align="right" class="imagedelete" style="width: 80px; height: 80px;" > </footer>                                                              
+                                      </div>
+                                </div>
+                         </div>
+
+                        </div>
+                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">                                      
                    </div>
                   
                     <div class="form-group">  
@@ -449,7 +490,7 @@ $(function(){
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Datos editables por producto </h5>
+                        <i><h5  id="staticBackdropLabel" > Datos editables por producto </h5></i>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -465,13 +506,13 @@ $(function(){
                              </div>
                         </div>
                         
-                        <input  style="visibility: hidden;" type="text" value ="" placeholder="Precio producto" class="form-control idProduct" id="idProduct" name ="idProduct">  
+                        <input style="visibility: hidden;"  type="text" value ="" class="form-control idProduct" id="idProduct" name ="idProduct">  
                    </div>
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
+                                <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar Cambios</button>
                           </div>
                     </div>
             </div>
