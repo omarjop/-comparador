@@ -1,6 +1,12 @@
 
   <?php 
   $valuesMal = "cosa";
+  $idTienda = $objTiendaInicial->getIdCategoria();
+  $objSelect = new ControladorSelectsInTables();
+  $objFinP = new ControladorFindProductosTienda();
+  $valorResult = null;
+
+
    if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){                           
             $ingreso  = new ControladorEliminarEditarProductosTienda();
             $id = $_POST["campoOculto2"]; 
@@ -23,11 +29,7 @@
              $objActualizar ->EditarProducto($id,$precio,$idEmpresa); 
 	    }
   
-      $idTienda = $objTiendaInicial->getIdCategoria();
-      $objSelect = new ControladorSelectsInTables();
-      $objFinP = new ControladorFindProductosTienda();
-      
-      $valorResult = null;
+
       $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto t1 INNER JOIN ( SELECT Producto_idProducto FROM producto_has_empresa  where Empresa_idEmpresa = ".$idTienda." ) t2 ON t1.idProducto  = t2.Producto_idProducto) t4 ON t3.idsubCategoria  = t4.subCategoria_idsubCategoria";
       $resultado = $objSelect->selectARowsInDb($sql);
       $mensaje ="Productos a Consultar";
@@ -37,12 +39,17 @@
            $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$nombreSubCate;
-	  }else{
+	  }/*else if($valorResult==null){
            
            $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
            $valorResult = $objFinP->returnXSubCategoria($squl1);
-	  }
+	  }*/
    
+           if(isset($_POST["BtnMiProducto"])){
+             $palabraclave = strval($_POST['BtnMiProducto']);
+             $valorResult = $objFinP->autocompletar($palabraclave,$idTienda);
+             
+	    }  
 
   ?>
 
@@ -59,16 +66,10 @@
 
 <div class="row">
 		                <div class="col-sm-5">
-                                <form class="form-horizontal" role="form">
+                                <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
                                       <div class="form-group">                                        
-                                          <input type="text" class="autocomplete form-control" id="sampleAutocomplete" data-toggle="dropdown" />
-                                          <ul class="dropdown-menu" role="menu">
-                                              <li><a>Action</a></li>
-                                              <li><a>Another action</a></li>
-                                              <li><a>Something else here</a></li>
-                                              <li><a>Separated link</a></li>
-                                          </ul>
-                                     
+                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Que quieres buscar..."/>   
+                                          
                                       </div>
                                     <form>
                         </div>
@@ -114,7 +115,7 @@
     <!-- Main content -->
     <div class="content">
 
-    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"){
+    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"&& $valorResult ==null){
           for($i=0;$i<count($resultado);$i++){
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
@@ -375,6 +376,27 @@ $(function(){
     });
   }, false);
 })();
+
+
+
+//----------------------------------funcion para autocompletar
+    $(document).ready(function () {
+        $('#miProducto').typeahead({
+            source: function (busqueda, resultado) {
+                $.ajax({
+                    url: "findProduct.php",
+					data: 'busqueda=' + busqueda,            
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+						resultado($.map(data, function (item) {
+							return item;
+                        }));
+                    }
+                });
+            }
+        });
+    });
 </script>
 
 
