@@ -34,7 +34,7 @@ $valor = "prueba de objeto";
 /*
    se envia el tipo de usuario en  una variable donde se definio que 1 es tienda ojo validar eso
 */
-$tipoUser = 2;
+$tipoUser = 1;
 $plantilla -> plantilla($objTiendaInicial,$tipoUser);
 
 

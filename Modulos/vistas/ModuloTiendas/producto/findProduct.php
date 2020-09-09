@@ -190,7 +190,19 @@
                                                     </p>
                                                         <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
                                                                                                                                                                    id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p>
-                                                        <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+                                                        <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                                                                                                                                            unidad = "<?php  
+                                                             $unidad =""; 
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                                         $unidad ="g";
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                                          $unidad ="kg";
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+                                                                          $unidad ="cm3";
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+                                                                          $unidad ="ml";
+											                  }
+                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
                                                                                                               
                                               </div>
 
@@ -314,7 +326,9 @@ $(function(){
 /*LLama el modal de eliminar producto*/ 
  $(function(){
      $(".eliminar").click(function(){
-         $(".campoOculto").attr('value',$(this).attr('id'));
+         $(".campoOculto").attr('value',$(this).attr('id'));         
+         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta')+'  '+$(this).attr('unidad'); 
+        $(".imagedelete").attr('src', $(this).attr('src'));
          $("#eliminarp").modal("show");  
       });
   });
@@ -437,15 +451,24 @@ $(function(){
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5>
+                        <i><h5  id="staticBackdropLabel" > Esta seguro que que desea eliminar el producto? </h5></i>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
                    <div class="modal-body">
                     <!-- aqui va el mensaje que se pasa por parametro-->
-                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
-                       
+                        <div class="row">
+                                <div class="col-sm-12">
+                                   <div class="card" style="background-color: #E5E5E5;font-size:140%;">
+                                      <div class="card-body">                                          
+                                          <footer class="" style="font-size:110%;"><cite title="Source Title" id="etiquetaEliminar"></cite><img src="" align="right" class="imagedelete" style="width: 80px; height: 80px;" > </footer>                                                              
+                                      </div>
+                                </div>
+                         </div>
+
+                        </div>
+                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">                                      
                    </div>
                   
                     <div class="form-group">  
@@ -467,7 +490,7 @@ $(function(){
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Datos editables por producto </h5>
+                        <i><h5  id="staticBackdropLabel" > Datos editables por producto </h5></i>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -483,13 +506,13 @@ $(function(){
                              </div>
                         </div>
                         
-                        <input   type="text" value ="" class="form-control idProduct" id="idProduct" name ="idProduct">  
+                        <input style="visibility: hidden;"  type="text" value ="" class="form-control idProduct" id="idProduct" name ="idProduct">  
                    </div>
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
+                                <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar Cambios</button>
                           </div>
                     </div>
             </div>
