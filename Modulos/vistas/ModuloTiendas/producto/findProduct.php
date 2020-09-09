@@ -39,16 +39,12 @@
            $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$nombreSubCate;
-	  }/*else if($valorResult==null){
-           
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
-           $valorResult = $objFinP->returnXSubCategoria($squl1);
-	  }*/
+	  }
    
-           if(isset($_POST["BtnMiProducto"])){
+        if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
              $palabraclave = strval($_POST['BtnMiProducto']);
              $valorResult = $objFinP->autocompletar($palabraclave,$idTienda);
-             
+             $mensaje ="Productos a Consultar";
 	    }  
 
   ?>
@@ -487,7 +483,7 @@ $(function(){
                              </div>
                         </div>
                         
-                        <input  style="visibility: hidden;" type="text" value ="" placeholder="Precio producto" class="form-control idProduct" id="idProduct" name ="idProduct">  
+                        <input   type="text" value ="" class="form-control idProduct" id="idProduct" name ="idProduct">  
                    </div>
                   
                     <div class="form-group">  

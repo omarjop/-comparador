@@ -2,9 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\Modulos",
+    "\\Modulos\\controladores",
+    "\\Modulos\\controladores\\ModuloTiendas",
+    "\\Modulos\\controladores\\ModuloTiendas\\productos",
     "\\Modulos\\vistas",
     "\\Modulos\\vistas\\estilos",
     "\\Modulos\\vistas\\ModuloAdmin"
   ],
+  "SelectedNode": "\\Modulos\\controladores\\ModuloTiendas\\productos\\c_elimarEditarProducto.php",
   "PreviewInSolutionExplorer": false
 }
