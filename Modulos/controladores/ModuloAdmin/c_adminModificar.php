@@ -7,7 +7,8 @@ class ControladorAdminModificar{
          
         $objUpdate = new ControladorUpdateDeleteInTables();//UpdateInTable
         //$sql ="update ".$tabla." set ".$columnaModificar." = ".$valor." where ".$columnaCompara." = ".$id;
-        $sql ='update marca set Descripcion = '.$valor.' where idMarca = '.$id; 
+        $valor = "'$valor'";
+        $sql ="update ".$tabla." set ".$columnaModificar." = ".$valor." where ".$columnaCompara." = ".$id; 
         $resultado = $objUpdate->UpdateInTable($sql);
         if($resultado=="Exitoso"){
            echo "<script>toastr.info('Marca modificada exitosamente');</script>";                              
