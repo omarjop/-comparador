@@ -18,6 +18,7 @@ require_once "vistas/generales/modelGeneral.php";
 require_once "PHPExcel/Classes/PHPExcel.php";
 require_once "controladores/ModuloTiendas/productos/c_findProductos.php";
 require_once "controladores/ModuloAdmin/c_adminAgregar.php";
+require_once "controladores/ModuloAdmin/c_adminSelecciona.php";
 //cuando la tienda inicie session debe llamar el controlador $plantilla =  new ControladorPlantilla();
 //llega el id del usuario por get y con el consulto en base de datos y creo objeto tienda y usuario si lo tiene y envcio los dos
 //objetos
