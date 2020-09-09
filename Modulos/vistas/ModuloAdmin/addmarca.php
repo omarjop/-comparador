@@ -111,7 +111,7 @@ if(isset($_POST["lupamarca"])){
             <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Descripcion"];?>
                   <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span marca = "<?php echo $resultado[$i]["Descripcion"];?>" id ="<?php echo $resultado[$i]["idMarca"];?>" class="fas fa-pen-alt editar"></span></p>
-                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $resultado[$i]["idMarca"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["Descripcion"];?>" id = "<?php echo $resultado[$i]["idMarca"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
               </li>
 
             </ul>
@@ -154,6 +154,7 @@ if(isset($_POST["lupamarca"])){
  $(function(){
      $(".eliminar").click(function(){
          $(".campoOculto").attr('value',$(this).attr('id'));
+         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
          $("#eliminarmarca").modal("show");  
       });
   });
@@ -203,6 +204,17 @@ if(isset($_POST["lupamarca"])){
                         </button>
                   </div>
                    <div class="modal-body">
+
+                   <div class="row">
+                                <div class="col-sm-12">
+                                   <div class="card" style="background-color: #E5E5E5;font-size:140%;">
+                                      <div class="card-body">                                          
+                                          <footer class="" style="font-size:110%;"><cite title="Source Title" id="etiquetaEliminar"></cite> </footer>                                                              
+                                      </div>
+                                </div>
+                                </div>
+                         </div>
+
                     <!-- aqui va el mensaje que se pasa por parametro-->
                      <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">               
                        
