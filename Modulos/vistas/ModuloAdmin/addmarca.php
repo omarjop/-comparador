@@ -53,27 +53,52 @@ if(isset($_POST["lupamarca"])){
 ?>
 
 <script type="text/javascript">
-
+/*Validación del campo de texto de agregar marca*/
   function validarFormulario(formulario){
        var marca = formulario.addmarcas.value;
-        if(validarNombreAndMarca(marca,"No es una marca v&aacute;lida","addmarcas")!=true){
-             return false;
-		}
+        if(validarNombreAndMarca(marca,"No es una marca v&aacute;lida","addmarcas")==true){
+             
+           if(validarMarcaAndRango(marca,"El nombre de la marca es muy extenso","addmarcas")!=true){
+              return false;
+           }else{
+               return true;     
+           }
+        }else{
+            return false;
+        }
+        
+        
+        
   return true;
  }
         
  //------funciones de validacion de cada uno de los campos
  function validarNombreAndMarca(valor,mensaje,campoForm){
       
-         if (isNaN(parseInt(valor)) && (valor.length > 0)){
+         if ((isNaN(parseInt(valor)))&& (valor !="")){
               return true;
          }else{       
              toastr.error(mensaje);
              document.getElementById(campoForm).value = "";
              return false;
 		 } 
- }
 
+ }
+  //------funciones de validacion de cada uno de los campos
+ function validarMarcaAndRango(valor,mensaje,campoForm){
+      
+         if ((valor.length) > 20){
+              
+              toastr.error(mensaje);
+              document.getElementById(campoForm).value = "";
+              return false;
+         }else{       
+
+             return true;
+		 } 
+
+ }
+//**********************************************************************/
 </script>
 
 <div class="content-wrapper">
@@ -93,7 +118,7 @@ if(isset($_POST["lupamarca"])){
                         <input type="search" name="buscamarcas" id="buscamarcas" class="form-control"  placeholder="Buscar Marca">
                         <span  class="input-group-btn">
                             <a href="#">
-                                <button class="btn btn-default backColor colorbotonamarillo lupamarca" type="submit" name="lupamarca" id="lupamarca">
+                                <button class="btn btn-default backColor colorbotonamarillo lupamarca" type="submit" name="lupamarca" id="lupamarca" style ="height:100%;">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </a>
@@ -108,17 +133,21 @@ if(isset($_POST["lupamarca"])){
             for ($i=0;$i<count($resultado);$i++){
              
         ?> 
+        
             <ul class="list-group list-group-flush">
+            <div class="row justify-content-center">
+             <div class="col-11">
               <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Descripcion"];?>
                   <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span marca = "<?php echo $resultado[$i]["Descripcion"];?>" id ="<?php echo $resultado[$i]["idMarca"];?>" class="fas fa-pen-alt editar"></span></p>
                   <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["Descripcion"];?>" id = "<?php echo $resultado[$i]["idMarca"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
               </li>
-
+               </div>
+               </div>
             </ul>
        <?php } }?> 
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
-    </div>
+  
 
       <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -128,7 +157,7 @@ if(isset($_POST["lupamarca"])){
       <p>Sidebar content</p>
     </div>
   </aside>
-<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+
   
 </div>
 <script type="text/javascript">
