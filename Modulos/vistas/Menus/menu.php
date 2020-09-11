@@ -44,6 +44,12 @@
                 </a>
               </li>
                <li class="nav-item">
+                <a href="asociarProductos" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Asociar Productos</p>
+                </a>
+              </li>
+               <li class="nav-item">
                 <a href="connectByApiRest" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Cargar por API REST</p>

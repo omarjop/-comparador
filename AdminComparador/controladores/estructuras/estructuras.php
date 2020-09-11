@@ -30,8 +30,12 @@ class ControladorEstructuras{
            
            return $arrayReturn;
         }   
+        
         public function tiposDeImagen(){
                return   array('png','jpg','jpeg');
 		}
 
+        public function returnControlCategoria(){
+               return   array('1-Tienda','2-Recetas');
+		}
 }

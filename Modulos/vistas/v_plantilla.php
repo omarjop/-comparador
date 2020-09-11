@@ -44,10 +44,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 
+
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/typeahead.js"></script>
+
+
+ <script src="vistas/js/validaciones.js"></script>
 
 
   <!-- jQuery -->
@@ -71,7 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                if(($_GET['ruta'] == "producto" || $_GET['ruta'] == "findProduct"|| 
                   $_GET['ruta'] == "attachFileProduct"||
                   $_GET['ruta'] == "attachFileExcellProduct"||
-                  $_GET['ruta'] == "connectByApiRest") && $tipoUser == 1){
+                  $_GET['ruta'] == "connectByApiRest"||$_GET['ruta'] =="asociarProductos") && $tipoUser == 1){
          
                     include "vistas/modulos/cabezoteProducto.php";
                     include "vistas/Menus/menu.php";

@@ -234,4 +234,18 @@ class ControladorProductosTienda{
            return $returnValue;
 	}
 
+//-----------------------------------Metodos para asociar Productos por empresa-----------------------------
+
+    public function asociarProductoSeleccionado($idProductoAdd,$precioProductoAdd,$idTienda){
+        $objInsert  = new ControladorInserttAllTables();
+        $intoAsociada2 = "Producto_idProducto,Empresa_idEmpresa,precioReal";
+        $valueAsociada2 = "'$idProductoAdd'".","."'$idTienda'".","."'$precioProductoAdd'";
+        $result = $objInsert->insertInTable("producto_has_empresa",$intoAsociada2,$valueAsociada2);
+        if($result!="Fallo"){
+           echo "<script>toastr.info('Se asocia correcta mente el producto');</script>";
+		}else{
+           echo "<script>toastr.info('Se presenta un error asociando el producto');</script>";
+		}
+	}
+
 }
