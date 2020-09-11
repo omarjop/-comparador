@@ -1,11 +1,22 @@
 {
   "ExpandedNodes": [
     "",
+<<<<<<< HEAD
     "\\Comparador",
     "\\Comparador\\modelos",
     "\\Modulos",
     "\\Modulos\\vistas"
   ],
   "SelectedNode": "\\Comparador\\modelos\\rutas.php",
+=======
+    "\\Modulos",
+    "\\Modulos\\controladores",
+    "\\Modulos\\controladores\\ModuloAdmin",
+    "\\Modulos\\controladores\\ModuloTiendas",
+    "\\Modulos\\controladores\\ModuloTiendas\\productos",
+    "\\Modulos\\vistas"
+  ],
+  "SelectedNode": "\\Modulos\\controladores\\ModuloAdmin\\c_adminAgregar.php",
+>>>>>>> 649a794580a988755f384fe58ead8a6cdef46131
   "PreviewInSolutionExplorer": false
 }
