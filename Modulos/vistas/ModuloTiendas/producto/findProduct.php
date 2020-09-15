@@ -44,7 +44,7 @@
 
       if(isset($valorDeUrl)){
            $valorDeUrl = "'".$valorDeUrl."'";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
+           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.idunidadMedida  = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto";
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$nombreSubCate;
 	  }
@@ -127,7 +127,7 @@
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
            //$squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$ruta.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria where Categoria_idCategoria = ".$idCategoria." and ruta = ".$ruta.") t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.Producto_idProducto = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto where t5.Empresa_idEmpresa = ".$idTienda;	  
+           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria,ruta FROM subcategoria where Categoria_idCategoria = ".$idCategoria." and ruta = ".$ruta.")     t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.idunidadMedida = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto where t5.Empresa_idEmpresa = ".$idTienda;	  
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$resultado[$i]["nombre"];   
     
@@ -164,13 +164,13 @@
                                                            descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
                                                            pesovolumen = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
@@ -189,13 +189,13 @@
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                             if ($valorResult[$j]["nombreMedida"]== "gramos (gr)") {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== "kilogramos (kg)"){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="centimetros cubicos (cm3)"){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="mililitros (ml)"){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
@@ -205,13 +205,13 @@
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
@@ -236,8 +236,8 @@
 
                       <div class="container-fluid">
                         <div class="row">
-                        <?php if($valorResult!=null&& $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
-
+                        <?php if($valorResult!=null && $valorResult!="Fallo" && $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
+                        
 
                               <div class="col-lg-3">
                                         <div class="card">
@@ -256,13 +256,13 @@
                                                            descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
                                                            pesovolumen = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
@@ -280,13 +280,13 @@
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== "gramos (gr)") {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== "kilogramos (kg)"){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="centimetros cubicos (cm3)"){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="mililitros (ml)"){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
@@ -296,13 +296,13 @@
                                                       <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      

@@ -1,9 +1,9 @@
-
-
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
     function mostrar(id) {
 
+    var aux = id.split("-");
+    id = aux[0];
         var unidades = ["gramos","kilogramos","mililitros","centimetros"];
         unidades.forEach(function(valor) {
                 if(valor == id){
@@ -14,24 +14,6 @@
         });
 
     }
-
-     function mostrarNuevaCategoria(id) {
-         
-         var nombres = id.split("-");
-        var unidades = ["Otros"];
-        unidades.forEach(function(valor) {
-                if(valor == nombres[1]){
-                   $("#".concat("NewCategory")).show();               
-			    }else{
-                    $("#".concat("NewCategory")).hide();  
-               }
-        });
-
-
-
-
-    }
-
     
  function validarFormulario(formulario){
          
@@ -185,7 +167,8 @@
 
           $values = array();
           for($i=0;$i<count($arreglo);$i++){
-             $aux = explode(" ", $arreglo[$i]);   
+             $auxValue = $arreglo[$i]["nombreMedida"];
+             $aux = explode(" ",$auxValue);   
              array_push($values, $aux[0]);
              
 		  }
@@ -195,15 +178,16 @@
 	 }
      
      $objEstuctura =  new ControladorEstructuras();
-     $valorUnidades = $objEstuctura->unidadesProductos();
+     $objSelect =  new ControladorSelectsInTables();
+
+     $valorUnidades = $objSelect->returnSelectAllRows("unidadmedida");
      $values = returnValues($valorUnidades);
 
      $gramos = $objEstuctura->unidadesProductosValues("gramos");
      $kilogramos = $objEstuctura->unidadesProductosValues("kilogramos");
      $mililitros = $objEstuctura->unidadesProductosValues("mililitros");
      $centimetros = $objEstuctura->unidadesProductosValues("centimetros");
-
-     $objSelect =  new ControladorSelectsInTables();
+     
      $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
 ?>
 
@@ -213,9 +197,11 @@
 
 
 
-  <div class="container">
-  <div class="abs-center">  
+
+
     <div class="row">
+       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+         <div class="btn-center" >
          <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);" novalidate>
                                            <div class="form-group">
                                            
@@ -242,7 +228,7 @@
                                                 <select class="form-control" onChange="mostrar(this.value);" id ="unit" name="unit" required>
                                                       <option value = "seleccion">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
-                                                            <option value='<?php echo $values[$i];?>'><?php echo $valorUnidades[$i];?></option>
+                                                            <option value='<?php echo $values[$i]."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
                                                        <?php }?>
                                                 </select>
                                             </div>
@@ -328,14 +314,7 @@
                                             </div>
                                      </div>
 
-                                    <div class="form-group" id ="NewCategory">
-                                        <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                        
-                                            <input id="NewCategory" name="NewCategory" type="text" placeholder="Escriba nueva categor&iacute;a" class="form-control"  value ="Escriba nueva categoria" required>
-                                    </div>
-
-
-           
+        
 
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-left"></span>
@@ -356,20 +335,18 @@
                         </div>
                     
                 </form>
-       
+            </div>
         </div>
     </div>
-</div>
+
  <?php
 
      echo '    
              <script type="text/javascript">
                       mostrar("l");
-                      mostrarNuevaCategoria("c");
+                      
                       
             </script>'; 
 
 
   ?>
-
-
