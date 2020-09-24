@@ -1,4 +1,4 @@
-  
+ //-----------------------------------Funciones para validar precio de un producto------------------------------------ 
   function validarAsociarProducto(formulario){
          var precio = formulario.precioEdit.value;
          if(validarPrecio(precio,"precioEdit")!=true){
@@ -22,4 +22,31 @@
                       return false;           
 			}
  }
- //-----------------------------------Funciones para validar precio de un producto------------------------------------
+ ale
+ //-----------------------------------Funciones para autocampletar en consulta pruebas------------------------------------
+ $("#BtnMiProducto").change(function(){
+    
+    var producto = $("#BtnMiProducto").val();
+    alert();
+   /* var datos = new FormData();
+    datos.append("validarProducto", producto);
+
+    $.ajax({
+        url:"http://localhost/-comparador/Modulos/vistas/ajax/validacion.ajax.php",
+        method:"POST",
+        data: datos, 
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(respuesta){
+              $("#auxx").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>funciona</div>');
+              if(respuesta){
+                    $("#auxx").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>funciona</div>');
+              }else{
+                    $("#auxx").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>funciona</div>');  
+			  }
+        }
+
+    })*/
+
+ })

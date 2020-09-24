@@ -32,11 +32,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
      <script src="bootstrap-autocomplete.min.js"></script>
      <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.5/dist/latest/bootstrap-autocomplete.min.js"></script>
      <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script> 
-
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
   <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
   <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
   <link rel="stylesheet" href="jqueryui/style.css">
 
 
@@ -52,6 +53,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
  <script src="vistas/js/validaciones.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
 
   <!-- jQuery -->
@@ -150,3 +152,4 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 </body>
 </html>
+

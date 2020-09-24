@@ -207,51 +207,6 @@ $(function(){
   });
   });
 
-/*LLama el modal de eliminar producto*/ 
- $(function(){
-     $(".eliminar").click(function(){
-         $(".campoOculto").attr('value',$(this).attr('id'));         
-         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta')+'  '+$(this).attr('unidad'); 
-        $(".imagedelete").attr('src', $(this).attr('src'));
-         $("#eliminarp").modal("show");  
-      });
-  });
-
-  /*Llama el modal de editar producto*/
-  $(function(){
-     $(".editar").click(function(){
-         $(".precioEdit").attr('value',$(this).attr('precio'));
-         $(".idProduct").attr('value',$(this).attr('id'));
-         $("#modificarp").modal("show");  
-      });
-  });
-  //precioEdit
-
-
-  function validarFormulario(formulario){
-       var precio = formulario.precioEdit.value;
-         if(validarPrecio(precio,"precioEdit")!=true){
-             return false;
-		 }
- }
-
-   function validarPrecio(valor,campoForm){
-            if(!valor.includes(',')){
-                 if (isNaN(parseFloat(valor))) {
-                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                      document.getElementById(campoForm).value = "";
-                      return false;
-                 }else{
-                      
-                      return true;
-		         } 
-            }else{
-                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                       document.getElementById(campoForm).value = "";
-                      return false;           
-			}
- }
-
 // Valida si el campo esta vacio y es requerido ponerlo en rojo cuando se da click
 (function() {
   'use strict';
@@ -272,25 +227,6 @@ $(function(){
 })();
 
 
-
-//----------------------------------funcion para autocompletar
-    $(document).ready(function () {
-        $('#miProducto').typeahead({
-            source: function (busqueda, resultado) {
-                $.ajax({
-                    url: "findProduct.php",
-					data: 'busqueda=' + busqueda,            
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-						resultado($.map(data, function (item) {
-							return item;
-                        }));
-                    }
-                });
-            }
-        });
-    });
 
 </script>
 

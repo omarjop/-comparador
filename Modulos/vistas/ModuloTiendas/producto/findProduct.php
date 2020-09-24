@@ -44,16 +44,16 @@
 
       if(isset($valorDeUrl)){
            $valorDeUrl = "'".$valorDeUrl."'";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.idunidadMedida  = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto";
+           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.idunidadMedida  = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto where t5.Empresa_idEmpresa = ".$idTienda;
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$nombreSubCate;
 	  }
    
-        if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
+       /* if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
              $palabraclave = strval($_POST['BtnMiProducto']);
-             $valorResult = $objFinP->autocompletar($palabraclave,$idTienda);
+             $valorResult = $objFinP->autocompletar($palabraclave,$idCategoria,$idTienda);
              $mensaje ="Productos a Consultar";
-	    }  
+	    }*/  
 
         
 
@@ -72,10 +72,12 @@
 
 <div class="row">
 		                <div class="col-sm-5">
-                                <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
+                                <form class="form-signin" role="form" enctype="multipart/form-data" method="post" action="#">
                                       <div class="form-group">                                        
-                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Buscar producto"/>   
-                                          
+                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Buscar producto" autocomplete="on" autofocus="" value=""/>   
+                                            <div id="mensaje">  
+                                                <p>Aqui va el mensaje </p>
+                                            </div>
                                       </div>
                                     <form>
                         </div>
@@ -415,23 +417,48 @@ $(function(){
 
 
 //----------------------------------funcion para autocompletar
-    $(document).ready(function () {
-        $('#miProducto').typeahead({
-            source: function (busqueda, resultado) {
-                $.ajax({
-                    url: "findProduct.php",
-					data: 'busqueda=' + busqueda,            
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-						resultado($.map(data, function (item) {
-							return item;
-                        }));
+
+/*
+    $(document).ready(function(){
+	$("input#BtnMiProducto").on("keydown",function(){
+		var valor = $(this).val();
+        $("div#mensaje p").html(valor);
+	});
+
+   });*/
+
+   $(document).ready(function(){
+        $("#BtnMiProducto").change(function(){
+    
+            var producto = $("#BtnMiProducto").val();
+            var datos = new FormData();
+            datos.append("validarProducto", producto);
+
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(respuesta){
+                          if(respuesta==null){
+                                $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No existe </div>');  
+                          }else{
+                               //var nombre = JSON.parse(respuesta).Nombre;
+                               $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+respuesta+'</div>');  
+
+			              }
+
+
                     }
-                });
-            }
-        });
-    });
+
+              })
+
+        })
+});
+
+
 </script>
 
 
