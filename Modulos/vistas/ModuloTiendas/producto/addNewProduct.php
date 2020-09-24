@@ -159,6 +159,45 @@
     });
   }, false);
 })();
+
+//--------------------------------------------------------------------------------------------------------
+/*auto completar al agregar nuevo producto*/
+$(document).ready(function(){
+        $("#nameProduct").change(function(){
+    
+            var producto = $("#nameProduct").val();
+            var datos = new FormData();
+            datos.append("newProduct", producto);
+
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(respuesta){
+                          if(respuesta.includes("null")){
+                                document.getElementById("Reference").value = null;
+                                document.getElementById("description").value = null;
+                          }else{
+                               respuesta =respuesta.replace("[","");
+                               respuesta =respuesta.replace("]","");
+                               document.getElementById("Reference").value = JSON.parse(respuesta).Referencia;
+                               document.getElementById("description").value = JSON.parse(respuesta).DescripcionP; 
+                              // $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+nombre+'</div>');  
+                              
+			              }
+
+
+                    }
+
+              })
+
+        })
+});
+
+
 </script>
 <?php 
 
@@ -186,8 +225,7 @@
      $gramos = $objEstuctura->unidadesProductosValues("gramos");
      $kilogramos = $objEstuctura->unidadesProductosValues("kilogramos");
      $mililitros = $objEstuctura->unidadesProductosValues("mililitros");
-     $centimetros = $objEstuctura->unidadesProductosValues("centimetros");
-     
+     $centimetros = $objEstuctura->unidadesProductosValues("centimetros");     
      $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
 ?>
 
@@ -292,7 +330,7 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></span>
                                         <div class="col-md-58">
-                                            <input id="lname" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
+                                            <input id="Reference" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
                                         </div>
                                     </div>
 
@@ -319,7 +357,7 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-left"></span>
                                         <div class="col-md-100">
-                                            <textarea class="form-control" id="message" name="description" placeholder="Breve descripci&oacute;n del producto" rows="7"></textarea>
+                                            <textarea class="form-control" id="description" name="description" placeholder="Breve descripci&oacute;n del producto" rows="7"></textarea>
                                         </div>
                                     </div>
   

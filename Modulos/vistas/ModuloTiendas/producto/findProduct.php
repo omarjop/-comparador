@@ -442,12 +442,15 @@ $(function(){
                     contentType: false,
                     processData: false,
                     success: function(respuesta){
-                          if(respuesta==null){
+                          if(respuesta.includes("null")){
                                 $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No existe </div>');  
                           }else{
-                               //var nombre = JSON.parse(respuesta).Nombre;
-                               $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+respuesta+'</div>');  
-
+                               respuesta =respuesta.replace("[","");
+                               respuesta =respuesta.replace("]","");
+                               var nombre = JSON.parse(respuesta).Nombre;
+                               
+                               $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+nombre+'</div>');  
+                              
 			              }
 
 
