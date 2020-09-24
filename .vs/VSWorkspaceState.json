@@ -6,8 +6,9 @@
     "\\Modulos\\controladores\\ModuloAdmin",
     "\\Modulos\\controladores\\ModuloTiendas",
     "\\Modulos\\controladores\\ModuloTiendas\\productos",
-    "\\Modulos\\vistas"
+    "\\Modulos\\vistas",
+    "\\Modulos\\vistas\\ModuloAdmin"
   ],
-  "SelectedNode": "\\Modulos\\controladores\\ModuloAdmin\\c_adminAgregar.php",
+  "SelectedNode": "\\Modulos\\controladores\\c_plantilla.php",
   "PreviewInSolutionExplorer": false
 }
