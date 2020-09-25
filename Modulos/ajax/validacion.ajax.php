@@ -47,7 +47,7 @@ if(isset($_POST["validarProducto"])){
 
 /*Valida los datos del producto cuando se registra uno nuevo*/
 if(isset($_POST["newProduct"])){  
-   $valProducto = new AjaxProducto();
+    $valProducto = new AjaxProducto();
     $valProducto -> validarProducto = $_POST["newProduct"];
     $valProducto ->ajaxValidarNewProducto();
 }

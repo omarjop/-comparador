@@ -180,13 +180,19 @@ $(document).ready(function(){
                           if(respuesta.includes("null")){
                                 document.getElementById("Reference").value = null;
                                 document.getElementById("description").value = null;
+                                document.getElementById("Brand").value = null;
+                                document.getElementById("Category").value = "seleccion";
+                                document.getElementById("unit").value = "seleccion";
                           }else{
                                respuesta =respuesta.replace("[","");
                                respuesta =respuesta.replace("]","");
                                document.getElementById("Reference").value = JSON.parse(respuesta).Referencia;
                                document.getElementById("description").value = JSON.parse(respuesta).DescripcionP; 
-                              // $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+nombre+'</div>');  
-                              
+                               document.getElementById("Brand").value = JSON.parse(respuesta).Descripcion; 
+                               document.getElementById("Category").value = JSON.parse(respuesta).idsubCategoria+'-'+JSON.parse(respuesta).nombre; 
+                               var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
+                               var aux = nombreMedidda.split(" ");
+                               document.getElementById("unit").value = aux[0]+'-'+JSON.parse(respuesta).idunidadMedida;
 			              }
 
 
