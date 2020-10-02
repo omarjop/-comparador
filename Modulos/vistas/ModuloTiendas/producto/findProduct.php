@@ -1,3 +1,22 @@
+<style>
+
+#autoCompletedList {
+  color: hsl(0, 0%, 0%);
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+#autoCompletedList li {
+  background: #424242;
+  padding: 5px;
+  color: hsl(0, 0%, 100%);
+  border-bottom: dotted 1px hsl(0, 0%, 58%);
+}
+#autoCompletedList li:hover {
+  background: hsl(0, 0%, 36%);
+  cursor: pointer;
+}
+</style>
 
   <?php 
   $valuesMal = "cosa";
@@ -49,11 +68,11 @@
            $mensaje = "Categoria  ".$nombreSubCate;
 	  }
    
-       /* if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
+        if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
              $palabraclave = strval($_POST['BtnMiProducto']);
              $valorResult = $objFinP->autocompletar($palabraclave,$idCategoria,$idTienda);
              $mensaje ="Productos a Consultar";
-	    }*/  
+	    }  
 
         
 
@@ -72,15 +91,15 @@
 
 <div class="row">
 		                <div class="col-sm-5">
-                                <form class="form-signin" role="form" enctype="multipart/form-data" method="post" action="#">
+                                <form class="form-signin" role="form" enctype="multipart/form-data" method="post" action="" name="formulario" id="formulario">
                                       <div class="form-group">                                        
-                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Buscar producto" autocomplete="on" autofocus="" value=""/>   
-                                            <div id="mensaje">  
-                                                <p>Aqui va el mensaje </p>
-                                            </div>
+                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Buscar producto" />   
+
                                       </div>
                                     <form>
                         </div>
+
+
                         
           <div class="col-sm-7">
                 <ol class="breadcrumb float-sm-right">  
@@ -427,8 +446,8 @@ $(function(){
 
    });*/
 
-   $(document).ready(function(){
-        $("#BtnMiProducto").change(function(){
+ $(document).ready(function(){
+        $("#BtnMiProducto").on("keydown",function(){
     
             var producto = $("#BtnMiProducto").val();
             var datos = new FormData();
@@ -442,16 +461,25 @@ $(function(){
                     contentType: false,
                     processData: false,
                     success: function(respuesta){
+
+                   /* var res = JSON.parse(respuesta);
+                    $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>'+respuesta+' </div>');  */
                           if(respuesta.includes("null")){
                                 $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No existe </div>');  
                           }else{
                                respuesta =respuesta.replace("[","");
                                respuesta =respuesta.replace("]","");
-                               var nombre = JSON.parse(respuesta).Nombre;
-                               
-                               $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+nombre+'</div>');  
-                              
+                               var res = JSON.parse(respuesta);
+                                    
+                                           // for (i = 0; i < res.datos.length; i++) {                                                      
+                                                      $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+respuesta+'</div>');  
+                                                // }
+
+
+                                        
 			              }
+
+
 
 
                     }
@@ -462,6 +490,58 @@ $(function(){
 });
 
 
+/*BtnMiProducto.addEventListener('keyup', (event) => {
+ 
+   if (!document.querySelector("#autoCompletedList")) {
+
+        ul = document.createElement('ul');
+        ul.setAttribute('id', 'autoCompletedList');
+        BtnMiProducto.after(ul);
+        
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState < 4) { }
+    }
+     xhr.onload = function () {
+
+        if (xhr.status == 200) {
+      
+            var res = JSON.parse(this.responseText);
+             // alert(xhr.status);
+            // remove elements
+            lista = document.querySelector('#autoCompletedList');
+            lista.innerHTML = "";
+
+            if (!res.error) {
+                 
+                for (i = 0; i < res.datos.length; i++) {
+ 
+                    let id = res.datos[i].id;
+                    let nombre = res.datos[i].nombre;
+
+                    li = document.createElement("li");
+                    li.setAttribute('class', 'item' + res.datos[i].id);
+                    li.innerHTML = res.datos[i].nombre;
+                    lista.prepend(li);
+ 
+                    document.querySelector('.item' + id).addEventListener('click', () => {
+                        document.querySelector("#BtnMiProducto").value = nombre;
+                        lista.innerHTML = "";
+                    })
+                }
+            }
+ 
+         }
+    }
+    xhr.open('post', 'http://localhost/-comparador/Modulos/ajax/validacion.ajax.php', true);
+    // form data
+    let form = document.querySelector('#formulario');
+    data = new FormData(form);
+    xhr.send(data);
+})*/
 </script>
 
 

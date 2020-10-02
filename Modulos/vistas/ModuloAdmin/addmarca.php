@@ -264,7 +264,7 @@ if(isset($_POST["lupamarca"])){
   </form> 
 
 
-  <!-- Modal que muestra producto al dar click en el boton de editar -->
+  <!-- Modal que muestra la marca al dar click en el boton de editar -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
         <div class="modal fade" id="modifiMarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
@@ -293,7 +293,7 @@ if(isset($_POST["lupamarca"])){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
+                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
                           </div>
                     </div>
             </div>
