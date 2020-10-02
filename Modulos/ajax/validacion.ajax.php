@@ -1,3 +1,5 @@
+
+
 <?php
 require_once "../../AdminComparador/controladores/c_select_int_tables.php";
 require_once "../../AdminComparador/modelos/m_select_all_tables.php";
@@ -8,12 +10,25 @@ class   AjaxProducto{
 
     public function ajaxValidarProducto(){
         $datos = $this->validarProducto;
+        $registrosErroneos = array();
+
         $objSelect = new ControladorSelectsInTables();
-        $datos = "'".$datos."'";
-        $sql = "Select * from producto where Nombre = ".$datos;
+        $datos = "'%".$datos."%'";
+        $sql = "Select * from producto where Nombre LIKE ".$datos;
         $respuesta = $objSelect->selectARowsInDb($sql);
+       
         if ($respuesta!= null) {
-	        echo json_encode($respuesta);
+            for($i=0;$i<count($respuesta);$i++){
+               $datos = array(
+                            "id" => $respuesta[$i]["idProducto"],
+                            "nombre" => $respuesta[$i]["Nombre"]
+                          );
+			}  
+            echo json_encode((
+                                "datos" => $datos,
+                                "error" => "No"
+                            ));
+                          //  echo json_encode($respuesta);
 	    }else{
            echo json_encode(null);
 		}
@@ -21,6 +36,7 @@ class   AjaxProducto{
     }
    
      public function ajaxValidarNewProducto(){
+     
         $datos = $this->validarProducto;
         $objSelect = new ControladorSelectsInTables();
         $datos = "'".$datos."'";
@@ -39,7 +55,7 @@ class   AjaxProducto{
  * VALIDA y retorna los productos del campo auto completar
  */
 if(isset($_POST["validarProducto"])){  
-   $valProducto = new AjaxProducto();
+   $valProducto = new AjaxProducto();   
     $valProducto -> validarProducto = $_POST["validarProducto"];
     $valProducto ->ajaxValidarProducto();
 }

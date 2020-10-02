@@ -20,7 +20,8 @@ class ControladorProductosTienda{
 
     private function validarCampos($objTiendaInicial){
             $objModel =  new modelosWork();
-        
+            $imagen =null;
+            $imagenValue = null;
             $nombreProducto =  $_POST["nameProduct"];
             $precio  =  $_POST["price"];
             $unidaVolumen = $_POST["unit"];
@@ -31,20 +32,19 @@ class ControladorProductosTienda{
             $referencia =  $_POST["Reference"];
             $marca =  $_POST["Brand"];
             $categoria = $_POST["Category"];
-            $newCategory = $_POST["NewCategory"];
+            $newCategory = null;
             $descripcion = $_POST["description"];
             $resultadoImagen = "Correcto";
             $unidad = $this->returnVolumen($unidaVolumen,$volumenGrams,$volumenKiloGrams,$volumenMililitros,$volumenCntimetro);
             $porciones = explode("-", $categoria);    
             $categoria = $porciones[0];
-      // Validar el precio que este bien el formato
             $objValidarDato  = new ControladorAdjuntos();
             $resultado = $objValidarDato->isFloat($precio,"Precio");
             $resultadoNombre = $objValidarDato->isString($nombreProducto);
              
-          
-               $categoria = $this->validarCategoria($categoria,$objTiendaInicial,$newCategory);
-
+       $isMarcaAux = $this->validarMarca($marca);   
+       if($this->validaExistenciaDeProducto($nombreProducto,$unidaVolumen,$unidad,$referencia,$isMarcaAux,$categoria)==null){
+                  $categoria = $this->validarCategoria($categoria,$objTiendaInicial,$newCategory);
                   if($categoria!="Error al registrar producto. Por favor comunicarse con el administrador."){
                            if($resultadoImagen == "Correcto"){
                                      $isMarca = $this->validarMarca($marca);
@@ -65,9 +65,29 @@ class ControladorProductosTienda{
                    }else{
                                 echo "<script> mensajeError('".$categoria."'); </script>";
 				   } 
+            }else{
+                       echo "<script> mensajeError('El producto ya se encuentra registrado, se puede asociar por el modulo asociar producto.'); </script>";
+			}
 
 	}
+//---------------------Validar existencia de producto si existe mensaje que para asociar lo haga por otro modulo-------------
+private function validaExistenciaDeProducto($nombreP,$pesoVolumen,$unidad,$referencia,$marca,$Categoria){
+   $auxUnidadVolumen = explode("-", $pesoVolumen);
+   $objSelect = new ControladorSelectsInTables();
+   $sql ="SELECT * FROM producto where Nombre = "."'".$nombreP."'"." AND unidadMedida_idunidadMedida = ".$auxUnidadVolumen[1].
+         " AND pesoVolumen = ".$unidad." AND Referencia = "."'".$referencia."'"." AND Marca_idMarca = ".$marca.
+         " AND subCategoria_idsubCategoria = ".$Categoria;
 
+   $resultado = $objSelect->selectARowsInDb($sql);
+    echo "<script> mensajeError('".$sql."'); </script>";
+   if($resultado==null){
+      return null;                              
+   }else{
+      return "Exiete";
+   }
+}
+
+//------------------------------------------------------------------------------------------------------------------------------
     private function validarCategoria($categoria,$objTiendaInicial,$newCategory){
              $returnValue="Error al registrar producto. Por favor comunicarse con el administrador.";
              $objSelects  = new ControladorSelectsInTables();

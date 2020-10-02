@@ -168,7 +168,7 @@ $(document).ready(function(){
             var producto = $("#nameProduct").val();
             var datos = new FormData();
             datos.append("newProduct", producto);
-
+         
             $.ajax({
                     url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
                     method:"POST",
@@ -183,6 +183,10 @@ $(document).ready(function(){
                                 document.getElementById("Brand").value = null;
                                 document.getElementById("Category").value = "seleccion";
                                 document.getElementById("unit").value = "seleccion";
+                                document.getElementById("grams").value = "seleccione";
+                                document.getElementById("kilograms").value = "seleccione";
+                                document.getElementById("milliliters").value = "seleccione";
+                                document.getElementById("centimeters").value = "seleccione";
                           }else{
                                respuesta =respuesta.replace("[","");
                                respuesta =respuesta.replace("]","");
@@ -193,6 +197,8 @@ $(document).ready(function(){
                                var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
                                var aux = nombreMedidda.split(" ");
                                document.getElementById("unit").value = aux[0]+'-'+JSON.parse(respuesta).idunidadMedida;
+                               mostrar(aux[0]+'-'+JSON.parse(respuesta).idunidadMedida);
+                               document.getElementById(returnUnidad(aux[0])).value = JSON.parse(respuesta).pesoVolumen;
 			              }
 
 
@@ -203,6 +209,26 @@ $(document).ready(function(){
         })
 });
 
+function returnUnidad(unidad){
+     var returnValue = "";
+
+     switch (unidad) {
+          case 'gramos':
+            returnValue = "grams";
+            break;
+          case 'kilogramos':
+            returnValue = "kilograms";
+            break;
+          case 'mililitros':
+            returnValue = "milliliters";
+            break;
+          case 'centimetros':
+            returnValue = "centimeters";
+            break;
+
+        }
+        return returnValue;
+}
 
 </script>
 <?php 

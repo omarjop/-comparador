@@ -2,6 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Modulos",
+    "\\Modulos\\ajax",
     "\\Modulos\\vistas",
     "\\Modulos\\vistas\\ModuloTiendas",
     "\\Modulos\\vistas\\ModuloTiendas\\producto"
