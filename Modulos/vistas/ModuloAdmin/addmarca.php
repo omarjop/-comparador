@@ -16,15 +16,12 @@ if(isset($_POST["btnaddmarca"])){
 if(isset($_POST["btnEliminarMarca"])){                           
      $objAdminEliminar  = new ControladorAdminEliminar();
      $valorMarca = $_POST["campoOculto2"]; 
-     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","producto","idMarca","Marca_idmarca");  
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");  
         if($resultadoEliminar=="Exitoso"){
            echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
-	    }else if ($resultadoEliminar=="Asociado"){
-           echo "<script>toastr.error('La marca no se puede eliminar, tiene productos asociados');</script>";
-      }else{
+	    }else{
            echo "<script>toastr.error('Error al eliminar marca, por favor intente nuevamente);</script>";                             
-	    }
-
+	    }          
     } 
 
  //--Boton del modal de editar marca, crea objeto de la clase controlador
@@ -264,7 +261,7 @@ if(isset($_POST["lupamarca"])){
   </form> 
 
 
-  <!-- Modal que muestra la marca al dar click en el boton de editar -->
+  <!-- Modal que muestra producto al dar click en el boton de editar -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
         <div class="modal fade" id="modifiMarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
@@ -293,7 +290,7 @@ if(isset($_POST["lupamarca"])){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
+                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
                           </div>
                     </div>
             </div>

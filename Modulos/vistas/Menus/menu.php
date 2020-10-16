@@ -4,7 +4,7 @@
     <a href="index3.html" class="brand-link">
       <img src="vistas/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light"><"Administraci&oacute;n"></span>
+      <span class="brand-text font-weight-light"><?php echo $objTiendaInicial->getNombreEmpresa();?></span>
     </a>
 
     <!-- Sidebar -->
@@ -172,18 +172,7 @@
                   <p>Categorias</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="adUnidadMedida" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Unidad Medida</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Caracteristicas</p>
-                </a>
-              </li>               			  
+			  
             </ul>
           </li>
 		  

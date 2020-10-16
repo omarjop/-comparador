@@ -18,17 +18,17 @@ class   AjaxProducto{
         $respuesta = $objSelect->selectARowsInDb($sql);
        
         if ($respuesta!= null) {
-            for($i=0;$i<count($respuesta);$i++){
+           for($i=0;$i<count($respuesta);$i++){
                $datos = array(
                             "id" => $respuesta[$i]["idProducto"],
                             "nombre" => $respuesta[$i]["Nombre"]
                           );
 			}  
-            echo json_encode((
+            echo json_encode (array(
                                 "datos" => $datos,
                                 "error" => "No"
                             ));
-                          //  echo json_encode($respuesta);
+                         //   echo json_encode($respuesta);
 	    }else{
            echo json_encode(null);
 		}

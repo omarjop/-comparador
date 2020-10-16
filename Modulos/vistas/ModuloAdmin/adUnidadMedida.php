@@ -1,19 +1,6 @@
-<?php 
-$resultado=null;
-//---- Objeto clase ControladorEstructuras para mostrar el valor del control de la unidad de medida
-$objControlUnidad= new ControladorEstructuras();
-$resultadoControl= $objControlUnidad->returnControlUnidad();
-$controlNumerico=array();
-$controlCaracter=array();
-for ($i=0;$i<count($resultadoControl);$i++)
-{
 
- $aux = explode("-",$resultadoControl[$i]); 
- array_push($controlNumerico, $aux[0]); 
- array_push($controlCaracter, $aux[1]); 
-}
- 
 
+<<<<<<< HEAD
   //--Boton del modal de agregar unidad, crea objeto de la clase controlador
 if(isset($_POST["btnaddunidad"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
@@ -22,96 +9,58 @@ if(isset($_POST["btnaddunidad"])){
      
      $objAdminAgregar->agregarCamposUnid("unidadmedida","nombreMedida",$valorUnidad,"control",$valorControl);
                        
+=======
+<?php 
+$resultado=null;
+//-- Al entrar se visualizan todas las marcas existentes
+ $objAdminSeleccionaTodos  = new ControladorAdminSelect();
+$resultado=$objAdminSeleccionaTodos->buscarAllMarca();
+
+  //--Boton del modal de agregar marca, crea objeto de la clase controlador
+if(isset($_POST["btnaddmarca"])){                           
+            $objAdminAgregar  = new ControladorAdminInsert();
+            $valorMarca = $_POST["addmarcas"]; 
+
+               $objAdminAgregar->agregaMarca($valorMarca);
+           
+            
+>>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794
     } 
-//--Boton del modal de eliminar unidad, crea objeto de la clase controlador    
-if(isset($_POST["btnEliminarUnidad"])){                           
-     $objAdminEliminar  = new ControladorAdminEliminar();
-     $valorUnidad = $_POST["campoOculto2"]; 
-     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorUnidad,"unidadmedida","producto","idunidadMedida","unidadMedida_idunidadMedida");  
-        if($resultadoEliminar=="Exitoso"){
-           echo "<script>toastr.info('Unidad de Medida eliminada exitosamente');</script>";                              
-      }else if ($resultadoEliminar=="Asociado"){
-           echo "<script>toastr.error('La unidad no se puede eliminar, tiene productos asociados');</script>";
-      }else{
-           echo "<script>toastr.error('Error al eliminar unidad, por favor intente nuevamente);</script>";                             
-      }
+//--Boton lupa consulta marca
 
-    }   
-  //--Boton del modal de editar unidad, crea objeto de la clase controlador
-if(isset($_POST["btnEditarUnidad"])){                           
-     $objAdminModificar  = new ControladorAdminModificar();
-     $idUnidadModif = $_POST["idunidadMedida"];
-     $valorUnidad = $_POST["unidadEdit"];  
-     $valorControl= $_POST["selecontrol"];
-     $resultadoModificar=$objAdminModificar->modificarCampo("unidadmedida","idunidadMedida","nombreMedida",$valorUnidad,$idUnidadModif);
-                                                                                                            
-      
-        
-    }      
-//-- Al entrar se visualizan todas las unidades existentes
-$objAdminSeleccionaTodos  = new ControladorAdminSelect();
-$resultado=$objAdminSeleccionaTodos->buscarAll("unidadMedida");
-
-//--Boton lupa consulta unidad
-
-if(isset($_POST["lupaunidad"])){                           
+if(isset($_POST["lupamarca"])){                           
             $objAdminSelecciona  = new ControladorAdminSelect();
-            $valorUnidad = $_POST["buscaunidad"]; 
-            $resultado=$objAdminSelecciona->buscaTabla($valorUnidad,"unidadmedida","*","nombreMedida");;
+            $valorMarca = $_POST["buscamarcas"]; 
+            $resultado=$objAdminSelecciona->buscaMarca($valorMarca);
        
              if ($resultado==null){
-               echo "<script>toastr.warning('La unidad no existe');</script>"; 
+               echo "<script>toastr.warning('La marca no existe');</script>"; 
              }
     } 
-
 ?>
+
 <script type="text/javascript">
-/*Validación del campo de texto de agregar unidad de medida*/
+
   function validarFormulario(formulario){
-       var unidmedida = formulario.addunidad.value;
-        if(validarNombreAndUnidad(unidmedida,"No es una unidad v&aacute;lida","addunidad")==true){
-             
-           if(validarMarcaAndRango(unidmedida,"El nombre de la unidad es muy extenso","addunidad")!=true){
-              return false;
-           }else{
-               return true;     
-           }
-        }else{
-            return false;
-        }
-        
-        
-        
+       var marca = formulario.addmarcas.value;
+        if(validarNombreAndMarca(marca,"No es una marca v&aacute;lida","addmarcas")!=true){
+             return false;
+		}
   return true;
  }
         
  //------funciones de validacion de cada uno de los campos
- function validarNombreAndUnidad(valor,mensaje,campoForm){
+ function validarNombreAndMarca(valor,mensaje,campoForm){
       
-         if ((isNaN(parseInt(valor)))&& (valor !="")){
+         if (isNaN(parseInt(valor)) && (valor.length > 0)){
               return true;
          }else{       
              toastr.error(mensaje);
              document.getElementById(campoForm).value = "";
              return false;
-     } 
-
+		 } 
  }
-  //------funciones de validacion de cada uno de los campos
- function validarMarcaAndRango(valor,mensaje,campoForm){
-      
-         if ((valor.length) > 50){
-              
-              toastr.error(mensaje);
-              document.getElementById(campoForm).value = "";
-              return false;
-         }else{       
 
-             return true;
-     } 
-
- }
-//**********************************************************************/
 </script>
 
 <div class="content-wrapper">
@@ -128,10 +77,10 @@ if(isset($_POST["lupaunidad"])){
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
              <div class="input-group col-lg-8 col-md-7 col-sm-9 col-xs-7" id="buscadormarca">
-                        <input type="search" name="buscaunidad" id="buscaunidad" class="form-control"  placeholder="Buscar unidad de medida">
+                        <input type="search" name="buscamarcas" id="buscamarcas" class="form-control"  placeholder="Buscar Marca">
                         <span  class="input-group-btn">
                             <a href="#">
-                                <button class="btn btn-default backColor colorbotonamarillo lupamarca" type="submit" name="lupaunidad" id="lupaunidad" style ="height:100%;">
+                                <button class="btn btn-default backColor colorbotonamarillo lupamarca" type="submit" name="lupamarca" id="lupamarca">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </a>
@@ -141,31 +90,46 @@ if(isset($_POST["lupaunidad"])){
               </div>
           </div><!-- /.col -->
 
-        <?php
+       <?php
            if ($resultado!= null){
             for ($i=0;$i<count($resultado);$i++){
              
         ?> 
-          <ul class="list-group list-group-flush">
-            <div class="row justify-content-center">
-             <div class="col-11">
-              <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["nombreMedida"];?>
-                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span unidmedida = "<?php echo $resultado[$i]["nombreMedida"];?>" id ="<?php echo $resultado[$i]["idunidadMedida"];?>" idcontrol="<?php echo $resultado[$i]["control"];?>" class="fas fa-pen-alt editar"></span></p>
-                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["nombreMedida"];?>" id = "<?php echo $resultado[$i]["idunidadMedida"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Descripcion"];?>
+                  <p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "" id = "" class="fas fa-pen-alt editar"></span></p>
+                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "" class="far fa-trash-alt eliminar"></span></p></a>      
               </li>
-               </div>
-               </div>
+
             </ul>
        <?php } }?> 
         </div><!-- /.row -->
+<<<<<<< HEAD
     </div><!-- /.container-fluid -->
 
 
+=======
+      </div><!-- /.container-fluid -->
+    </div>
+
+      <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+  
+</div>
+>>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794
 <script type="text/javascript">
 
-/*LLama el modal de adicionar unidad*/ 
+/*LLama el modal de adicionar marca*/ 
  $(function(){
      $(".botaddmarca").click(function(){
+<<<<<<< HEAD
          $("#modaddunidad").modal("show");  
       });
  });
@@ -187,42 +151,35 @@ if(isset($_POST["lupaunidad"])){
          $(".campoOculto").attr('value',$(this).attr('id'));
          document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
          $("#eliminarunidad").modal("show");  
+=======
+         $("#modaddmarca").modal("show");  
+>>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794
       });
   });
+
 </script>
 
-
-<!-- Modal para agregar nueva marca -->
+  <!-- Modal para agregar nueva marca -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
-        <div class="modal fade" id="modaddunidad" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modaddmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Agregar Unidad de Medida</h5>
+                        <h5  id="staticBackdropLabel" > Agregar Marca</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
                    <div class="modal-body">
                        
-                         <input   type="text" class="form-control" id="addunidad" name ="addunidad" placeholder="Agregue nombre de unidad" >  
-
+                         <input   type="text" class="form-control" id="addmarcas" name ="addmarcas" placeholder="Agregue nombre de marca" >  
                    </div>
-                   <div class="form-group-inline col-md-10">
-                   
-                     <div class="col-md-6 col-lg-6">
-                      <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol" name="selecontrol"  required><option value = "seleccion">Seleccione Control</option>
-                               <?php for($i=0;$i<count($controlNumerico);$i++){?>
-                               <option value="<?php echo $controlNumerico[$i]; ?>"><?php echo $controlCaracter[$i]; ?></option> 
-                               <?php }?> 
-                       </select>
-                      </div>
-                    </div>
+                  
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnaddunidad" id = "btnaddunidad" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                <button type="submit" name = "btnaddmarca" id = "btnaddmarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
                           </div>
                     </div>
             </div>
@@ -230,6 +187,7 @@ if(isset($_POST["lupaunidad"])){
         </div>
   </form>
 
+<<<<<<< HEAD
  <!-- Modal que muestra el confirmar cuando se elimina una marca -->
  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
         <div class="modal fade" id="eliminarunidad" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -318,3 +276,5 @@ if(isset($_POST["lupaunidad"])){
           </div>   
         </div>
   </form>
+=======
+>>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794

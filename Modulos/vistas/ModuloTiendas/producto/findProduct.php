@@ -467,13 +467,13 @@ $(function(){
                           if(respuesta.includes("null")){
                                 $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No existe </div>');  
                           }else{
-                               respuesta =respuesta.replace("[","");
-                               respuesta =respuesta.replace("]","");
+                               /*respuesta =respuesta.replace("[","");
+                               respuesta =respuesta.replace("]","");*/
                                var res = JSON.parse(respuesta);
                                     
                                            // for (i = 0; i < res.datos.length; i++) {                                                      
-                                                      $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+respuesta+'</div>');  
-                                                // }
+                                                      $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+res.datos.length+'</div>');  
+                                             //    }
 
 
                                         

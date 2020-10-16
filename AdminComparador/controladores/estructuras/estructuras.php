@@ -38,7 +38,4 @@ class ControladorEstructuras{
         public function returnControlCategoria(){
                return   array('1-Tienda','2-Recetas');
 		}
-        public function returnControlUnidad(){
-               return   array('1-Unidad de Peso','2-Unidad de Volumen');
-    }
 }
