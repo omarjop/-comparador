@@ -2,11 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Modulos",
-    "\\Modulos\\ajax",
+    "\\Modulos\\controladores\\ModuloAdmin",
     "\\Modulos\\vistas",
     "\\Modulos\\vistas\\ModuloTiendas",
     "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\Modulos\\vistas\\ModuloTiendas\\producto\\addNewProduct.php",
+  "SelectedNode": "\\Modulos\\vistas\\ModuloTiendas\\producto\\findProduct.php",
   "PreviewInSolutionExplorer": false
 }
