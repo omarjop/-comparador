@@ -19,7 +19,7 @@ if(isset($_POST["btnaddunidad"])){
     $objAdminAgregar  = new ControladorAdminInsert();
     $valorUnidad = $_POST["addunidad"]; 
     $valorControl= $_POST["selecontrol"];
-      echo "<script>toastr.info('$valorControl');</script>";
+     
      $objAdminAgregar->agregarCamposUnid("unidadmedida","nombreMedida",$valorUnidad,"control",$valorControl);
                        
     } 
@@ -158,7 +158,7 @@ if(isset($_POST["lupaunidad"])){
             </ul>
        <?php } }?> 
         </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+    </div><!-- /.container-fluid -->
 
 
 <script type="text/javascript">
@@ -174,8 +174,11 @@ if(isset($_POST["lupaunidad"])){
      $(".editar").click(function(){
          $(".idunidadMedida").attr('value',$(this).attr('id'));
          $(".unidadEdit").attr('value',$(this).attr('unidmedida'));
-         $(".controlEdit").attr('value',$(this).attr('idcontrol'));
+         //$("#controlEdit").attr('value',$(this).attr('idcontrol'));
+        // document.getElementById("controlEdit").value=$(this).attr('idcontrol');
+      
          $("#modifiUnidad").modal("show");
+         document.getElementById("controlEdit").value=$(this).attr('idcontrol');
          
       });
   });    
@@ -288,19 +291,20 @@ if(isset($_POST["lupaunidad"])){
                             <div class="col-sm-10">
                                 <input   type="text" value ="" placeholder="Nombre Unidad" class="form-control unidadEdit" id="unidadEdit" name ="unidadEdit" required>  
                              </div>
-                        </div>
+                       
 
-                          <div class="row">
-                            <div class="col-sm-2">
-                                <h5 class="colortextoformulariosetiquetas">Control</h5>
-                            </div>
-                            <div class="col-sm-10">
-                                <input   type="text" value ="" placeholder="Nombre Unidad" class="form-control controlEdit" id="controlEdit" name ="controlEdit" required>  
-                             </div>
-                        </div>
-                        
-
-
+                    <div class="form-group-inline col-md-8">
+                   
+                     <div class="col-md-6 col-lg-10">
+                      <select class="form-control" onChange="mostrar(this.value);" id ="controlEdit" name="controlEdit"  required><option value = "seleccion">Seleccione Control</option>
+                               <?php for($i=0;$i<count($controlNumerico);$i++){?>
+                               <option value="<?php echo $controlNumerico[$i]; ?>"><?php echo $controlCaracter[$i]; ?></option> 
+                               <?php }?> 
+                       </select>
+                      </div>
+                    </div>                       
+                    </div>
+ 
                    </div>
 
                     <input   style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idunidadMedida" id="idunidadMedida" name ="idunidadMedida"> 
