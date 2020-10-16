@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <!--- AVISO INFORMATIVO -->
-            <diV class="col-lg-9 col-md-8 col-sm-12 col-xs-12 social">
+            <diV class="col-lg-3 col-md-8 col-sm-12 col-xs-12 social">
                 <ul>
                     <li>
                         <a href="http://facebook.com" target="_blank">
@@ -37,6 +37,14 @@
                     </li>
                 </ul>
             </div>
+
+            <!--- UBICACION -->
+            <diV class="col-lg-6 col-md-4 col-sm-8 col-xs-12 registro">
+                <ul class="pull-center ubicacion">
+                    <li><a href="#modalUbicacion" data-toggle="modal"><i class="fa fa-map-marker" aria-hidden="true"></i> Tu ubicacion cual es?</a></li>
+                </ul>
+            </div>
+
             <!--- REGISTRO -->
             <diV class="col-lg-3 col-md-4 col-sm-8 col-xs-12 registro">
                 <ul>
@@ -46,7 +54,7 @@
 
                         if($_SESSION["validarSesion"] == "ok"){
 
-                            if($_SESSION["modoAcceso"] == "directo"){
+                            if($_SESSION["modoAcceso"] == "directo" || $_SESSION["modoAcceso"] == "facebook"){
                                 echo '
                                     <li>
                                         <img class="img-circle" src="'.$servidor.'/vistas/img/usuarios/default/anonymous.png" width="10%">
@@ -55,7 +63,7 @@
                                     <li>|</li>
                                     <li><a href="'.$url.'perfil">Ver perfil</a></li>
                                     <li>|</li>
-                                    <li><a href="'.$url.'salir">Salir</a></li>
+                                    <li><a href="'.$url.'salir" class="salida">Salir</a></li>
                                 ';
 
                             }
@@ -89,6 +97,7 @@
                 <a href="<?php echo $url ?>">
                     <img src="http://localhost/AdminComparador/vistas/img/plantilla/logo.png" class="img-responsive">
                 </a>
+               
             </div>
        
             <!-- =======================
@@ -105,7 +114,7 @@
                                 <ul class="dropdown-menu">
                                     <?php 
                                         $item = "control";
-                                        $valor = "2";
+                                        $valor = "1";
                                         $categorias = ControladorProductos::CtrlMostrarCategorias($item, $valor);
                                         foreach ($categorias as $key => $value) {
                                             echo '
@@ -136,32 +145,32 @@
             <!-- ====================
             MENU DE SERVICIOS
             ========================-->
-            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-12 " id="carrito">
+         <div class="col-lg-3 col-md-3 col-sm-2 col-xs-12 " id="carrito">
                 <li>
-                <?php 
+              <?php 
                     
                 if(isset($_SESSION["validarSesion"])){
                     if($_SESSION["validarSesion"] == "ok"){
                         echo '
-                        
-                        <ul  class="pull-right">
-                        <a href="#">
-                            <span  data-toggle="tooltip" title="Crea tus Listas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive img-thumbnail">
-                            </span>
-                           <!-- <h5>Listas</h5> -->
-                        </a>
-                    </ul>
                         ';
                     }
                 }
                     
                 ?>
+                        
+                        <ul  class="pull-right">
+                        <a href="<?php echo $url;?>listas">
+                            <span  data-toggle="tooltip" title="Listas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive img-thumbnail">
+                            </span>
+                           <!-- <h5>Listas</h5> -->
+                        </a>
+                    </ul>
                     
 
                     <ul class="pull-right">
-                        <a href="#">
-                            <span data-toggle="tooltip" title="Crea tus Listas">
+                        <a href="<?php echo $url;?>blog">
+                            <span data-toggle="tooltip" title="Blog">
                                 <img src="http://localhost/AdminComparador/vistas/img/iconos/blogs32.png" class="img-responsive img-thumbnail">
                             </span>
                            <!-- <h5>Blogs</h5> -->
@@ -169,32 +178,21 @@
                     </ul>
 
                     <ul class="pull-right">
-                        <a href="#">
-                            <span data-toggle="tooltip" title="Crea tus Listas">
+                        <a href="<?php echo $url;?>tiendas">
+                            <span data-toggle="tooltip" title="Tiendas">
                                 <img src="http://localhost/AdminComparador/vistas/img/iconos/tienda32.png" class="img-responsive img-thumbnail">
                             </span>
                           <!--  <h5>Tiendas</h5> -->
                         </a>
                     </ul>
-                    <?php 
-                    
-                    if(isset($_SESSION["validarSesion"])){
-                        if($_SESSION["validarSesion"] == "ok"){
-                            echo '
                             <ul class="pull-right">
-                        <a href="#">
-                            <span data-toggle="tooltip" title="Crea tus Listas">
+                        <a href="<?php echo $url;?>recetas">
+                            <span data-toggle="tooltip" title="Recetas">
                                 <img src="http://localhost/AdminComparador/vistas/img/iconos/receta32.png" class="img-responsive img-thumbnail">
                             </span>
                             <!-- <h5>Recetas</h5>-->
                         </a>
                     </ul>
-                            
-                            ';
-                        }
-                    }
-                        
-                    ?>
                     
                 </li>
             </div>
@@ -202,6 +200,37 @@
         </div>
     </div>
 </header>
+
+<!-- ==================================
+VENTANA MODAL PARA la UBICACION
+======================================-->
+<div class="modal fade modalFormulario" id="modalUbicacion" tabindex="-1" role="dialog" aria-labelledby="modalUbicacion" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modalTitulo">
+
+        <h3 class="colorbarra"><i class="fa fa-map-marker" aria-hidden="true"></i> INGRESA TU UBICACION</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        <div class="controlar">
+        <div class="col-xs-12 espacio">
+            <div class="col-md-12 espacio">
+                <form method="post" class="form-signin">
+                    <div id="logreg-forms">     
+                                    
+                       <div id="google_canvas" class="google_canvas"></div>
+
+                    </div>
+                </form>  
+            </div>
+        </div>
+        </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ==================================
 VENTANA MODAL PARA EL INICIO DE SESÍON
 ======================================-->
@@ -394,7 +423,7 @@ VENTANA MODAL PARA EL REGISTRO
                                                 <span  class="input-group-addon">
                                                     <i class="glyphicon glyphicon-user"></i>
                                                 </span>
-                                                <input type="text" class="form-control text-uppercase" id="regTienda" name="regTienda" placeholder="Email address" autocomplete="on" required="" autofocus="">
+                                               <!--  <input type="text" class="form-control text-uppercase" id="regTienda" name="regTienda" placeholder="Email address" autocomplete="on" required="" autofocus=""> -->
                                             </div>
                                         </div>
                                     
@@ -403,7 +432,7 @@ VENTANA MODAL PARA EL REGISTRO
                                                 <span  class="input-group-addon">
                                                     <i class="glyphicon glyphicon-envelope"></i>
                                                 </span>
-                                                <input type="password" id="regPasswordTienda" name="regPasswordTienda" class="form-control" placeholder="Password" required="" autocomplete="on">
+                                             <!--   <input type="password" id="regPasswordTienda" name="regPasswordTienda" class="form-control" placeholder="Password" required="" autocomplete="on"> -->
                                             </div>
                                         </div>
                                         

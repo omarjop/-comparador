@@ -182,31 +182,13 @@ VENTANAS MODALES
     width:210px !important;
     margin: 0 auto;
 }
-
-
-/*
-.modalFormulario .usuario, .modalFormulario .regTienda{
-    cursor: pointer;
+/*=====================================================================
+ESTILO PARA GOOGLE CANVAS UBICACION
+======================================================================*/
+.form-signin .google_canvas{
+    height: 50vh;
+    width: 80vh;
 }
-.modalFormulario .usuario p{
-    background-color: rgb(223, 141, 49);
-}
-.modalFormulario .regTienda p{
-    background-color: rgb(53, 116, 24);
-}
-.modalFormulario .usuario p, .modalFormulario .regTienda p{
-    color: white;
-    text-align: center;
-    line-height: 35px;
-    font-size: 18px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-.modalFormulario p i{
-    margin-right: 20px;
-    font-size: 20px;
-}*/
-
 /*=====================================================================
 Escritorios Grandes (LG revisamos en 1366px en adelante)
 ======================================================================*/

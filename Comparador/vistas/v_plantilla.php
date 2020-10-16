@@ -10,6 +10,14 @@
     <?php
         /** Mantener la ruta fija del proyecto*/
         $url = Ruta::ctrlRuta();
+
+        /** se crea la lista */
+        
+        if(isset( $_POST["nombreLista"])){
+            //365 * 24 * 60 * 60 para qeu dure un año
+            setcookie("lista-compra", $_POST["nombreLista"], time() + 3600); 
+        }
+        
         
     ?>
 
@@ -27,16 +35,21 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/ofertas.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/productos.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/testimonio.css">
-    
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/blog.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/footer.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/sidemenu.css">
+
 
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
    
     <script src="<?php echo $url ?>vistas/js/plugins/jquery.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/bootstrap.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/sweetalert.min.js"></script>
-    
 
-    
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvutLjDWiM2gOTSvLxOj35yQ2FEKXsfWI&callback=initMap">
+  </script>
+
 </head>
 <body>
     <?php  
@@ -66,27 +79,32 @@
 
             } else{
                 
-                if($rutas[0] == "verificar" || $rutas[0] == "salir"){
-
+                if($rutas[0] == "verificar" || $rutas[0] == "salir" || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
+                   $rutas[0]  == "listas"   || $rutas[0] == "recetas" ){
+                 
                     include "modulos/".$rutas[0].".php";
 
                 }else{
 
                     include "modulos/error404.php";
+                    
 
                 }
             }
+            include "modulos/footer.php";
         }else{
 
             include "modulos/slide.php";
             include "modulos/v_servicios.php";
             include "modulos/ofertas.php";
             include "modulos/testimonio.php";
+            include "modulos/footer.php";
             
         }
 
     ?>
 <input type="hidden" value="<?php echo $url; ?>" id="rutaOculta">
+<input type="hidden" value="<?php echo $_SESSION["id"]; ?>" id="idUsuario">
 
 <!--=====================================
 JAVASCRIPT PERSONALIZADO
@@ -96,6 +114,7 @@ JAVASCRIPT PERSONALIZADO
 <script src="<?php echo $url ?>vistas/js/herramienta.js"></script> 
 <script src="<?php echo $url ?>vistas/js/usuario.js"></script> 
 <script src="<?php echo $url ?>vistas/js/registroFacebook.js"></script> 
+<script src="<?php echo $url ?>vistas/js/listas.js"></script> 
 
 <!--=====================================
 INICIO SE SESION CON FACEBOOK 
