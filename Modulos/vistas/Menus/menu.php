@@ -172,7 +172,12 @@
                   <p>Categorias</p>
                 </a>
               </li>
-			  
+              <li class="nav-item">
+                <a href="adUnidadMedida" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Unidad Medida</p>
+                </a>
+              </li>			  
             </ul>
           </li>
 		  

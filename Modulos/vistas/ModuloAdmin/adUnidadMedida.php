@@ -1,6 +1,7 @@
 
+<?php 
+$resultado=null;
 
-<<<<<<< HEAD
   //--Boton del modal de agregar unidad, crea objeto de la clase controlador
 if(isset($_POST["btnaddunidad"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
@@ -9,9 +10,7 @@ if(isset($_POST["btnaddunidad"])){
      
      $objAdminAgregar->agregarCamposUnid("unidadmedida","nombreMedida",$valorUnidad,"control",$valorControl);
                        
-=======
-<?php 
-$resultado=null;
+
 //-- Al entrar se visualizan todas las marcas existentes
  $objAdminSeleccionaTodos  = new ControladorAdminSelect();
 $resultado=$objAdminSeleccionaTodos->buscarAllMarca();
@@ -24,7 +23,7 @@ if(isset($_POST["btnaddmarca"])){
                $objAdminAgregar->agregaMarca($valorMarca);
            
             
->>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794
+
     } 
 //--Boton lupa consulta marca
 
@@ -151,9 +150,9 @@ if(isset($_POST["lupamarca"])){
          $(".campoOculto").attr('value',$(this).attr('id'));
          document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
          $("#eliminarunidad").modal("show");  
-=======
+
          $("#modaddmarca").modal("show");  
->>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794
+
       });
   });
 
@@ -276,5 +275,4 @@ if(isset($_POST["lupamarca"])){
           </div>   
         </div>
   </form>
-=======
->>>>>>> 384f28666cdbd1390daedc2e5d2b581792129794
+

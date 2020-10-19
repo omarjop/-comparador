@@ -82,8 +82,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     include "vistas/modulos/cabezoteProducto.php";
                     include "vistas/Menus/menu.php";
                     include "vistas/ModuloTiendas/producto/".$_GET['ruta'].".php";
-          
-	           }else if(($_GET['ruta'] == "addmarca"||$_GET['ruta'] == "addNewProductAdmin")&& $tipoUser == 2){
+
+	           }else if(($_GET['ruta'] == "addmarca" || $_GET['ruta'] == "adUnidadMedida"|| 
+               $_GET['ruta'] == "addNewProductAdmin")&& $tipoUser == 2){
+
                     include "vistas/modulos/cabezoteProducto.php";
                     include "vistas/Menus/menu.php";
                     include "vistas/ModuloAdmin/".$_GET['ruta'].".php";
