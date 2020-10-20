@@ -20,6 +20,11 @@ class ControladorSelectsInTables{
                 $resultado =  $objSelect->selectARowsInDb($sql);
                 return $resultado;
         }
+        //retorna todos los registros  de una tabla
+         public function selectTodosRegistros($tabla){
+                $resultado = ModeloSelectAllTables:: selectTodosRegistros($tabla);
+                return $resultado;
+        }
 
         
 }

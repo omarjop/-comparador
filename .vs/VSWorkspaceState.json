@@ -1,11 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Comparador\\controladores",
+    "\\Comparador\\modelos",
     "\\Modulos",
     "\\Modulos\\vistas",
-    "\\Modulos\\vistas\\ModuloTiendas",
-    "\\Modulos\\vistas\\ModuloTiendas\\producto"
+    "\\Modulos\\vistas\\ModuloAdmin"
   ],
-  "SelectedNode": "\\Modulos\\vistas\\v_plantilla.php",
+  "SelectedNode": "\\Modulos\\vistas\\ModuloAdmin\\addmarca.php",
   "PreviewInSolutionExplorer": false
 }
