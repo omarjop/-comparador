@@ -218,6 +218,7 @@ $(document).ready(function(){
                                document.getElementById("unit").value = aux[0]+'-'+JSON.parse(respuesta).idunidadMedida;
                                mostrar(aux[0]+'-'+JSON.parse(respuesta).idunidadMedida);
                                document.getElementById(returnUnidad(aux[0])).value = JSON.parse(respuesta).pesoVolumen;
+                               
 			              }
 
 
@@ -227,6 +228,40 @@ $(document).ready(function(){
 
         })
 });
+
+
+ $(function(){
+     $("#btnaddproducto").click(function(){
+          var nombreAddP = $("#nameProduct").val();
+          //var unitAddP = $("#unit").val();
+          alert(nombreAddP)
+          var returnValue = true;
+            var datos = new FormData();
+            datos.append("nombreAddP", nombreAddP);
+            //datos.append("unitAddP", unitAddP);
+         
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(respuesta){
+                          if(respuesta.includes("null")){
+                             returnValue =  true;
+                          }else{
+                           $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe</div>');  
+                           returnValue =  false;                               
+			              }
+
+
+                    }
+
+              })
+              return returnValue;
+      });
+  });
 
 function returnUnidad(unidad){
      var returnValue = "";
@@ -714,18 +749,6 @@ $(function(){
 })();
 
 
-
-//----------------------------------funcion para autocompletar
-
-/*
-    $(document).ready(function(){
-	$("input#BtnMiProducto").on("keydown",function(){
-		var valor = $(this).val();
-        $("div#mensaje p").html(valor);
-	});
-
-   });*/
-
  $(document).ready(function(){
         $("#BtnMiProducto").on("keydown",function(){
     
@@ -770,58 +793,7 @@ $(function(){
 });
 
 
-/*BtnMiProducto.addEventListener('keyup', (event) => {
- 
-   if (!document.querySelector("#autoCompletedList")) {
 
-        ul = document.createElement('ul');
-        ul.setAttribute('id', 'autoCompletedList');
-        BtnMiProducto.after(ul);
-        
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-
-        if (xhr.readyState < 4) { }
-    }
-     xhr.onload = function () {
-
-        if (xhr.status == 200) {
-      
-            var res = JSON.parse(this.responseText);
-             // alert(xhr.status);
-            // remove elements
-            lista = document.querySelector('#autoCompletedList');
-            lista.innerHTML = "";
-
-            if (!res.error) {
-                 
-                for (i = 0; i < res.datos.length; i++) {
- 
-                    let id = res.datos[i].id;
-                    let nombre = res.datos[i].nombre;
-
-                    li = document.createElement("li");
-                    li.setAttribute('class', 'item' + res.datos[i].id);
-                    li.innerHTML = res.datos[i].nombre;
-                    lista.prepend(li);
- 
-                    document.querySelector('.item' + id).addEventListener('click', () => {
-                        document.querySelector("#BtnMiProducto").value = nombre;
-                        lista.innerHTML = "";
-                    })
-                }
-            }
- 
-         }
-    }
-    xhr.open('post', 'http://localhost/-comparador/Modulos/ajax/validacion.ajax.php', true);
-    // form data
-    let form = document.querySelector('#formulario');
-    data = new FormData(form);
-    xhr.send(data);
-})*/
 </script>
 
 

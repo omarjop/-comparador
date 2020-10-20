@@ -50,6 +50,21 @@ class   AjaxProducto{
 		}
         
     }
+
+    public function ajaxValidarNewProductoAdd($nombre,$unidad){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $nombre = "'".$nombre."'";
+        echo $nombre;
+        $sql = "SELECT * FROM producto where Nombre = "+$nombre/*+" AND unidadMedida_idunidadMedida ="+$unidad*/;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+        if ($respuesta!= null) {
+	        echo json_encode($respuesta);
+	    }else{
+           echo json_encode(null);
+		}
+        
+    }
 }
 /**
  * VALIDA y retorna los productos del campo auto completar
@@ -61,9 +76,16 @@ if(isset($_POST["validarProducto"])){
 }
 
 
-/*Valida los datos del producto cuando se registra uno nuevo*/
+/*Valida los datos del producto cuando se registra uno nuevo desde tiendas*/
 if(isset($_POST["newProduct"])){  
     $valProducto = new AjaxProducto();
     $valProducto -> validarProducto = $_POST["newProduct"];
     $valProducto ->ajaxValidarNewProducto();
+}
+
+
+/*Valida los datos del producto cuando se registra uno nuevo desde la administración*/
+if(isset($_POST["nombreAddP"])){  
+    $valProducto = new AjaxProducto();
+    $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"]/*,$_POST["unitAddP"]*/);
 }
