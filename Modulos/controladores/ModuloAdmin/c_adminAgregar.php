@@ -21,4 +21,18 @@ class ControladorAdminInsert{
 
         
     }
+        public function agregarCamposUnid($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("unidadmedida","nombreMedida","'$valorAgregar'","control","'$valorAgregar2'");
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego la unidad correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar la unidad.Codigo: '+".$resultado.");</script>";                             
+              }
+
+    
+
+        
+    }
 }
