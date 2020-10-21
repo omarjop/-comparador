@@ -6,7 +6,7 @@
         $idUsu = 10;
     }
 ?>
-<div class="container-fluid">
+<div class="container-fluid" >
     <div class="container">
     
         
@@ -65,7 +65,7 @@
         <!---========================================  
         TODAS MIS LISTAS style="display:none"
         ===========================================-->
-        <ul class="listasfullC">
+        <ul class="listasfullC" id="RecargarListas">
             <div class="col-lg-9 col-md-9 col-sm-10 col-xs-12 text-center" id="infoListas"> 
             
                 <?php  
@@ -76,10 +76,10 @@
                             <div class="row">';
                             foreach ($mostrarListas as $key => $value) {
                                 echo' <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center" id="infoListas">
-                                        
+                              
                                         <div class="cnt-block equal-hight" style="height: 220px;">
                                             <figure><img src="'.$url.'vistas/img/usuario/listas-de-verificacion1.png" class="img-responsive" alt=""></figure>
-                                            <h3>'.$value["nombreLista"].'</h3>
+                                            <h3 id="nameListCCC">'.$value["nombreLista"].'</h3>
                                             <ul class="follow-us clearfix">
                                                 <li><span data-toggle="tooltip" title="Comparar lista"><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a> </span></li>
                                                 <li><span data-toggle="tooltip" title="Ver y editar lista"><a class="listEditView" href="#" id="'.$value["idListaCompra"].'"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
@@ -117,8 +117,6 @@
                 ?>
             </div>
         </ul>
-        <ul class="ListasActualizadas"> </ul>
-       
         <!---========================================  
         LISTAS COMPARTIDAS style="display:none"
         ===========================================-->
@@ -141,6 +139,7 @@
                                 echo' <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center" id="infoListas">
                                         
                                         <div class="cnt-block equal-hight" style="height: 220px;">
+                                       
                                             <figure><img src="'.$url.'vistas/img/usuario/listas-de-verificacion1.png" class="img-responsive" alt=""></figure>
                                             <h3><a href="http://www.webcoderskull.com/">'.$value["nombreLista"].'</a></h3>
                                                 <ul class="follow-us clearfix">
@@ -297,21 +296,61 @@
         <!---========================================  
         DIV PARA VER Y EDITAR LISTAS
         ===========================================-->
-        <ul class="listaEditViewC" id="listaEditView" style="display:none">
+        <ul class="listaEditViewC" style="display:none">
             <div class="col-lg-9 col-md-9 col-sm-10 col-xs-12" id="infoListas"> 
                 <div class="table-responsive">
                     <div class="table-wrapper table-striped  table-hover">
                         <div class="table-title">
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <h2 id="nameList"></h2>
+                                <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+                                    <div id="nameList"></div>
                                </div> 
-                                <div class="col-lg-6col-md-6 col-sm-6 col-xs-12">
-                                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="fa fa-plus-circle" aria-hidden="true"></i> <span>Agrara Producto</span></a>
-                                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="fa fa-minus-circle"  aria-hidden="true"></i> <span>Eliminar</span></a>						
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div id="botonesCabecera"></div>		
                                 </div>
                             </div>
                         </div>
+
+                        <!-- aca se debe colocar una clase para ocultarla  style="display:none;"-->
+                        <div class="agragaProduct" style="display:none;">
+                            <div class="row">  
+                               <div class="AgregaProducto" id="AgregaProducto"></div>
+                             <!--    <select id="mibuscador" class="form-control" style="width:40%;">
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>  -->
+                            </div>
+                        </div>
+                        <!-- ------ -->
+
                         <table class="table">
                             <thead>
                                 <tr>

@@ -102,9 +102,9 @@
 *ESTILOS DE LAS LISTAS
 */
 #infoListas .titiloInf {
-    height: 40px;
+    height: 50px;
     background-color:#435d7d;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 15px;
     font-size: 15px;
     color: white;
@@ -191,6 +191,30 @@ ESTILO PARA EDITAR LA LISTA
 	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
+.agragaProduct{
+	padding-bottom: 15px;
+	background: #d8d8da;
+	color: rgb(138, 137, 118);
+	padding: 16px 30px;
+	min-width: 100%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+}
+
+.agragaProduct .btn {
+	color: #fff;
+	float: right;
+	font-size: 13px;
+	border: none;
+    padding-top: 9px;
+    padding-bottom: 8px;
+
+}
+
+.agragaProduct legend{
+	color: #807f7b;
+}
+
 .table-title h2 {
 	margin: 5px 0 0;
 	font-size: 24px;
@@ -301,7 +325,8 @@ table.table .avatar {
 	float: left;
 	margin-top: 10px;
 	font-size: 13px;
-}    
+}   
+
 /*Custom checkbox 
 .custom-checkbox {
 	position: relative;

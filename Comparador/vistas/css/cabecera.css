@@ -62,7 +62,7 @@ header #buscador input{
     border-radius: 0px;
 }
 header #buscador button{
-    padding: 10px 15px;
+    padding: 9px 15px;
     border: 1px solid silver;
     border-radius: 0;
 }
@@ -103,7 +103,7 @@ VENTANAS MODALES
 }
 /**  ===========================*/
 .form-control {
-    height: 37px;
+    height: 36px;
 }
 .stepwizard-step p {
     margin-top: 5px;

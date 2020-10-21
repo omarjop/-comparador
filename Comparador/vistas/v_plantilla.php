@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/sweetalert.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/select2.min.css" rel="stylesheet" />
     
     <!--  Hojas de Estilos personalizadas-->
 
@@ -79,8 +80,9 @@
 
             } else{
                 
-                if($rutas[0] == "verificar" || $rutas[0] == "salir" || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
-                   $rutas[0]  == "listas"   || $rutas[0] == "recetas" ){
+                if($rutas[0] == "verificar"|| $rutas[0] == "salir"   || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
+                   $rutas[0] == "listas"   || $rutas[0] == "recetas" || $rutas[0] == "listas-compartidas" || $rutas[0] == "listas-de-recetas" ||
+                   $rutas[0] == "papelera" ){
                  
                     include "modulos/".$rutas[0].".php";
 
@@ -115,6 +117,7 @@ JAVASCRIPT PERSONALIZADO
 <script src="<?php echo $url ?>vistas/js/usuario.js"></script> 
 <script src="<?php echo $url ?>vistas/js/registroFacebook.js"></script> 
 <script src="<?php echo $url ?>vistas/js/listas.js"></script> 
+<script src="<?php echo $url ?>vistas/js/plugins/select2.min.js"></script>
 
 <!--=====================================
 INICIO SE SESION CON FACEBOOK 

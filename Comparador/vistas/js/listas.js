@@ -1,3 +1,4 @@
+
 var idUsuario = $("#idUsuario").val();
 var verLista= 0;
 /********************************************** 
@@ -5,12 +6,18 @@ var verLista= 0;
  **********************************************/
 $(".listasFull").click(function(e){
     e.preventDefault();
+
+    if(verLista == 1){
+        location.reload();
+        verLista = 0;
+    }
+    
     $(".listasborradasC").hide();
     $(".listaEditViewC").hide();
     $(".listasCompartidasD").hide();
     $(".listasRecetasR").hide();
     $(".listasfullC").show();
-    
+    $(".agragaProduct").hide(); 
 })
 
 $(".listasComp").click(function(e){
@@ -21,7 +28,7 @@ $(".listasComp").click(function(e){
     $(".listasRecetasR").hide();
     $(".listasCompartidasD").show();
     $("#ListasActualizadas").hide();
-
+    $(".agragaProduct").hide(); 
 })
 
 $(".listasRecetas").click(function(e){
@@ -31,6 +38,7 @@ $(".listasRecetas").click(function(e){
     $(".listasfullC").hide();
     $(".listasCompartidasD").hide();
     $(".listasRecetasR").show();
+    $(".agragaProduct").hide(); 
 })
 
  $(".listasBorradas").click(function(e){
@@ -40,13 +48,14 @@ $(".listasRecetas").click(function(e){
     $(".listasCompartidasD").hide();
     $(".listasRecetasR").hide();
     $(".listasfullC").hide();
+    $(".agragaProduct").hide(); 
 })
 
 /********************************************** 
  * MULTIPLE SELECCION DEL LAS LISTAS
  **********************************************/
 $(document).ready(function(){
-
+    $("#mibuscador").select2();
 	// Select/Deselect checkboxes
 	var checkbox = $('table tbody input[type="checkbox"]');
 	$("#selectAll").click(function(){
@@ -74,7 +83,7 @@ $(document).ready(function(){
  *********************************************************/
 $(".listEditView").click(function(e){
     e.preventDefault();
-    console.log("pruebas");
+    $(".agragaProduct").hide(); 
     var select = document.querySelector('.follow-us');
     var idLista = select.querySelectorAll("a.listEditView");
     var idLista = this.id;
@@ -100,9 +109,14 @@ function pintarCabeceraLista(idLista){
         success: function(respuesta){
             let obj = JSON.parse(respuesta);
             let plantilla = " ";
+            let plantilla2 = " ";
             plantilla +='<h2>'+obj.nombreLista+' <a onclick="activarFormulario(\''+obj.nombreLista+'\', '+obj.idListaCompra+')" id='+obj.idListaCompra+' class="btn cadena" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>'
-                
+
+            plantilla2 += ' <a onclick="activarFormularioProducto(\''+obj.nombreLista+'\', '+obj.idListaCompra+')" id='+obj.idListaCompra+' class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> <span>Agrara Producto</span></a>'
+          //  plantilla2 += ' <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="fa fa-minus-circle"  aria-hidden="true"></i> <span>Eliminar</span></a>'					
+
             $("#nameList").html(plantilla);
+            $("#botonesCabecera").html(plantilla2); 
             $(".listasfullC").hide();
             $(".listaEditViewC").show();
         }
@@ -110,12 +124,83 @@ function pintarCabeceraLista(idLista){
     })
 }
 function activarFormulario(name, id){
+    
     let plantilla = " ";
-    plantilla +=' <input type="text" class="form-control is-valid" id="newNameList" name="newNameList" placeholder="" value="' + name + '" required>'
-    plantilla +='<button type="button" onclick="cambiarNombreListaF('+ id +')" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>Cambiar</button>'
-    plantilla +='<button type="button" onclick="pintarCabeceraLista(' + id + ')" class="btn btn-danger"><i class="fa fa-minus-circle"  aria-hidden="true"></i> Cancelar</button>'
+    plantilla += ' <form>'
+    plantilla += '<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">' 
+    plantilla +=' <input type="text" class="form-control"  id="newNameList" name="newNameList" placeholder="" value="' + name + '" required="">'
+    plantilla += '</div>'
+    plantilla += '<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">' 
+    plantilla +='<a onclick="pintarCabeceraLista(' + id + ')" class="btn btn-danger pull-left"><i class="fa fa-thumbs-o-down "  aria-hidden="true"></i>Cancelar</a>'
+    plantilla +='<a onclick="cambiarNombreListaF('+ id +')" class="btn btn-success pull-left"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Cambiar</a>'
+    plantilla += '</div>'
+    plantilla += ' <form>'
     $("#nameList").html(plantilla);
     
+}
+function activarFormularioProducto(nameL, idL){
+    
+    var idLis = idL;
+    let plantilla = " ";
+    plantilla += '<legend>Agregue productos a tu lista</legend>'
+    plantilla += '<div class="col-lg-10 col-md-9 col-sm-12 col-xs-12">   ' 
+    plantilla += '    <div class="input-group">'
+    plantilla += '        <input list="colores" name="colores" type="text" class="form-control" placeholder="Nombre del producto" autocomplete="on" required="" style="width: 390px;">'
+    plantilla += '        <input type="text" class="form-control" placeholder="cantidad" autocomplete="on" required="" style="width: 156px;">'
+    plantilla += '        <div class="input-group-btn">'
+    plantilla += '        <button onclick="agregarProductoLista('+ idLis +')" class="btn btn-success">'
+    plantilla += '            <i class="fa fa-product-hunt"></i> Agregar'
+    plantilla += '        </div>'
+    plantilla += '    </div>'
+    plantilla += '</div>'
+    plantilla += '<div class="col-lg-2 col-md-9 col-sm-12 col-xs-12">'
+    plantilla += '    <a onclick="ocultarFormularioProducto()" class="btn btn-info">¡Ya termine !</a>'
+    plantilla += '</div>'
+    plantilla += '<datalist id="colores">'
+    plantilla += '  <option value="Papa"></option>'
+    plantilla += '  <option value="Arroz"></option>'
+    plantilla += '  <option value="Espagueti"></option>'
+    plantilla += '  <option value="Salsa de tomate"></option>'
+    plantilla += '  <option value="Mayonesa"></option>'
+    plantilla += '</datalist>'
+    $("#AgregaProducto").html(plantilla);
+    $(".agragaProduct").show();  
+}
+function ocultarFormularioProducto(){
+    $(".agragaProduct").hide(); 
+} 
+function agregarProductoLista(idLis){
+    console.log(idLis+" "+idUsuario);
+} 
+/*$(document).ready(function(){
+    setInterval(
+        function(){
+            console.log("cambio");
+            $("#recargaLista").load("Comparador/vistas/modulos/listas.php");
+        }, 2000
+    )
+})*/
+function consultarproductos(){
+        var datos = new FormData();
+        datos.append("nameChange", newName);
+        datos.append("idChange", id);
+        $.ajax({
+            url:rutaOculta+"ajax/lista.ajax.php",
+            method:"POST",
+            data: datos, 
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(respuesta){
+               if(respuesta == "ok"){
+                    pintarCabeceraLista(id);
+                    verLista = 1;
+                     // Ayuda a recargar una sola porcion de codigo obligatorio el espacio load(" #RecargarListas"); 
+                  //  $("#RecargarListas").load(" #RecargarListas"); 
+                }
+            }
+
+        })
 }
 function cambiarNombreListaF(id){
     var newName = $("#newNameList").val();
@@ -135,6 +220,8 @@ function cambiarNombreListaF(id){
                if(respuesta == "ok"){
                     pintarCabeceraLista(id);
                     verLista = 1;
+                     // Ayuda a recargar una sola porcion de codigo obligatorio el espacio load(" #RecargarListas"); 
+                  //  $("#RecargarListas").load(" #RecargarListas"); 
                 }
             }
 
@@ -215,10 +302,9 @@ $(".listDelete").click(function(e){
                         closeOnConfirm: false
 
                     },
-
                         function(isConfirm){
                             if(isConfirm){
-                                window.location = localStorage.getItem("rutaActual");
+                               location.reload();
                             }
                 });
 
@@ -267,7 +353,7 @@ $(".recuperarlista").click(function(e){
                         if(respuesta == "ok"){
                             swal("BUEN TRABAJO!", "Tu lista fue recuperada con éxito.!", "success")
                             setTimeout(function () {
-                                window.location = localStorage.getItem("rutaActual");
+                                location.reload();
                                 
                               }, 1000);
                             
@@ -280,6 +366,33 @@ $(".recuperarlista").click(function(e){
               }
     });
 })
+
+/*****************************************************************
+ * METODO PARA CONSULTAR TODAS LAS LISTAS ACTIVAS DE UN USUARIO
+ *****************************************************************/
+function actualizarListasUsuario(){
+    var item1 = "Persona_idPersona";
+    var item2 = "listaCompra_idListaCompra";
+    var valor1 = idUsuario;
+    var valor2 = "1";
+    var datos = new FormData();
+    datos.append("item1", item1);
+    datos.append("item2", item2);
+    datos.append("valor1", valor1);
+    datos.append("valor2", valor2);
+    $.ajax({
+        url:rutaOculta+"ajax/lista.ajax.php",
+        method:"POST",
+        data: datos, 
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(respuesta){
+            window.location = localStorage.getItem("rutaActual");
+        }
+
+    })
+}
 
 /*****************************************************************
  * METODO PARA CONSULTAR TODAS LAS LISTAS ACTIVAS DE UN USUARIO
