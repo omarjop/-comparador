@@ -34,63 +34,79 @@
 
     }
     
- function validarFormulario(formulario){
+ 
+     
+</script>
+<script>
+ var returnValue ;
+
+
+
+
+function validarFormulario(formulario){
          
          var nombre = formulario.nameProduct.value;
          var precio = formulario.price.value;
          var pesoVolumen = formulario.unit.value;
-         var marca = formulario.Brand.value;
+         var marca = formulario.marca.value;
          var categoria = formulario.Category.value;
          var gramos = formulario.grams.value;
          var kilogramos = formulario.kilograms.value;
          var mililitros = formulario.milliliters.value;
          var centimetros = formulario.centimeters.value;
-         var nuevaCategoria = formulario.NewCategory.value;
-         
-         if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido","nameProduct")!=true){
-             return false;
-		 }
-         if(validarPrecio(precio,"price")!=true){
-             return false;
-		 }
-         if(validarPesoVolumenAndCategoria(pesoVolumen,"no es una unidad de peso o volumen no es v&aacute;lida","unit")!=true){
-             return false;
-		 }
-         if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
-             return false;
-		 }
-         if(validarNombreAndMarca(marca,"No es un nombre de marca v&aacute;lido","Brand")!=true){
-             return false;
-		 }
-         if(validarPesoVolumenAndCategoria(categoria,"Categor&iacute;a, seleccione una opci&oacute;n valida","Category")!=true){
-             return false;
-		 }
-         if(validarNuevaCategoria(categoria,nuevaCategoria)!=true){
-             return false;
-		 }
 
-         
-     return true;
+                 if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido","nameProduct")!=true){
+                   returnValue = false;
+                    // return false;
+		         }
+                 if(validarPrecio(precio,"price")!=true){
+                   returnValue = false;
+                     //return false;
+		         }
+                 if(validarPesoVolumenAndCategoria(pesoVolumen,"no es una unidad de peso o volumen no es v&aacute;lida","unit")!=true){
+                     returnValue = false;
+                     //return false;
+		         }
+                 if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
+                     returnValue = false;
+                     ///return false;
+		         }
+                 if(validarNombreAndMarca(marca,"No es un nombre de marca v&aacute;lido","marca")!=true){
+                     returnValue = false;
+                    // return false;
+		         }
+                 if(validarPesoVolumenAndCategoria(categoria,"Categor&iacute;a, seleccione una opci&oacute;n valida","Category")!=true){
+                     returnValue = false;
+                    // return false;
+		         }
+
+                     if(returnValue!=true){
+                        returnValue = false;   
+					 }else{
+                        returnValue = true;              
+					 }
+ 
+     
+     return returnValue;
  }
  //------funciones de validacion de cada uno de los campos
  function validarNombreAndMarca(valor,mensaje,campoForm){
-         if (isNaN(parseInt(valor))) {
-              return true;
-         }else{       
-         //nameProduct
-          toastr.error(mensaje);
-          document.getElementById(campoForm).value = "";
-
-                      
-               return false;
-		 } 
+               if(valor == "seleccione"){
+           toastr.error(mensaje);
+           //document.getElementById(campoForm).value = "";
+           return false; 
+		}else{
+           return true;  
+		}
  }
  
   function validarPrecio(valor,campoForm){
+
             if(!valor.includes(',')){
                  if (isNaN(parseFloat(valor))) {
                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
                       //toastr.error("El valor ("+document.getElementById(campoForm).value+") "+mensaje);
+                      //$("#"+campoForm).parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)</div>');  
                       document.getElementById(campoForm).value = "";
                       return false;
                  }else{
@@ -107,7 +123,7 @@
  function validarPesoVolumenAndCategoria(valor,mensaje,campoForm){
         if(valor == "seleccion"){
            toastr.error(mensaje);
-           document.getElementById(campoForm).value = "";
+           //document.getElementById(campoForm).value = "";
            return false; 
 		}else{
            return true;  
@@ -157,9 +173,53 @@
          return true;
  }
 
-     
-</script>
-<script>
+
+
+ $(function(){
+     $("#btnaddproducto").click(function(){
+          
+         if(returnValue!=false){
+                          var nombreAddP = $("#nameProduct").val();
+                          //var unitAddP = $("#unit").val();
+                         // alert(nombreAddP)
+
+                            var datos = new FormData();
+            
+                            datos.append("nombreAddP", nombreAddP);
+         
+                            $.ajax({
+                   
+                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                                    method:"POST",
+                                    data: datos, 
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    async:false,
+                                    success: function(respuesta){
+                                          if(respuesta.includes("null")){                          
+                                             $(".alert").remove();
+                                             returnValue =  true;
+                                          }else{
+                                          $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>El producto ya se encuentra registrado</div>');                               
+                                             returnValue = false;                              
+			                              }
+
+
+                                    }
+
+                              })
+                   }
+
+              return returnValue;
+              
+      });
+
+      
+
+  });
+
+
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
   'use strict';
@@ -182,7 +242,7 @@
 //--------------------------------------------------------------------------------------------------------
 /*auto completar al agregar nuevo producto*/
 $(document).ready(function(){
-        $("#nameProduct").change(function(){
+       $("#nameProduct").change(function(){
     
             var producto = $("#nameProduct").val();
             var datos = new FormData();
@@ -195,8 +255,11 @@ $(document).ready(function(){
                     cache: false,
                     contentType: false,
                     processData: false,
+                    async:false,
                     success: function(respuesta){
                           if(respuesta.includes("null")){
+                          $(".alert").remove();
+                          returnValue = true;    
                                 document.getElementById("Reference").value = null;
                                 document.getElementById("description").value = null;
                                 document.getElementById("Brand").value = null;
@@ -228,40 +291,14 @@ $(document).ready(function(){
 
         })
 });
+//valida el precio
+$(document).ready(function(){
+       $("#price").change(function(){
+         returnValue = true; 
+        })
+});
 
 
- $(function(){
-     $("#btnaddproducto").click(function(){
-          var nombreAddP = $("#nameProduct").val();
-          //var unitAddP = $("#unit").val();
-          alert(nombreAddP)
-          var returnValue = true;
-            var datos = new FormData();
-            datos.append("nombreAddP", nombreAddP);
-            //datos.append("unitAddP", unitAddP);
-         
-            $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(respuesta){
-                          if(respuesta.includes("null")){
-                             returnValue =  true;
-                          }else{
-                           $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe</div>');  
-                           returnValue =  false;                               
-			              }
-
-
-                    }
-
-              })
-              return returnValue;
-      });
-  });
 
 function returnUnidad(unidad){
      var returnValue = "";
@@ -705,7 +742,7 @@ $(function(){
   //precioEdit
 
 
-  function validarFormulario(formulario){
+  function validarFormularioEdit(formulario){
        var precio = formulario.precioEdit.value;
          if(validarPrecio(precio,"precioEdit")!=true){
              return false;
@@ -872,7 +909,7 @@ $(function(){
 
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
-  <form class="form " method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);">
+  <form class="form " method="post"  enctype="multipart/form-data" >
         <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
@@ -913,7 +950,7 @@ $(function(){
 
   <!--Modal para el registro de producto-->
 
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);" novalidate>
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data"onSubmit="return validarFormulario(this);" novalidate >
             <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
               aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -927,6 +964,10 @@ $(function(){
                                   <div class="modal-body mx-3">
                                     <div class="md-form mb-4">
                                       <input id="nameProduct" name="nameProduct" type="text" placeholder="Nombre producto" class="form-control"   oninput="check_text(this);" required>                                      
+                                    </div>
+
+                                    <div class="md-form mb-4">
+                                     <input id="price" name="price" type="text" placeholder="Precio" class="form-control" >
                                     </div>
 
                                     <div class="md-form mb-4">                                      

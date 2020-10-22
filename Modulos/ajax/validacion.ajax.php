@@ -51,12 +51,11 @@ class   AjaxProducto{
         
     }
 
-    public function ajaxValidarNewProductoAdd($nombre,$unidad){
+    public function ajaxValidarNewProductoAdd($nombre/*,$unidad*/){
      
         $objSelect = new ControladorSelectsInTables();
         $nombre = "'".$nombre."'";
-        echo $nombre;
-        $sql = "SELECT * FROM producto where Nombre = "+$nombre/*+" AND unidadMedida_idunidadMedida ="+$unidad*/;
+        $sql = "SELECT * FROM producto where Nombre = $nombre"/*+" AND unidadMedida_idunidadMedida ="+$unidad*/;
         $respuesta = $objSelect->selectARowsInDb($sql);
         if ($respuesta!= null) {
 	        echo json_encode($respuesta);
