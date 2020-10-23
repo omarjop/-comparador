@@ -51,13 +51,15 @@ class   AjaxProducto{
         
     }
 
-    public function ajaxValidarNewProductoAdd($nombre/*,$unidad*/){
+    public function ajaxValidarNewProductoAdd($nombre,$unidad){
      
         $objSelect = new ControladorSelectsInTables();
         $nombre = "'".$nombre."'";
-        $sql = "SELECT * FROM producto where Nombre = $nombre"/*+" AND unidadMedida_idunidadMedida ="+$unidad*/;
+        //$unidad = "'".$unidad."'";
+        
+        $sql = "SELECT * FROM producto where Nombre = $nombre AND unidadMedida_idunidadMedida = $unidad";
         $respuesta = $objSelect->selectARowsInDb($sql);
-        if ($respuesta!= null) {
+        if ($respuesta!= null ) {
 	        echo json_encode($respuesta);
 	    }else{
            echo json_encode(null);
@@ -86,5 +88,5 @@ if(isset($_POST["newProduct"])){
 /*Valida los datos del producto cuando se registra uno nuevo desde la administración*/
 if(isset($_POST["nombreAddP"])){  
     $valProducto = new AjaxProducto();
-    $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"]/*,$_POST["unitAddP"]*/);
+    $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"],$_POST["unitAddP"]);
 }

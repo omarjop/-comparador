@@ -180,12 +180,16 @@ function validarFormulario(formulario){
           
          if(returnValue!=false){
                           var nombreAddP = $("#nameProduct").val();
-                          //var unitAddP = $("#unit").val();
+                          var unitAddP = $("#unit").val();
+                          var aux  = unitAddP.split("-");
+                          unitAddP = aux[1];
+                          //alert(unitAddP);
                          // alert(nombreAddP)
 
                             var datos = new FormData();
             
                             datos.append("nombreAddP", nombreAddP);
+                            datos.append("unitAddP", unitAddP);
          
                             $.ajax({
                    
@@ -202,7 +206,7 @@ function validarFormulario(formulario){
                                              returnValue =  true;
                                           }else{
                                           $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>El producto ya se encuentra registrado</div>');                               
-                                             returnValue = false;                              
+                                            returnValue = false;                              
 			                              }
 
 
@@ -213,11 +217,46 @@ function validarFormulario(formulario){
 
               return returnValue;
               
-      });
-
-      
+      });     
 
   });
+
+//valida el precio
+$(document).ready(function(){
+       $("#price").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+
+  //valida referencia
+$(document).ready(function(){
+       $("#Reference").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+  //valida peso volumen
+$(document).ready(function(){
+       $("#unit").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+  //valida marca
+$(document).ready(function(){
+       $("#marca").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+  //validacategoria
+$(document).ready(function(){
+       $("#Category").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
 
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -291,12 +330,7 @@ $(document).ready(function(){
 
         })
 });
-//valida el precio
-$(document).ready(function(){
-       $("#price").change(function(){
-         returnValue = true; 
-        })
-});
+
 
 
 
@@ -1049,6 +1083,11 @@ $(function(){
                                     </div>
 
                                   </div>
+
+                                        <?php  
+                                           /* $registro  = new ControladorProductosTienda();
+                                            $registro ->registrarProducto($objTiendaInicial);*/
+                                        ?>
 
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
