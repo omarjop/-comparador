@@ -19,9 +19,42 @@ if(isset($_POST["btnaddunidad"])){
     $objAdminAgregar  = new ControladorAdminInsert();
     $valorUnidad = $_POST["addunidad"]; 
     $valorControl= $_POST["selecontrol"];
-     
+   
      $objAdminAgregar->agregarCamposUnid("unidadmedida","nombreMedida",$valorUnidad,"control",$valorControl);
-   }                    
+   }  
+
+//--Boton del modal de eliminar , crea objeto de la clase controlador
+if(isset($_POST["btnEliminarUnidad"])){                           
+     $objAdminEliminar  = new ControladorAdminEliminar();
+     $valorUnidElim = $_POST["campoOculto2"]; 
+     $objConsultaUnidad= new ControladorAdminSelect();
+     $resultadoConsulta= $objConsultaUnidad->consultaPrevia($valorUnidElim,'producto','unidadMedida_idunidadMedida'); 
+     if($resultadoConsulta==null){
+
+        $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorUnidElim,"unidadmedida","idunidadMedida");  
+        if($resultadoEliminar=="Exitoso"){
+           echo "<script>toastr.info('Unidad Medida eliminada exitosamente');</script>";                              
+         }else{
+           echo "<script>toastr.error('Error al eliminar Unidad Medida, por favor intente nuevamente);</script>";                             
+         }    
+
+       }else{
+
+          echo "<script>toastr.error('La unidad tiene productos asociados no se puede eliminar');</script>"; 
+     }
+      
+    } 
+ //--Boton del modal de editar, crea objeto de la clase controlador
+if(isset($_POST["btnEditarUnidad"])){                           
+     $objAdminModificar  = new ControladorAdminModificar();
+     $idUnidadModif = $_POST["idunidadMedida"];
+     $valorUnidades = $_POST["unidadEdit"];  
+     $valorControlModif = $_POST["selecontrol2"]; 
+     $resultadoModificar=$objAdminModificar->modifDosCampos("unidadmedida","idunidadMedida","nombreMedida",$valorUnidades,$idUnidadModif,"control",$valorControlModif);
+                                                                                                            
+      
+        
+    }                      
 
 //-- Al entrar se visualizan todas las unidades existentes
 $objAdminSeleccionaTodos  = new ControladorAdminSelect();
@@ -142,7 +175,7 @@ if(isset($_POST["lupaunidad"])){
          $(".idunidadMedida").attr('value',$(this).attr('id'));
          $(".unidadEdit").attr('value',$(this).attr('nombunidad'));   
          $("#modifiUnidad").modal("show");
-         document.getElementById("selecontrol").value=$(this).attr('idcontrol');
+         document.getElementById("selecontrol2").value=$(this).attr('idcontrol');
          
       });
   });    
@@ -244,26 +277,28 @@ if(isset($_POST["lupaunidad"])){
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
-                   <div class="modal-body">
+                 
                         <!-- aqui va el mensaje que se pasa por parametro-->
-                    
+                      <div class="modal-body mx-3">
                                 <input   type="text" value ="" placeholder="Nombre Unidad" class="form-control unidadEdit" id="unidadEdit" name ="unidadEdit" required>  
-                                   
-                      <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol" name="selecontrol"  required><option value = "seleccion">Seleccione Control</option>
+                    </div>     
+                      <div class="modal-body mx-3">       
+                      <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol2" name="selecontrol2"  required><option value = "seleccion">Seleccione Control</option>
                                <?php for($i=0;$i<count($controlNumerico);$i++){?>
                                <option value="<?php echo $controlNumerico[$i]; ?>"><?php echo $controlCaracter[$i]; ?></option> 
                                <?php }?> 
-                       </select>                      
-                   </div>
-
+                       </select>
+                                             
                     <input   style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idunidadMedida" id="idunidadMedida" name ="idunidadMedida"> 
+                     </div>  
                     <div class="form-group">  
-                          <div class="modal-footer">         
+                          <div class="modal-footer d-flex justify-content-center">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
                                 <button type="submit" name = "btnEditarUnidad" id = "btnEditarUnidad" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
                           </div>
                     </div>
-            </div>
+          
           </div>   
         </div>
+      </div> 
   </form>

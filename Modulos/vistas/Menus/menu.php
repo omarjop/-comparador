@@ -148,6 +148,13 @@
             <ul class="nav nav-treeview">
             
               <li class="nav-item">
+                <a href="addTipoEmpresa" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipo Empresa</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a href="addNewProductAdmin" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Productos</p>

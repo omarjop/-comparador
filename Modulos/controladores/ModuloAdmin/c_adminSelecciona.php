@@ -18,4 +18,15 @@ class ControladorAdminSelect{
            $resultado = $objAdminSeleccionar->selectARowsInDb($sql);
            return $resultado;
          }
+
+          public function consultaPrevia($valorConsultar,$tabla,$columnaCompara){
+                 
+           $objAdminSeleccionar  = new ControladorSelectsInTables();
+           //$valorConsultar = "'$valorConsultar'";
+           $sql= "select * from ".$tabla." where ".$columnaCompara." =".$valorConsultar;
+           $resultado = $objAdminSeleccionar->selectARowsInDb($sql);
+
+            return $resultado;
+         }
+
 }

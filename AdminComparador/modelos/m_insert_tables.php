@@ -13,7 +13,7 @@ private $servicio;
                    $this->db = Conexion::conectar();
                     $sql = "INSERT INTO ".$tabla."(".$into.") VALUES (".$values.")";
                     $result = $this->db->query($sql);
-
+                
                     if ($result) {                        
                         return $this->db->lastInsertId(); //Retorna el id del registro inseertado
                     } else {

@@ -15,13 +15,24 @@ if(isset($_POST["btnaddmarca"])){
 //--Boton del modal de eliminar marca, crea objeto de la clase controlador
 if(isset($_POST["btnEliminarMarca"])){                           
      $objAdminEliminar  = new ControladorAdminEliminar();
-     $valorMarca = $_POST["campoOculto2"]; 
-     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");  
+     $valorMarca = $_POST["campoOculto2"];  
+     $objConsultaMarca= new ControladorAdminSelect();
+     $resultadoConsulta= $objConsultaMarca->consultaPrevia($valorMarca,'producto','Marca_idMarca');
+     
+     if($resultadoConsulta==null){
+       
+        $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");  
         if($resultadoEliminar=="Exitoso"){
            echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
-	    }else{
+         }else{
            echo "<script>toastr.error('Error al eliminar marca, por favor intente nuevamente);</script>";                             
-	    }          
+         }                 
+     }else{
+
+          echo "<script>toastr.error('La marca tiene productos asociados no se puede eliminar');</script>"; 
+     }
+
+        
     } 
 
  //--Boton del modal de editar marca, crea objeto de la clase controlador
