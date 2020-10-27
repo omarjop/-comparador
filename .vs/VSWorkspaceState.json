@@ -1,10 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Comparador",
-    "\\Comparador\\vistas",
-    "\\Comparador\\vistas\\js"
+    "\\Modulos",
+    "\\Modulos\\ajax"
   ],
-  "SelectedNode": "\\Comparador\\vistas\\js\\usuario.js",
+  "SelectedNode": "\\Modulos\\ajax\\validacion.ajax.php",
   "PreviewInSolutionExplorer": false
 }
