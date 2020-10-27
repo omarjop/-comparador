@@ -125,7 +125,7 @@ if(isset($_POST["lupamarca"])){
               <button type="button" class="btn btn-warning botaddmarca colorbotonamarillo" >Agregar Marca</button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-             <div class="input-group col-lg-8 col-md-7 col-sm-9 col-xs-7" id="buscadormarca">
+             <div class="input-group col-lg-6 col-md-7 col-sm-9 col-xs-8" id="buscadormarca">
                         <input type="search" name="buscamarcas" id="buscamarcas" class="form-control"  placeholder="Buscar Marca">
                         <span  class="input-group-btn">
                             <a href="#">
@@ -140,7 +140,7 @@ if(isset($_POST["lupamarca"])){
           </div><!-- /.col -->
 
        <?php
-           if ($resultado!= null){
+           if ($resultado!= null && $resultado!= "Fallo" ){
             for ($i=0;$i<count($resultado);$i++){
              
         ?> 

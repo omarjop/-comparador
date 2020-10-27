@@ -31,10 +31,16 @@ class ControladorAdminInsert{
          
             }else{
                  echo "<script>toastr.error('Error al agregar la unidad.Codigo: '+".$resultado.");</script>";                             
-              }
-
-    
-
-        
+              }    
     }
+        public function agregarCamposTEmp($tabla,$columna,$valorAgregar){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("tipoempresa","descripcion","'$valorAgregar'");
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }
+      }
 }

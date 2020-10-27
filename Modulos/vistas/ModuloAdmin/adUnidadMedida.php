@@ -19,8 +19,7 @@ if(isset($_POST["btnaddunidad"])){
     $objAdminAgregar  = new ControladorAdminInsert();
     $valorUnidad = $_POST["addunidad"]; 
     $valorControl= $_POST["selecontrol"];
-   
-     $objAdminAgregar->agregarCamposUnid("unidadmedida","nombreMedida",$valorUnidad,"control",$valorControl);
+    $objAdminAgregar->agregarCamposUnid("unidadmedida","nombreMedida",$valorUnidad,"control",$valorControl);
    }  
 
 //--Boton del modal de eliminar , crea objeto de la clase controlador
@@ -59,7 +58,7 @@ if(isset($_POST["btnEditarUnidad"])){
 //-- Al entrar se visualizan todas las unidades existentes
 $objAdminSeleccionaTodos  = new ControladorAdminSelect();
 $resultado=$objAdminSeleccionaTodos->buscarAll("unidadmedida");
-echo $resultado[0]["nombreMedida"];
+
   
 //--Boton lupa consulta unidad
 
@@ -75,27 +74,83 @@ if(isset($_POST["lupaunidad"])){
 ?>
 
 <script type="text/javascript">
-
+/*Validación del campo de texto de agregar */
   function validarFormulario(formulario){
-       var marca = formulario.addmarcas.value;
-        if(validarNombreAndMarca(marca,"No es una unidad v&aacute;lida","addmarcas")!=true){
-             return false;
-		}
+       var unidadVal = formulario.addunidad.value;
+       var seleUnidad = formulario.selecontrol.value;
+        if(validarNombreAndUnidad(unidadVal,"No es una unidad v&aacute;lida","addunidad")==true &&
+           validarUnidadAndRango(unidadVal,"El nombre de la unidad es muy extenso","addunidad")==true){
+              
+               if(validarNombreAndSelec(seleUnidad,"Seleccione una opci&oacute;n de control","selecontrol")==true ){
+                  return true;
+               }else{
+                   return false;     
+               }
+        }else{
+            return false;
+        }
+ 
+        
+        
   return true;
  }
         
  //------funciones de validacion de cada uno de los campos
- function validarNombreAndMarca(valor,mensaje,campoForm){
+ function validarNombreAndUnidad(valor,mensaje,campoForm){
       
-         if (isNaN(parseInt(valor)) && (valor.length > 0)){
+         if ((isNaN(parseInt(valor)))&& (valor !="")){
               return true;
          }else{       
              toastr.error(mensaje);
              document.getElementById(campoForm).value = "";
              return false;
-		 } 
+     } 
+
+ }
+  //------funciones de validacion de cada uno de los campos
+ function validarUnidadAndRango(valor,mensaje,campoForm){
+      
+         if ((valor.length) > 50){
+              
+              toastr.error(mensaje);
+              document.getElementById(campoForm).value = "";
+              return false;
+         }else{       
+
+             return true;
+     } 
+
  }
 
+
+ /*Validación del campo de texto de editar */
+  function validarFormulario2(formulario){
+       var seleUnidads = formulario.selecontrol2.value;
+     if(validarNombreAndSelec(seleUnidads,"Seleccione una opci&oacute;n de control","selecontrol2")==true ){
+        return true;
+             
+        }else{
+          return false;
+        }
+ 
+        
+        
+  return true;
+ }
+ //**********************************************************************/
+    
+ //------funciones de validacion del select control al adicionar
+ function validarNombreAndSelec(valor,mensaje,campoForm){
+      
+         if (valor !="seleccion"){
+              return true;
+         }else{       
+             toastr.error(mensaje);
+             
+             return false;
+     } 
+
+ }
 </script>
 
 <div class="content-wrapper">
@@ -104,7 +159,7 @@ if(isset($_POST["lupaunidad"])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Administraci&oacute;n Unidad Medida</h1>
+            <h1 class="m-0 text-dark">Admin. Unidad Medida</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -112,11 +167,11 @@ if(isset($_POST["lupaunidad"])){
                 </button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-             <div class="input-group col-lg-8 col-md-7 col-sm-9 col-xs-7" id="buscadormarca">
-                        <input type="search" name="buscaunidad" id="buscaunidad" class="form-control"  placeholder="Buscar unidad de medida">
+             <div class="input-group col-lg-5 col-md-7 col-sm-9 col-xs-8 " id="buscadormarca"  >
+                        <input type="search" name="buscaunidad" id="buscaunidad" class="form-control"  placeholder="Buscar unidad"  style ="height:500%;>
                         <span  class="input-group-btn">
                             <a href="#">
-                                <button class="btn btn-default backColor colorbotonamarillo lupaunidad" type="submit" name="lupaunidad" id="lupaunidad">
+                                <button class="btn btn-default backColor colorbotonamarillo lupaunidad" type="submit" name="lupaunidad" id="lupaunidad" style ="height:100%;">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </a>
@@ -127,7 +182,7 @@ if(isset($_POST["lupaunidad"])){
           </div><!-- /.col -->
 
        <?php
-          if ($resultado!= null){
+          if ($resultado!= null && $resultado!= "Fallo" ){
             for ($i=0;$i<count($resultado);$i++){
              
         ?> 
@@ -196,15 +251,15 @@ if(isset($_POST["lupaunidad"])){
 
           <div class="modal-dialog">
            <div class="modal-content">
-                 <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Agregar Unidad de Medida</h5>
+                 <div class="modal-header " style ="background-color: #D0A20E;color:#FFFFFF; >
+                        <h5  id="staticBackdropLabel"> Agregar Unidad de Medida</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
                    <div class="modal-body">
                        
-                         <input   type="text" class="form-control" id="addunidad" name ="addunidad" placeholder="Agregue unidad de medida" >  
+                         <input   type="text" class="form-control" id="addunidad" name ="addunidad" placeholder="Agregue unidad de medida">  
                    </div>
                    <div class="modal-body">
                     <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol" name="selecontrol"  required><option value = "seleccion">Seleccione Control</option>
@@ -266,7 +321,7 @@ if(isset($_POST["lupaunidad"])){
   </form> 
 
     <!-- Modal que muestra la unidad de medida al dar click en el boton de editar -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);"novalidate>
         <div class="modal fade" id="modifiUnidad" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
@@ -289,7 +344,7 @@ if(isset($_POST["lupaunidad"])){
                                <?php }?> 
                        </select>
                                              
-                    <input   style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idunidadMedida" id="idunidadMedida" name ="idunidadMedida"> 
+                    <input   style="visibility: hidden;" type="text" value ="" placeholder="ID" class="form-control idunidadMedida" id="idunidadMedida" name ="idunidadMedida"> 
                      </div>  
                     <div class="form-group">  
                           <div class="modal-footer d-flex justify-content-center">         
