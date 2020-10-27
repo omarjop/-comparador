@@ -39,15 +39,16 @@
 </script>
 <script>
  var returnValue ;
+ var returnValueDelete ;
 
 
 
 
-function validarFormulario(formulario){
+function validarFormulario2(formulario){
          
-         var nombre = formulario.nameProduct.value;
+         var nombre = formulario.nameProducto.value;
          var precio = formulario.price.value;
-         var pesoVolumen = formulario.unit.value;
+         var pesoVolumen = formulario.unitt.value;
          var marca = formulario.marca.value;
          var categoria = formulario.Category.value;
          var gramos = formulario.grams.value;
@@ -55,7 +56,7 @@ function validarFormulario(formulario){
          var mililitros = formulario.milliliters.value;
          var centimetros = formulario.centimeters.value;
 
-                 if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido","nameProduct")!=true){
+                 if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido","nameProducto")!=true){
                    returnValue = false;
                     // return false;
 		         }
@@ -63,7 +64,7 @@ function validarFormulario(formulario){
                    returnValue = false;
                      //return false;
 		         }
-                 if(validarPesoVolumenAndCategoria(pesoVolumen,"no es una unidad de peso o volumen no es v&aacute;lida","unit")!=true){
+                 if(validarPesoVolumenAndCategoria(pesoVolumen,"no es una unidad de peso o volumen no es v&aacute;lida","unitt")!=true){
                      returnValue = false;
                      //return false;
 		         }
@@ -179,12 +180,11 @@ function validarFormulario(formulario){
      $("#btnaddproducto").click(function(){
           
          if(returnValue!=false){
-                          var nombreAddP = $("#nameProduct").val();
-                          var unitAddP = $("#unit").val();
+                          var nombreAddP = $("#nameProducto").val();
+                          var unitAddP = $("#unitt").val();
                           var aux  = unitAddP.split("-");
                           unitAddP = aux[1];
-                          //alert(unitAddP);
-                         // alert(nombreAddP)
+
 
                             var datos = new FormData();
             
@@ -205,7 +205,7 @@ function validarFormulario(formulario){
                                              $(".alert").remove();
                                              returnValue =  true;
                                           }else{
-                                          $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>El producto ya se encuentra registrado</div>');                               
+                                          $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>El producto ya se encuentra registrado'+respuesta+'</div>');                               
                                             returnValue = false;                              
 			                              }
 
@@ -220,6 +220,55 @@ function validarFormulario(formulario){
       });     
 
   });
+
+
+  //valida si puede o no eliminar producto
+   $(function(){
+     $("#btnEliminarValue").click(function(){
+          
+
+
+                            var idProducto = $("#campoOculto2").val();
+                           var datos = new FormData();
+            
+                            datos.append("idProducto", idProducto);
+         
+                            $.ajax({
+                   
+                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                                    method:"POST",
+                                    data: datos, 
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    async:false,
+                                    success: function(respuesta){
+                                          if(respuesta.includes("No existe")){                          
+                                             $(".alert").remove();
+                                             returnValueDelete =  respuesta;
+                                          }else{   
+                                            var res = JSON.parse(respuesta);
+                                            toastr.error(res.mensaje);
+                                            returnValueDelete = false;                              
+			                              }
+
+
+                                    }
+
+                              })
+
+              return returnValueDelete;
+      });     
+
+  });
+
+  $(document).ready(function(){
+       $("#btnCancelarDe").click(function(){
+        $(".alert").remove();   
+         returnValueDelete = true; 
+        })
+});
+
 
 //valida el precio
 $(document).ready(function(){
@@ -281,9 +330,9 @@ $(document).ready(function(){
 //--------------------------------------------------------------------------------------------------------
 /*auto completar al agregar nuevo producto*/
 $(document).ready(function(){
-       $("#nameProduct").change(function(){
+       $("#nameProducto").change(function(){
     
-            var producto = $("#nameProduct").val();
+            var producto = $("#nameProducto").val();
             var datos = new FormData();
             datos.append("newProduct", producto);
          
@@ -303,7 +352,7 @@ $(document).ready(function(){
                                 document.getElementById("description").value = null;
                                 document.getElementById("Brand").value = null;
                                 document.getElementById("Category").value = "seleccion";
-                                document.getElementById("unit").value = "seleccion";
+                                document.getElementById("unitt").value = "seleccion";
                                 document.getElementById("grams").value = "seleccione";
                                 document.getElementById("kilograms").value = "seleccione";
                                 document.getElementById("milliliters").value = "seleccione";
@@ -317,7 +366,7 @@ $(document).ready(function(){
                                document.getElementById("Category").value = JSON.parse(respuesta).idsubCategoria+'-'+JSON.parse(respuesta).nombre; 
                                var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
                                var aux = nombreMedidda.split(" ");
-                               document.getElementById("unit").value = aux[0]+'-'+JSON.parse(respuesta).idunidadMedida;
+                               document.getElementById("unitt").value = aux[0]+'-'+JSON.parse(respuesta).idunidadMedida;
                                mostrar(aux[0]+'-'+JSON.parse(respuesta).idunidadMedida);
                                document.getElementById(returnUnidad(aux[0])).value = JSON.parse(respuesta).pesoVolumen;
                                
@@ -400,22 +449,6 @@ function returnUnidad(unidad){
 
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------
-   if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){      
-            $ingreso  = new ControladorEliminarEditarProductosTienda();
-            $id = $_POST["campoOculto2"]; 
-            $objLog-> escribirEnLog("Consultar Producto Tienda","INFO",$nitTienda,"Se procede a eliminar el producto con id: ".$id); 
-            $idEmpresa = $objTiendaInicial->getIdEmpresa();
-            $resultadoEliminar = $ingreso ->EliminarProducto($id,$idEmpresa);          
-            
-              if($resultadoEliminar=="Exitoso"){
-                 $objLog-> escribirEnLog("Consultar Producto Tienda","INFO",$nitTienda,"Se procede a elimina con exito el producto "); 
-                 echo "<script>toastr.info('Producto eliminado exitosamente');</script>";                              
-			  }else{
-                 echo "<script>toastr.error('Error al eliminar producto, por favor intente nuevamente');</script>";                             
-                 $objLog-> escribirEnLog("Consultar Producto Tienda","WARNING",$nitTienda,"Falla la eliminacion del producto para la tienda"); 
-			  }
-            
-    }
 
         if(isset($_POST["btnEditarValue"])){
              $id = $_POST["idProduct"]; 
@@ -469,7 +502,7 @@ function returnUnidad(unidad){
                         <li class="nav-item dropdown breadcrumb-item activ">
 
                                    <a class="nav-link" data-toggle="dropdown" href="#">
-                                      <i class="fa fa-search" aria-hidden="true"> Consultar Mis Productos</i>                                 
+                                      <i class="fa fa-search" aria-hidden="true"> Consultar Productos</i>                                 
                                     </a>
 
 
@@ -533,8 +566,10 @@ function returnUnidad(unidad){
           for($i=0;$i<count($resultado);$i++){
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
+           $idSub = $resultado[$i]["idsubCategoria"];
+            $idSub =  "'".$idSub."'";
            //$squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$ruta.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria,ruta FROM subcategoria where Categoria_idCategoria = ".$idCategoria." and ruta = ".$ruta.")     t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.idunidadMedida = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto where t5.Empresa_idEmpresa = ".$idTienda;	  
+           $squl1 = "SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria,ruta FROM subcategoria where idsubCategoria = ".$idSub.")     t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.idunidadMedida = t4.unidadMedida_idunidadMedida";	  
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$resultado[$i]["nombre"];   
     
@@ -592,7 +627,7 @@ function returnUnidad(unidad){
                                                     <h5 class="m-0"style="color:#136574;"id="nombreProducto" value="<?php echo $valorResult[$j]["Nombre"];?>" ><?php echo $valorResult[$j]["Nombre"];?></h5><!--Nombre producto-->
                                                     
                                                     <!--Precio-->
-                                                    <h6 class="card-title textoprecioproducto" style="color:#D0A20E;font-weight: bold;font-size:19px;font-family:sans-serif;"><?php echo "$".$valorResult[$j]["precioReal"];?></h6>
+                                                   <!-- <h6 class="card-title textoprecioproducto" style="color:#D0A20E;font-weight: bold;font-size:19px;font-family:sans-serif;"><?php echo "$".$valorResult[$j]["precioReal"];?></h6>-->
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
                                                              $unidad =""; 
@@ -683,7 +718,7 @@ function returnUnidad(unidad){
                                                     <h5 class="m-0"style="color:#136574;"></h5> <!--Nombre de tienda-->
                                                     <h5 class="m-0"style="color:#136574;"id="nombreProducto" value="<?php echo $valorResult[$j]["Nombre"];?>" ><?php echo $valorResult[$j]["Nombre"];?></h5><!--Nombre producto-->
                                                     <!--Precio-->
-                                                    <h6 class="card-title textoprecioproducto" style="color:#D0A20E;font-weight: bold;font-size:19px;font-family:sans-serif;"><?php echo "$".$valorResult[$j]["precioReal"];?></h6>
+                                                    
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
                                                              $unidad =""; 
@@ -700,7 +735,7 @@ function returnUnidad(unidad){
                                                     </p>
                                                       <a href="#"><p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
                                                                                                                                                                    id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p></a>
-                                                      <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                      <a href=""><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =""; 
                                                               if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
@@ -745,7 +780,7 @@ $(function(){
      $(".imagen").click(function(){
       var imagenValue = $(this).attr('src');
       $(".imagepreview").attr('src',imagenValue);
-      document.getElementById("precio").innerHTML= "Hoy "+$(this).attr('precio'); 
+     // document.getElementById("precio").innerHTML= "Hoy "+$(this).attr('precio'); 
       document.getElementById("productoname").innerHTML= $(this).attr('nombreproducto');
       document.getElementById("description").innerHTML= $(this).attr('descripcion');
       document.getElementById("pesovolumenes").innerHTML= $(this).attr('pesovolumen');
@@ -930,9 +965,14 @@ $(function(){
                      <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">                                      
                    </div>
                   
+                                <?php  
+                                            $eliminarProducto  = new ControladorAdminEliminar();
+                                            $eliminarProducto ->eliminarProductoAdmin();
+                                ?>
+
                     <div class="form-group">  
                           <div class="modal-footer">         
-                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="submit" name = "btnCancelarDe" id = "btnCancelarDe" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
                                 <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
                           </div>
                     </div>
@@ -984,7 +1024,7 @@ $(function(){
 
   <!--Modal para el registro de producto-->
 
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data"onSubmit="return validarFormulario(this);" novalidate >
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);" novalidate >
             <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
               aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -997,7 +1037,7 @@ $(function(){
                      </div>
                                   <div class="modal-body mx-3">
                                     <div class="md-form mb-4">
-                                      <input id="nameProduct" name="nameProduct" type="text" placeholder="Nombre producto" class="form-control"   oninput="check_text(this);" required>                                      
+                                      <input id="nameProducto" name="nameProducto" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
                                     </div>
 
                                     <div class="md-form mb-4">
@@ -1005,7 +1045,7 @@ $(function(){
                                     </div>
 
                                     <div class="md-form mb-4">                                      
-                                                <select class="form-control" onChange="mostrar(this.value);" id ="unit" name="unit" required>
+                                                <select class="form-control" onChange="mostrar(this.value);" id ="unitt" name="unitt" required>
                                                       <option value = "seleccion">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
                                                             <option value='<?php echo $values[$i]."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
@@ -1085,14 +1125,15 @@ $(function(){
                                   </div>
 
                                         <?php  
-                                           /* $registro  = new ControladorProductosTienda();
-                                            $registro ->registrarProducto($objTiendaInicial);*/
+                                            $registroProducto  = new ControladorAdminInsert();
+                                            $registroProducto ->agregarProducto();
                                         ?>
 
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
                                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                                <button type="submit" name = "btnaddproducto" id = "btnaddproducto" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                                
+                                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" id="btnaddproducto" name="btnaddproducto" >Agregar</button>
                                           </div>
                                     </div>
                 </div>

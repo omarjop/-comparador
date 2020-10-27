@@ -55,7 +55,7 @@ class   AjaxProducto{
      
         $objSelect = new ControladorSelectsInTables();
         $nombre = "'".$nombre."'";
-        //$unidad = "'".$unidad."'";
+        $unidad = "'".$unidad."'";
         
         $sql = "SELECT * FROM producto where Nombre = $nombre AND unidadMedida_idunidadMedida = $unidad";
         $respuesta = $objSelect->selectARowsInDb($sql);
@@ -63,6 +63,42 @@ class   AjaxProducto{
 	        echo json_encode($respuesta);
 	    }else{
            echo json_encode(null);
+		}
+        
+    }
+
+     public function ajaxValidarDeleteProducto($idProduct){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $respuesta = null;
+        $respuesta2 = null;
+        $respuesta3 = null;
+        
+
+        $sql2 = "SELECT * FROM producto_has_listacompra where Producto_idProducto = ".$idProduct;
+        $respuesta2 = $objSelect->selectARowsInDb($sql2);
+        $mensaje2 = "No se puede eliminar, el producto se encuentra asociado a una lista de compra";
+
+        $sql3 = "SELECT * FROM producto_has_recetas where Producto_idProducto = ".$idProduct;
+        $respuesta3 = $objSelect->selectARowsInDb($sql3);
+        $mensaje3 = "No se puede eliminar, el producto se encuentra asociado a una receta";
+
+        $mensaje4 = "No se puede eliminar, el producto se encuentra asociado a una lista de compra y a una receta";
+
+        if ( $respuesta2!= null && $respuesta3!= null) {
+	        echo json_encode(array(                                
+                                "mensaje" => $mensaje4
+                            ));
+	    }else if($respuesta== null && $respuesta2!= null && $respuesta3== null){
+            echo json_encode(array(                                
+                                    "mensaje" => $mensaje2
+                                ));
+        }else if($respuesta== null && $respuesta2== null && $respuesta3!= null){
+            echo json_encode(array(                                
+                                    "mensaje" => $mensaje3
+                                ));
+        }else{
+           echo json_encode("No existe");
 		}
         
     }
@@ -89,4 +125,10 @@ if(isset($_POST["newProduct"])){
 if(isset($_POST["nombreAddP"])){  
     $valProducto = new AjaxProducto();
     $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"],$_POST["unitAddP"]);
+}
+
+//Valida si el producto se encuentra asociado a una tienda sino no se elimina
+if(isset($_POST["idProducto"])){  
+    $valProducto = new AjaxProducto();
+    $valProducto ->ajaxValidarDeleteProducto($_POST["idProducto"]);
 }
