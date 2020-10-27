@@ -17,15 +17,15 @@ class ControladorAdminEliminar{
             return $resultado;
 		 }
 
-         public function eliminarProductoAdmin(){
-                 if(isset($_POST["btnEliminarValue"])){
-                            $resultado = $this->eliminarCampo($_POST["campoOculto2"],"producto","idProducto");
+         public function eliminarProductoAdmin($id){
+                 //if(isset($_POST["btnEliminarValue"])){
+                            $resultado = $this->eliminarCampo($id,"producto","idProducto");
                             if($resultado=="Exitoso"){
                                echo "<script>toastr.info('Producto eliminado exitosamente');</script>";                              
                              }else{
                                echo "<script>toastr.error('Error al eliminar producto, por favor intente nuevamente);</script>";                             
                              } 
-                 }
+                // }
 		 }
 
 }

@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Modulos",
-    "\\Modulos\\ajax"
+    "\\Modulos\\controladores",
+    "\\Modulos\\controladores\\ModuloTiendas",
+    "\\Modulos\\controladores\\ModuloTiendas\\productos",
+    "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\Modulos\\ajax\\validacion.ajax.php",
+  "SelectedNode": "\\Modulos\\controladores\\ModuloTiendas\\productos\\c_elimarEditarProducto.php",
   "PreviewInSolutionExplorer": false
 }

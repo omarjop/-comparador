@@ -449,21 +449,23 @@ function returnUnidad(unidad){
 
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------
+     if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){      
+            $eliminarProducto  = new ControladorAdminEliminar();
+            $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto2"]);             
+    }
+         if(isset($_POST["btnEliminarValue"])){      
+            $eliminarProducto  = new ControladorAdminEliminar();
+            $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto2"]);             
+    }
 
-        if(isset($_POST["btnEditarValue"])){
-             $id = $_POST["idProduct"]; 
-             $objLog-> escribirEnLog("Consultar Producto Tienda","INFO",$nitTienda,"Se procede a editar el producto con id: ".$id);              
-             $precio = $_POST["precioEdit"];
-             $idEmpresa = $objTiendaInicial->getIdEmpresa();
-             $objActualizar  = new ControladorEliminarEditarProductosTienda();
-             $objActualizar ->EditarProducto($id,$precio,$idEmpresa,$nitTienda,$objLog); 
+
+        if(isset($_POST["btnaddproducto"])){
+              $registroProducto  = new ControladorAdminInsert();
+              $registroProducto ->agregarProducto();
 	    }
   
-  //jql que retorna las categorias
-      $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto) t1 ON t3.idsubCategoria = t1.subCategoria_idsubCategoria";
-      $resultado = $objSelect->selectARowsInDb($sql);
-      $mensaje ="Productos a Consultar";
 
+  
       if(isset($valorDeUrl)){
            $valorDeUrl = "'".$valorDeUrl."'";
            $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.idunidadMedida  = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto where t5.Empresa_idEmpresa = ".$idTienda;
@@ -477,7 +479,10 @@ function returnUnidad(unidad){
              $mensaje ="Productos a Consultar";
 	    }  
 
-        
+          //jql que retorna las categorias
+      $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto) t1 ON t3.idsubCategoria = t1.subCategoria_idsubCategoria";
+      $resultado = $objSelect->selectARowsInDb($sql);
+      $mensaje ="Productos a Consultar";
 
   ?>
 
@@ -938,7 +943,7 @@ $(function(){
 
 
 <!-- Modal que muestra el confirmar cuando se elimina un producto -->
- <form class="form needs-validation" method="post"  enctype="multipart/form-data">
+ <form class="form needs-validation" method="post"  enctype="multipart/form-data" >
         <div class="modal fade" id="eliminarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
@@ -965,15 +970,12 @@ $(function(){
                      <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">                                      
                    </div>
                   
-                                <?php  
-                                            $eliminarProducto  = new ControladorAdminEliminar();
-                                            $eliminarProducto ->eliminarProductoAdmin();
-                                ?>
+
 
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" name = "btnCancelarDe" id = "btnCancelarDe" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
+                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;" >Aceptar</button>
                           </div>
                     </div>
             </div>
@@ -1124,10 +1126,7 @@ $(function(){
 
                                   </div>
 
-                                        <?php  
-                                            $registroProducto  = new ControladorAdminInsert();
-                                            $registroProducto ->agregarProducto();
-                                        ?>
+
 
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
