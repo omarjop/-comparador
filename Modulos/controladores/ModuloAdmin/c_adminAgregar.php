@@ -42,9 +42,7 @@ class ControladorAdminInsert{
         }
       }
 
-              }
-        
-    }
+
     //--------Registro de producto---------------------------
     public function agregarProducto(){
           if(isset($_POST["btnaddproducto"])){

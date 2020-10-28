@@ -4,10 +4,10 @@ $resultado=null;
 
 
   //--Boton del modal de agregar, crea objeto de la clase controlador
-if(isset($_POST["btnaddmarca"])){                           
+if(isset($_POST["btnaddTipoEmpresa"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
 
-    $valorTEmpresa= $_POST["addmarcas"]; 
+    $valorTEmpresa= $_POST["addTipoEmpresa"]; 
     
      $objAdminAgregar->agregarCamposTEmp("tipoempresa","descripcion",$valorTEmpresa);
                        
@@ -33,11 +33,92 @@ if(isset($_POST["btnEditarTEmpresa"])){
       
         
     } 
+
+if(isset($_POST["lupaTipoEmpresa"])){                           
+            $objAdminSelecciona  = new ControladorAdminSelect();
+            $valorTipoEmpresa = $_POST["buscaTipoEmpresa"]; 
+            $resultado=$objAdminSelecciona->buscaTabla($valorTipoEmpresa,"tipoempresa","*","descripcion");;
+       
+             if ($resultado==null){
+               echo "<script>toastr.warning('El tipo de empresa no existe');</script>"; 
+             }
+    }   
    
 //-- Al entrar se visualizan todas las existentes
 $objAdminSeleccionaTodos  = new ControladorAdminSelect();
 $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
 ?>
+
+<script type="text/javascript">
+/*Validación del campo de texto de agregar */
+  function validarFormulario(formulario){
+       var tempresa = formulario.addTipoEmpresa.value;
+
+        if(validarNombreTipoEmpresa(tempresa,"No es un tipo de empresa v&aacute;lido","addTipoEmpresa")==true){
+             
+           if(validaRangoTipoEmpresa(tempresa,"El nombre es muy extenso","addTipoEmpresa")!=true){
+              return false;
+           }else{
+               return true;     
+           }
+        }else{
+            return false;
+        }
+        
+        
+        
+  return true;
+ }
+   
+  //------------------------------------------------------
+    function validarFormulario2(formulario){
+       var tempresaEdit = formulario.tipoempresaEdit.value;
+       
+
+        if(validarNombreTipoEmpresa(tempresaEdit,"No es un tipo de empresa v&aacute;lido","tipoempresaEdit")==true){
+             
+           if(validaRangoTipoEmpresa(tempresaEdit,"El nombre es muy extenso","tipoempresaEdit")!=true){
+              return false;
+           }else{
+               return true;     
+           }
+        }else{
+            return false;
+        }
+        
+        
+        
+  return true;
+ }      
+ //------funciones de validacion de cada uno de los campos
+ function validarNombreTipoEmpresa(valor,mensaje,campoForm){
+      
+         if ((isNaN(parseInt(valor)))&& (valor !="")){
+              return true;
+         }else{       
+             toastr.error(mensaje);
+             document.getElementById(campoForm).value = "";
+             return false;
+     } 
+
+ }
+  //------funciones de validacion de cada uno de los campos
+ function validaRangoTipoEmpresa(valor,mensaje,campoForm){
+      
+         if ((valor.length) > 50){
+              
+              toastr.error(mensaje);
+              document.getElementById(campoForm).value = "";
+              return false;
+         }else{       
+
+             return true;
+     } 
+
+ }
+//**********************************************************************/
+</script>
+
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -45,18 +126,18 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Admin Tipo Empresa</h1>
+            <h1 class="m-0 text-dark">Admin. Tipo Empresa</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <button type="button" class="btn btn-warning botaddmarca colorbotonamarillo" >Agregar Tipo Emp</button>
+              <button type="button" class="btn btn-warning botaddTipoEmpresa colorbotonamarillo" >Agregar Tipo Emp</button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-             <div class="input-group col-lg-5 col-md-7 col-sm-9 col-xs-8" id="buscadormarca">
-                        <input type="search" name="buscamarcas" id="buscamarcas" class="form-control"  placeholder="Buscar Tipo Emp">
+             <div class="input-group col-lg-5 col-md-7 col-sm-9 col-xs-8" id="buscaTipoEmpresa">
+                        <input type="search" name="buscaTipoEmpresa" id="buscaTipoEmpresa" class="form-control"  placeholder="Buscar Tipo Emp">
                         <span  class="input-group-btn">
                             <a href="#">
-                                <button class="btn btn-default backColor colorbotonamarillo lupamarca" type="submit" name="lupamarca" id="lupamarca" style ="height:100%;">
+                                <button class="btn btn-default backColor colorbotonamarillo lupaTipoEmpresa" type="submit" name="lupaTipoEmpresa" id="lupaTipoEmpresa" style ="height:100%;">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </a>
@@ -103,8 +184,8 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
 
 /*LLama el modal de adicionar */ 
  $(function(){
-     $(".botaddmarca").click(function(){
-         $("#modaddmarca").modal("show");  
+     $(".botaddTipoEmpresa").click(function(){
+         $("#modaddtipoempresa").modal("show");  
       });
   });
    /*LLama el modal de eliminar */ 
@@ -112,7 +193,7 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
      $(".eliminar").click(function(){
          $(".campoOculto").attr('value',$(this).attr('id'));
          document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
-         $("#eliminarmarca").modal("show");  
+         $("#modeliminatipoe").modal("show");  
       });
   });
 
@@ -121,7 +202,7 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
      $(".editar").click(function(){
          $(".idtipoEmpresa").attr('value',$(this).attr('id'));
          $(".tipoempresaEdit").attr('value',$(this).attr('tempresa'));
-         $("#modifiMarca").modal("show");
+         $("#modmodiftipoe").modal("show");
          
       });
   });
@@ -130,25 +211,25 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
 
   <!-- Modal para agregar  -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
-        <div class="modal fade" id="modaddmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modaddtipoempresa" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Agregar Tipo Empresa</h5>
+                        <h5  id="staticBackdropLabel" > Agregar tipo de empresa</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
                    <div class="modal-body">
                        
-                         <input   type="text" class="form-control" id="addmarcas" name ="addmarcas" placeholder="Agregue tipo de empresa" >  
+                         <input   type="text" class="form-control" id="addTipoEmpresa" name ="addTipoEmpresa" placeholder="Agregue tipo de empresa" >  
                    </div>
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnaddmarca" id = "btnaddmarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                <button type="submit" name = "btnaddTipoEmpresa" id = "btnaddTipoEmpresa" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
                           </div>
                     </div>
             </div>
@@ -158,7 +239,7 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
 
    <!-- Modal que muestra el confirmar cuando se elimina  -->
  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-        <div class="modal fade" id="eliminarmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modeliminatipoe" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
@@ -196,13 +277,13 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
         </div>
   </form> 
  <!-- Modal que muestra producto al dar click en el boton de editar -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
-        <div class="modal fade" id="modifiMarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);"novalidate>
+        <div class="modal fade" id="modmodiftipoe" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Editar Tipo Empresa </h5>
+                        <h5  id="staticBackdropLabel" > Editar tipo de empresa </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -210,11 +291,8 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
                    <div class="modal-body">
                         <!-- aqui va el mensaje que se pasa por parametro-->
                         <div class="row">
-                            <div class="col-sm-2">
-                                <h5 class="colortextoformulariosetiquetas">Marca</h5>
-                            </div>
-                            <div class="col-sm-10">
-                                <input   type="text" value ="" placeholder="Nombre Marca" class="form-control tipoempresaEdit" id="tipoempresaEdit" name ="tipoempresaEdit" required>  
+                            <div class="modal-body mx-1 ">
+                                <input   type="text" value ="" placeholder="Tipo de Empresa" class="form-control tipoempresaEdit" id="tipoempresaEdit" name ="tipoempresaEdit" required>  
                              </div>
                         </div>
                         

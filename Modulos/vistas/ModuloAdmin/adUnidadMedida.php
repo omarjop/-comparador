@@ -94,7 +94,26 @@ if(isset($_POST["lupaunidad"])){
         
   return true;
  }
+ //---------------------------------------------------------
+   function validarFormulario2(formulario){
+       var unidadValEdi = formulario.unidadEdit.value;
+       var seleUnidadEditar = formulario.selecontrol2.value;
+        if(validarNombreAndUnidad(unidadValEdi,"No es una unidad v&aacute;lida","unidadEdit")==true &&
+           validarUnidadAndRango(unidadValEdi,"El nombre de la unidad es muy extenso","unidadEdit")==true){
+              
+               if(validarNombreAndSelec(seleUnidadEditar,"Seleccione una opci&oacute;n de control","selecontrol2")==true ){
+                  return true;
+               }else{
+                   return false;     
+               }
+        }else{
+            return false;
+        }
+ 
         
+        
+  return true;
+ }       
  //------funciones de validacion de cada uno de los campos
  function validarNombreAndUnidad(valor,mensaje,campoForm){
       
@@ -113,29 +132,12 @@ if(isset($_POST["lupaunidad"])){
          if ((valor.length) > 50){
               
               toastr.error(mensaje);
-              document.getElementById(campoForm).value = "";
               return false;
          }else{       
 
              return true;
      } 
 
- }
-
-
- /*Validación del campo de texto de editar */
-  function validarFormulario2(formulario){
-       var seleUnidads = formulario.selecontrol2.value;
-     if(validarNombreAndSelec(seleUnidads,"Seleccione una opci&oacute;n de control","selecontrol2")==true ){
-        return true;
-             
-        }else{
-          return false;
-        }
- 
-        
-        
-  return true;
  }
  //**********************************************************************/
     

@@ -2234,3 +2234,7 @@
 
 [2000-07-01T00:00:00+02:00][Consultar][INFO]: Se inicia el proceso de Consultar Productos 
 
+[2000-07-01T00:00:00+02:00][Consultar Producto Tienda][INFO]: Se procede a editar el producto con id: 1
+
+[2000-07-01T00:00:00+02:00][Consultar Producto Tienda][WARNING]: Falla la edicion del producto para la tienda
+
