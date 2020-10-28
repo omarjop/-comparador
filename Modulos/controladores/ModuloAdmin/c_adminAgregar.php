@@ -35,20 +35,15 @@ class ControladorAdminInsert{
     public function agregarProducto(){
           if(isset($_POST["btnaddproducto"])){
 
-           /*$nombreProduct = $this->returnPesoVolumen($_POST["unitt"]);$this->returnUnidadMedida($_POST["unitt"],$_POST["grams"],$_POST["kilograms"],
-                   $_POST["milliliters"],$_POST["centimeters"]);*/
-
-        //   secho "<script>toastr.info($nombreProduct);</script>"; 
-                  $this->validarDatosProducto(); 
+                 $this->validarDatosProducto(); 
 		  }
 	}
 
     private function validarDatosProducto(){
-          
-
-            $datosDelProducto = array($_POST["nameProducto"],$_POST["price"],$this->returnPesoVolumen($_POST["unitt"]),$this->returnUnidadMedida($_POST["unitt"],$_POST["grams"],$_POST["kilograms"],
-                   $_POST["milliliters"],$_POST["centimeters"]),$_POST["Reference"],$_POST["marca"],$this->returnCategoria($_POST["Category"]),$_POST["description"]);
-
+          $unit = $_POST["unitt"];          
+          $unit2 = $_POST["unitt"];
+          $datosDelProducto = array($_POST["nameProducto"],$_POST["price"],$this->returnPesoVolumen($unit),$this->returnUnidadMedida($unit2,$_POST["grams"],$_POST["kilograms"]
+                                       ,$_POST["milliliters"],$_POST["centimeters"]),$_POST["Reference"],$_POST["marca"],$this->returnCategoria($_POST["Category"]),$_POST["description"]);
               
              $this->registrarProducto($datosDelProducto);   
 	}
@@ -58,7 +53,7 @@ class ControladorAdminInsert{
        $ruta ="";
        $objAdminAgregar  = new ControladorInserttAllTables();
        $into = "unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Marca_idMarca,Nombre,Referencia,Descripcion,FotoPrincipal,pesoVolumen";      
-       $value ="'$datosDelProducto[2]'".","."'$datosDelProducto[6]'".","."'$datosDelProducto[5]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[6]'".","."'$ruta'".","."'$datosDelProducto[3]'";
+       $value ="'$datosDelProducto[2]'".","."'$datosDelProducto[6]'".","."'$datosDelProducto[5]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[7]'".","."'$ruta'".","."'$datosDelProducto[3]'";
      //  echo "<script>toastr.info($value);</script>";  
        $resultado= $objAdminAgregar->insertInTable("producto",$into, $value);
 
@@ -89,29 +84,34 @@ class ControladorAdminInsert{
           return $valorReturn ; 
 	}
     private function returnUnidadMedida($unit,$gramos,$kilo,$mili,$centimetros){
-        
-         $valorReturn = null;
+ 
+         $valorReturn = null;         
+         if($unit!=null){
+                  $medida = explode("-",$unit);
+                  switch ($medida[0]) {
+                            case "gramos":
+                            $valorReturn=$_POST["grams"];
+                        
+                            break;
+                        case "kilogramos":
+                            $valorReturn=$_POST["kilograms"];
+                        
+                            break;
+                        case "mililitros":
+                            $valorReturn= $_POST["milliliters"];
+                        
+                            break;
+                        case "centimetros":
+                            $valorReturn=$_POST["centimeters"];
+                        
+                            break;
+                    }
 
-         if($unit!=null&&$unit!=""){
-               $medida = explode("-",$unit);
-          
-              
-              switch ($medida[0]) {
-                    case "gramos (gr)":
-                        $valorReturn=$gramos;
-                        break;
-                    case "kilogramos (kg)":
-                        $valorReturn=$kilo;
-                        break;
-                    case "mililitros (ml)":
-                        $valorReturn=$mili;
-                        break;
-                    case "centimetros cubicos (cm3)":
-                        $valorReturn=$centimetros;
-                        break;
-                }
+
+            
           }
-          
+            
             return $valorReturn;
 	}
+
 }

@@ -3,10 +3,8 @@
     "",
     "\\Modulos",
     "\\Modulos\\controladores",
-    "\\Modulos\\controladores\\ModuloTiendas",
-    "\\Modulos\\controladores\\ModuloTiendas\\productos",
-    "\\Modulos\\vistas\\ModuloTiendas\\producto"
+    "\\Modulos\\controladores\\ModuloAdmin"
   ],
-  "SelectedNode": "\\Modulos\\controladores\\ModuloTiendas\\productos\\c_elimarEditarProducto.php",
+  "SelectedNode": "\\Modulos\\controladores\\ModuloAdmin\\c_adminAgregar.php",
   "PreviewInSolutionExplorer": false
 }
