@@ -32,36 +32,36 @@ class ControladorAdminInsert{
         
     }
     //--------Registro de producto---------------------------
-    public function agregarProducto(){
+    public function agregarProducto($rutaImagen){
           if(isset($_POST["btnaddproducto"])){
 
-                 $this->validarDatosProducto(); 
+                 $this->validarDatosProducto($rutaImagen); 
 		  }
 	}
 
-    private function validarDatosProducto(){
+    private function validarDatosProducto($rutaImagen){
           $unit = $_POST["unitt"];          
           $unit2 = $_POST["unitt"];
-          $datosDelProducto = array($_POST["nameProducto"],$_POST["price"],$this->returnPesoVolumen($unit),$this->returnUnidadMedida($unit2,$_POST["grams"],$_POST["kilograms"]
+          $precio="";
+          $datosDelProducto = array($_POST["nameProducto"],$precio,$this->returnPesoVolumen($unit),$this->returnUnidadMedida($unit2,$_POST["grams"],$_POST["kilograms"]
                                        ,$_POST["milliliters"],$_POST["centimeters"]),$_POST["Reference"],$_POST["marca"],$this->returnCategoria($_POST["Category"]),$_POST["description"]);
               
-             $this->registrarProducto($datosDelProducto);   
+             $this->registrarProducto($datosDelProducto,$rutaImagen);   
 	}
 
-    private function registrarProducto($datosDelProducto){
+    private function registrarProducto($datosDelProducto,$rutaImagen){
       
-       $ruta ="";
+       $ruta = "../AdminComparador/imagenes_productos/".$_FILES[$rutaImagen]["name"];
        $objAdminAgregar  = new ControladorInserttAllTables();
        $into = "unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Marca_idMarca,Nombre,Referencia,Descripcion,FotoPrincipal,pesoVolumen";      
        $value ="'$datosDelProducto[2]'".","."'$datosDelProducto[6]'".","."'$datosDelProducto[5]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[7]'".","."'$ruta'".","."'$datosDelProducto[3]'";
-     //  echo "<script>toastr.info($value);</script>";  
+       $this->SubirArchivoImagen($rutaImagen);
        $resultado= $objAdminAgregar->insertInTable("producto",$into, $value);
 
        if ($resultado!='Fallo') {
-                echo "<script>toastr.info('Se agrego el producto correctamente');</script>";    
-         
+                echo "<script>toastr.info('Se agrego el producto correctamente');</script>";             
             }else{
-                 echo "<script>toastr.error('Error al agregar el producto Error: '+".$resultado.");</script>";                             
+                echo "<script>toastr.error('Error al agregar el producto Error: '+".$resultado.");</script>";                             
               }
 	}
 
@@ -113,5 +113,35 @@ class ControladorAdminInsert{
             
             return $valorReturn;
 	}
+
+    public function SubirArchivoImagen($archivo){
+        
+            $rutaFinal;
+            $rutaFinal= "../AdminComparador/imagenes_productos";
+            $path = $rutaFinal;
+
+            if (!file_exists($path)) {
+                            mkdir($path, 0777, true);
+                             $rutaFinal= $rutaFinal."/";
+                            $fichero_subido = $rutaFinal.basename($_FILES[$archivo]["name"]);          
+                            if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $fichero_subido)) {
+                                              return true;
+                             } else {
+                                              return false;
+                            }
+
+            }else{
+                        $rutaFinal= $rutaFinal."/";
+                        $fichero_subido = $rutaFinal.basename($_FILES[$archivo]["name"]);          
+                        if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $fichero_subido)) {
+                                          return true;
+                         } else {
+                                          return false;
+                        }
+                       
+			}
+
+
+    }
 
 }

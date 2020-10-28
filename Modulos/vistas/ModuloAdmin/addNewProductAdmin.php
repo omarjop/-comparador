@@ -178,8 +178,9 @@ function validarFormulario2(formulario){
 
  $(function(){
      $("#btnaddproducto").click(function(){
-          
+         
          if(returnValue!=false){
+            
                           var nombreAddP = $("#nameProducto").val();
                           var unitAddP = $("#unitt").val();
                           var aux  = unitAddP.split("-");
@@ -201,12 +202,14 @@ function validarFormulario2(formulario){
                                     processData: false,
                                     async:false,
                                     success: function(respuesta){
-                                          if(respuesta.includes("null")){                          
-                                             $(".alert").remove();
-                                             returnValue =  true;
+                                    
+                                    if(respuesta.includes("null")){                          
+                                                 $(".alert").remove();                                             
+                                                 returnValue =  true;
+
                                           }else{
-                                          $("#nameProduct").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>El producto ya se encuentra registrado'+respuesta+'</div>');                               
-                                            returnValue = false;                              
+                                                 toastr.error('El producto ya se encuentra registrado');                               
+                                                 returnValue = false;                              
 			                              }
 
 
@@ -307,6 +310,48 @@ $(document).ready(function(){
         })
 });
 
+  //validar unidad peso volumen
+$(document).ready(function(){
+       $("#unitt").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+
+//------------------------------------------------------------------
+//validar gramos
+$(document).ready(function(){
+       $("#unitt").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+$(document).ready(function(){
+       $("#grams").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+$(document).ready(function(){
+       $("#kilograms").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+$(document).ready(function(){
+       $("#mililitros").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+$(document).ready(function(){
+       $("#centimetros").change(function(){
+        $(".alert").remove();   
+         returnValue = true; 
+        })
+});
+
+//------------------------------------------------------------------
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
@@ -461,7 +506,7 @@ function returnUnidad(unidad){
 
         if(isset($_POST["btnaddproducto"])){
               $registroProducto  = new ControladorAdminInsert();
-              $registroProducto ->agregarProducto();
+              $registroProducto ->agregarProducto('imgProducto');
 	    }
   
 
@@ -988,51 +1033,10 @@ $(function(){
   <form class="form " method="post"  enctype="multipart/form-data" >
         <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
-          <div class="modal-dialog">
-           <div class="modal-content">
-                 <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <i><h5  id="staticBackdropLabel" > Datos editables por producto </h5></i>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                  </div>
-                   <div class="modal-body">
-                        <!-- aqui va el mensaje que se pasa por parametro-->
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <h5 class="colortextoformulariosetiquetas">Precio</h5>
-                            </div>
-                            <div class="col-sm-10">
-                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit">  
-                             </div>
-                        </div>
-                        
-                        <input style="visibility: hidden;"  type="text" value ="" class="form-control idProduct" id="idProduct" name ="idProduct">  
-                   </div>
-                  
-                    <div class="form-group">  
-                          <div class="modal-footer">         
-                                <button type="submit" name = "btnCancelarValue" id = "btnCancelarValue" class="btn btn-secondary" style ="width:48%;" onclick="history.go(0)">Cancelar</button>            
-                                <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar Cambios</button>
-                          </div>
-                    </div>
-            </div>
-          </div>   
-        </div>
-  </form>
-
-
-
-
-  <!--Modal para el registro de producto-->
-
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);" novalidate >
-            <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog" role="document">
+<div class="modal-dialog" role="document">
                 <div class="modal-content">
                      <div class="modal-header text-center" style ="background-color: #D0A20E;color:#FFFFFF;">
-                                    <h4 class="modal-title w-100 ">Registro de Producto</h4>
+                                    <h4 class="modal-title w-100 ">Campos editables</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -1042,9 +1046,6 @@ $(function(){
                                       <input id="nameProducto" name="nameProducto" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
                                     </div>
 
-                                    <div class="md-form mb-4">
-                                     <input id="price" name="price" type="text" placeholder="Precio" class="form-control" >
-                                    </div>
 
                                     <div class="md-form mb-4">                                      
                                                 <select class="form-control" onChange="mostrar(this.value);" id ="unitt" name="unitt" required>
@@ -1115,7 +1116,7 @@ $(function(){
                                     </div>
 
                                     <div class="md-form mb-4 custom-file">
-                                         <input type="file" class="custom-file-input" id="customFileLang" lang="es" required>
+                                         <input type="file" class="custom-file-input" id="imgProducto" name="imgProducto" lang="es"  required>
                                          <label class="custom-file-label" for="customFileLang">Seleccione Imagen Producto</label>
                                     </div>
 
@@ -1130,9 +1131,123 @@ $(function(){
 
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
-                                                <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                                
-                                                <button type="submit" class="btn btn-primary btn-lg colorbotonamarillo" id="btnaddproducto" name="btnaddproducto" >Agregar</button>
+                                                <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button> 
+                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto" name="btnaddproducto" >Agregar</button>
+                                          </div>
+                                    </div>
+                </div>
+              </div>  
+        </div>
+  </form>
+
+
+
+
+  <!--Modal para el registro de producto-->
+
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);" novalidate >
+            <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                     <div class="modal-header text-center" style ="background-color: #D0A20E;color:#FFFFFF;">
+                                    <h4 class="modal-title w-100 ">Registro de Producto</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                     </div>
+                                  <div class="modal-body mx-3">
+                                    <div class="md-form mb-4">
+                                      <input id="nameProducto" name="nameProducto" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
+                                    </div>
+
+
+                                    <div class="md-form mb-4">                                      
+                                                <select class="form-control" onChange="mostrar(this.value);" id ="unitt" name="unitt" required>
+                                                      <option value = "seleccion">Seleccione Peso/Volumen</option>
+                                                       <?php for($i=0;$i<count($valorUnidades);$i++){?>
+                                                            <option value='<?php echo $values[$i]."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
+                                                       <?php }?>
+                                                </select>
+                                    </div>
+
+                                     <div class="md-form mb-4"  id= "gramos">                                      
+                                             <select class="form-control" name="grams" id ="grams" required>  
+                                                     <option value='seleccione'>Seleccione Gramos</option> 
+                                                  <?php for($i=0;$i<count($gramos);$i++){?>
+                                                     <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
+                                                  <?php }?>
+                                             </select>
+                                    </div>
+
+                                     <div class="md-form mb-4"  id= "kilogramos"> 
+                                         <select class="form-control" name="kilograms" id="kilograms" required>   
+                                                  <option value='seleccione'>Seleccione Kilogramos</option> 
+                                               <?php for($i=0;$i<count($kilogramos);$i++){?>
+                                                  <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
+                                               <?php }?>                                                                                                                                                                                                                                                                
+                                          </select>
+                                     </div>
+
+                                      <div class="md-form mb-4"  id= "mililitros"> 
+                                         <select class="form-control" name="milliliters" id ="milliliters" required>         
+                                              <option value='seleccione'>Seleccione Mililitros</option> 
+                                              <?php for($i=0;$i<count($mililitros);$i++){?>
+                                                 <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
+                                              <?php }?>  
+                                         </select>
+                                     </div>
+
+                                      <div class="md-form mb-4"  id= "centimetros"> 
+                                          <select class="form-control" name="centimeters" id ="centimeters" required>   
+                                                  <option value='seleccione'>Seleccione cm3</option> 
+                                               <?php for($i=0;$i<count($centimetros);$i++){?>
+                                                  <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
+                                               <?php }?>  
+                                          </select>
+                                     </div>
+
+
+                                    <div class="md-form mb-4">
+                                      <input id="Reference" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
+                                    </div>
+
+                                    <div class="md-form mb-4">
+                                            <select class="form-control" name="marca" id ="marca" required>  
+                                                     <option value='seleccione'>Seleccione marca</option> 
+                                                  <?php for($i=0;$i<count($marcas);$i++){?>
+                                                     <option value='<?php echo $marcas[$i]["idMarca"];?>'><?php echo $marcas[$i]["Descripcion"];?></option>  
+                                                  <?php }?>
+                                             </select>
+                                    </div>
+
+                                   <div class="md-form mb-4">
+                                              <select class="form-control" id="Category" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
+                                                      <option value = "seleccion">Seleccione Categor&iacutea</option>     
+                                                      <?php for($i=0;$i<count($resultSelect);$i++){?>
+                                                           <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
+                                                      <?php }?>
+                                                </select>
+                                    </div>
+
+                                    <div class="md-form mb-4 custom-file">
+                                         <input type="file" class="custom-file-input" id="imgProducto" name="imgProducto" lang="es"  required>
+                                         <label class="custom-file-label" for="customFileLang">Seleccione Imagen Producto</label>
+                                    </div>
+
+                                    <div class="md-form">
+                                      <i class="fas fa-pencil prefix grey-text"></i>
+                                      <textarea class="form-control" id="description" name="description" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
+                                    </div>
+
+                                  </div>
+
+
+
+                                   <div class="form-group">  
+                                          <div class="modal-footer d-flex justify-content-center">         
+                                                <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button> 
+                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto" name="btnaddproducto" >Agregar</button>
                                           </div>
                                     </div>
                 </div>

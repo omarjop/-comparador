@@ -1,10 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\AdminComparador",
+    "\\AdminComparador\\imagenes_productos",
     "\\Modulos",
     "\\Modulos\\controladores",
-    "\\Modulos\\controladores\\ModuloAdmin"
+    "\\Modulos\\controladores\\ModuloTiendas\\productos",
+    "\\Modulos\\vistas",
+    "\\Modulos\\vistas\\generales",
+    "\\Modulos\\vistas\\ModuloTiendas"
   ],
-  "SelectedNode": "\\Modulos\\controladores\\ModuloAdmin\\c_adminAgregar.php",
+  "SelectedNode": "\\AdminComparador\\imagenes_productos\\gatorade.png",
   "PreviewInSolutionExplorer": false
 }
