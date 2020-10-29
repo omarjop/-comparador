@@ -82,7 +82,25 @@ if(isset($_POST["lupamarca"])){
         
   return true;
  }
+     
+ //--------------------------------------------------------
+   function validarFormulario2(formulario){
+       var marcaEdita = formulario.marcaEdit.value;
+        if(validarNombreAndMarca(marcaEdita,"No es una marca v&aacute;lida","marcaEdit")==true){
+             
+           if(validarMarcaAndRango(marcaEdita,"El nombre de la marca es muy extenso","marcaEdit")!=true){
+              return false;
+           }else{
+               return true;     
+           }
+        }else{
+            return false;
+        }
         
+        
+        
+  return true;
+ }       
  //------funciones de validacion de cada uno de los campos
  function validarNombreAndMarca(valor,mensaje,campoForm){
       
@@ -125,7 +143,7 @@ if(isset($_POST["lupamarca"])){
               <button type="button" class="btn btn-warning botaddmarca colorbotonamarillo" >Agregar Marca</button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-             <div class="input-group col-lg-8 col-md-7 col-sm-9 col-xs-7" id="buscadormarca">
+             <div class="input-group col-lg-6 col-md-7 col-sm-9 col-xs-8" id="buscadormarca">
                         <input type="search" name="buscamarcas" id="buscamarcas" class="form-control"  placeholder="Buscar Marca">
                         <span  class="input-group-btn">
                             <a href="#">
@@ -140,7 +158,7 @@ if(isset($_POST["lupamarca"])){
           </div><!-- /.col -->
 
        <?php
-           if ($resultado!= null){
+           if ($resultado!= null && $resultado!= "Fallo" ){
             for ($i=0;$i<count($resultado);$i++){
              
         ?> 
@@ -273,7 +291,7 @@ if(isset($_POST["lupamarca"])){
 
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);"novalidate>
         <div class="modal fade" id="modifiMarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
@@ -287,10 +305,7 @@ if(isset($_POST["lupamarca"])){
                    <div class="modal-body">
                         <!-- aqui va el mensaje que se pasa por parametro-->
                         <div class="row">
-                            <div class="col-sm-2">
-                                <h5 class="colortextoformulariosetiquetas">Marca</h5>
-                            </div>
-                            <div class="col-sm-10">
+                            <div class="modal-body mx-1 ">
                                 <input   type="text" value ="" placeholder="Nombre Marca" class="form-control marcaEdit" id="marcaEdit" name ="marcaEdit" required>  
                              </div>
                         </div>
@@ -301,7 +316,7 @@ if(isset($_POST["lupamarca"])){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Editar</button>
+                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
                           </div>
                     </div>
             </div>
