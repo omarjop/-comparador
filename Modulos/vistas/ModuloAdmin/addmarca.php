@@ -127,6 +127,54 @@ if(isset($_POST["lupamarca"])){
 		 } 
 
  }
+var returnValue = true;
+//validar que no exista el registro con accion de boton
+ $(function(){
+     $("#btnaddmarca").click(function(){
+          
+         if(returnValue!=false){
+                          var nombreAddMarca = $("#addmarcas").val();
+                          var datos = new FormData();
+            
+                            datos.append("nombreAddMarca", nombreAddMarca);
+                            datos.append("nombreAddMarca", nombreAddMarca);
+         
+                            $.ajax({
+                   
+                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                                    method:"POST",
+                                    data: datos, 
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    async:false,
+                                    success: function(respuesta){
+                                          if(respuesta.includes("No existe")){                          
+                                             $(".alert").remove();
+                                             returnValue =  true;
+                                          }else{
+                                            toastr.error("La marca se encuentra registrada");                             
+                                            returnValue = false;                              
+                                    }
+
+
+                                    }
+
+                              })
+                   }
+
+              return returnValue;
+              
+      });     
+
+  });
+
+
+$(document).ready(function(){
+        $("#addmarcas").on("keydown",function(){
+          returnValue = true;
+     });
+});
 //**********************************************************************/
 </script>
 

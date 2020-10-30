@@ -102,7 +102,25 @@ class   AjaxProducto{
 		}
         
     }
+
+    //------------------metodo que valida si existe registros
+    public function ajaxValidarExisteRegistro($tabla,$columnaComparar,$valorComparar){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $valorComparar = "'".$valorComparar."'";
+        
+        $sql = "SELECT * FROM  ".$tabla." where ".$columnaComparar." = ".$valorComparar;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+        if ($respuesta!= null ) {
+            echo json_encode($respuesta);
+        }else{
+           echo json_encode("No existe");
+        }
+        
+    }
 }
+
+
 /**
  * VALIDA y retorna los productos del campo auto completar
  */
@@ -127,8 +145,18 @@ if(isset($_POST["nombreAddP"])){
     $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"],$_POST["unitAddP"]);
 }
 
-//Valida si el producto se encuentra asociado a una tienda sino no se elimina
-if(isset($_POST["idProducto"])){  
-    $valProducto = new AjaxProducto();
-    $valProducto ->ajaxValidarDeleteProducto($_POST["idProducto"]);
+//Valida si la marca existe
+if(isset($_POST["nombreAddMarca"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("marca","Descripcion",$_POST["nombreAddMarca"]);
+}
+//Valida si existe la unidad de medida 
+if(isset($_POST["addunidadValue"])){  
+    $valUnidadMedida = new AjaxProducto();
+    $valUnidadMedida ->ajaxValidarExisteRegistro("unidadmedida","nombreMedida",$_POST["addunidadValue"]);
+}
+//Valida si existe el tipo de empresa
+if(isset($_POST["nombreAddTipoEmp"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("tipoempresa","descripcion",$_POST["nombreAddTipoEmp"]);
 }

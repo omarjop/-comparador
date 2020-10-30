@@ -116,6 +116,57 @@ $resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
      } 
 
  }
+
+
+ var returnValue = true;
+//validar que no exista el registro con accion de boton
+ $(function(){
+     $("#btnaddTipoEmpresa").click(function(){
+          
+         if(returnValue!=false){
+                          var nombreAddTipoEmp = $("#addTipoEmpresa").val();
+                          var datos = new FormData();
+            
+                            datos.append("nombreAddTipoEmp", nombreAddTipoEmp);
+                            datos.append("nombreAddTipoEmp", nombreAddTipoEmp);
+         
+                            $.ajax({
+                   
+                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                                    method:"POST",
+                                    data: datos, 
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    async:false,
+                                    success: function(respuesta){
+                                          if(respuesta.includes("No existe")){                          
+                                             $(".alert").remove();
+                                             returnValue =  true;
+                                          }else{
+                                            toastr.error("El tipo de empresa se encuentra registrado");                             
+                                            returnValue = false;                              
+                                    }
+
+
+                                    }
+
+                              })
+                   }
+
+              return returnValue;
+              
+      });     
+
+  });
+
+
+$(document).ready(function(){
+        $("#addTipoEmpresa").on("keydown",function(){
+          returnValue = true;
+     });
+});
+//**********************************************************************/
 //**********************************************************************/
 </script>
 

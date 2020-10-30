@@ -153,6 +153,48 @@ if(isset($_POST["lupaunidad"])){
      } 
 
  }
+
+var returnValue = true;
+//validar que no exista el registro con accion de boton
+ $(function(){
+     $("#btnaddunidad").click(function(){
+    
+            var addunidadValue = $("#addunidad").val();
+            //alert(addunidadValue);
+            var datos = new FormData();
+            datos.append("addunidadValue",addunidadValue);
+         
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          if(respuesta.includes("No existe")){
+                              $(".alert").remove();
+                              returnValue = true;    
+                      
+                          }else{
+                              
+                              toastr.error("La unidad de medida se encuentra registrada");
+                              returnValue = false;             
+                          }
+
+
+                    }
+
+              })
+
+            return returnValue;
+
+        })
+});
+
+
+
 </script>
 
 <div class="content-wrapper">
