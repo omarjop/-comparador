@@ -34,6 +34,10 @@ if(isset($_POST["btnEditarTEmpresa"])){
         
     } 
 
+ //-- Al entrar se visualizan todas las existentes
+$objAdminSeleccionaTodos  = new ControladorAdminSelect();
+$resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");   
+
 if(isset($_POST["lupaTipoEmpresa"])){                           
             $objAdminSelecciona  = new ControladorAdminSelect();
             $valorTipoEmpresa = $_POST["buscaTipoEmpresa"]; 
@@ -44,9 +48,7 @@ if(isset($_POST["lupaTipoEmpresa"])){
              }
     }   
    
-//-- Al entrar se visualizan todas las existentes
-$objAdminSeleccionaTodos  = new ControladorAdminSelect();
-$resultado=$objAdminSeleccionaTodos->buscarAll("tipoempresa");
+
 ?>
 
 <script type="text/javascript">

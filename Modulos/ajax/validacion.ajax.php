@@ -160,3 +160,19 @@ if(isset($_POST["nombreAddTipoEmp"])){
     $valMarca = new AjaxProducto();
     $valMarca ->ajaxValidarExisteRegistro("tipoempresa","descripcion",$_POST["nombreAddTipoEmp"]);
 }
+//Valida si existe el tipo de producto
+if(isset($_POST["nombreAddTipoProd"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("tipoproducto","descripcion",$_POST["nombreAddTipoProd"]);
+}
+//Valida si existe el pais
+if(isset($_POST["nombreAddPais"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("pais","nombrePais",$_POST["nombreAddPais"]);
+}
+//Valida si existe el perfil
+if(isset($_POST["nombreAddPerfil"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
+}
+
