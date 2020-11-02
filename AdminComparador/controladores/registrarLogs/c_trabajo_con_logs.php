@@ -27,7 +27,7 @@ class ControladorWorkLogs{
 
           $objRutas =  new ControladorRutasGenerales();
 
-         $file = fopen($objRutas ->rutaArchivosLogs().$nit."logAdministracion.log", "a");
+         $file = fopen($objRutas ->rutaArchivosLogs()."logAdministracion.log", "a");
           if($file){
                fwrite($file, $descripcionLog . PHP_EOL);
                fclose($file);          

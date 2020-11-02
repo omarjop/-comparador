@@ -2,14 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\AdminComparador",
-    "\\AdminComparador\\imagenes_productos",
-    "\\Modulos",
+    "\\AdminComparador\\controladores",
+    "\\AdminComparador\\controladores\\estructuras",
+    "\\AdminComparador\\controladores\\rutas",
     "\\Modulos\\controladores",
-    "\\Modulos\\controladores\\ModuloTiendas\\productos",
     "\\Modulos\\vistas",
     "\\Modulos\\vistas\\generales",
-    "\\Modulos\\vistas\\ModuloTiendas"
+    "\\Modulos\\vistas\\ModuloTiendas",
+    "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\AdminComparador\\imagenes_productos\\gatorade.png",
+  "SelectedNode": "\\AdminComparador\\controladores\\estructuras\\estructuras.php",
   "PreviewInSolutionExplorer": false
 }

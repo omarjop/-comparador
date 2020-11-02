@@ -62,6 +62,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="vistas/dist/js/demo.js"></script>
 
+<script type="text/javascript" src="http://localhost/-comparador/Modulos/vistas/js/validaciones.js"></script>  
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

@@ -52,7 +52,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script type="text/javascript" src="js/typeahead.js"></script>
 
 
- <script src="vistas/js/validaciones.js"></script>
+
+
  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
 
@@ -62,6 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="vistas/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="vistas/dist/js/adminlte.min.js"></script>
+<script src="http://localhost/-comparador/Modulos/vistas/js/adminValidaciones.js"></script> 
 
 
 
@@ -151,6 +153,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 </div>
+ 
+              
 </body>
 </html>
 

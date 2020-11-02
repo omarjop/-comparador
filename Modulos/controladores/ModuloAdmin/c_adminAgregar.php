@@ -52,13 +52,17 @@ class ControladorAdminInsert{
 	}
 
     private function validarDatosProducto($rutaImagen){
-          $unit = $_POST["unitt"];          
-          $unit2 = $_POST["unitt"];
+          $unit = $_POST["unitt1"];          
+          $unit2 = $_POST["unitt1"];
           $precio="";
-          $datosDelProducto = array($_POST["nameProducto"],$precio,$this->returnPesoVolumen($unit),$this->returnUnidadMedida($unit2,$_POST["grams"],$_POST["kilograms"]
+          $objLog =  new ControladorWorkLogs();
+         // $objLog->escribirEnLogAdmin("Administracion","INFO","Valor del campo Sub categoria: ".$_POST["Category1"]);
+          $objLog->escribirEnLogAdmin("Administracion","INFO","Valor del campo Sub categoria: ".$_POST["subCategory1"]);
+
+         /* $datosDelProducto = array($_POST["nameProducto"],$precio,$this->returnPesoVolumen($unit),$this->returnUnidadMedida($unit2,$_POST["grams"],$_POST["kilograms"]
                                        ,$_POST["milliliters"],$_POST["centimeters"]),$_POST["Reference"],$_POST["marca"],$this->returnCategoria($_POST["Category"]),$_POST["description"]);
               
-             $this->registrarProducto($datosDelProducto,$rutaImagen);   
+             $this->registrarProducto($datosDelProducto,$rutaImagen);   */
 	}
 
     private function registrarProducto($datosDelProducto,$rutaImagen){

@@ -102,7 +102,59 @@ class   AjaxProducto{
 		}
         
     }
+
+    public function ajaxReturnDatosProducto($idProduct){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $respuesta = null;        
+
+        $sql = "SELECT * FROM producto where idProducto = ".$idProduct;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+
+        if($respuesta!= null){
+            echo json_encode($respuesta);
+        }else{
+           echo json_encode("No existe");
+		}
+        
+    }
+
+    public function ajaxReturnSubCategorias($idSubCategoria){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $respuesta = null;        
+
+        $sql = "SELECT * FROM subcategoria where Categoria_idCategoria = ".$idSubCategoria;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+
+        if($respuesta!= null){
+            echo json_encode($respuesta);
+        }else{
+           echo json_encode("No existe");
+		}
+        
+    }
+
+    public function ajaxReturnAllRegistros($tabla,$columnaComparar,$idComprar){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $respuesta = null;        
+
+        $sql = "SELECT * FROM ".$tabla." where ".$columnaComparar." = ".$idComprar;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+
+        if($respuesta!= null){
+            echo json_encode($respuesta);
+        }else{
+           echo json_encode("No existe");
+		}
+        
+    }
+    
+
 }
+
+
 /**
  * VALIDA y retorna los productos del campo auto completar
  */
@@ -131,4 +183,22 @@ if(isset($_POST["nombreAddP"])){
 if(isset($_POST["idProducto"])){  
     $valProducto = new AjaxProducto();
     $valProducto ->ajaxValidarDeleteProducto($_POST["idProducto"]);
+}
+
+//Valida si el producto Existe y retorna su información
+if(isset($_POST["idProductoFiendValue"])){  
+    $valProducto = new AjaxProducto();
+    $valProducto ->ajaxReturnDatosProducto($_POST["idProductoFiendValue"]);
+}
+
+//trae las sub categorias asociadas a una categoria
+if(isset($_POST["findSubCategorias"])){  
+    $valProducto = new AjaxProducto();
+    $valProducto ->ajaxReturnAllRegistros("subcategoria","Categoria_idCategoria",$_POST["findSubCategorias"]);
+}
+
+//trae las unidades de peso volumen de las unidades de medida
+if(isset($_POST["findUnidadMedida"])){  
+    $valProducto = new AjaxProducto();
+    $valProducto ->ajaxReturnAllRegistros("pesovolumen","unidadMedida_idunidadMedida",$_POST["findUnidadMedida"]);
 }

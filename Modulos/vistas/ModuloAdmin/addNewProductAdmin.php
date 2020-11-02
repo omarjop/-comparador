@@ -1,3 +1,4 @@
+
 <style>
 
 #autoCompletedList {
@@ -17,439 +18,9 @@
   cursor: pointer;
 }
 </style>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript">
-    function mostrar(id) {
-
-    var aux = id.split("-");
-    id = aux[0];
-        var unidades = ["gramos","kilogramos","mililitros","centimetros"];
-        unidades.forEach(function(valor) {
-                if(valor == id){
-                   $("#".concat(valor)).show();               
-			    }else{
-                    $("#".concat(valor)).hide();  
-               }
-        });
-
-    }
-    
- 
-     
-</script>
-<script>
- var returnValue ;
- var returnValueDelete ;
 
 
 
-
-function validarFormulario2(formulario){
-         
-         var nombre = formulario.nameProducto.value;
-         var precio = formulario.price.value;
-         var pesoVolumen = formulario.unitt.value;
-         var marca = formulario.marca.value;
-         var categoria = formulario.Category.value;
-         var gramos = formulario.grams.value;
-         var kilogramos = formulario.kilograms.value;
-         var mililitros = formulario.milliliters.value;
-         var centimetros = formulario.centimeters.value;
-
-                 if(validarNombreAndMarca(nombre,"No es un nombre de producto v&aacute;lido","nameProducto")!=true){
-                   returnValue = false;
-                    // return false;
-		         }
-                 if(validarPrecio(precio,"price")!=true){
-                   returnValue = false;
-                     //return false;
-		         }
-                 if(validarPesoVolumenAndCategoria(pesoVolumen,"no es una unidad de peso o volumen no es v&aacute;lida","unitt")!=true){
-                     returnValue = false;
-                     //return false;
-		         }
-                 if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
-                     returnValue = false;
-                     ///return false;
-		         }
-                 if(validarNombreAndMarca(marca,"No es un nombre de marca v&aacute;lido","marca")!=true){
-                     returnValue = false;
-                    // return false;
-		         }
-                 if(validarPesoVolumenAndCategoria(categoria,"Categor&iacute;a, seleccione una opci&oacute;n valida","Category")!=true){
-                     returnValue = false;
-                    // return false;
-		         }
-
-                     if(returnValue!=true){
-                        returnValue = false;   
-					 }else{
-                        returnValue = true;              
-					 }
- 
-     
-     return returnValue;
- }
- //------funciones de validacion de cada uno de los campos
- function validarNombreAndMarca(valor,mensaje,campoForm){
-               if(valor == "seleccione"){
-           toastr.error(mensaje);
-           //document.getElementById(campoForm).value = "";
-           return false; 
-		}else{
-           return true;  
-		}
- }
- 
-  function validarPrecio(valor,campoForm){
-
-            if(!valor.includes(',')){
-                 if (isNaN(parseFloat(valor))) {
-                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                      //toastr.error("El valor ("+document.getElementById(campoForm).value+") "+mensaje);
-                      //$("#"+campoForm).parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)</div>');  
-                      document.getElementById(campoForm).value = "";
-                      return false;
-                 }else{
-                      
-                      return true;
-		         } 
-            }else{
-                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                       document.getElementById(campoForm).value = "";
-                      return false;           
-			}
- }
-
- function validarPesoVolumenAndCategoria(valor,mensaje,campoForm){
-        if(valor == "seleccion"){
-           toastr.error(mensaje);
-           //document.getElementById(campoForm).value = "";
-           return false; 
-		}else{
-           return true;  
-		}
- }
-
-  function validarUnidades(valorPesoVolumen,gramos,kilogramos,mililitros,centimetros){
-    
-        if(valorPesoVolumen == "gramos"){
-            if(gramos == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("grams").value = "";
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "kilogramos"){
-            if(kilogramos == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("kilograms").value = "";
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "mililitros"){
-            if(mililitros == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("milliliters").value = "";
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "centimetros"){
-            if(centimetros == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("centimeters").value = "";
-               return false; 
-		    }
-		}  
-  return true;
- }
-
- function validarNuevaCategoria(categoria,nuevaCategoria){
- 
- var cate = categoria.split("-");
-         if(cate[1] == "Otros"){
-                if(!nuevaCategoria){
-                    toastr.error('El campo nueva categor&iacute;a es requerido');       
-                    document.getElementById("NewCategory").value = "";
-                    return false;       
-			    }
-		 }
-         return true;
- }
-
-
-
- $(function(){
-     $("#btnaddproducto").click(function(){
-         
-         if(returnValue!=false){
-            
-                          var nombreAddP = $("#nameProducto").val();
-                          var unitAddP = $("#unitt").val();
-                          var aux  = unitAddP.split("-");
-                          unitAddP = aux[1];
-
-
-                            var datos = new FormData();
-            
-                            datos.append("nombreAddP", nombreAddP);
-                            datos.append("unitAddP", unitAddP);
-         
-                            $.ajax({
-                   
-                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                                    method:"POST",
-                                    data: datos, 
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false,
-                                    async:false,
-                                    success: function(respuesta){
-                                    
-                                    if(respuesta.includes("null")){                          
-                                                 $(".alert").remove();                                             
-                                                 returnValue =  true;
-
-                                          }else{
-                                                 toastr.error('El producto ya se encuentra registrado');                               
-                                                 returnValue = false;                              
-			                              }
-
-
-                                    }
-
-                              })
-                   }
-
-              return returnValue;
-              
-      });     
-
-  });
-
-
-  //valida si puede o no eliminar producto
-   $(function(){
-     $("#btnEliminarValue").click(function(){
-          
-
-
-                            var idProducto = $("#campoOculto2").val();
-                           var datos = new FormData();
-            
-                            datos.append("idProducto", idProducto);
-         
-                            $.ajax({
-                   
-                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                                    method:"POST",
-                                    data: datos, 
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false,
-                                    async:false,
-                                    success: function(respuesta){
-                                          if(respuesta.includes("No existe")){                          
-                                             $(".alert").remove();
-                                             returnValueDelete =  respuesta;
-                                          }else{   
-                                            var res = JSON.parse(respuesta);
-                                            toastr.error(res.mensaje);
-                                            returnValueDelete = false;                              
-			                              }
-
-
-                                    }
-
-                              })
-
-              return returnValueDelete;
-      });     
-
-  });
-
-  $(document).ready(function(){
-       $("#btnCancelarDe").click(function(){
-        $(".alert").remove();   
-         returnValueDelete = true; 
-        })
-});
-
-
-//valida el precio
-$(document).ready(function(){
-       $("#price").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-
-  //valida referencia
-$(document).ready(function(){
-       $("#Reference").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-  //valida peso volumen
-$(document).ready(function(){
-       $("#unit").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-  //valida marca
-$(document).ready(function(){
-       $("#marca").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-  //validacategoria
-$(document).ready(function(){
-       $("#Category").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-
-  //validar unidad peso volumen
-$(document).ready(function(){
-       $("#unitt").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-
-//------------------------------------------------------------------
-//validar gramos
-$(document).ready(function(){
-       $("#unitt").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-$(document).ready(function(){
-       $("#grams").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-$(document).ready(function(){
-       $("#kilograms").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-$(document).ready(function(){
-       $("#mililitros").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-$(document).ready(function(){
-       $("#centimetros").change(function(){
-        $(".alert").remove();   
-         returnValue = true; 
-        })
-});
-
-//------------------------------------------------------------------
-
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-
-//--------------------------------------------------------------------------------------------------------
-/*auto completar al agregar nuevo producto*/
-$(document).ready(function(){
-       $("#nameProducto").change(function(){
-    
-            var producto = $("#nameProducto").val();
-            var datos = new FormData();
-            datos.append("newProduct", producto);
-         
-            $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    async:false,
-                    success: function(respuesta){
-                          if(respuesta.includes("null")){
-                          $(".alert").remove();
-                          returnValue = true;    
-                                document.getElementById("Reference").value = null;
-                                document.getElementById("description").value = null;
-                                document.getElementById("Brand").value = null;
-                                document.getElementById("Category").value = "seleccion";
-                                document.getElementById("unitt").value = "seleccion";
-                                document.getElementById("grams").value = "seleccione";
-                                document.getElementById("kilograms").value = "seleccione";
-                                document.getElementById("milliliters").value = "seleccione";
-                                document.getElementById("centimeters").value = "seleccione";
-                          }else{
-                               respuesta =respuesta.replace("[","");
-                               respuesta =respuesta.replace("]","");
-                               document.getElementById("Reference").value = JSON.parse(respuesta).Referencia;
-                               document.getElementById("description").value = JSON.parse(respuesta).DescripcionP; 
-                               document.getElementById("marca").value = JSON.parse(respuesta).idMarca; 
-                               document.getElementById("Category").value = JSON.parse(respuesta).idsubCategoria+'-'+JSON.parse(respuesta).nombre; 
-                               var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
-                               var aux = nombreMedidda.split(" ");
-                               document.getElementById("unitt").value = aux[0]+'-'+JSON.parse(respuesta).idunidadMedida;
-                               mostrar(aux[0]+'-'+JSON.parse(respuesta).idunidadMedida);
-                               document.getElementById(returnUnidad(aux[0])).value = JSON.parse(respuesta).pesoVolumen;
-                               
-			              }
-
-
-                    }
-
-              })
-
-        })
-});
-
-
-
-
-function returnUnidad(unidad){
-     var returnValue = "";
-
-     switch (unidad) {
-          case 'gramos':
-            returnValue = "grams";
-            break;
-          case 'kilogramos':
-            returnValue = "kilograms";
-            break;
-          case 'mililitros':
-            returnValue = "milliliters";
-            break;
-          case 'centimetros':
-            returnValue = "centimeters";
-            break;
-
-        }
-        return returnValue;
-}
-
-</script>
   <?php 
   $valuesMal = "cosa";
   $idCategoria = $objTiendaInicial->getIdCategoria();
@@ -466,12 +37,14 @@ function returnUnidad(unidad){
      function returnValues($arreglo){
 
           $values = array();
-          for($i=0;$i<count($arreglo);$i++){
-             $auxValue = $arreglo[$i]["nombreMedida"];
-             $aux = explode(" ",$auxValue);   
-             array_push($values, $aux[0]);
+            if($arreglo!=null){
+                  for($i=0;$i<count($arreglo);$i++){
+                     $auxValue = $arreglo[$i]["nombreMedida"];
+                     $aux = explode(" ",$auxValue);   
+                     array_push($values, $aux[0]);
              
-		  }
+		          }
+              }
 
           return $values;
      
@@ -483,30 +56,29 @@ function returnUnidad(unidad){
      $valorUnidades = $objSelect->returnSelectAllRows("unidadmedida");
      $values = returnValues($valorUnidades);
 
-     $gramos = $objEstuctura->unidadesProductosValues("gramos");
-     $kilogramos = $objEstuctura->unidadesProductosValues("kilogramos");
-     $mililitros = $objEstuctura->unidadesProductosValues("mililitros");
-     $centimetros = $objEstuctura->unidadesProductosValues("centimetros");     
-     $resultSelect = $objSelect->returnSelectAllRows("subcategoria");
-
-     //-----------Retorna las marcas para mostrar en el capo de registro------
+     $resultSelect = ControladorSelectsInTables:: selectTodosRegistros("categoria");
      $marcas = ControladorSelectsInTables:: selectTodosRegistros("marca");
 
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------
-     if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){      
+     if(isset($_POST["btnEliminarValue1"])&& isset($_POST["campoOculto21"])){      
+            $eliminarProducto  = new ControladorAdminEliminar();
+            $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto21"]);             
+    }
+     /*    if(isset($_POST["btnEliminarValue1"])){      
             $eliminarProducto  = new ControladorAdminEliminar();
             $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto2"]);             
-    }
-         if(isset($_POST["btnEliminarValue"])){      
-            $eliminarProducto  = new ControladorAdminEliminar();
-            $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto2"]);             
-    }
+    }*/
 
 
-        if(isset($_POST["btnaddproducto"])){
-              $registroProducto  = new ControladorAdminInsert();
-              $registroProducto ->agregarProducto('imgProducto');
+        if(isset($_POST["btnaddproducto1"])){
+
+                  $objLog =  new ControladorWorkLogs();
+                   $objLog->escribirEnLogAdmin("Administracion","INFO","PROBAR LA ESCRITURA EN LOG");
+                   $objLog->escribirEnLogAdmin("Administracion","INFO","Valor del campo Sub categoria: ".$_POST["subCategoryAdd"]);
+
+                      $registroProducto  = new ControladorAdminInsert();
+                      $registroProducto ->agregarProducto('imgProducto');
 	    }
   
 
@@ -518,8 +90,8 @@ function returnUnidad(unidad){
            $mensaje = "Categoria  ".$nombreSubCate;
 	  }
    
-        if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
-             $palabraclave = strval($_POST['BtnMiProducto']);
+        if(isset($_POST["BtnMiProductos1"])&& $_POST['BtnMiProductos1']!=null){
+             $palabraclave = strval($_POST['BtnMiProductos1']);
              $valorResult = $objFinP->autocompletar($palabraclave,$idCategoria,$idTienda);
              $mensaje ="Productos a Consultar";
 	    }  
@@ -555,7 +127,7 @@ function returnUnidad(unidad){
                                       <i class="fa fa-search" aria-hidden="true"> Consultar Productos</i>                                 
                                     </a>
 
-
+                                 
                                    <!-- SEARCH FORM -->
 
                                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -583,7 +155,7 @@ function returnUnidad(unidad){
           		                <div class="col-sm-4">
                                 <form class="form-signin" role="form" enctype="multipart/form-data" method="post" action="" name="formulario" id="formulario">
                                       <div class="form-group">                                        
-                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Buscar producto" data-target="#modalLoginAvatar"/>   
+                                          <input type="text" name="BtnMiProductos1" id="BtnMiProductos1"  class="form-control" placeholder="Buscar producto" data-target="#modalLoginAvatar"/>   
 
                                       </div>
                                  <form>
@@ -596,7 +168,7 @@ function returnUnidad(unidad){
 
 
                             <div class="text-center">
-                              <a href="" class="btn btn-default btn-rounded colorbotonamarillo" data-toggle="modal" data-target="#modalContactForm">
+                              <a href="" class="btn btn-default btn-rounded colorbotonamarillo" data-toggle="modal" data-target="#modalContactForm" value "1" onclick="mostrar2('1-0');">
                                 Agregar Producto</a>
                             </div>
                         </div>
@@ -692,8 +264,8 @@ function returnUnidad(unidad){
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                        <p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
-                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p>
+                                                       <a href="#"><p style ="position: absolute; right: 10;" onclick="mostrar3(this.id);mostrar2(this.id);"  id ="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editarAdmin"></span></p></a>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =""; 
@@ -783,8 +355,8 @@ function returnUnidad(unidad){
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                      <a href="#"><p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
-                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p></a>
+                                                      <p style ="position: absolute; right: 10;"   id="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editarAdmin"></span></p>
                                                       <a href=""><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =""; 
@@ -824,133 +396,6 @@ function returnUnidad(unidad){
 
 
 
-<script type="text/javascript">
-
-$(function(){
-     $(".imagen").click(function(){
-      var imagenValue = $(this).attr('src');
-      $(".imagepreview").attr('src',imagenValue);
-     // document.getElementById("precio").innerHTML= "Hoy "+$(this).attr('precio'); 
-      document.getElementById("productoname").innerHTML= $(this).attr('nombreproducto');
-      document.getElementById("description").innerHTML= $(this).attr('descripcion');
-      document.getElementById("pesovolumenes").innerHTML= $(this).attr('pesovolumen');
-      document.getElementById("referenciavalue").innerHTML= "Referencia "+$(this).attr('referencia');
-      document.getElementById("marcavalue").innerHTML= "Marca "+$(this).attr('marca');
-      $('#imagemodal').modal('show');
-  });
-  });
-
-/*LLama el modal de eliminar producto*/ 
- $(function(){
-     $(".eliminar").click(function(){
-         $(".campoOculto").attr('value',$(this).attr('id'));         
-         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta')+'  '+$(this).attr('unidad'); 
-        $(".imagedelete").attr('src', $(this).attr('src'));
-         $("#eliminarp").modal("show");  
-      });
-  });
-
-  /*Llama el modal de editar producto*/
-  $(function(){
-     $(".editar").click(function(){
-         $(".precioEdit").attr('value',$(this).attr('precio'));
-         $(".idProduct").attr('value',$(this).attr('id'));
-         $("#modificarp").modal("show");  
-      });
-  });
-  //precioEdit
-
-
-  function validarFormularioEdit(formulario){
-       var precio = formulario.precioEdit.value;
-         if(validarPrecio(precio,"precioEdit")!=true){
-             return false;
-		 }
- }
-
-   function validarPrecio(valor,campoForm){
-            if(!valor.includes(',')){
-                 if (isNaN(parseFloat(valor))) {
-                      toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                      document.getElementById(campoForm).value = "";
-                      return false;
-                 }else{
-                      
-                      return true;
-		         } 
-            }else{
-                       toastr.error("No es un precio v&aacute;lido Por favor ingresar un valor num&eacute;rico y los decimales con el caracter(.)");
-                       document.getElementById(campoForm).value = "";
-                      return false;           
-			}
- }
-
-// Valida si el campo esta vacio y es requerido ponerlo en rojo cuando se da click
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-
-
- $(document).ready(function(){
-        $("#BtnMiProducto").on("keydown",function(){
-    
-            var producto = $("#BtnMiProducto").val();
-            var datos = new FormData();
-            datos.append("validarProducto", producto);
-
-            $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(respuesta){
-
-                   /* var res = JSON.parse(respuesta);
-                    $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>'+respuesta+' </div>');  */
-                          if(respuesta.includes("null")){
-                                $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No existe </div>');  
-                          }else{
-                               /*respuesta =respuesta.replace("[","");
-                               respuesta =respuesta.replace("]","");*/
-                               var res = JSON.parse(respuesta);
-                                    
-                                           // for (i = 0; i < res.datos.length; i++) {                                                      
-                                                      $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+res.datos.length+'</div>');  
-                                             //    }
-
-
-                                        
-			              }
-
-
-
-
-                    }
-
-              })
-
-        })
-});
-
-
-
-</script>
 
 
 
@@ -1012,7 +457,7 @@ $(function(){
                          </div>
 
                         </div>
-                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto2" name ="campoOculto2">                                      
+                     <input  style="visibility: hidden;" type="text" value ="" class="campoOculto form-control" id="campoOculto21" name ="campoOculto21">                                      
                    </div>
                   
 
@@ -1020,7 +465,7 @@ $(function(){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" name = "btnCancelarDe" id = "btnCancelarDe" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEliminarValue" id = "btnEliminarValue" class="btn btn-secondary"style ="background-color: #D64646;width:48%;" >Aceptar</button>
+                                <button type="submit" name = "btnEliminarValue1" id = "btnEliminarValue1" class="btn btn-secondary"style ="background-color: #D64646;width:48%;" >Aceptar</button>
                           </div>
                     </div>
             </div>
@@ -1031,33 +476,33 @@ $(function(){
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
   <form class="form " method="post"  enctype="multipart/form-data" >
-        <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+        <div class="modal fade" id="modificarpp"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
-<div class="modal-dialog" role="document">
-                <div class="modal-content">
-                     <div class="modal-header text-center" style ="background-color: #D0A20E;color:#FFFFFF;">
-                                    <h4 class="modal-title w-100 ">Campos editables</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                     </div>
-                                  <div class="modal-body mx-3">
-                                    <div class="md-form mb-4">
-                                      <input id="nameProducto" name="nameProducto" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
+            <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                                 <div class="modal-header text-center" style ="background-color: #D0A20E;color:#FFFFFF;">
+                                                <h4 class="modal-title w-100 ">Campos editables</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                 </div>
+                                              <div class="modal-body mx-3">
+                                                                       <div class="md-form mb-4">
+                                      <input id="nameProducto1" name="nameProducto1" value = "" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
                                     </div>
 
 
                                     <div class="md-form mb-4">                                      
-                                                <select class="form-control" onChange="mostrar(this.value);" id ="unitt" name="unitt" required>
+                                                <select class="form-control" onChange="mostrar2(this.value);" id ="unitt1" name="unitt1" required>
                                                       <option value = "seleccion">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
-                                                            <option value='<?php echo $values[$i]."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
+                                                            <option value='<?php echo $values[$i]."2"."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
                                                        <?php }?>
                                                 </select>
                                     </div>
 
-                                     <div class="md-form mb-4"  id= "gramos">                                      
-                                             <select class="form-control" name="grams" id ="grams" required>  
+                                     <div class="md-form mb-4"  id= "gramos2">                                      
+                                             <select class="form-control" name="grams1" id ="grams1" required>  
                                                      <option value='seleccione'>Seleccione Gramos</option> 
                                                   <?php for($i=0;$i<count($gramos);$i++){?>
                                                      <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
@@ -1065,8 +510,8 @@ $(function(){
                                              </select>
                                     </div>
 
-                                     <div class="md-form mb-4"  id= "kilogramos"> 
-                                         <select class="form-control" name="kilograms" id="kilograms" required>   
+                                     <div class="md-form mb-4"  id= "kilogramos2"> 
+                                         <select class="form-control" name="kilograms1" id="kilograms1" required>   
                                                   <option value='seleccione'>Seleccione Kilogramos</option> 
                                                <?php for($i=0;$i<count($kilogramos);$i++){?>
                                                   <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
@@ -1074,8 +519,8 @@ $(function(){
                                           </select>
                                      </div>
 
-                                      <div class="md-form mb-4"  id= "mililitros"> 
-                                         <select class="form-control" name="milliliters" id ="milliliters" required>         
+                                      <div class="md-form mb-4"  id= "mililitros2"> 
+                                         <select class="form-control" name="milliliters1" id ="milliliters1" required>         
                                               <option value='seleccione'>Seleccione Mililitros</option> 
                                               <?php for($i=0;$i<count($mililitros);$i++){?>
                                                  <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
@@ -1083,8 +528,8 @@ $(function(){
                                          </select>
                                      </div>
 
-                                      <div class="md-form mb-4"  id= "centimetros"> 
-                                          <select class="form-control" name="centimeters" id ="centimeters" required>   
+                                      <div class="md-form mb-4"  id= "centimetros2"> 
+                                          <select class="form-control" name="centimeters1" id ="centimeters1" required>   
                                                   <option value='seleccione'>Seleccione cm3</option> 
                                                <?php for($i=0;$i<count($centimetros);$i++){?>
                                                   <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
@@ -1094,11 +539,11 @@ $(function(){
 
 
                                     <div class="md-form mb-4">
-                                      <input id="Reference" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
+                                      <input id="Reference1" name="Reference1" type="text" placeholder="Referencia" class="form-control" required>
                                     </div>
 
                                     <div class="md-form mb-4">
-                                            <select class="form-control" name="marca" id ="marca" required>  
+                                            <select class="form-control" name="marca1" id ="marca1" required>  
                                                      <option value='seleccione'>Seleccione marca</option> 
                                                   <?php for($i=0;$i<count($marcas);$i++){?>
                                                      <option value='<?php echo $marcas[$i]["idMarca"];?>'><?php echo $marcas[$i]["Descripcion"];?></option>  
@@ -1107,7 +552,7 @@ $(function(){
                                     </div>
 
                                    <div class="md-form mb-4">
-                                              <select class="form-control" id="Category" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
+                                              <select class="form-control" id="Category1" name="Category1"  required >
                                                       <option value = "seleccion">Seleccione Categor&iacutea</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
                                                            <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
@@ -1122,7 +567,7 @@ $(function(){
 
                                     <div class="md-form">
                                       <i class="fas fa-pencil prefix grey-text"></i>
-                                      <textarea class="form-control" id="description" name="description" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
+                                      <textarea class="form-control" id="description1" name="description1" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
                                     </div>
 
                                   </div>
@@ -1132,12 +577,13 @@ $(function(){
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
                                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button> 
-                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto" name="btnaddproducto" >Agregar</button>
+                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto1" name="btnaddproducto1" >Agregar</button>
                                           </div>
                                     </div>
-                </div>
-              </div>  
-        </div>
+                                              </div>
+                     </div>                    
+             </div>
+         </div>
   </form>
 
 
@@ -1151,69 +597,41 @@ $(function(){
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                      <div class="modal-header text-center" style ="background-color: #D0A20E;color:#FFFFFF;">
-                                    <h4 class="modal-title w-100 ">Registro de Producto</h4>
+                                    
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                      </div>
                                   <div class="modal-body mx-3">
                                     <div class="md-form mb-4">
-                                      <input id="nameProducto" name="nameProducto" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
+                                      <input id="nameProducto1" name="nameProducto1" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
                                     </div>
 
 
                                     <div class="md-form mb-4">                                      
-                                                <select class="form-control" onChange="mostrar(this.value);" id ="unitt" name="unitt" required>
-                                                      <option value = "seleccion">Seleccione Peso/Volumen</option>
+                                                <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1" name="unitt1" required>
+                                                      <option value = "seleccione">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
-                                                            <option value='<?php echo $values[$i]."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
+                                                            <option value='<?php echo $values[$i]."1"."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
                                                        <?php }?>
                                                 </select>
                                     </div>
 
-                                     <div class="md-form mb-4"  id= "gramos">                                      
-                                             <select class="form-control" name="grams" id ="grams" required>  
-                                                     <option value='seleccione'>Seleccione Gramos</option> 
-                                                  <?php for($i=0;$i<count($gramos);$i++){?>
-                                                     <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
-                                                  <?php }?>
+                                     <div class="md-form mb-4"  id= "gramos1">                                      
+                                             <select class="form-control" name="unidadNumericaAdd" id ="unidadNumericaAdd" required>  
+                                                     <option value='seleccione'>Seleccione unidad de medida</option> 
                                              </select>
                                     </div>
 
-                                     <div class="md-form mb-4"  id= "kilogramos"> 
-                                         <select class="form-control" name="kilograms" id="kilograms" required>   
-                                                  <option value='seleccione'>Seleccione Kilogramos</option> 
-                                               <?php for($i=0;$i<count($kilogramos);$i++){?>
-                                                  <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
-                                               <?php }?>                                                                                                                                                                                                                                                                
-                                          </select>
-                                     </div>
 
-                                      <div class="md-form mb-4"  id= "mililitros"> 
-                                         <select class="form-control" name="milliliters" id ="milliliters" required>         
-                                              <option value='seleccione'>Seleccione Mililitros</option> 
-                                              <?php for($i=0;$i<count($mililitros);$i++){?>
-                                                 <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
-                                              <?php }?>  
-                                         </select>
-                                     </div>
-
-                                      <div class="md-form mb-4"  id= "centimetros"> 
-                                          <select class="form-control" name="centimeters" id ="centimeters" required>   
-                                                  <option value='seleccione'>Seleccione cm3</option> 
-                                               <?php for($i=0;$i<count($centimetros);$i++){?>
-                                                  <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
-                                               <?php }?>  
-                                          </select>
-                                     </div>
 
 
                                     <div class="md-form mb-4">
-                                      <input id="Reference" name="Reference" type="text" placeholder="Referencia" class="form-control" required>
+                                      <input id="Reference1" name="Reference1" type="text" placeholder="Referencia" class="form-control" required>
                                     </div>
 
                                     <div class="md-form mb-4">
-                                            <select class="form-control" name="marca" id ="marca" required>  
+                                            <select class="form-control" name="marca1" id ="marca1" required>  
                                                      <option value='seleccione'>Seleccione marca</option> 
                                                   <?php for($i=0;$i<count($marcas);$i++){?>
                                                      <option value='<?php echo $marcas[$i]["idMarca"];?>'><?php echo $marcas[$i]["Descripcion"];?></option>  
@@ -1222,11 +640,17 @@ $(function(){
                                     </div>
 
                                    <div class="md-form mb-4">
-                                              <select class="form-control" id="Category" name="Category" onChange="mostrarNuevaCategoria(this.value);" required >
-                                                      <option value = "seleccion">Seleccione Categor&iacutea</option>     
+                                              <select class="form-control" id="CategoryAdd" name="CategoryAdd" onChange="mostrarSubCategoriaAdmin(this.value);" required >
+                                                      <option value = "seleccione">Seleccione Categor&iacutea</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
-                                                           <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
+                                                           <option value = "<?php echo $resultSelect[$i]["idCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
                                                       <?php }?>
+                                                </select>
+                                    </div>
+
+                                    <div class="md-form mb-4">
+                                              <select class="form-control" id="subCategoryAdd" name="subCategoryAdd"  required >
+                                                      <option value = "seleccion">Seleccione Sub Categor&iacutea</option>     
                                                 </select>
                                     </div>
 
@@ -1237,7 +661,7 @@ $(function(){
 
                                     <div class="md-form">
                                       <i class="fas fa-pencil prefix grey-text"></i>
-                                      <textarea class="form-control" id="description" name="description" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
+                                      <textarea class="form-control" id="description1" name="description1" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
                                     </div>
 
                                   </div>
@@ -1247,7 +671,7 @@ $(function(){
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
                                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button> 
-                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto" name="btnaddproducto" >Agregar</button>
+                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto1" name="btnaddproducto1" >Agregar</button>
                                           </div>
                                     </div>
                 </div>
@@ -1256,17 +680,5 @@ $(function(){
   </form>
 
 
+  
 
-
-
-   <?php
-
-     echo '    
-             <script type="text/javascript">
-                      mostrar("l");
-                      
-                      
-            </script>'; 
-
-
-  ?>

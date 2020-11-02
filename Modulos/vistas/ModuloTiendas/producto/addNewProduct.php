@@ -14,6 +14,8 @@
         });
 
     }
+
+
     
  function validarFormulario(formulario){
          
@@ -125,7 +127,7 @@
   return true;
  }
 
- function validarNuevaCategoria(categoria,nuevaCategoria){
+/* function validarNuevaCategoria(categoria,nuevaCategoria){
  
  var cate = categoria.split("-");
          if(cate[1] == "Otros"){
@@ -136,7 +138,7 @@
 			    }
 		 }
          return true;
- }
+ }*/
 
      
 </script>
