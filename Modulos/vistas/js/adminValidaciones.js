@@ -333,8 +333,8 @@ $(document).ready(function(){
 /*auto completar al agregar nuevo producto*/
 $(document).ready(function(){
        $("#nameProducto1").change(function(){
-            
-            var producto = $("#nameProducto1").val();
+            alert("Entra");
+            /*var producto = $("#nameProducto1").val();
             var datos = new FormData();
             datos.append("newProduct", producto);
          
@@ -353,19 +353,16 @@ $(document).ready(function(){
                                 document.getElementById("Reference1").value = null;
                                 document.getElementById("description1").value = null;
                                 document.getElementById("Brand1").value = null;
-                                document.getElementById("Category1").value = "seleccion";
+                                document.getElementById("CategoryAdd").value = "seleccion";
                                 document.getElementById("unitt1").value = "seleccion";
                                 document.getElementById("grams1").value = "seleccione";
-                                document.getElementById("kilograms1").value = "seleccione";
-                                document.getElementById("milliliters1").value = "seleccione";
-                                document.getElementById("centimeters1").value = "seleccione";
                           }else{
                                respuesta =respuesta.replace("[","");
                                respuesta =respuesta.replace("]","");
                                document.getElementById("Reference1").value = JSON.parse(respuesta).Referencia;
                                document.getElementById("description1").value = JSON.parse(respuesta).DescripcionP; 
                                document.getElementById("marca1").value = JSON.parse(respuesta).idMarca; 
-                               document.getElementById("Category1").value = JSON.parse(respuesta).idsubCategoria+'-'+JSON.parse(respuesta).nombre; 
+                               document.getElementById("CategoryAdd").value = JSON.parse(respuesta).idsubCategoria+'-'+JSON.parse(respuesta).nombre; 
                                var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
                                var aux = nombreMedidda.split(" ");
                                document.getElementById("unitt1").value = aux[0]+'1'+'-'+JSON.parse(respuesta).idunidadMedida;
@@ -377,7 +374,7 @@ $(document).ready(function(){
 
                     }
 
-              })
+              })*/
 
         })
 });
@@ -537,10 +534,9 @@ $(function(){
 });
 
 function mostrarSubCategoriaAdmin(categoria){
-      var aux = categoria.split("-");
-     
+         
       var datos = new FormData();
-      datos.append("findSubCategorias", aux[0]);
+      datos.append("findSubCategorias", categoria);
       $.ajax({
                     url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
                     method:"POST",
@@ -601,9 +597,9 @@ function mostrarSubCategoriaAdmin(categoria){
  /*Metodo que valida si muestra los campos de unidades y si no los oculta*/
    function mostrarUnidadNumericaPesoVolumen(id) {
             
-            var aux = id.split("-");
+      
             var datos = new FormData();
-      datos.append("findUnidadMedida", aux[1]);
+      datos.append("findUnidadMedida", id);
       $.ajax({
                     url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
                     method:"POST",
@@ -677,7 +673,7 @@ function mostrarSubCategoriaAdmin(categoria){
       });
   });
 
-  function mostrar3(id){
+  function mostrarDatosEdit(id){
 
 
             var datos = new FormData();
@@ -703,11 +699,14 @@ function mostrarSubCategoriaAdmin(categoria){
                                        document.getElementById("description1").value = JSON.parse(respuesta).Descripcion; 
                                        document.getElementById("marca1").value = JSON.parse(respuesta).Marca_idMarca; 
                                        document.getElementById("nameProducto1").value = JSON.parse(respuesta).Nombre; 
-                                       
+                                       document.getElementById("tipoProduct").value = JSON.parse(respuesta).tipoProducto_idtipoProducto
+                                       var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
+                                       var aux = nombreMedidda.split(" ");
+                                       document.getElementById("unitt1").value = aux[0]+'1'+'-'+JSON.parse(respuesta).idunidadMedida;
                                        //document.getElementById("Category1").value = JSON.parse(respuesta).subCategoria_idsubCategoria; 
                                       /* var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
                                        var aux = nombreMedidda.split(" ");
-                                       document.getElementById("unitt1").value = aux[0]+'1'+'-'+JSON.parse(respuesta).idunidadMedida;
+                                      
                                        mostrar2(aux[0]+'1'+'-'+JSON.parse(respuesta).idunidadMedida);
                                        document.getElementById(returnUnidad(aux[0]+'1')).value = JSON.parse(respuesta).pesoVolumen;*/
                                

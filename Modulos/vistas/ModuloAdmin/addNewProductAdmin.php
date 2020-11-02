@@ -29,7 +29,6 @@
   $objSelect = new ControladorSelectsInTables();
   $objFinP = new ControladorFindProductosTienda();
   $objLog =  new ControladorWorkLogs();
-  //$objLog-> escribirEnLog("Consultar","INFO",$nitTienda,"Se inicia el proceso de Consultar Productos ");
   $valorResult = null;
 
   //--------------------------Se prepara data para el formulario de registro de producto----------------------------------------------
@@ -49,6 +48,13 @@
           return $values;
      
 	 }
+     function returnUnidadLimpia($valor){
+         $unidad =""; 
+         $aux = explode("(",$valor);
+         $unidad = $aux[1];
+         $unidad = str_replace(')', " ", $unidad);
+         return $unidad;
+	 }
      
      $objEstuctura =  new ControladorEstructuras();
      $objSelect =  new ControladorSelectsInTables();
@@ -58,27 +64,22 @@
 
      $resultSelect = ControladorSelectsInTables:: selectTodosRegistros("categoria");
      $marcas = ControladorSelectsInTables:: selectTodosRegistros("marca");
-
+     $tipoProducto = ControladorSelectsInTables:: selectTodosRegistros("tipoproducto");
+     $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia la pagina para administrar productos");
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------
      if(isset($_POST["btnEliminarValue1"])&& isset($_POST["campoOculto21"])){      
             $eliminarProducto  = new ControladorAdminEliminar();
             $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto21"]);             
     }
-     /*    if(isset($_POST["btnEliminarValue1"])){      
-            $eliminarProducto  = new ControladorAdminEliminar();
-            $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto2"]);             
-    }*/
+  
 
 
         if(isset($_POST["btnaddproducto1"])){
 
                   $objLog =  new ControladorWorkLogs();
-                   $objLog->escribirEnLogAdmin("Administracion","INFO","PROBAR LA ESCRITURA EN LOG");
-                   $objLog->escribirEnLogAdmin("Administracion","INFO","Valor del campo Sub categoria: ".$_POST["subCategoryAdd"]);
-
-                      $registroProducto  = new ControladorAdminInsert();
-                      $registroProducto ->agregarProducto('imgProducto');
+                  $registroProducto  = new ControladorAdminInsert();
+                  $registroProducto ->agregarProducto('imgProducto');
 	    }
   
 
@@ -223,20 +224,10 @@
 										                  }
                                                           echo $imagen;
                                                       ?>" alt="Card image cap" style="width:160px;alaing:center;height:160px; display: flex;align-items: center;justify-content: center;"  
-                                                           precio = "<?php echo "$".$valorResult[$j]["precioReal"];?>" 
                                                            nombreproducto ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                            descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
                                                            pesovolumen = "<?php  
-                                                             $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
-                                                                         $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
-                                                                          $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
-                                                                          $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
-                                                                          $unidad ="ml";
-											                  }
+                                                              $unidad = returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
                                                               referencia = "<?php if($valorResult[$j]["Referencia"]!=""){echo $valorResult[$j]["Referencia"];}else {echo "Sin referencia";}?>"
                                                               marca ="<?php
@@ -252,32 +243,14 @@
                                                    <!-- <h6 class="card-title textoprecioproducto" style="color:#D0A20E;font-weight: bold;font-size:19px;font-family:sans-serif;"><?php echo "$".$valorResult[$j]["precioReal"];?></h6>-->
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
-                                                             $unidad =""; 
-                                             if ($valorResult[$j]["nombreMedida"]== "gramos (gr)") {
-                                                                         $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== "kilogramos (kg)"){
-                                                                          $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=="centimetros cubicos (cm3)"){
-                                                                          $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=="mililitros (ml)"){
-                                                                          $unidad ="ml";
-											                  }
+                                                              $unidad = returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                       <a href="#"><p style ="position: absolute; right: 10;" onclick="mostrar3(this.id);mostrar2(this.id);"  id ="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                       <a href="#"><p style ="position: absolute; right: 10;" onclick="mostrarDatosEdit(this.id);"  id ="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                    id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editarAdmin"></span></p></a>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
-                                                             $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
-                                                                         $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
-                                                                          $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
-                                                                          $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
-                                                                          $unidad ="ml";
-											                  }
+                                                             $unidad =returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
                                                                                                               
                                               </div>
@@ -288,98 +261,7 @@
                               </div>
                                
                           <?php }}?>
-                    <?php }}else{?>
-                       <div class="col-lg-12">
-                                   <div class="card" style="color:#AB6F14;font-size:140%;">
-                                  <div class="card-body">                                          
-                                      <footer class="" style="color:#AB6F14;font-size:110%;"><cite title="Source Title"><?php echo $mensaje;?></cite></footer>                    
-                                  </div>
-                                </div>
-                        </div>
-
-
-                      <div class="container-fluid">
-                        <div class="row">
-                        <?php if($valorResult!=null && $valorResult!="Fallo" && $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
-                        
-
-                              <div class="col-lg-3">
-                                        <div class="card">
-                                              <!--Imagen del producto-->
-                                                    <div  style="alaing:center;display: flex;align-items: center;justify-content: center;">
-                                                    <a href="#"> <img  class="img-responsive imagen"  src="<?php 
-                                                          if(!empty($valorResult[$j]["FotoPrincipal"])){
-                                                               $imagen =$valorResult[$j]["FotoPrincipal"];
-									                      }else{
-                                                               $imagen ='../AdminComparador/imagenes_productos/producto.png';                          
-										                  }
-                                                          echo $imagen;
-                                                      ?>" alt="Card image cap" style="width:160px;alaing:center;height:160px; display: flex;align-items: center;justify-content: center;"  
-                                                           precio = "<?php echo "$".$valorResult[$j]["precioReal"];?>" 
-                                                           nombreproducto ="<?php echo $valorResult[$j]["Nombre"];?>" 
-                                                           descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
-                                                           pesovolumen = "<?php  
-                                                             $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
-                                                                         $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
-                                                                          $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
-                                                                          $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
-                                                                          $unidad ="ml";
-											                  }
-                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
-                                                              referencia = "<?php if($valorResult[$j]["Referencia"]!=""){echo $valorResult[$j]["Referencia"];}else {echo "Sin referencia";}?>"
-                                                              marca ="<?php
-                                                                  $marcaDes = $objSelect->selectARowsInDb("select Descripcion from marca where idMarca = ".$valorResult[$j]["Marca_idMarca"]);
-                                                                  echo $marcaDes[0]["Descripcion"];
-                                                              ?>"></a>
-                                                </div>
-                                              <div class="card-body">
-                                                    <h5 class="m-0"style="color:#136574;"></h5> <!--Nombre de tienda-->
-                                                    <h5 class="m-0"style="color:#136574;"id="nombreProducto" value="<?php echo $valorResult[$j]["Nombre"];?>" ><?php echo $valorResult[$j]["Nombre"];?></h5><!--Nombre producto-->
-                                                    <!--Precio-->
-                                                    
-                                                    <!--Unidad de medida-->
-                                                    <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
-                                                             $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== "gramos (gr)") {
-                                                                         $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== "kilogramos (kg)"){
-                                                                          $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=="centimetros cubicos (cm3)"){
-                                                                          $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=="mililitros (ml)"){
-                                                                          $unidad ="ml";
-											                  }
-                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>
-                                                    </p>
-                                                      <p style ="position: absolute; right: 10;"   id="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
-                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editarAdmin"></span></p>
-                                                      <a href=""><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
-                                                                                                                                                                            unidad = "<?php  
-                                                             $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
-                                                                         $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
-                                                                          $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
-                                                                          $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
-                                                                          $unidad ="ml";
-											                  }
-                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
-
-      
-                                              </div>
-
-                                         </div>      
-             
-                              </div>
-
-                          <?php }}?>
-                    <?php }?> 
+                    <?php }}?>
           <!-- /.col-md-6 -->
           </form>
 		        <div class="modal-footer">
@@ -487,90 +369,29 @@
                                                 </button>
                                  </div>
                                               <div class="modal-body mx-3">
-                                                                       <div class="md-form mb-4">
-                                      <input id="nameProducto1" name="nameProducto1" value = "" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
-                                    </div>
+                                                        <div class="md-form mb-4">
+                                                              <input id="nameProducto1" name="nameProducto1" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
+                                                            </div>
 
+                                                            <div class="md-form mb-4">                                      
+                                                                        <select class="form-control"  id ="tipoProduct" name="tipoProduct" required>
+                                                                              <option value = "seleccione">Seleccione Tipo/Producto</option>
+                                                                               <?php for($i=0;$i<count($tipoProducto);$i++){?>
+                                                                                    <option value='<?php echo $tipoProducto[$i]["idtipoProducto"];?>'><?php echo $tipoProducto[$i]["descripcion"];?></option>
+                                                                               <?php }?>
+                                                                        </select>
+                                                            </div>
 
-                                    <div class="md-form mb-4">                                      
-                                                <select class="form-control" onChange="mostrar2(this.value);" id ="unitt1" name="unitt1" required>
-                                                      <option value = "seleccion">Seleccione Peso/Volumen</option>
-                                                       <?php for($i=0;$i<count($valorUnidades);$i++){?>
-                                                            <option value='<?php echo $values[$i]."2"."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
-                                                       <?php }?>
-                                                </select>
-                                    </div>
+                                                            <div class="md-form mb-4">                                      
+                                                                        <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1" name="unitt1" required>
+                                                                              <option value = "seleccione">Seleccione Peso/Volumen</option>
+                                                                               <?php for($i=0;$i<count($valorUnidades);$i++){?>
+                                                                                    <option value='<?php echo $valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
+                                                                               <?php }?>
+                                                                        </select>
+                                                            </div>
+                                              </div>
 
-                                     <div class="md-form mb-4"  id= "gramos2">                                      
-                                             <select class="form-control" name="grams1" id ="grams1" required>  
-                                                     <option value='seleccione'>Seleccione Gramos</option> 
-                                                  <?php for($i=0;$i<count($gramos);$i++){?>
-                                                     <option value='<?php echo $gramos[$i];?>'><?php echo $gramos[$i];?></option>  
-                                                  <?php }?>
-                                             </select>
-                                    </div>
-
-                                     <div class="md-form mb-4"  id= "kilogramos2"> 
-                                         <select class="form-control" name="kilograms1" id="kilograms1" required>   
-                                                  <option value='seleccione'>Seleccione Kilogramos</option> 
-                                               <?php for($i=0;$i<count($kilogramos);$i++){?>
-                                                  <option value='<?php echo $kilogramos[$i];?>'><?php echo $kilogramos[$i];?></option>  
-                                               <?php }?>                                                                                                                                                                                                                                                                
-                                          </select>
-                                     </div>
-
-                                      <div class="md-form mb-4"  id= "mililitros2"> 
-                                         <select class="form-control" name="milliliters1" id ="milliliters1" required>         
-                                              <option value='seleccione'>Seleccione Mililitros</option> 
-                                              <?php for($i=0;$i<count($mililitros);$i++){?>
-                                                 <option value='<?php echo $mililitros[$i];?>'><?php echo $mililitros[$i];?></option>  
-                                              <?php }?>  
-                                         </select>
-                                     </div>
-
-                                      <div class="md-form mb-4"  id= "centimetros2"> 
-                                          <select class="form-control" name="centimeters1" id ="centimeters1" required>   
-                                                  <option value='seleccione'>Seleccione cm3</option> 
-                                               <?php for($i=0;$i<count($centimetros);$i++){?>
-                                                  <option value='<?php echo $centimetros[$i];?>'><?php echo $centimetros[$i];?></option>  
-                                               <?php }?>  
-                                          </select>
-                                     </div>
-
-
-                                    <div class="md-form mb-4">
-                                      <input id="Reference1" name="Reference1" type="text" placeholder="Referencia" class="form-control" required>
-                                    </div>
-
-                                    <div class="md-form mb-4">
-                                            <select class="form-control" name="marca1" id ="marca1" required>  
-                                                     <option value='seleccione'>Seleccione marca</option> 
-                                                  <?php for($i=0;$i<count($marcas);$i++){?>
-                                                     <option value='<?php echo $marcas[$i]["idMarca"];?>'><?php echo $marcas[$i]["Descripcion"];?></option>  
-                                                  <?php }?>
-                                             </select>
-                                    </div>
-
-                                   <div class="md-form mb-4">
-                                              <select class="form-control" id="Category1" name="Category1"  required >
-                                                      <option value = "seleccion">Seleccione Categor&iacutea</option>     
-                                                      <?php for($i=0;$i<count($resultSelect);$i++){?>
-                                                           <option value = "<?php echo $resultSelect[$i]["idsubCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
-                                                      <?php }?>
-                                                </select>
-                                    </div>
-
-                                    <div class="md-form mb-4 custom-file">
-                                         <input type="file" class="custom-file-input" id="imgProducto" name="imgProducto" lang="es"  required>
-                                         <label class="custom-file-label" for="customFileLang">Seleccione Imagen Producto</label>
-                                    </div>
-
-                                    <div class="md-form">
-                                      <i class="fas fa-pencil prefix grey-text"></i>
-                                      <textarea class="form-control" id="description1" name="description1" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
-                                    </div>
-
-                                  </div>
 
 
 
@@ -607,12 +428,20 @@
                                       <input id="nameProducto1" name="nameProducto1" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
                                     </div>
 
+                                    <div class="md-form mb-4">                                      
+                                                <select class="form-control"  id ="tipoProduct" name="tipoProduct" required>
+                                                      <option value = "seleccione">Seleccione Tipo/Producto</option>
+                                                       <?php for($i=0;$i<count($tipoProducto);$i++){?>
+                                                            <option value='<?php echo $tipoProducto[$i]["idtipoProducto"];?>'><?php echo $tipoProducto[$i]["descripcion"];?></option>
+                                                       <?php }?>
+                                                </select>
+                                    </div>
 
                                     <div class="md-form mb-4">                                      
                                                 <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1" name="unitt1" required>
                                                       <option value = "seleccione">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
-                                                            <option value='<?php echo $values[$i]."1"."-".$valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
+                                                            <option value='<?php echo $valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
                                                        <?php }?>
                                                 </select>
                                     </div>
@@ -643,7 +472,7 @@
                                               <select class="form-control" id="CategoryAdd" name="CategoryAdd" onChange="mostrarSubCategoriaAdmin(this.value);" required >
                                                       <option value = "seleccione">Seleccione Categor&iacutea</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
-                                                           <option value = "<?php echo $resultSelect[$i]["idCategoria"]."-".$resultSelect[$i]["nombre"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
+                                                           <option value = "<?php echo $resultSelect[$i]["idCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
                                                       <?php }?>
                                                 </select>
                                     </div>

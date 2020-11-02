@@ -39,8 +39,7 @@ class   AjaxProducto{
      
         $datos = $this->validarProducto;
         $objSelect = new ControladorSelectsInTables();
-        $datos = "'".$datos."'";
-        //SELECT *  FROM marca t6 INNER JOIN(SELECT * from subcategoria t4 INNER JOIN(SELECT * from unidadmedida t3 INNER JOIN (SELECT DISTINCT idProducto,unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Marca_idMarca,Referencia,Descripcion AS DescripcionP,pesoVolumen  FROM producto where Nombre = 'Arroz') t1 on t3.idUnidadMedida = t1.unidadMedida_idUnidadMedida) t5 ON t4.idsubCategoria = t5.subCategoria_idsubCategoria)t7 ON t6.idMarca = t7.Marca_idMarca
+        $datos = "'".$datos."'";        
         $sql = "SELECT *  FROM marca t6 INNER JOIN(SELECT * from subcategoria t4 INNER JOIN(SELECT * from unidadmedida t3 INNER JOIN (SELECT DISTINCT idProducto,unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Marca_idMarca,Referencia,Descripcion AS DescripcionP,pesoVolumen  FROM producto where Nombre = ".$datos.") t1 on t3.idUnidadMedida = t1.unidadMedida_idUnidadMedida) t5 ON t4.idsubCategoria = t5.subCategoria_idsubCategoria)t7 ON t6.idMarca = t7.Marca_idMarca";
         $respuesta = $objSelect->selectARowsInDb($sql);
         if ($respuesta!= null) {
@@ -219,6 +218,7 @@ if(isset($_POST["findSubCategorias"])){
 //trae las unidades de peso volumen de las unidades de medida
 if(isset($_POST["findUnidadMedida"])){  
     $valProducto = new AjaxProducto();
+    $aux = $_POST["findUnidadMedida"];
     $valProducto ->ajaxReturnAllRegistros("pesovolumen","unidadMedida_idunidadMedida",$_POST["findUnidadMedida"]);
 }
 

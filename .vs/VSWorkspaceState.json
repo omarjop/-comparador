@@ -1,16 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdminComparador",
-    "\\AdminComparador\\controladores",
     "\\AdminComparador\\controladores\\estructuras",
     "\\AdminComparador\\controladores\\rutas",
+    "\\Modulos",
     "\\Modulos\\controladores",
-    "\\Modulos\\vistas",
+    "\\Modulos\\controladores\\ModuloAdmin",
     "\\Modulos\\vistas\\generales",
-    "\\Modulos\\vistas\\ModuloTiendas",
     "\\Modulos\\vistas\\ModuloTiendas\\producto"
   ],
-  "SelectedNode": "\\AdminComparador\\controladores\\estructuras\\estructuras.php",
+  "SelectedNode": "\\Modulos\\controladores\\ModuloAdmin\\c_adminAgregar.php",
   "PreviewInSolutionExplorer": false
 }

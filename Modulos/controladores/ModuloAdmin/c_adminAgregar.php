@@ -74,42 +74,44 @@ class ControladorAdminInsert{
         }
       }
 
-    //--------Registro de producto---------------------------
-    public function agregarProducto($rutaImagen){
-          if(isset($_POST["btnaddproducto"])){
-
-                 $this->validarDatosProducto($rutaImagen); 
-		  }
+ //--------inicia administraci+on de producto---------------------------
+    public function agregarProducto($rutaImagen){   
+                 $objLog =  new ControladorWorkLogs();
+                 $this->validarDatosProducto($rutaImagen,$objLog); 		  
 	}
 
-    private function validarDatosProducto($rutaImagen){
-          $unit = $_POST["unitt1"];          
-          $unit2 = $_POST["unitt1"];
-          $precio="";
+    private function validarDatosProducto($rutaImagen,$objLog){
+     $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (validarDatosProducto) para la validacion de los datos de registro de producto");
           $objLog =  new ControladorWorkLogs();
-         // $objLog->escribirEnLogAdmin("Administracion","INFO","Valor del campo Sub categoria: ".$_POST["Category1"]);
-          $objLog->escribirEnLogAdmin("Administracion","INFO","Valor del campo Sub categoria: ".$_POST["subCategory1"]);
 
-         /* $datosDelProducto = array($_POST["nameProducto"],$precio,$this->returnPesoVolumen($unit),$this->returnUnidadMedida($unit2,$_POST["grams"],$_POST["kilograms"]
-                                       ,$_POST["milliliters"],$_POST["centimeters"]),$_POST["Reference"],$_POST["marca"],$this->returnCategoria($_POST["Category"]),$_POST["description"]);
-              
-             $this->registrarProducto($datosDelProducto,$rutaImagen);   */
+         try{ 
+               $datosDelProducto = array($_POST["nameProducto1"],$_POST["tipoProduct"],$_POST["unitt1"],$_POST["unidadNumericaAdd"],$_POST["Reference1"],$_POST["marca1"],$_POST["CategoryAdd"],$_POST["subCategoryAdd"],$_POST["description1"]);              
+               $this->registrarProducto($datosDelProducto,$rutaImagen,$objLog);   
+           }catch(Exception $e){
+              $objLog->escribirEnLogAdmin("AdminProducto","ERROR",$e->getMessage());
+		   }
+     $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se finaliza el metodo (validarDatosProducto) "); 
 	}
 
-    private function registrarProducto($datosDelProducto,$rutaImagen){
-      
-       $ruta = "../AdminComparador/imagenes_productos/".$_FILES[$rutaImagen]["name"];
-       $objAdminAgregar  = new ControladorInserttAllTables();
-       $into = "unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Marca_idMarca,Nombre,Referencia,Descripcion,FotoPrincipal,pesoVolumen";      
-       $value ="'$datosDelProducto[2]'".","."'$datosDelProducto[6]'".","."'$datosDelProducto[5]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[7]'".","."'$ruta'".","."'$datosDelProducto[3]'";
-       $this->SubirArchivoImagen($rutaImagen);
-       $resultado= $objAdminAgregar->insertInTable("producto",$into, $value);
+    private function registrarProducto($datosDelProducto,$rutaImagen,$objLog){
+           
+           $objAdminAgregar  = new ControladorInserttAllTables(); 
+           $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (registrarProducto) para el registro de producto");
+           $ruta = "../AdminComparador/imagenes_productos/".$_FILES[$rutaImagen]["name"];
 
-       if ($resultado!='Fallo') {
-                echo "<script>toastr.info('Se agrego el producto correctamente');</script>";             
-            }else{
-                echo "<script>toastr.error('Error al agregar el producto Error: '+".$resultado.");</script>";                             
-              }
+           $into = "Marca_idMarca,tipoProducto_idtipoProducto,unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Nombre,Referencia,	Descripcion,FotoPrincipal,pesoVolumen";      
+           $value ="'$datosDelProducto[5]'".","."'$datosDelProducto[1]'".","."'$datosDelProducto[2]'".","."'$datosDelProducto[7]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[8]'".","."'$ruta'".","."'$datosDelProducto[3]'";
+           $this->SubirArchivoImagen($rutaImagen);
+           $resultado= $objAdminAgregar->insertInTable("producto",$into, $value);
+
+           if ($resultado!='Fallo') {
+                    $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se registra correctamente el producto con id ".$resultado);
+                    echo "<script>toastr.info('Se agrego el producto correctamente');</script>";             
+                }else{
+                    $objLog->escribirEnLogAdmin("AdminProducto","INFO","No se puede registrar el producto por el siguiente inconveniente ".$resultado);
+                    echo "<script>toastr.error('Error al agregar el producto Error: '+".$resultado.");</script>";                             
+                }
+           $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se finaliza el metodo (registrarProducto) "); 
 	}
 
     private function returnPesoVolumen($pesoVolumen){
@@ -190,5 +192,7 @@ class ControladorAdminInsert{
 
 
     }
+
+    //----------------------Finaliza administración producto--------------------------------------------------
 
 }
