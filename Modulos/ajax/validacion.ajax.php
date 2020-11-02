@@ -197,7 +197,7 @@ if(isset($_POST["nombreAddP"])){
     $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"],$_POST["unitAddP"]);
 }
 
-<<<<<<< HEAD
+
 //Valida si el producto se encuentra asociado a una tienda sino no se elimina
 if(isset($_POST["idProducto"])){  
     $valProducto = new AjaxProducto();
@@ -221,7 +221,7 @@ if(isset($_POST["findUnidadMedida"])){
     $valProducto = new AjaxProducto();
     $valProducto ->ajaxReturnAllRegistros("pesovolumen","unidadMedida_idunidadMedida",$_POST["findUnidadMedida"]);
 }
-=======
+
 //Valida si la marca existe
 if(isset($_POST["nombreAddMarca"])){  
     $valMarca = new AjaxProducto();
@@ -253,4 +253,4 @@ if(isset($_POST["nombreAddPerfil"])){
     $valMarca ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
 }
 
->>>>>>> 04e9a1d673a69fc46dfea79a3027531b0d102ffc
+
