@@ -57,7 +57,7 @@ if(isset($_POST["btnEditarUnidad"])){
 
 //-- Al entrar se visualizan todas las unidades existentes
 $objAdminSeleccionaTodos  = new ControladorAdminSelect();
-$resultado=$objAdminSeleccionaTodos->buscarAll("unidadmedida");
+$resultado=$objAdminSeleccionaTodos->buscarAll("categoria");
 
   
 //--Boton lupa consulta unidad
@@ -203,16 +203,16 @@ var returnValue = true;
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Admin. Unidad Medida</h1>
+            <h1 class="m-0 text-dark">Administraci&oacute;n Categorias</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <button type="button" class="btn btn-warning botaddunidad colorbotonamarillo" >Agregar Unidad 
+              <button type="button" class="btn btn-warning botaddunidad colorbotonamarillo" >Agregar Categoria 
                 </button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
              <div class="input-group col-lg-5 col-md-7 col-sm-9 col-xs-8 " id="buscadormarca"  >
-                        <input type="search" name="buscaunidad" id="buscaunidad" class="form-control"  placeholder="Buscar unidad"  style ="height:500%;>
+                        <input type="search" name="buscaunidad" id="buscaunidad" class="form-control"  placeholder="Buscar categorias"  style ="height:500%;>
                         <span  class="input-group-btn">
                             <a href="#">
                                 <button class="btn btn-default backColor colorbotonamarillo lupaunidad" type="submit" name="lupaunidad" id="lupaunidad" style ="height:100%;">
@@ -231,9 +231,9 @@ var returnValue = true;
              
         ?> 
             <ul class="list-group list-group-flush">
-              <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["nombreMedida"];?>
-                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span nombunidad = "<?php echo $resultado[$i]["nombreMedida"];?>" id = "<?php echo $resultado[$i]["idunidadMedida"];?>" idcontrol="<?php echo $resultado[$i]["control"];?>" class="fas fa-pen-alt editar"></span></p></a> 
-                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["nombreMedida"];?>" id = "<?php echo $resultado[$i]["idunidadMedida"];?>" class="far fa-trash-alt eliminar"></span></p></a>          
+              <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["nombre"];?>
+                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span nombunidad = "<?php echo $resultado[$i]["nombre"];?>" id = "<?php echo $resultado[$i]["idCategoria"];?>" idcontrol="<?php echo $resultado[$i]["control"];?>" class="fas fa-pen-alt editar"></span></p></a> 
+                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["nombreMedida"];?>" id = "<?php echo $resultado[$i]["idCategoria"];?>" class="far fa-trash-alt eliminar"></span></p></a>          
               </li>
 
             </ul>

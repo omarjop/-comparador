@@ -42,6 +42,37 @@ class ControladorAdminInsert{
         }
       }
 
+        public function agregarCamposTProducto($tabla,$columna,$valorAgregar){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("tipoproducto","descripcion","'$valorAgregar'");
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }
+      }
+
+        public function agregarCamposPais($tabla,$columna,$valorAgregar){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("pais","nombrePais","'$valorAgregar'");
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }
+      }
+        public function agregarCamposPerfil($tabla,$columna,$valorAgregar){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("perfil","Descripcion","'$valorAgregar'");
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }
+      }
 
     //--------Registro de producto---------------------------
     public function agregarProducto($rutaImagen){

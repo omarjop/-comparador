@@ -103,6 +103,7 @@ class   AjaxProducto{
         
     }
 
+
     public function ajaxReturnDatosProducto($idProduct){
      
         $objSelect = new ControladorSelectsInTables();
@@ -152,6 +153,23 @@ class   AjaxProducto{
     }
     
 
+
+    //------------------metodo que valida si existe registros
+    public function ajaxValidarExisteRegistro($tabla,$columnaComparar,$valorComparar){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $valorComparar = "'".$valorComparar."'";
+        
+        $sql = "SELECT * FROM  ".$tabla." where ".$columnaComparar." = ".$valorComparar;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+        if ($respuesta!= null ) {
+            echo json_encode($respuesta);
+        }else{
+           echo json_encode("No existe");
+        }
+        
+    }
+
 }
 
 
@@ -179,6 +197,7 @@ if(isset($_POST["nombreAddP"])){
     $valProducto ->ajaxValidarNewProductoAdd($_POST["nombreAddP"],$_POST["unitAddP"]);
 }
 
+<<<<<<< HEAD
 //Valida si el producto se encuentra asociado a una tienda sino no se elimina
 if(isset($_POST["idProducto"])){  
     $valProducto = new AjaxProducto();
@@ -202,3 +221,36 @@ if(isset($_POST["findUnidadMedida"])){
     $valProducto = new AjaxProducto();
     $valProducto ->ajaxReturnAllRegistros("pesovolumen","unidadMedida_idunidadMedida",$_POST["findUnidadMedida"]);
 }
+=======
+//Valida si la marca existe
+if(isset($_POST["nombreAddMarca"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("marca","Descripcion",$_POST["nombreAddMarca"]);
+}
+//Valida si existe la unidad de medida 
+if(isset($_POST["addunidadValue"])){  
+    $valUnidadMedida = new AjaxProducto();
+    $valUnidadMedida ->ajaxValidarExisteRegistro("unidadmedida","nombreMedida",$_POST["addunidadValue"]);
+}
+//Valida si existe el tipo de empresa
+if(isset($_POST["nombreAddTipoEmp"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("tipoempresa","descripcion",$_POST["nombreAddTipoEmp"]);
+}
+//Valida si existe el tipo de producto
+if(isset($_POST["nombreAddTipoProd"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("tipoproducto","descripcion",$_POST["nombreAddTipoProd"]);
+}
+//Valida si existe el pais
+if(isset($_POST["nombreAddPais"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("pais","nombrePais",$_POST["nombreAddPais"]);
+}
+//Valida si existe el perfil
+if(isset($_POST["nombreAddPerfil"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
+}
+
+>>>>>>> 04e9a1d673a69fc46dfea79a3027531b0d102ffc

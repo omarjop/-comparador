@@ -155,12 +155,24 @@
               </li>
 
               <li class="nav-item">
+                <a href="addTipoProducto" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipo Producto</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a href="addNewProductAdmin" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Productos</p>
                 </a>
               </li>
-            
+              <li class="nav-item">
+                <a href="addPerfil" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Perfil</p>
+                </a>
+              </li>
                <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -174,7 +186,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="addCategorias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categorias</p>
                 </a>
@@ -184,7 +196,13 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Unidad Medida</p>
                 </a>
-              </li>			  
+              </li>			
+              <li class="nav-item">
+                <a href="addPais" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pais</p>
+                </a>
+              </li>     
             </ul>
           </li>
 		  
