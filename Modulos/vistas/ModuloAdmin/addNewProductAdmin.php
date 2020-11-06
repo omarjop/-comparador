@@ -73,16 +73,17 @@
             $eliminarProducto ->eliminarProductoAdmin($_POST["campoOculto21"]);             
     }
   
+     if(isset($_POST["btnaddproducto1"])){
+            $registroProducto  = new ControladorAdminInsert();
+            $registroProducto ->agregarProducto('imgProducto');
+	 }
 
-
-        if(isset($_POST["btnaddproducto1"])){
-
-                  $objLog =  new ControladorWorkLogs();
-                  $registroProducto  = new ControladorAdminInsert();
-                  $registroProducto ->agregarProducto('imgProducto');
-	    }
+      if(isset($_POST["btneditproducto"])){
+            $registroProducto  = new ControladorAdminInsert();
+            $registroProducto ->agregarProducto('imgProductoEdit');
+	 }
   
-
+  
   
       if(isset($valorDeUrl)){
            $valorDeUrl = "'".$valorDeUrl."'";
@@ -246,8 +247,8 @@
                                                               $unidad = returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
-                                                       <a href="#"><p style ="position: absolute; right: 10;" onclick="mostrarDatosEdit(this.id);"  id ="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
-                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editarAdmin"></span></p></a>
+                                                       <a href="#"><p style ="position: absolute; right: 10;" onclick="mostrarDatosAdminEdit(this.id,'<?php echo $valorResult[$j]["subCategoria_idsubCategoria"];?>');" id ="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                                                                                                                                   id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt"></span></p></a>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
@@ -370,11 +371,11 @@
                                  </div>
                                               <div class="modal-body mx-3">
                                                         <div class="md-form mb-4">
-                                                              <input id="nameProducto1" name="nameProducto1" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
+                                                              <input id="nameProductoAdminEdit" name="nameProductoAdminEdit" type="text" placeholder="Nombre producto" class="form-control"   required>                                      
                                                             </div>
 
                                                             <div class="md-form mb-4">                                      
-                                                                        <select class="form-control"  id ="tipoProduct" name="tipoProduct" required>
+                                                                        <select class="form-control"  id ="tipoProductAdminEdit" name="tipoProductAdminEdit" required>
                                                                               <option value = "seleccione">Seleccione Tipo/Producto</option>
                                                                                <?php for($i=0;$i<count($tipoProducto);$i++){?>
                                                                                     <option value='<?php echo $tipoProducto[$i]["idtipoProducto"];?>'><?php echo $tipoProducto[$i]["descripcion"];?></option>
@@ -383,13 +384,59 @@
                                                             </div>
 
                                                             <div class="md-form mb-4">                                      
-                                                                        <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1" name="unitt1" required>
+                                                                        <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1AdminEdit" name="unitt1AdminEdit" required>
                                                                               <option value = "seleccione">Seleccione Peso/Volumen</option>
                                                                                <?php for($i=0;$i<count($valorUnidades);$i++){?>
                                                                                     <option value='<?php echo $valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
                                                                                <?php }?>
                                                                         </select>
                                                             </div>
+
+                                                            <div class="md-form mb-4"  id= "gramos1">                                      
+                                                                     <select class="form-control" name="unidadNumericaAddAdminEdit" id ="unidadNumericaAddAdminEdit" required>  
+                                                                             <option value='seleccione'>Seleccione unidad de medida</option> 
+                                                                     </select>
+                                                            </div>
+
+                                                             <div class="md-form mb-4">
+                                                              <input id="Reference1AdminEdit" name="Reference1AdminEdit" type="text" placeholder="Referencia" class="form-control" required>
+                                                             </div>
+
+                                                            <div class="md-form mb-4">
+                                                                    <select class="form-control" name="marca1AdminEdit" id ="marca1AdminEdit" required>  
+                                                                             <option value='seleccione'>Seleccione marca</option> 
+                                                                          <?php for($i=0;$i<count($marcas);$i++){?>
+                                                                             <option value='<?php echo $marcas[$i]["idMarca"];?>'><?php echo $marcas[$i]["Descripcion"];?></option>  
+                                                                          <?php }?>
+                                                                     </select>
+                                                            </div>
+
+
+                                                             <div class="md-form mb-4">
+                                                                      <select class="form-control" id="CategoryAddAdminEdit" name="CategoryAddAdminEdit" onChange="mostrarSubCategoriaAdmin(this.value);" required >
+                                                                              <option value = "seleccione">Seleccione Categor&iacutea</option>     
+                                                                              <?php for($i=0;$i<count($resultSelect);$i++){?>
+                                                                                   <option value = "<?php echo $resultSelect[$i]["idCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
+                                                                              <?php }?>
+                                                                        </select>
+                                                              </div>
+
+                                                                <div class="md-form mb-4">
+                                                                          <select class="form-control" id="subCategoryAddAdminEdit" name="subCategoryAddAdminEdit"  required >
+                                                                                  <option value = "seleccion">Seleccione Sub Categor&iacutea</option>     
+                                                                            </select>
+                                                                </div>
+
+                                                                <div class="md-form mb-4 custom-file">
+                                                                     <input type="file" class="custom-file-input" id="imgProductoEdit" name="imgProductoEdit" lang="es"  required>
+                                                                     <label class="custom-file-label" for="customFileLang">Seleccione Imagen Producto</label>
+                                                                </div>
+
+                                                                <div class="md-form">
+                                                                  <i class="fas fa-pencil prefix grey-text"></i>
+                                                                  <textarea class="form-control" id="description1AdminEdit" name="description1AdminEdit" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
+                                                                </div>
+
                                               </div>
 
 
@@ -398,7 +445,7 @@
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
                                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button> 
-                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btnaddproducto1" name="btnaddproducto1" >Agregar</button>
+                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btneditproducto" name="btneditproducto" >Agregar</button>
                                           </div>
                                     </div>
                                               </div>

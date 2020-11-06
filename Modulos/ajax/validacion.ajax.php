@@ -103,12 +103,15 @@ class   AjaxProducto{
     }
 
 
-    public function ajaxReturnDatosProducto($idProduct){
-     
+    public function ajaxReturnDatosProducto($idProduct,$idSubCategoria){
+       // echo "<script>toastr.error(''+".$idSubCategoria.");</script>"; 
         $objSelect = new ControladorSelectsInTables();
-        $respuesta = null;        
+        $respuesta = null; 
+        $sql = "select * from producto  t4 INNER JOIN (select categoria_idCategoria,idsubCategoria from subcategoria where idsubCategoria = ".$idSubCategoria.") t2 
+                on t4.subCategoria_idsubCategoria  = t2.idsubCategoria and  t4.idProducto = ".$idProduct;
 
-        $sql = "SELECT * FROM producto where idProducto = ".$idProduct;
+                
+        //$sql = "SELECT * FROM producto where idProducto = ".$idProduct;
         $respuesta = $objSelect->selectARowsInDb($sql);
 
         if($respuesta!= null){
@@ -206,7 +209,7 @@ if(isset($_POST["idProducto"])){
 //Valida si el producto Existe y retorna su información
 if(isset($_POST["idProductoFiendValue"])){  
     $valProducto = new AjaxProducto();
-    $valProducto ->ajaxReturnDatosProducto($_POST["idProductoFiendValue"]);
+    $valProducto ->ajaxReturnDatosProducto($_POST["idProductoFiendValue"],$_POST["idSubCategoria"]);
 }
 
 //trae las sub categorias asociadas a una categoria
