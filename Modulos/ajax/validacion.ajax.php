@@ -255,5 +255,15 @@ if(isset($_POST["nombreAddPerfil"])){
     $valMarca = new AjaxProducto();
     $valMarca ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
 }
+//Valida si existe la ciudad
+if(isset($_POST["addCiudadValue"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("ciudad","nombreCiudad",$_POST["addCiudadValue"]);
+}
+//Valida si existe el tipo de pago
+if(isset($_POST["nombreAddtipo_pago"])){  
+    $valMarca = new AjaxProducto();
+    $valMarca ->ajaxValidarExisteRegistro("tipo_pago","Tipo_pago",$_POST["nombreAddtipo_pago"]);
+}
 
 

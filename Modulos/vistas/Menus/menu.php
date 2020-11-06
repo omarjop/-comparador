@@ -146,45 +146,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-            
-              <li class="nav-item">
-                <a href="addTipoEmpresa" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Tipo Empresa</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="addTipoProducto" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Tipo Producto</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="addNewProductAdmin" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Productos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="addPerfil" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Perfil</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Usuarios</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="addmarca" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Marcas</p>
-                </a>
-              </li>
               <li class="nav-item">
                 <a href="addCategorias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -192,23 +153,68 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="adUnidadMedida" class="nav-link">
+                <a href="addCiudad" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Unidad Medida</p>
+                  <p>Ciudad</p>
                 </a>
-              </li>			
+              </li>                     
+              <li class="nav-item">
+                <a href="addmarca" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Marcas</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="addPais" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pais</p>
                 </a>
-              </li>     
+              </li>         
+              <li class="nav-item">
+                <a href="addPerfil" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Perfil</p>
+                </a>
+              </li>  
+              <li class="nav-item">
+                <a href="addNewProductAdmin" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Productos</p>
+                </a>
+              </li>          
+              <li class="nav-item">
+                <a href="addTipoEmpresa" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipo Empresa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="addTipoPago" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipo Pago</p>
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a href="addTipoProducto" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipo Producto</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="adUnidadMedida" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Unidad Medida</p>
+                </a>
+              </li>         
+               <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Usuarios</p>
+                </a>
+              </li>    
             </ul>
           </li>
-		  
-
-	  
-		  
+                    
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
