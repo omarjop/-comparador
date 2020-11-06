@@ -73,6 +73,17 @@ class ControladorAdminInsert{
                  echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
         }
       }
+        public function agregarCamposTipoPago($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2){
+            $objAdminAgregar  = new ControladorInserttAllTables(); 
+            $resultado= $objAdminAgregar->insertInTable("tipo_pago","Tipo_pago,Descripcion_pago","'$valorAgregar'".","."'$valorAgregar2'");
+ 
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }
+      }
 
  //--------inicia administraci+on de producto---------------------------
     public function agregarProducto($rutaImagen){   
