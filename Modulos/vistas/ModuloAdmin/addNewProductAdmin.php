@@ -80,7 +80,7 @@
 
       if(isset($_POST["btneditproducto"])){
             $registroProducto  = new ControladorAdminInsert();
-            $registroProducto ->agregarProducto('imgProductoEdit');
+            $registroProducto ->modificarProductoAdmin('imgProductoEdit');
 	 }
   
   
