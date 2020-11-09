@@ -36,15 +36,16 @@ class ControladorAdminModificar{
 
     //-----------------------Inicia la modificacion de la data de producto------------------------
     public function modificarProductoAdmin($rutaImagen){
+        $objLog =  new ControladorWorkLogs();
         $this->validarDatosProducto($rutaImagen,$objLog); 	     
 	}
 
     private function validarDatosProducto($rutaImagen,$objLog){
-     $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (validarDatosProducto) para la validacion de los datos de actualizar de producto");
+     $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (validarDatosProducto) para la validacion de los datos de actualizar de producto con id ".$_POST["idProductValueAdmin"]);
           $objLog =  new ControladorWorkLogs();
 
          try{ 
-               $datosDelProducto = array($_POST["nameProductoAdminEdit"],$_POST["tipoProductAdminEdit"],$_POST["unitt1AdminEdit"],$_POST["unidadNumericaAddAdminEdit"],$_POST["Reference1AdminEdit"],$_POST["marca1AdminEdit"],$_POST["CategoryAddAdminEdit"],$_POST["subCategoryAddAdminEdit"],$_POST["description1AdminEdit"]);              
+               $datosDelProducto = array($_POST["nameProductoAdminEdit"],$_POST["tipoProductAdminEdit"],$_POST["unitt1AdminEdit"],$_POST["unidadNumericaAddAdminEdit"],$_POST["Reference1AdminEdit"],$_POST["marca1AdminEdit"],$_POST["CategoryAddAdminEdit"],$_POST["subCategoryAddAdminEdit"],$_POST["description1AdminEdit"],$_POST["idProductValueAdmin"]);              
                $this->actualizarProducto($datosDelProducto,$rutaImagen,$objLog);   
            }catch(Exception $e){
               $objLog->escribirEnLogAdmin("AdminProducto","ERROR",$e->getMessage());
@@ -56,24 +57,30 @@ class ControladorAdminModificar{
      private function actualizarProducto($datosDelProducto,$rutaImagen,$objLog){
            
            $objAdminAgregar  = new ControladorInserttAllTables(); 
-           $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (actualizarProducto) para el registro de producto");
-           $ruta = "../AdminComparador/imagenes_productos/".$_FILES[$rutaImagen]["name"];
+           $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (actualizarProducto) para la actualización de producto con id ".$datosDelProducto[9]);
+           
+           $objUpdate = new ControladorUpdateDeleteInTables();
+           $sql ="update producto set Marca_idMarca = "."'$datosDelProducto[5]'".",tipoProducto_idtipoProducto =" ."'$datosDelProducto[1]'"
+           .",unidadMedida_idunidadMedida ="."'$datosDelProducto[2]'".",subCategoria_idsubCategoria ="."'$datosDelProducto[7]'".",Nombre ="."'$datosDelProducto[0]'"
+           .",Referencia ="."'$datosDelProducto[4]'".",Descripcion ="."'$datosDelProducto[8]'"; 
 
-           $into = "Marca_idMarca,tipoProducto_idtipoProducto,unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Nombre,Referencia,	Descripcion,FotoPrincipal,pesoVolumen";      
-           $value ="'$datosDelProducto[5]'".","."'$datosDelProducto[1]'".","."'$datosDelProducto[2]'".","."'$datosDelProducto[7]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[8]'".","."'$ruta'".","."'$datosDelProducto[3]'";
-             
-            if($rutaImagen!=""&&$rutaImagen!=null){ 
+           
+            if($_FILES[$rutaImagen]["name"]!=""&&$_FILES[$rutaImagen]["name"]!=null){ 
+                    $ruta = "../AdminComparador/imagenes_productos/".$_FILES[$rutaImagen]["name"];
                     $this->SubirArchivoImagen($rutaImagen);
+                    $sql = $sql.",FotoPrincipal ="."'$ruta'";
                 }
-           //$resultado= $objAdminAgregar->insertInTable("producto",$into, $value);*/
+                $sql = $sql." where idProducto = ".$datosDelProducto[9];
+                
+           $resultado = $objUpdate->UpdateInTable($sql);
 
-          /* if ($resultado!='Fallo') {
-                    $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se registra correctamente el producto con id ".$resultado);
-                    echo "<script>toastr.info('Se agrego el producto correctamente');</script>";             
+           if ($resultado=='Exitoso') {
+                    $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se Actualiza correctamente el producto con id ".$datosDelProducto[9]);
+                    echo "<script>toastr.info('Se Actualiza el producto correctamente');</script>";             
                 }else{
-                    $objLog->escribirEnLogAdmin("AdminProducto","INFO","No se puede registrar el producto por el siguiente inconveniente ".$resultado);
+                    $objLog->escribirEnLogAdmin("AdminProducto","ERROR","No se puede Actualizar el producto por el siguiente inconveniente ".$resultado);
                     echo "<script>toastr.error('Error al agregar el producto Error: '+".$resultado.");</script>";                             
-                }*/
+                }
            $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se finaliza el metodo (actualizarProducto) "); 
 	}
 
