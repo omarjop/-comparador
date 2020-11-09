@@ -27,14 +27,6 @@
 	       }
 	  
     ?>
-    <!-- /.content-header -->
-
-
-    <!-- Aqui dentro puede ir la tarjeta con el formulario de crear archivo-->
-
-    <!-- Aqui dentro puede ir la tarjeta con el formulario de crear archivo-->
-
-
   </div>
   <!-- /.content-wrapper -->
 

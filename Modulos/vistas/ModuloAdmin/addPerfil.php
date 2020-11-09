@@ -1,75 +1,64 @@
-
-
 <?php 
 $resultado=null;
 
 
-  //--Boton del modal de agregar marca, crea objeto de la clase controlador
-if(isset($_POST["btnaddmarca"])){                           
+
+  //--Boton del modal de agregar, crea objeto de la clase controlador
+if(isset($_POST["btnaddperfil"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
-    $valorMarca = $_POST["addmarcas"]; 
-     $objAdminAgregar->agregarCampos("marca","Descripcion",$valorMarca);
+
+    $valorperfil= $_POST["addperfil"]; 
+    
+     $objAdminAgregar->agregarCamposPerfil("perfil","Descripcion",$valorperfil);
                        
     } 
-
-//--Boton del modal de eliminar marca, crea objeto de la clase controlador
-if(isset($_POST["btnEliminarMarca"])){                           
+    //--Boton del modal de eliminar , crea objeto de la clase controlador
+if(isset($_POST["btnEliminarperfil"])){                           
      $objAdminEliminar  = new ControladorAdminEliminar();
-     $valorMarca = $_POST["campoOculto2"];  
-     $objConsultaMarca= new ControladorAdminSelect();
-     $resultadoConsulta= $objConsultaMarca->consultaPrevia($valorMarca,'producto','Marca_idMarca');
-     
-     if($resultadoConsulta==null){
-       
-        $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorMarca,"marca","idMarca");  
+     $valorperfilElimina = $_POST["campoOculto2"];  
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorperfilElimina,"perfil","idperfil");  
         if($resultadoEliminar=="Exitoso"){
-           echo "<script>toastr.info('Marca eliminada exitosamente');</script>";                              
+           echo "<script>toastr.info('Registro perfil eliminado');</script>";                              
          }else{
-           echo "<script>toastr.error('Error al eliminar marca, por favor intente nuevamente);</script>";                             
-         }                 
-     }else{
-
-          echo "<script>toastr.error('La marca tiene productos asociados no se puede eliminar');</script>"; 
-     }
-
-        
-    } 
-
- //--Boton del modal de editar marca, crea objeto de la clase controlador
-if(isset($_POST["btnEditarMarca"])){                           
+           echo "<script>toastr.error('Error al eliminar, por favor intente nuevamente);</script>";                             
+         }    
+   }
+    //--Boton del modal de editar, crea objeto de la clase controlador
+if(isset($_POST["btnEditarperfil"])){                           
      $objAdminModificar  = new ControladorAdminModificar();
-     $idMarkModif = $_POST["idMarca"];
-     $valorMarca = $_POST["marcaEdit"];  
-     $resultadoModificar=$objAdminModificar->modificarCampo("marca","idMarca","Descripcion",$valorMarca,$idMarkModif);
+     $idperfilModif = $_POST["idPerfil"];
+     $valorperfil = $_POST["perfilEdit"];  
+     $resultadoModificar=$objAdminModificar->modificarCampo("perfil","idperfil","Descripcion",$valorperfil,$idperfilModif);
                                                                                                             
       
         
     } 
-//-- Al entrar se visualizan todas las marcas existentes
- $objAdminSeleccionaTodos  = new ControladorAdminSelect();
-$resultado=$objAdminSeleccionaTodos->buscarAll("marca");
 
-//--Boton lupa consulta marca
+ //-- Al entrar se visualizan todas las existentes
+$objAdminSeleccionaTodos  = new ControladorAdminSelect();
+$resultado=$objAdminSeleccionaTodos->buscarAll("perfil");   
 
-if(isset($_POST["lupamarca"])){                           
+if(isset($_POST["lupaperfil"])){                           
             $objAdminSelecciona  = new ControladorAdminSelect();
-            $valorMarca = $_POST["buscamarcas"]; 
-            $resultado=$objAdminSelecciona->buscaTabla($valorMarca,"marca","*","Descripcion");
+            $valorperfil = $_POST["buscaperfil"]; 
+            $resultado=$objAdminSelecciona->buscaTabla($valorperfil,"perfil","*","Descripcion");;
        
              if ($resultado==null){
-               echo "<script>toastr.warning('La marca no existe');</script>"; 
+               echo "<script>toastr.warning('El registro del perfil no existe');</script>"; 
              }
-    } 
+    }   
+   
 
 ?>
 
 <script type="text/javascript">
-/*Validación del campo de texto de agregar marca*/
+/*ValidaciÃ³n del campo de texto de agregar */
   function validarFormulario(formulario){
-       var marca = formulario.addmarcas.value;
-        if(validarNombreAndMarca(marca,"No es una marca v&aacute;lida","addmarcas")==true){
+       var tperfil = formulario.addperfil.value;
+
+        if(validarDescripcion(tperfil,"No es un perfil v&aacute;lido","addperfil")==true){
              
-           if(validarMarcaAndRango(marca,"El nombre de la marca es muy extenso","addmarcas")!=true){
+           if(validaRangoperfil(tperfil,"El nombre es muy extenso","addperfil")!=true){
               return false;
            }else{
                return true;     
@@ -82,13 +71,15 @@ if(isset($_POST["lupamarca"])){
         
   return true;
  }
-     
- //--------------------------------------------------------
-   function validarFormulario2(formulario){
-       var marcaEdita = formulario.marcaEdit.value;
-        if(validarNombreAndMarca(marcaEdita,"No es una marca v&aacute;lida","marcaEdit")==true){
+   
+  //------------------------------------------------------
+    function validarFormulario2(formulario){
+       var tperfilEdit = formulario.perfilEdit.value;
+       
+
+        if(validarDescripcion(tperfilEdit,"No es un perfil v&aacute;lido","perfilEdit")==true){
              
-           if(validarMarcaAndRango(marcaEdita,"El nombre de la marca es muy extenso","marcaEdit")!=true){
+           if(validaRangoperfil(tperfilEdit,"El nombre es muy extenso","perfilEdit")!=true){
               return false;
            }else{
                return true;     
@@ -100,9 +91,9 @@ if(isset($_POST["lupamarca"])){
         
         
   return true;
- }       
+ }      
  //------funciones de validacion de cada uno de los campos
- function validarNombreAndMarca(valor,mensaje,campoForm){
+ function validarDescripcion(valor,mensaje,campoForm){
       
          if ((isNaN(parseInt(valor)))&& (valor !="")){
               return true;
@@ -110,13 +101,13 @@ if(isset($_POST["lupamarca"])){
              toastr.error(mensaje);
              document.getElementById(campoForm).value = "";
              return false;
-		 } 
+     } 
 
  }
   //------funciones de validacion de cada uno de los campos
- function validarMarcaAndRango(valor,mensaje,campoForm){
+ function validaRangoperfil(valor,mensaje,campoForm){
       
-         if ((valor.length) > 20){
+         if ((valor.length) > 50){
               
               toastr.error(mensaje);
               document.getElementById(campoForm).value = "";
@@ -124,20 +115,22 @@ if(isset($_POST["lupamarca"])){
          }else{       
 
              return true;
-		 } 
+     } 
 
  }
-var returnValue = true;
+
+
+ var returnValue = true;
 //validar que no exista el registro con accion de boton
  $(function(){
-     $("#btnaddmarca").click(function(){
+     $("#btnaddperfil").click(function(){
           
          if(returnValue!=false){
-                          var nombreAddMarca = $("#addmarcas").val();
+                          var nombreAddPerfil = $("#addperfil").val();
                           var datos = new FormData();
             
-                            datos.append("nombreAddMarca", nombreAddMarca);
-                            datos.append("nombreAddMarca", nombreAddMarca);
+                            datos.append("nombreAddPerfil", nombreAddPerfil);
+                            datos.append("nombreAddPerfil", nombreAddPerfil);
          
                             $.ajax({
                    
@@ -153,7 +146,7 @@ var returnValue = true;
                                              $(".alert").remove();
                                              returnValue =  true;
                                           }else{
-                                            toastr.error("La marca se encuentra registrada");                             
+                                            toastr.error("El perfil se encuentra registrado");                             
                                             returnValue = false;                              
                                     }
 
@@ -171,12 +164,14 @@ var returnValue = true;
 
 
 $(document).ready(function(){
-        $("#addmarcas").on("keydown",function(){
+        $("#addperfil").on("keydown",function(){
           returnValue = true;
      });
 });
 //**********************************************************************/
+//**********************************************************************/
 </script>
+
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -184,18 +179,18 @@ $(document).ready(function(){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Administraci&oacute;n Marca</h1>
+            <h1 class="m-0 text-dark">Administraci&oacute;n Perfil</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <button type="button" class="btn btn-warning botaddmarca colorbotonamarillo" >Agregar Marca</button>
+              <button type="button" class="btn btn-warning botaddperfil colorbotonamarillo" >Agregar perfil</button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-             <div class="input-group col-lg-6 col-md-7 col-sm-9 col-xs-8" id="buscadormarca">
-                        <input type="search" name="buscamarcas" id="buscamarcas" class="form-control"  placeholder="Buscar Marca">
+             <div class="input-group col-lg-5 col-md-7 col-sm-9 col-xs-8" id="buscaperfil">
+                        <input type="search" name="buscaperfil" id="buscaperfil" class="form-control"  placeholder="Buscar perfil">
                         <span  class="input-group-btn">
                             <a href="#">
-                                <button class="btn btn-default backColor colorbotonamarillo lupamarca" type="submit" name="lupamarca" id="lupamarca" style ="height:100%;">
+                                <button class="btn btn-default backColor colorbotonamarillo lupaperfil" type="submit" name="lupaperfil" id="lupaperfil" style ="height:100%;">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </a>
@@ -204,8 +199,7 @@ $(document).ready(function(){
              </form>
               </div>
           </div><!-- /.col -->
-
-       <?php
+                 <?php
            if ($resultado!= null && $resultado!= "Fallo" ){
             for ($i=0;$i<count($resultado);$i++){
              
@@ -215,18 +209,18 @@ $(document).ready(function(){
             <div class="row justify-content-center">
              <div class="col-11">
               <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Descripcion"];?>
-                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span marca = "<?php echo $resultado[$i]["Descripcion"];?>" id ="<?php echo $resultado[$i]["idMarca"];?>" class="fas fa-pen-alt editar"></span></p>
-                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["Descripcion"];?>" id = "<?php echo $resultado[$i]["idMarca"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span tperfil = "<?php echo $resultado[$i]["Descripcion"];?>" id ="<?php echo $resultado[$i]["idPerfil"];?>" class="fas fa-pen-alt editar"></span></p>
+                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["Descripcion"];?>" id = "<?php echo $resultado[$i]["idPerfil"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
               </li>
                </div>
                </div>
             </ul>
        <?php } }?> 
+
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
-  
 
-      <!-- Control Sidebar -->
+            <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     <div class="p-3">
@@ -237,57 +231,58 @@ $(document).ready(function(){
 
   
 </div>
+
+
 <script type="text/javascript">
 
-/*LLama el modal de adicionar marca*/ 
+/*LLama el modal de adicionar */ 
  $(function(){
-     $(".botaddmarca").click(function(){
-         $("#modaddmarca").modal("show");  
+     $(".botaddperfil").click(function(){
+         $("#modaddperfil").modal("show");  
+      });
+  });
+   /*LLama el modal de eliminar */ 
+ $(function(){
+     $(".eliminar").click(function(){
+         $(".campoOculto").attr('value',$(this).attr('id'));
+         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
+         $("#modeliminaperfil").modal("show");  
       });
   });
 
   /*LLama el modal de editar marca*/ 
  $(function(){
      $(".editar").click(function(){
-         $(".idMarca").attr('value',$(this).attr('id'));
-         $(".marcaEdit").attr('value',$(this).attr('marca'));
-         $("#modifiMarca").modal("show");
+         $(".idPerfil").attr('value',$(this).attr('id'));
+         $(".perfilEdit").attr('value',$(this).attr('tperfil'));
+         $("#modmodifperfil").modal("show");
          
-      });
-  });
-
-  /*LLama el modal de eliminar marca*/ 
- $(function(){
-     $(".eliminar").click(function(){
-         $(".campoOculto").attr('value',$(this).attr('id'));
-         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
-         $("#eliminarmarca").modal("show");  
       });
   });
 
 </script>
 
-  <!-- Modal para agregar nueva marca -->
+  <!-- Modal para agregar  -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
-        <div class="modal fade" id="modaddmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modaddperfil" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Agregar Marca</h5>
+                        <h5  id="staticBackdropLabel" > Agregar Perfil</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
                    <div class="modal-body">
                        
-                         <input   type="text" class="form-control" id="addmarcas" name ="addmarcas" placeholder="Agregue nombre de marca" >  
+                         <input   type="text" class="form-control" id="addperfil" name ="addperfil" placeholder="Agregue perfil" >  
                    </div>
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnaddmarca" id = "btnaddmarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                <button type="submit" name = "btnaddperfil" id = "btnaddperfil" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
                           </div>
                     </div>
             </div>
@@ -295,16 +290,14 @@ $(document).ready(function(){
         </div>
   </form>
 
-
-
-  <!-- Modal que muestra el confirmar cuando se elimina una marca -->
+   <!-- Modal que muestra el confirmar cuando se elimina  -->
  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-        <div class="modal fade" id="eliminarmarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modeliminaperfil" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Esta seguro que desea eliminar la marca? </h5>
+                        <h5  id="staticBackdropLabel" > Esta seguro que desea eliminar? </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -329,23 +322,21 @@ $(document).ready(function(){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEliminarMarca" id = "btnEliminarMarca" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
+                                <button type="submit" name = "btnEliminarperfil" id = "btnEliminarperfil" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
                           </div>
                     </div>
             </div>
           </div>   
         </div>
   </form> 
-
-
-  <!-- Modal que muestra producto al dar click en el boton de editar -->
+ <!-- Modal que muestra producto al dar click en el boton de editar -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);"novalidate>
-        <div class="modal fade" id="modifiMarca" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+        <div class="modal fade" id="modmodifperfil" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Editar Marca </h5>
+                        <h5  id="staticBackdropLabel" > Editar Perfil</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -354,17 +345,17 @@ $(document).ready(function(){
                         <!-- aqui va el mensaje que se pasa por parametro-->
                         <div class="row">
                             <div class="modal-body mx-1 ">
-                                <input   type="text" value ="" placeholder="Nombre Marca" class="form-control marcaEdit" id="marcaEdit" name ="marcaEdit" required>  
+                                <input   type="text" value ="" placeholder="perfil" class="form-control perfilEdit" id="perfilEdit" name ="perfilEdit" required>  
                              </div>
                         </div>
                         
-                        <input   style="visibility: hidden;" type="text" value ="" placeholder="ID Marca" class="form-control idMarca" id="idMarca" name ="idMarca">  
+                        <input   style="visibility: hidden;" type="text" value ="" placeholder="ID perfil" class="form-control idPerfil" id="idPerfil" name ="idPerfil">  
                    </div>
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditarMarca" id = "btnEditarMarca" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
+                                <button type="submit" name = "btnEditarperfil" id = "btnEditarperfil" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Aceptar</button>
                           </div>
                     </div>
             </div>

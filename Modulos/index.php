@@ -26,9 +26,9 @@ require_once "controladores/ModuloAdmin/c_adminEliminar.php";
 //objetos
 
 $objTiendaInicial =  new Tiendas();
-$objTiendaInicial->setIdEmpresa("1");
-$objTiendaInicial->setNombreEmpresa("Empresa de morita");
-$objTiendaInicial->setNitEmpresa("5555");
+$objTiendaInicial->setIdEmpresa("2");
+$objTiendaInicial->setNombreEmpresa("Empresa de cross");
+$objTiendaInicial->setNitEmpresa("55558");
 $objTiendaInicial->setIdCategoria("1");
 $plantilla =  new ControladorPlantilla();
 $valor = "prueba de objeto";

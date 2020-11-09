@@ -1,51 +1,80 @@
+<style>
+
+#autoCompletedList {
+  color: hsl(0, 0%, 0%);
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+#autoCompletedList li {
+  background: #424242;
+  padding: 5px;
+  color: hsl(0, 0%, 100%);
+  border-bottom: dotted 1px hsl(0, 0%, 58%);
+}
+#autoCompletedList li:hover {
+  background: hsl(0, 0%, 36%);
+  cursor: pointer;
+}
+</style>
 
   <?php 
   $valuesMal = "cosa";
-  $idTienda = $objTiendaInicial->getIdCategoria();
+  $idCategoria = $objTiendaInicial->getIdCategoria();
+  $idTienda = $objTiendaInicial->getIdEmpresa();
+  $nitTienda = $objTiendaInicial->getNitEmpresa();
   $objSelect = new ControladorSelectsInTables();
   $objFinP = new ControladorFindProductosTienda();
+  $objLog =  new ControladorWorkLogs();
+  $objLog-> escribirEnLog("Consultar","INFO",$nitTienda,"Se inicia el proceso de Consultar Productos ");
   $valorResult = null;
 
 
-   if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){                           
+   if(isset($_POST["btnEliminarValue"])&& isset($_POST["campoOculto2"])){      
             $ingreso  = new ControladorEliminarEditarProductosTienda();
             $id = $_POST["campoOculto2"]; 
+            $objLog-> escribirEnLog("Consultar Producto Tienda","INFO",$nitTienda,"Se procede a eliminar el producto con id: ".$id); 
             $idEmpresa = $objTiendaInicial->getIdEmpresa();
             $resultadoEliminar = $ingreso ->EliminarProducto($id,$idEmpresa);          
             
               if($resultadoEliminar=="Exitoso"){
+                 $objLog-> escribirEnLog("Consultar Producto Tienda","INFO",$nitTienda,"Se procede a elimina con exito el producto "); 
                  echo "<script>toastr.info('Producto eliminado exitosamente');</script>";                              
 			  }else{
-                 echo "<script>toastr.error('Error al eliminar producto, por favor intente nuevamente);</script>";                             
+                 echo "<script>toastr.error('Error al eliminar producto, por favor intente nuevamente');</script>";                             
+                 $objLog-> escribirEnLog("Consultar Producto Tienda","WARNING",$nitTienda,"Falla la eliminacion del producto para la tienda"); 
 			  }
             
     }
 
         if(isset($_POST["btnEditarValue"])){
              $id = $_POST["idProduct"]; 
+             $objLog-> escribirEnLog("Consultar Producto Tienda","INFO",$nitTienda,"Se procede a editar el producto con id: ".$id);              
              $precio = $_POST["precioEdit"];
              $idEmpresa = $objTiendaInicial->getIdEmpresa();
              $objActualizar  = new ControladorEliminarEditarProductosTienda();
-             $objActualizar ->EditarProducto($id,$precio,$idEmpresa); 
+             $objActualizar ->EditarProducto($id,$precio,$idEmpresa,$nitTienda,$objLog); 
 	    }
   
-
+  //jql que retorna las categorias
       $sql = "SELECT  DISTINCT idsubCategoria ,nombre,ruta from subcategoria t3 INNER JOIN (SELECT DISTINCT subCategoria_idsubCategoria FROM producto t1 INNER JOIN ( SELECT Producto_idProducto FROM producto_has_empresa  where Empresa_idEmpresa = ".$idTienda." ) t2 ON t1.idProducto  = t2.Producto_idProducto) t4 ON t3.idsubCategoria  = t4.subCategoria_idsubCategoria";
       $resultado = $objSelect->selectARowsInDb($sql);
       $mensaje ="Productos a Consultar";
 
       if(isset($valorDeUrl)){
            $valorDeUrl = "'".$valorDeUrl."'";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
+           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$valorDeUrl.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.idunidadMedida  = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto where t5.Empresa_idEmpresa = ".$idTienda;
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$nombreSubCate;
 	  }
    
         if(isset($_POST["BtnMiProducto"])&& $_POST['BtnMiProducto']!=null){
              $palabraclave = strval($_POST['BtnMiProducto']);
-             $valorResult = $objFinP->autocompletar($palabraclave,$idTienda);
+             $valorResult = $objFinP->autocompletar($palabraclave,$idCategoria,$idTienda);
              $mensaje ="Productos a Consultar";
 	    }  
+
+        
 
   ?>
 
@@ -62,14 +91,16 @@
 
 <div class="row">
 		                <div class="col-sm-5">
-                                <form class="form-horizontal" role="form" enctype="multipart/form-data" method="post">
+                                <form class="form-signin" role="form" enctype="multipart/form-data" method="post" action="" name="formulario" id="formulario">
                                       <div class="form-group">                                        
-                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Que quieres buscar..."/>   
-                                          
+                                          <input type="text" name="BtnMiProducto" id="BtnMiProducto"  class="form-control" placeholder="Buscar producto" />   
+
                                       </div>
                                     <form>
                         </div>
 
+
+                        
           <div class="col-sm-7">
                 <ol class="breadcrumb float-sm-right">  
                         <li class="nav-item dropdown breadcrumb-item activ">
@@ -82,7 +113,8 @@
                                    <!-- SEARCH FORM -->
 
                                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                       <?php if($resultado!="Fallo"){ for($i=0;$i<count($resultado);$i++){?>
+                             
+                                       <?php if($resultado!="Fallo" && $resultado!=null){ for($i=0;$i<count($resultado);$i++){?>
                                           <a href="<?php echo $resultado[$i]["ruta"];?>" onclick="searchForCategory(<?php $resultado[$i]["idsubCategoria"];?>)" class="dropdown-item">
                                             <!-- Message Start -->
                                                 <div class="media">
@@ -111,11 +143,12 @@
     <!-- Main content -->
     <div class="content">
 
-    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"&& $valorResult ==null){
+    <?php if(!isset($valorDeUrl)&& $resultado!="Fallo"&& $valorResult ==null&&isset($resultado)){
           for($i=0;$i<count($resultado);$i++){
            $ruta = $resultado[$i]["ruta"];
            $ruta =  "'".$ruta."'";
-           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idTienda."  and ruta = ".$ruta.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
+           //$squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$ruta.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
+           $squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria,ruta FROM subcategoria where Categoria_idCategoria = ".$idCategoria." and ruta = ".$ruta.")     t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.idunidadMedida = t4.unidadMedida_idunidadMedida) t6 ON t5.Producto_idProducto = t6.idProducto where t5.Empresa_idEmpresa = ".$idTienda;	  
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$resultado[$i]["nombre"];   
     
@@ -152,13 +185,13 @@
                                                            descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
                                                            pesovolumen = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
@@ -177,13 +210,13 @@
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                             if ($valorResult[$j]["nombreMedida"]== "gramos (gr)") {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== "kilogramos (kg)"){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="centimetros cubicos (cm3)"){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="mililitros (ml)"){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
@@ -193,13 +226,13 @@
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
@@ -224,8 +257,8 @@
 
                       <div class="container-fluid">
                         <div class="row">
-                        <?php if($valorResult!=null&& $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
-
+                        <?php if($valorResult!=null && $valorResult!="Fallo" && $resultado!="Fallo"){for($j=0;$j<count($valorResult);$j++){?>
+                        
 
                               <div class="col-lg-3">
                                         <div class="card">
@@ -244,13 +277,13 @@
                                                            descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
                                                            pesovolumen = "<?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
@@ -268,20 +301,33 @@
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
                                                              $unidad =""; 
-                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos') {
+                                                              if ($valorResult[$j]["nombreMedida"]== "gramos (gr)") {
                                                                          $unidad ="g";
-                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos'){
+                                                              }else if($valorResult[$j]["nombreMedida"]== "kilogramos (kg)"){
                                                                           $unidad ="kg";
-											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="centimetros cubicos (cm3)"){
                                                                           $unidad ="cm3";
-											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros'){
+											                  }else if($valorResult[$j]["nombreMedida"]=="mililitros (ml)"){
                                                                           $unidad ="ml";
 											                  }
                                                               echo $valorResult[$j]["pesoVolumen"].$unidad;?>
                                                     </p>
                                                       <a href="#"><p style ="position: absolute; right: 10;" data-placement="top" data-toggle="tooltip" title="Editar"><span precio = "<?php echo $valorResult[$j]["precioReal"];?>" 
                                                                                                                                                                    id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt editar"></span></p></a>
-                                                      <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+                                                      <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
+                                                                                                                                                                            unidad = "<?php  
+                                                             $unidad =""; 
+                                                              if ($valorResult[$j]["nombreMedida"]== 'gramos (gr)') {
+                                                                         $unidad ="g";
+                                                              }else if($valorResult[$j]["nombreMedida"]== 'kilogramos (kg)'){
+                                                                          $unidad ="kg";
+											                  }else if($valorResult[$j]["nombreMedida"]=='centimetros cubicos (cm3)'){
+                                                                          $unidad ="cm3";
+											                  }else if($valorResult[$j]["nombreMedida"]=='mililitros (ml)'){
+                                                                          $unidad ="ml";
+											                  }
+                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
+
       
                                               </div>
 
@@ -390,23 +436,112 @@ $(function(){
 
 
 //----------------------------------funcion para autocompletar
-    $(document).ready(function () {
-        $('#miProducto').typeahead({
-            source: function (busqueda, resultado) {
-                $.ajax({
-                    url: "findProduct.php",
-					data: 'busqueda=' + busqueda,            
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-						resultado($.map(data, function (item) {
-							return item;
-                        }));
+
+/*
+    $(document).ready(function(){
+	$("input#BtnMiProducto").on("keydown",function(){
+		var valor = $(this).val();
+        $("div#mensaje p").html(valor);
+	});
+
+   });*/
+
+ $(document).ready(function(){
+        $("#BtnMiProducto").on("keydown",function(){
+    
+            var producto = $("#BtnMiProducto").val();
+            var datos = new FormData();
+            datos.append("validarProducto", producto);
+
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(respuesta){
+
+                   /* var res = JSON.parse(respuesta);
+                    $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>'+respuesta+' </div>');  */
+                          if(respuesta.includes("null")){
+                                $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>No existe </div>');  
+                          }else{
+                               /*respuesta =respuesta.replace("[","");
+                               respuesta =respuesta.replace("]","");*/
+                               var res = JSON.parse(respuesta);
+                                    
+                                           // for (i = 0; i < res.datos.length; i++) {                                                      
+                                                      $("#BtnMiProducto").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>existe '+res.datos.length+'</div>');  
+                                             //    }
+
+
+                                        
+			              }
+
+
+
+
                     }
-                });
+
+              })
+
+        })
+});
+
+
+/*BtnMiProducto.addEventListener('keyup', (event) => {
+ 
+   if (!document.querySelector("#autoCompletedList")) {
+
+        ul = document.createElement('ul');
+        ul.setAttribute('id', 'autoCompletedList');
+        BtnMiProducto.after(ul);
+        
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState < 4) { }
+    }
+     xhr.onload = function () {
+
+        if (xhr.status == 200) {
+      
+            var res = JSON.parse(this.responseText);
+             // alert(xhr.status);
+            // remove elements
+            lista = document.querySelector('#autoCompletedList');
+            lista.innerHTML = "";
+
+            if (!res.error) {
+                 
+                for (i = 0; i < res.datos.length; i++) {
+ 
+                    let id = res.datos[i].id;
+                    let nombre = res.datos[i].nombre;
+
+                    li = document.createElement("li");
+                    li.setAttribute('class', 'item' + res.datos[i].id);
+                    li.innerHTML = res.datos[i].nombre;
+                    lista.prepend(li);
+ 
+                    document.querySelector('.item' + id).addEventListener('click', () => {
+                        document.querySelector("#BtnMiProducto").value = nombre;
+                        lista.innerHTML = "";
+                    })
+                }
             }
-        });
-    });
+ 
+         }
+    }
+    xhr.open('post', 'http://localhost/-comparador/Modulos/ajax/validacion.ajax.php', true);
+    // form data
+    let form = document.querySelector('#formulario');
+    data = new FormData(form);
+    xhr.send(data);
+})*/
 </script>
 
 
@@ -462,9 +597,10 @@ $(function(){
                                 <div class="col-sm-12">
                                    <div class="card" style="background-color: #E5E5E5;font-size:140%;">
                                       <div class="card-body">                                          
-                                          <footer class="" style="font-size:110%;"><cite title="Source Title" id="etiquetaEliminar"></cite><img src="" align="right" class="imagedelete" style="width: 80px; height: 80px;" > </footer>                                                              
+                                          <footer class="" style="font-size:110%;"><cite title="Source Title" id="etiquetaEliminar"></cite><img src=""  align="right" class="imagedelete" style="width: 70px; height: 60px;" > </footer>                                                              
                                       </div>
-                                </div>
+                                   
+                                 </div>
                          </div>
 
                         </div>
@@ -484,7 +620,7 @@ $(function(){
 
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+  <form class="form " method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);">
         <div class="modal fade" id="modificarp" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
@@ -502,7 +638,7 @@ $(function(){
                                 <h5 class="colortextoformulariosetiquetas">Precio</h5>
                             </div>
                             <div class="col-sm-10">
-                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit" required>  
+                                <input   type="text" value ="" placeholder="Precio producto" class="form-control precioEdit" id="precioEdit" name ="precioEdit">  
                              </div>
                         </div>
                         
@@ -511,7 +647,7 @@ $(function(){
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
-                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="submit" name = "btnCancelarValue" id = "btnCancelarValue" class="btn btn-secondary" style ="width:48%;" onclick="history.go(0)">Cancelar</button>            
                                 <button type="submit" name = "btnEditarValue" id = "btnEditarValue" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar Cambios</button>
                           </div>
                     </div>

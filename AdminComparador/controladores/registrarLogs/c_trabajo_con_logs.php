@@ -20,6 +20,24 @@ class ControladorWorkLogs{
 
 	 }
 
+     public function escribirEnLogAdmin($modulo,$tipoLog,$descripcion){
+         $fecha = date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
+         $descripcionLog = "[".$fecha."]"."[".$modulo."]"."[".$tipoLog."]".": ".$descripcion;
+         $descripcionLog = $descripcionLog."\n";
+
+          $objRutas =  new ControladorRutasGenerales();
+
+         $file = fopen($objRutas ->rutaArchivosLogs()."logAdministracion.log", "a");
+          if($file){
+               fwrite($file, $descripcionLog . PHP_EOL);
+               fclose($file);          
+		  }else{
+                        echo "No se encuentra el archivo";  
+		  }
+
+
+	 }
+
      public function leerArchivoPlano($rutaArchivo,$eliminar){
          
          try{

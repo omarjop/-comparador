@@ -52,6 +52,15 @@ private $servicio;
 		    }
 
      }
+
+//Retorna todos los registros de una tabla
+     public function selectTodosRegistros($tabla){
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+        $stmt ->  execute();
+        return  $stmt ->fetchAll(); 
+        $stmt -> close();
+        $stmt = null;
+	 }
         
 
 }
