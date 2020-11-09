@@ -31,7 +31,6 @@
 
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/cabecera.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plantilla.css">
-    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/slide.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/servicios.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/ofertas.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/productos.css">
@@ -39,17 +38,10 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/blog.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/footer.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/sidemenu.css">
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-   
+ 
     <script src="<?php echo $url ?>vistas/js/plugins/jquery.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/bootstrap.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/sweetalert.min.js"></script>
-
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvutLjDWiM2gOTSvLxOj35yQ2FEKXsfWI&callback=initMap">
-  </script>
 
 </head>
 <body>
@@ -111,7 +103,6 @@
 <!--=====================================
 JAVASCRIPT PERSONALIZADO
 ======================================--> 
-<script src="<?php echo $url ?>vistas/js/slider.js"></script> 
 <script src="<?php echo $url ?>vistas/js/ofertas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/herramienta.js"></script> 
 <script src="<?php echo $url ?>vistas/js/usuario.js"></script> 

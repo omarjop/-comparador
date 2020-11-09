@@ -2,167 +2,77 @@
 SLIDESHOW  
 ======================================-->
 
-<div class="container-fluid" id="slide">
-	
+<div class="container-fluid" >
 	<div class="row">
-		
-		<!--=====================================
-		DIAPOSITIVAS
-		======================================-->
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
 
-		<ul>
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+	  <img src="http://localhost/AdminComparador/vistas/img/slide/default/back_default_3.jpg" alt="Los Angeles">
+	  <div class="carousel-caption">
+        <h3>Los Angeles</h3>
+        <p>LA is always so much fun!</p>
+      </div>
+    </div>
 
-			<!-- SLIDE 1 -->
-		
-			<li>
-				
-				<img src="http://localhost/AdminComparador/vistas/img/slide/default/back_default.jpg">
+    <div class="item">
+      <img src="http://localhost/AdminComparador/vistas/img/slide/default/back_default.jpg" alt="Chicago">
+    </div>
 
-				<div class="slideOpciones slideOpcion1">
-					
-					<img class="imgProducto" src="http://localhost/AdminComparador/vistas/img/slide/slide1/calzado.png" style="top:15%; right:10%; width:45%">
-
-					<div class="textosSlide" style="top:20%; left:10%; width:40%">
-						
-						<h1 style="color:#08abac">Lorem ipsum dolor sit amet</h1>
-						<h2 style="color:#777">Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
-						<h3 style="color:#888">amet consectetur adipisicing elit</h3>
-
-						<a href="#">
-							
-							<button class="btn btn-default backColor text-uppercase">
-
-							VER PRODUCTO <span class="fa fa-chevron-right"></span>
-
-							</button>
-
-						</a>
-
-					</div>	
-
-				</div>
-
-			</li>	
-
-			<!-- SLIDE 2 -->
-		
-			<li>
-				
-				<img src="http://localhost/AdminComparador/vistas/img/slide/default/back_default_3.jpg">
-
-				<div class="slideOpciones slideOpcion2">
-					
-					<img class="imgProducto" src="http://localhost/backend/vistas/img/slide/slide2/curso.png" style="top:5%; left:15%; width:22%">
-
-					<div class="textosSlide" style="top:15%; right:15%; width:40%">
-						
-            <h1 style="color:#08abac">Lorem ipsum dolor sit amet</h1>
-            <h2 style="color:#777">Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
-            <h3 style="color:#888">amet consectetur adipisicing elit</h3>
-
-						<a href="#">
-							
-							<button class="btn btn-default backColor text-uppercase">
-
-							VER PRODUCTO <span class="fa fa-chevron-right"></span>
-
-							</button>
-
-						</a>
-
-					</div>	
-
-				</div>
-
-			</li>	
-
-			<!-- SLIDE 3 -->
-		
-			<li>
-				
-				<img src="http://localhost/AdminComparador/vistas/img/slide/default/back_default_2.jpg">
-
-				<div class="slideOpciones slideOpcion2">
-					
-					<img class="imgProducto" src="http://localhost/backend/vistas/img/slide/slide3/iphone.png" style="top:5%; left:15%; width:25%">
-
-					<div class="textosSlide" style="top:15%; right:15%; width:40%">
-						
-            <h1 style="color:#08abac">Lorem ipsum dolor sit amet</h1>
-            <h2 style="color:#777">Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
-            <h3 style="color:#888">amet consectetur adipisicing elit</h3>
-
-						<a href="#">
-							
-							<button class="btn btn-default backColor text-uppercase">
-
-							VER PRODUCTO <span class="fa fa-chevron-right"></span>
-
-							</button>
-
-						</a>
-
-					</div>	
-
-				</div>
-
-			</li>
-
-			<!-- SLIDE 4 -->
-		
-			<li>
-				
-				<img src="http://localhost/backend/vistas/img/slide/slide4/fondo3.jpg">
-
-				<div class="slideOpciones slideOpcion1">
-					
-					<img class="imgProducto" src="" style="top:5%; right:15%; width:25%">
-
-					<div class="textosSlide" style="top:20%; left:10%; width:40%">
-						
-            <h1 style="color:#08abac">Lorem ipsum dolor sit amet</h1>
-            <h2 style="color:#777">Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
-            <h3 style="color:#888">amet consectetur adipisicing elit</h3>
-
-
-						<a href="#">
-							
-						<!-- 	<button class="btn btn-default backColor text-uppercase">
-
-							VER PRODUCTO <span class="fa fa-chevron-right"></span>
-
-							</button> -->
-
-						</a>
-
-					</div>	
-
-				</div>
-
-			</li>		
-
-		</ul>
-
-		<!--=====================================
-		PAGINACIÓN
-		======================================-->
-
-		<ol id="paginacion">
-
-        	<li item="1"><span class="fa fa-circle"></span></li>
-			<li item="2"><span class="fa fa-circle"></span></li>
-			<li item="3"><span class="fa fa-circle"></span></li>
-			<li item="4"><span class="fa fa-circle"></span></li>
-
-		</ol>	
-
-		<!--=====================================
-		FLECHAS
-		======================================-->	
-
-		<div class="flechas" id="retroceder"><span class="fa fa-chevron-left"></span></div>
-		<div class="flechas" id="avanzar"><span class="fa fa-chevron-right"></span></div>
-
+    <div class="item">
+      <img src="http://localhost/AdminComparador/vistas/img/slide/default/back_default.jpg" alt="New York">
 	</div>
+<!-- <section class="search-sec">
+    <div class="container">
+        <form action="#" method="post" novalidate="novalidate">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <input type="text" class="form-control search-slt" placeholder="Enter Pickup City">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <input type="text" class="form-control search-slt" placeholder="Enter Drop City">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <select class="form-control search-slt" id="exampleFormControlSelect1">
+                                <option>Select Vehicle</option>
+                                <option>Example one</option>
+                                <option>Example one</option>
+                                <option>Example one</option>
+                                <option>Example one</option>
+                                <option>Example one</option>
+                                <option>Example one</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <button type="button" class="btn btn-danger wrn-btn">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section> -->
+  </div>
 
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+		
+	</div>
 </div>

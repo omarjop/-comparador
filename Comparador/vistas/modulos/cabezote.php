@@ -16,11 +16,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="http://google.com" target="_blank">
-                        <i class="fa fa-google-plus redSocial facebookBlanco" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
                         <a href="https://www.instagram.com" target="_blank"
                         <i class="fa fa-instagram  redSocial facebookBlanco" aria-hidden="true"></i>
                         </a>
@@ -38,15 +33,8 @@
                 </ul>
             </div>
 
-            <!--- UBICACION -->
-            <diV class="col-lg-6 col-md-4 col-sm-8 col-xs-12 registro">
-                <ul class="pull-center ubicacion">
-                    <li><a href="#modalUbicacion" data-toggle="modal"><i class="fa fa-map-marker" aria-hidden="true"></i> Tu ubicacion cual es?</a></li>
-                </ul>
-            </div>
-
             <!--- REGISTRO -->
-            <diV class="col-lg-3 col-md-4 col-sm-8 col-xs-12 registro">
+            <diV class="col-lg-9 col-md-4 col-sm-12 col-xs-12 registro">
                 <ul>
                 <?php 
                     
@@ -57,7 +45,7 @@
                             if($_SESSION["modoAcceso"] == "directo" || $_SESSION["modoAcceso"] == "facebook"){
                                 echo '
                                     <li>
-                                        <img class="img-circle" src="'.$servidor.'/vistas/img/usuarios/default/anonymous.png" width="10%">
+                                        <img class="img-circle" src="'.$servidor.'/vistas/img/usuarios/default/anonymous.png" width="4%">
                                     </li>
                                 
                                     <li>|</li>
@@ -104,33 +92,8 @@
             BLOQUE CATEGORIAS Y BUSCADOR
             ==========================-->
             <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                
-                    <!-- ====================
-                    BOTON DE CATEGORIAS
-                    ========================-->
-                    <div class="col-lg-4 col-md-5 col-sm-3 col-xs-5 backColor" id="btnCategorias" >
-                        <ul>
-                            <li class="upper-links dropdown"><a class="links" href="#">TIENDAS<span class="pull-right"><i class="fa fa-bars" aria-hidden="true"></i></span> </a> 
-                                <ul class="dropdown-menu">
-                                    <?php 
-                                        $item = "control";
-                                        $valor = "1";
-                                        $categorias = ControladorProductos::CtrlMostrarCategorias($item, $valor);
-                                        foreach ($categorias as $key => $value) {
-                                            echo '
-                                            <li><a href="'.$value["ruta"].'"  class="pixelCategorias"> '.$value["nombre"].'</a></li>                                 
-                                            ';
-                                        }
-                                    ?>  
-                                </ul>  
-                            </li>
-                        </ul>
-                    </div>
                         
-                    <!-- ====================
-                    BUSCADOR
-                    ========================-->
-                    <div class="input-group col-lg-8 col-md-7 col-sm-9 col-xs-7" id="buscador">
+                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="buscador">
                         <input type="search" name="buscar" class="form-control" placeholder="Que quieres buscar...">
                         <span  class="input-group-btn">
                             <a href="#">
@@ -157,11 +120,10 @@
                 }
                     
                 ?>
-                        
-                        <ul  class="pull-right">
+                    <ul  class="pull-right">
                         <a href="<?php echo $url;?>listas">
                             <span  data-toggle="tooltip" title="Listas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive img-thumbnail">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive ">
                             </span>
                            <!-- <h5>Listas</h5> -->
                         </a>
@@ -171,7 +133,7 @@
                     <ul class="pull-right">
                         <a href="<?php echo $url;?>blog">
                             <span data-toggle="tooltip" title="Blog">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/blogs32.png" class="img-responsive img-thumbnail">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/blogs32.png" class="img-responsive ">
                             </span>
                            <!-- <h5>Blogs</h5> -->
                         </a>
@@ -180,7 +142,7 @@
                     <ul class="pull-right">
                         <a href="<?php echo $url;?>tiendas">
                             <span data-toggle="tooltip" title="Tiendas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/tienda32.png" class="img-responsive img-thumbnail">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/tienda32.png" class="img-responsive ">
                             </span>
                           <!--  <h5>Tiendas</h5> -->
                         </a>
@@ -188,7 +150,7 @@
                             <ul class="pull-right">
                         <a href="<?php echo $url;?>recetas">
                             <span data-toggle="tooltip" title="Recetas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/receta32.png" class="img-responsive img-thumbnail">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/receta32.png" class="img-responsive ">
                             </span>
                             <!-- <h5>Recetas</h5>-->
                         </a>
@@ -201,35 +163,6 @@
     </div>
 </header>
 
-<!-- ==================================
-VENTANA MODAL PARA la UBICACION
-======================================-->
-<div class="modal fade modalFormulario" id="modalUbicacion" tabindex="-1" role="dialog" aria-labelledby="modalUbicacion" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content modalTitulo">
-
-        <h3 class="colorbarra"><i class="fa fa-map-marker" aria-hidden="true"></i> INGRESA TU UBICACION</h3>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-        <div class="controlar">
-        <div class="col-xs-12 espacio">
-            <div class="col-md-12 espacio">
-                <form method="post" class="form-signin">
-                    <div id="logreg-forms">     
-                                    
-                       <div id="google_canvas" class="google_canvas"></div>
-
-                    </div>
-                </form>  
-            </div>
-        </div>
-        </div>
-      <div class="modal-footer">
-
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ==================================
 VENTANA MODAL PARA EL INICIO DE SESÍON

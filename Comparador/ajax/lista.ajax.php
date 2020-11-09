@@ -28,11 +28,13 @@ class   AjaxListas{
     }
 
     public $idList;
+    public $estadoProducto;
     public function ajaxBuscarProductoLista(){
-        $valor = $this->idList;
-        $respuesta = ControladorListas::ctrlMostrarProductosListas($valor);
+        $datos = array( "idList"=>$this->idList,
+                        "estadoProducto"=>$this->estadoProducto
+                        );
+        $respuesta = ControladorListas::ctrlMostrarProductosListas($datos);
         echo  json_encode ($respuesta);
-        
     }
 
     public $idChange;
@@ -44,6 +46,20 @@ class   AjaxListas{
         $respuesta = ControladorListas::ctrlCambiarNombreLista($datos);
         echo $respuesta;
         
+    }
+    public function ajaxConsultaP(){
+        $respuesta = ControladorListas::ctrlConsultarPrpduct();
+        echo  json_encode ($respuesta);
+    }
+
+    public $idListaP, $namePrdouct, $idProducto, $cantidadProduct;
+    public function ajaxAgregaProductoLista(){
+        $datos = array("idListaP"=>$this->idListaP,
+                        "namePrdouct"=>$this->namePrdouct, 
+                        "idProducto"=>$this->idProducto, 
+                        "cantidadProduct"=>$this->cantidadProduct);
+        $respuesta = ControladorListas::ctrlAgregarProductosLista($datos);
+        echo ($respuesta);
     }
 }
 
@@ -68,6 +84,7 @@ if(isset($_POST["item1"])){
 if(isset($_POST["idLista2"])){  
     $buscaProductosList = new AjaxListas();
     $buscaProductosList -> idList = $_POST["idLista2"];
+    $buscaProductosList -> estadoProducto= $_POST["estadoProducto"];
     $buscaProductosList ->ajaxBuscarProductoLista();
 }
 //funcion para cambiar el nombre de la lista 
@@ -76,4 +93,20 @@ if(isset($_POST["nameChange"])){
     $cambiarNombreLista  -> nameChange = $_POST["nameChange"];
     $cambiarNombreLista  -> idChange = $_POST["idChange"];
     $cambiarNombreLista  ->ajaxCambiarNombreLista();
+}
+
+//funcion para consultar los productos existentes. 
+if(isset($_POST["consultaProduct"])){  
+    $consultaP = new AjaxListas();
+    $consultaP  ->ajaxConsultaP();
+}
+
+//Metodo para agragar productos a una lista
+if(isset($_POST["cantidadProduct"])){  
+    $agregaProducto = new AjaxListas();
+    $agregaProducto  -> idListaP = $_POST["idListaP"];
+    $agregaProducto  -> namePrdouct = $_POST["nameProducto"];
+    $agregaProducto  -> idProducto = $_POST["idProcduto"];
+    $agregaProducto  -> cantidadProduct = $_POST["cantidadProduct"];
+    $agregaProducto  ->ajaxAgregaProductoLista();
 }

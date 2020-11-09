@@ -112,14 +112,12 @@ class ControladorListas{
     /**==========================================================
      * METODO PARA CONSULTAR LOS PRODUCTOS QUE UNA LISTA TIENE
      *==========================================================*/
-    static public function ctrlMostrarProductosListas($valor){
+    static public function ctrlMostrarProductosListas($datos){
 
-        $tabla1 = "producto_has_listacompra";
-        $tabla2 = "producto";
+        $tabla = "productoslista";
         $item1 = "listaCompra_idListaCompra";
-        $item2 = "idProducto";
-        $item3 = "Producto_idProducto ";
-        $respuesta = ModeloLista::mdlMostrarProductosListas($tabla1, $tabla2, $item1, $item2, $item3, $valor);
+        $item2 = "estado";
+        $respuesta = ModeloLista::mdlMostrarProductosListas($tabla, $item1, $item2, $datos);
         return $respuesta;
 
     }
@@ -134,6 +132,14 @@ class ControladorListas{
         $respuesta = ModeloLista::mdlConsultarListas($tabla, $item, $valor);
         return $respuesta;
 
+    }
+    /**==========================================================
+     * METODO PARA CONSULTAR TODOS LOS PRODUCTOS 
+     *==========================================================*/
+    static public function ctrlConsultarPrpduct(){
+        $tabla = "producto";
+        $respuesta = ModeloLista::mdlConsultarPrpduct($tabla);
+        return $respuesta;
     }
     
     /**==========================================================
@@ -153,6 +159,16 @@ class ControladorListas{
         $tabla = "listacompra";
         $item = "nombreLista";
         $respuesta = ModeloLista::mdlCambiarEstadoLista($tabla, $item, $datos);
+        return $respuesta;
+    }
+
+    /**==========================================================
+     * METODO PARA AGREGAR PRODUCTOS A LA LISTA
+     *==========================================================*/
+    static public function ctrlAgregarProductosLista($datos){
+        $tabla = "productoslista";
+        $item = "idProducto";
+        $respuesta = ModeloLista::mdlAgregarProductosLista($tabla, $item, $datos);
         return $respuesta;
     }
 

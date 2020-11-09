@@ -1,25 +1,24 @@
 
 .carousel {
     margin-bottom: 0;
-    padding: 0 40px 30px 40px;
+    padding: -1px 40px 30px 40px;
 }
-/* The controlsy */
+/* Idicadores del Slider Principal */
 .carousel-control {
-	left: 35px;
-    height: 40px;
+	left: 8px;
+    height: 00px;
 	width: 40px;
-    background-color:  #1d8c01;
-	margin-top: -75px;
+	margin-top: 200px;
 	font-size: 26px;
 }
 .carousel-control.right {
 	right: 35px;
 }
-/* The indicators */
+/* Idicador de slide principal */
 .carousel-indicators {
 	right: 50%;
 	top: auto;
-	bottom: -10px;
+	bottom: 20px;
 	margin-right: -19px;
 }
 /* The colour of the indicators */
@@ -28,4 +27,23 @@
 }
 .carousel-indicators .active {
 background: #428bca;
+}
+.carousel-caption {
+    right: 20%;
+    left: 20%;
+    padding-bottom: 60px;
+}
+
+/* Idicador de ofertas */
+.carousel-indicators-oferta {
+	right: 50%;
+	top: auto;
+	bottom: -10px;
+	margin-right: -19px;
+}
+.carousel-indicators-oferta li {
+	background: #cecece;
+}
+.carousel-indicators-oferta .active {
+	background: #428bca;
 }

@@ -56,14 +56,11 @@ require_once "conexion.php";
     //**************************************************************** 
     // Mostra todos los pruductos que una lista tiene asociado       *
     //**************************************************************** 
-    static public function mdlMostrarProductosListas($tabla1, $tabla2, $item1, $item2, $item3, $valor){
+    static public function mdlMostrarProductosListas($tabla, $item1, $item2, $datos){
 
-        $stmt = Conexion::conectar()->prepare(" SELECT A.Cantidad, B.Nombre 
-                                                FROM $tabla1 A
-                                                INNER JOIN $tabla2 B
-                                                ON A.$item1 = :$item1
-                                                WHERE A.$item3 = B.$item2");
-        $stmt -> bindParam(":".$item1, $valor, PDO::PARAM_STR);
+        $stmt = Conexion::conectar()->prepare(" SELECT nombreProducto, cantidad FROM $tabla WHERE $item1 = :$item1 AND $item2 = :$item2");
+        $stmt -> bindParam(":".$item1, $datos["idList"], PDO::PARAM_STR);
+        $stmt -> bindParam(":".$item2, $datos["estadoProducto"], PDO::PARAM_INT);
         $stmt -> execute();
         return  $stmt ->fetchAll(); 
             
@@ -105,4 +102,31 @@ require_once "conexion.php";
         $stmt = null;
     }
 
+    
+    //**************************************************************** 
+     // Consulta una lista determinada segun su ID                   *
+    //**************************************************************** 
+    static public function mdlConsultarPrpduct($tabla){
+
+        $stmt = Conexion::conectar()->prepare(" SELECT 	idProducto, Nombre FROM $tabla");
+        $stmt -> execute();
+        return  $stmt ->fetchAll(); 
+            
+    }
+
+    //******************************************************************** 
+     // Consulta si existe un producto que desea agregar sino lo agrega  *
+    //******************************************************************** 
+    static public function mdlAgregarProductosLista($tabla, $item, $datos){
+
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+        
+        $stmt -> bindParam(":".$item, $datos["idProducto"], PDO::PARAM_INT);
+        $stmt -> execute();
+        if($stmt-> fetch()){
+            return "ok";
+        }else{
+            return"Error";
+        }
+    }
  }
