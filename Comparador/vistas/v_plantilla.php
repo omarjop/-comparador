@@ -55,17 +55,18 @@
         $ruta =  null;
 
         if(isset($_GET["ruta"])){
-
-            $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
             
+            $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
+             
             $item = "ruta";
             $valor = $_GET["ruta"];
 
             $rutaCategoria = ControladorProductos::CtrlMostrarCategorias($item, $valor);
-            
-            if($valor == $rutaCategoria["ruta"]){
-                $ruta = $valor;
-            }
+           if (is_array ($rutaCategoria)) { 
+                if($valor == $rutaCategoria["ruta"]){
+                    $ruta = $valor;
+                }
+           }
             if($ruta != null){
             
                 include "modulos/productos.php"; 
