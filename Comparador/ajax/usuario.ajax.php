@@ -50,6 +50,6 @@ if(isset($_POST["validarEmail"])){
  */
 if(isset($_POST["email"])){
     $regFacebook = new AjaxUsuario();
-    $regFacebook ->email = $_POST["email"];
+    $regFacebook -> email = $_POST["email"];
     $regFacebook ->ajaxRegistroFacebook();   
 }

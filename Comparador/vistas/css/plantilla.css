@@ -32,7 +32,7 @@
 }
 
 body {
-    font-family: 'ubuntu Condensed',  sans-serif;
+    font-family: 'Ubuntu Condensed',  sans-serif;
 }
 ul, ol, li{
     padding: 0px;
@@ -52,7 +52,7 @@ hr{
     color:teal;
 }
 .barraSuperior{
-    background:  var(--main-color-secundario);
+    background:#047576;
   
 }
 .barraSuperior a{

@@ -6,7 +6,7 @@
 
 				<div id="Carousel" class="carousel slide">
 					
-					<ol class="carousel-indicators">
+					<ol class="carousel-indicators-oferta">
 						<li data-target="#Carousel" data-slide-to="0" class="active"></li>
 						<li data-target="#Carousel" data-slide-to="1"></li>
 						<li data-target="#Carousel" data-slide-to="2"></li>

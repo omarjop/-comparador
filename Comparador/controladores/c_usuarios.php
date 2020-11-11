@@ -5,6 +5,7 @@
     
     public function ctrlRegistroUsuario(){
         $url = Ruta::ctrlRuta();
+        $mdlVista = Ruta::ctrlRutaServidor();
         /*******************************************
         * REGISTRAR USUARIO                        *
         ********************************************/
@@ -180,7 +181,7 @@
             preg_match('/^[a-zA-Z0-9]+$/',$_POST["ingresoPassword"])){
 
                 $clave = htmlentities(addslashes($_POST["ingresoPassword"]));
-
+                
                 $tabla = "usuario";
                 $item = "correo";
                 $valor = $_POST["ingresoEmail"];
@@ -210,6 +211,7 @@
 
                     }else{
                         if($respuesta["Perfil_idPerfil"] == 1){
+
                             $_SESSION["validarSesion"] = "ok";
                             $_SESSION["id"] = $respuesta["idUsuario"];
                             $_SESSION["perfil"] = $respuesta["Perfil_idPerfil"];
@@ -219,13 +221,14 @@
                             echo '<script> 
                                 window.location = localStorage.getItem("rutaActual");
                             </script>';
-                        }else{
-
-                            
                         }
-                        
-                        
-                       
+                       /* if($respuesta["Perfil_idPerfil"] == 2){
+                            echo '<script> 
+                            alert("gola");
+                                window.location = "../Modulos/index.php?id=2?usu=42";
+                            </script>';
+
+                        }*/
                     }
                 }else{
                     echo '<script> 
@@ -307,10 +310,6 @@
                     $id = $respuesta1["idUsuario"];
                     $item3 = "Clave";
                     $valor3 = $encriptarPass;
-                    var_dump($tabla);
-                    var_dump($id);
-                    var_dump( $item3);
-                    var_dump($valor3);
                     $respuestaA = ModeloUsuarios::mdlActualizarUsuario($tabla, $id, $item3, $valor3);
                     
                     if($respuestaA == "ok"){
@@ -452,9 +451,65 @@
      * ******************************************/
 
     static public function ctrlResgistroRedesSociales($datos){
+
         $tabla= "usuario";
-        $respuesta = ModeloUsuarios::mdlRegistroUsuario($tabla , $datos);
-        return $respuesta;     
+        $item= "correo";
+        $valor = $datos["email"];
+
+        $emailRepetido = false;
+
+        $respuesta0 = ModeloUsuarios:: mdlMostrarUsuario($tabla, $item, $valor);
+
+        if($respuesta0){
+
+            $emailRepetido = true;
+
+        }else{
+
+            $respuesta1 = ModeloUsuarios::mdlRegistroUsuario($tabla , $datos);
+
+        }
+        
+        if( $emailRepetido || $respuesta1 =="ok"){
+
+
+            $respuesta2 = ModeloUsuarios:: mdlMostrarUsuario($tabla, $item, $valor);
+
+            if($respuesta2["modoAcceso"] == "facebook"){
+                
+                session_start();
+                $_SESSION["validarSesion"] = "ok";
+                $_SESSION["id"] = $respuesta2["idUsuario"];
+                $_SESSION["perfil"] = $respuesta2["Perfil_idPerfil"];
+                $_SESSION["correo"] = $respuesta2["correo"];
+                $_SESSION["password"] = $respuesta2["Clave"];
+                $_SESSION["modoAcceso"] = $respuesta2["modoAcceso"];
+                echo "ok";
+            }else{
+                echo "";
+            }
+
+        }else{
+
+            echo '<script> 
+            swal({
+                    title: "¡ERROR!",
+                    text: "¡Error al iniciar sesíon con face!",
+                    type: "error",
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+
+                },
+
+                    function(isConfirm){
+                        if(isConfirm){
+                            history.back();
+                        }
+            });
+            
+            </script>';
+
+        }  
     }
 
 
