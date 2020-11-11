@@ -79,7 +79,7 @@
 	 }
 
       if(isset($_POST["btneditproducto"])){
-            $registroProducto  = new ControladorAdminInsert();
+            $registroProducto  = new ControladorAdminModificar();
             $registroProducto ->modificarProductoAdmin('imgProductoEdit');
 	 }
   
@@ -384,7 +384,7 @@
                                                             </div>
 
                                                             <div class="md-form mb-4">                                      
-                                                                        <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1AdminEdit" name="unitt1AdminEdit" required>
+                                                                        <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value,'unidadNumericaAddAdminEdit');" id ="unitt1AdminEdit" name="unitt1AdminEdit" required>
                                                                               <option value = "seleccione">Seleccione Peso/Volumen</option>
                                                                                <?php for($i=0;$i<count($valorUnidades);$i++){?>
                                                                                     <option value='<?php echo $valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
@@ -413,7 +413,7 @@
 
 
                                                              <div class="md-form mb-4">
-                                                                      <select class="form-control" id="CategoryAddAdminEdit" name="CategoryAddAdminEdit" onChange="mostrarSubCategoriaAdmin(this.value);" required >
+                                                                      <select class="form-control" id="CategoryAddAdminEdit" name="CategoryAddAdminEdit" onChange="mostrarSubCategoriaAdmin(this.value,'subCategoryAddAdminEdit');" required >
                                                                               <option value = "seleccione">Seleccione Categor&iacutea</option>     
                                                                               <?php for($i=0;$i<count($resultSelect);$i++){?>
                                                                                    <option value = "<?php echo $resultSelect[$i]["idCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>
@@ -428,7 +428,7 @@
                                                                 </div>
 
                                                                 <div class="md-form mb-4 custom-file">
-                                                                     <input type="file" class="custom-file-input" id="imgProductoEdit" name="imgProductoEdit" lang="es"  required>
+                                                                     <input type="file" class="custom-file-input" id="imgProductoEdit" name="imgProductoEdit" lang="es" >
                                                                      <label class="custom-file-label" for="customFileLang">Seleccione Imagen Producto</label>
                                                                 </div>
 
@@ -436,6 +436,11 @@
                                                                   <i class="fas fa-pencil prefix grey-text"></i>
                                                                   <textarea class="form-control" id="description1AdminEdit" name="description1AdminEdit" placeholder="Breve descripci&oacute;n del producto" rows="3"></textarea>
                                                                 </div>
+
+                                                                <div class="md-form mb-4">
+                                                                   <input style="visibility: hidden;"  type="text" class="campoOculto form-control" id="idProductValueAdmin" name ="idProductValueAdmin">                                      
+                                                                </div>
+                                                                
 
                                               </div>
 
@@ -445,7 +450,7 @@
                                    <div class="form-group">  
                                           <div class="modal-footer d-flex justify-content-center">         
                                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button> 
-                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btneditproducto" name="btneditproducto" >Agregar</button>
+                                                <button type="submit" class="btn btn-primary  colorbotonamarillo" style ="width:48%;" id="btneditproducto" name="btneditproducto" >Editar</button>
                                           </div>
                                     </div>
                                               </div>
@@ -485,7 +490,7 @@
                                     </div>
 
                                     <div class="md-form mb-4">                                      
-                                                <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value);" id ="unitt1" name="unitt1" required>
+                                                <select class="form-control" onChange="mostrarUnidadNumericaPesoVolumen(this.value,'unidadNumericaAdd');" id ="unitt1" name="unitt1" required>
                                                       <option value = "seleccione">Seleccione Peso/Volumen</option>
                                                        <?php for($i=0;$i<count($valorUnidades);$i++){?>
                                                             <option value='<?php echo $valorUnidades[$i]["idunidadMedida"];?>'><?php echo $valorUnidades[$i]["nombreMedida"];?></option>
@@ -516,7 +521,7 @@
                                     </div>
 
                                    <div class="md-form mb-4">
-                                              <select class="form-control" id="CategoryAdd" name="CategoryAdd" onChange="mostrarSubCategoriaAdmin(this.value);" required >
+                                              <select class="form-control" id="CategoryAdd" name="CategoryAdd" onChange="mostrarSubCategoriaAdmin(this.value,'subCategoryAdd');" required >
                                                       <option value = "seleccione">Seleccione Categor&iacutea</option>     
                                                       <?php for($i=0;$i<count($resultSelect);$i++){?>
                                                            <option value = "<?php echo $resultSelect[$i]["idCategoria"];?>"><?php echo $resultSelect[$i]["nombre"];?></option>

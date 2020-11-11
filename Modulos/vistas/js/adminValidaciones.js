@@ -501,7 +501,7 @@ $(function(){
         })
 });
 
-function mostrarSubCategoriaAdmin(categoria){
+function mostrarSubCategoriaAdmin(categoria,campo){
          
       var datos = new FormData();
       datos.append("findSubCategorias", categoria);
@@ -520,13 +520,13 @@ function mostrarSubCategoriaAdmin(categoria){
 
 
                                
-                                       var x = document.getElementById("subCategoryAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
 
-                                       var select = document.getElementById("subCategoryAdd"); 
+                                       var select = document.getElementById(campo); 
                                        respuesta =respuesta.replace("[","");
                                        respuesta =respuesta.replace("]","");
                                        var auxSplit = respuesta.split("},");
@@ -544,12 +544,12 @@ function mostrarSubCategoriaAdmin(categoria){
 
 			              }else{
                                                              
-                                       var x = document.getElementById("subCategoryAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
-                                      var select = document.getElementById("subCategoryAdd"); 
+                                      var select = document.getElementById(campo); 
                                       var option = document.createElement("option");
                                       option.value = "seleccion";
                                       option.innerHTML = "Seleccione Sub Categor&iacutea";
@@ -563,7 +563,7 @@ function mostrarSubCategoriaAdmin(categoria){
 }
 
  /*Metodo que valida si muestra los campos de unidades y si no los oculta*/
-   function mostrarUnidadNumericaPesoVolumen(id) {
+   function mostrarUnidadNumericaPesoVolumen(id,campo) {
             
       
             var datos = new FormData();
@@ -583,13 +583,13 @@ function mostrarSubCategoriaAdmin(categoria){
 
 
                                
-                                       var x = document.getElementById("unidadNumericaAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
 
-                                       var select = document.getElementById("unidadNumericaAdd"); 
+                                       var select = document.getElementById(campo); 
                                        respuesta =respuesta.replace("[","");
                                        respuesta =respuesta.replace("]","");
                                        var auxSplit = respuesta.split("},");
@@ -607,12 +607,12 @@ function mostrarSubCategoriaAdmin(categoria){
 
 			              }else{
                                                              
-                                       var x = document.getElementById("unidadNumericaAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
-                                      var select = document.getElementById("unidadNumericaAdd"); 
+                                      var select = document.getElementById(campo); 
                                       var option = document.createElement("option");
                                       option.value = "seleccion";
                                       option.innerHTML = "Seleccione unidad de medida";
@@ -673,9 +673,12 @@ function mostrarSubCategoriaAdmin(categoria){
                                        document.getElementById("nameProductoAdminEdit").value = JSON.parse(respuesta).Nombre; 
                                        document.getElementById("tipoProductAdminEdit").value = JSON.parse(respuesta).tipoProducto_idtipoProducto
                                        document.getElementById("unitt1AdminEdit").value = JSON.parse(respuesta).unidadMedida_idunidadMedida;
-                                       document.getElementById("unidadNumericaAddAdminEdit").value = JSON.parse(respuesta).pesoVolumen;
                                        document.getElementById("CategoryAddAdminEdit").value = JSON.parse(respuesta).categoria_idCategoria;
-                                        
+                                       document.getElementById("idProductValueAdmin").value = JSON.parse(respuesta).idProducto;
+                                       mostrarUnidadNumericaPesoVolumen(JSON.parse(respuesta).unidadMedida_idunidadMedida,'unidadNumericaAddAdminEdit'); 
+                                       document.getElementById("unidadNumericaAddAdminEdit").value = JSON.parse(respuesta).pesoVolumen;
+                                       mostrarSubCategoriaAdmin(JSON.parse(respuesta).categoria_idCategoria,'subCategoryAddAdminEdit');
+                                       document.getElementById("subCategoryAddAdminEdit").value = JSON.parse(respuesta).subCategoria_idsubCategoria;
                                
 			              }
 
