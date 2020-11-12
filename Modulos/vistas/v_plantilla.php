@@ -86,7 +86,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     include "vistas/ModuloTiendas/producto/".$_GET['ruta'].".php";
 
 	           }else if(($_GET['ruta'] == "addmarca" || $_GET['ruta'] == "adUnidadMedida"|| 
-              $_GET['ruta'] == "addTipoEmpresa" || $_GET['ruta'] == "addTipoProducto"|| $_GET['ruta'] == "addCategorias"|| $_GET['ruta'] == "addPais"|| $_GET['ruta'] == "addPerfil"|| $_GET['ruta'] == "addCiudad"||  $_GET['ruta'] == "addTipoPago"||$_GET['ruta'] == "addNewProductAdmin")&& $tipoUser == 2){
+              $_GET['ruta'] == "addTipoEmpresa" || $_GET['ruta'] == "addTipoProducto"|| $_GET['ruta'] == "addCategorias"|| $_GET['ruta'] == "addPais"|| $_GET['ruta'] == "addPerfil"|| $_GET['ruta'] == "addCiudad"||  $_GET['ruta'] == "addDia"||  $_GET['ruta'] == "addTipoPago"||$_GET['ruta'] == "addNewProductAdmin")&& $tipoUser == 2){
 
                     include "vistas/modulos/cabezoteProducto.php";
                     include "vistas/Menus/menu.php";

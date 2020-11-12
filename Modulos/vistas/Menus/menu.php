@@ -157,7 +157,13 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ciudad</p>
                 </a>
-              </li>                     
+              </li>  
+             <li class="nav-item">
+                <a href="addDia" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dia Calendario</p>
+                </a>
+              </li>                    
               <li class="nav-item">
                 <a href="addmarca" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
