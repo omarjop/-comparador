@@ -67,10 +67,12 @@
                     $ruta = $valor;
                 }
            }
-            if($ruta != null){
+            if($ruta != null && $rutaCategoria["control"]!=1){
             
                 include "modulos/productos.php"; 
 
+            }else if($ruta != null && $rutaCategoria["control"]==1){
+                     include "modulos/recetas.php";
             } else{
                 
                 if($rutas[0] == "verificar"|| $rutas[0] == "salir"   || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
