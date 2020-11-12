@@ -4,22 +4,16 @@ $resultado=null;
 $controlNumerico=array();
 $controlCaracter=array();
 
-//----- Objeto de la clase estrucutra con los valores del control de la tabla
-$objControlUnidad = new ControladorEstructuras();
-$vectorControlUnidad= $objControlUnidad->returnControlUnidad();
-for ($i=0;$i<count($vectorControlUnidad);$i++){
- 
- $porciones = explode("-", $vectorControlUnidad[$i]);
- array_push($controlNumerico, $porciones[0]);
-  array_push($controlCaracter, $porciones[1]);
-}
+//----- Objeto  con valores tabla pais
+ $resultSelect = ControladorSelectsInTables:: selectTodosRegistros("pais");
+
 
   //--Boton del modal de agregar unidad, crea objeto de la clase controlador
 if(isset($_POST["btnaddCiudad"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
     $valorCiudad = $_POST["addCiudad"]; 
-    $valorControl= $_POST["selecontrol"];
-    $objAdminAgregar->agregarCamposUnid("ciudad","nombreCiudad",$valorCiudad,"control",$valorControl);
+    $valorPais= $_POST["selePais"];
+    $objAdminAgregar->agregarCamposCiudad("ciudad","nombreCiudad",$valorCiudad,"pais_idpais",$valorPais);
    }  
 
 //--Boton del modal de eliminar , crea objeto de la clase controlador
@@ -48,8 +42,8 @@ if(isset($_POST["btnEditarUnidad"])){
      $objAdminModificar  = new ControladorAdminModificar();
      $idCiudadModif = $_POST["idciudad"];
      $valorCiudades = $_POST["ciudadEdit"];  
-     $valorControlModif = $_POST["selecontrol2"]; 
-     $resultadoModificar=$objAdminModificar->modifDosCampos("ciudad","idciudad","nombreCiudad",$valorCiudades,$idCiudadModif,"control",$valorControlModif);
+     $valorControlModif = $_POST["selePais2"]; 
+     $resultadoModificar=$objAdminModificar->modifDosCampos("ciudad","idciudad","nombreCiudad",$valorCiudades,$idCiudadModif,"pais_idpais",$valorControlModif);
                                                                                                             
       
         
@@ -76,12 +70,12 @@ if(isset($_POST["lupaCiudad"])){
 <script type="text/javascript">
 /*Validación del campo de texto de agregar */
   function validarFormulario(formulario){
-       var CiudadVal = formulario.addCiudad.value;
-       var selePais = formulario.selecontrol.value;
-        if(validarNombreAndCiudad(CiudadVal,"No es una Ciudad v&aacute;lida","addCiudad")==true &&
-           validarUnidadAndRango(CiudadVal,"El nombre de la Ciudad es muy extenso","addCiudad")==true){
+       var unidadVal = formulario.addCiudad.value;
+       var seleUnidad = formulario.selePais.value;
+        if(validarNombreAndUnidad(unidadVal,"No es una Ciudad v&aacute;lida","addCiudad")==true &&
+           validarUnidadAndRango(unidadVal,"El nombre de la Ciudad es muy extenso","addCiudad")==true){
               
-               if(validarNombreAndSelec(selePais,"Seleccione una opci&oacute;n de Pais","selecontrol")==true ){
+               if(validarNombreAndSelec(seleUnidad,"Seleccione una opci&oacute;n de Pa&iacute;s","selePais")==true ){
                   return true;
                }else{
                    return false;     
@@ -94,9 +88,28 @@ if(isset($_POST["lupaCiudad"])){
         
   return true;
  }
-     
+ //---------------------------------------------------------
+   function validarFormulario2(formulario){
+       var unidadValEdi = formulario.ciudadEdit.value;
+       var seleUnidadEditar = formulario.selePais2.value;
+        if(validarNombreAndUnidad(unidadValEdi,"No es una Ciudad v&aacute;lida","ciudadEdit")==true &&
+           validarUnidadAndRango(unidadValEdi,"El nombre de la Ciudad es muy extenso","ciudadEdit")==true){
+              
+               if(validarNombreAndSelec(seleUnidadEditar,"Seleccione una opci&oacute;n de Pa&iacute;s","selePais2")==true ){
+                  return true;
+               }else{
+                   return false;     
+               }
+        }else{
+            return false;
+        }
+ 
+        
+        
+  return true;
+ }       
  //------funciones de validacion de cada uno de los campos
- function validarNombreAndCiudad(valor,mensaje,campoForm){
+ function validarNombreAndUnidad(valor,mensaje,campoForm){
       
          if ((isNaN(parseInt(valor)))&& (valor !="")){
               return true;
@@ -108,9 +121,9 @@ if(isset($_POST["lupaCiudad"])){
 
  }
   //------funciones de validacion de cada uno de los campos
- function validarCiudadAndRango(valor,mensaje,campoForm){
+ function validarUnidadAndRango(valor,mensaje,campoForm){
       
-         if ((valor.length) > 50){
+         if ((valor.length) > 20){
               
               toastr.error(mensaje);
               return false;
@@ -120,7 +133,20 @@ if(isset($_POST["lupaCiudad"])){
      } 
 
  }
+ //**********************************************************************/
+    
+ //------funciones de validacion del select control al adicionar
+ function validarNombreAndSelec(valor,mensaje,campoForm){
+      
+         if (valor !="seleccion"){
+              return true;
+         }else{       
+             toastr.error(mensaje);
+             
+             return false;
+     } 
 
+ }
 var returnValue = true;
 //validar que no exista el registro con accion de boton
  $(function(){
@@ -199,7 +225,7 @@ var returnValue = true;
         ?> 
             <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["nombreCiudad"];?>
-                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span nombunidad = "<?php echo $resultado[$i]["nombreCiudad"];?>" id = "<?php echo $resultado[$i]["idciudad"];?>" idcontrol="<?php echo $resultado[$i]["control"];?>" class="fas fa-pen-alt editar"></span></p></a> 
+                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span nombCiudads = "<?php echo $resultado[$i]["nombreCiudad"];?>" id = "<?php echo $resultado[$i]["idciudad"];?>" idPais="<?php echo $resultado[$i]["pais_idpais"];?>" class="fas fa-pen-alt editar"></span></p></a> 
                   <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["nombreCiudad"];?>" id = "<?php echo $resultado[$i]["idciudad"];?>" class="far fa-trash-alt eliminar"></span></p></a>          
               </li>
 
@@ -239,9 +265,9 @@ var returnValue = true;
  $(function(){
      $(".editar").click(function(){
          $(".idciudad").attr('value',$(this).attr('id'));
-         $(".ciudadEdit").attr('value',$(this).attr('nombunidad'));   
+         $(".ciudadEdit").attr('value',$(this).attr('nombCiudads'));   
          $("#modifiCiudad").modal("show");
-         document.getElementById("selecontrol2").value=$(this).attr('idcontrol');
+         document.getElementById("selePais2").value=$(this).attr('idPais');
          
       });
   });    
@@ -273,9 +299,9 @@ var returnValue = true;
                          <input   type="text" class="form-control" id="addCiudad" name ="addCiudad" placeholder="Agregue Ciudad">  
                    </div>
                    <div class="modal-body">
-                    <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol" name="selecontrol"  required><option value = "seleccion">Seleccione Control</option>
-                               <?php for($i=0;$i<count($controlNumerico);$i++){?>
-                               <option value="<?php echo $controlNumerico[$i]; ?>"><?php echo $controlCaracter[$i]; ?></option> 
+                    <select class="form-control" onChange="mostrar(this.value);" id ="selePais" name="selePais"  required><option value = "seleccion">Seleccione Pais</option>
+                               <?php for($i=0;$i<count($resultSelect);$i++){?>
+                               <option value="<?php echo $resultSelect[$i]["idpais"]; ?>"><?php echo $resultSelect[$i]["nombrePais"]; ?></option> 
                                <?php }?> 
                        </select>
                      </div>
@@ -349,9 +375,9 @@ var returnValue = true;
                                 <input   type="text" value ="" placeholder="Nombre Unidad" class="form-control ciudadEdit" id="ciudadEdit" name ="ciudadEdit" required>  
                     </div>     
                       <div class="modal-body mx-3">       
-                      <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol2" name="selecontrol2"  required><option value = "seleccion">Seleccione Control</option>
-                               <?php for($i=0;$i<count($controlNumerico);$i++){?>
-                               <option value="<?php echo $controlNumerico[$i]; ?>"><?php echo $controlCaracter[$i]; ?></option> 
+                      <select class="form-control" onChange="mostrar(this.value);" id ="selePais2" name="selePais2"  required><option value = "seleccion">Seleccione Control</option>
+                               <?php for($i=0;$i<count($resultSelect);$i++){?>
+                               <option value="<?php echo $resultSelect[$i]["idpais"]; ?>"><?php echo $resultSelect[$i]["nombrePais"]; ?></option> 
                                <?php }?> 
                        </select>
                                              

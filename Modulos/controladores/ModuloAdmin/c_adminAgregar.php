@@ -85,6 +85,44 @@ class ControladorAdminInsert{
         }
       }
 
+        public function agregarCamposCiudad($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2){
+            $objAdminAgregar  = new ControladorInserttAllTables();  
+            $resultado= $objAdminAgregar->insertInTable("ciudad","nombreCiudad,pais_idpais","'$valorAgregar'".",".$valorAgregar2);
+      
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego la unidad correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar la unidad.Codigo: '+".$resultado.");</script>";                             
+
+              }    
+    }
+
+        public function agregarCampoDia($tabla,$columna,$valorAgregar){
+            $objAdminAgregar  = new ControladorInserttAllTables();   
+            $resultado= $objAdminAgregar->insertInTable("dia","Descripcion","'$valorAgregar'");
+    
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }
+      }
+    public function agregarCamposCategoria($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+
+            $resultado= $objAdminAgregar->insertInTable("categoria","nombre,control","'$valorAgregar'".",".$valorAgregar2);
+      
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego la categor&iacute;a correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar la categor&iacute;.Codigo: '+".$resultado.");</script>";                             
+
+              }    
+    }
+
  //--------inicia administraci+on de producto---------------------------
     public function agregarProducto($rutaImagen){   
                  $objLog =  new ControladorWorkLogs();

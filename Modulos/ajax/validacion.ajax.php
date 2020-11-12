@@ -171,6 +171,23 @@ class   AjaxProducto{
         }
         
     }
+        //------------------metodo que valida si existen dos registros
+    public function ajaxValidarExisteDosRegistros($tabla,$columnaComparar1,$valorComparar1,$columnaComparar2,$valorComparar2){
+     
+        $objSelect = new ControladorSelectsInTables();
+        $valorComparar1 = "'".$valorComparar1."'";
+        $valorComparar2 = "'".$valorComparar2."'";
+        
+        $sql = "SELECT * FROM  ".$tabla." where ".$columnaComparar1." = ".$valorComparar1. " and ".$columnaComparar2." = ".$valorComparar2;
+        $respuesta = $objSelect->selectARowsInDb($sql);
+        echo "<script>toastr.warning('$respuesta');</script>"; 
+        if ($respuesta!= null ) {
+            echo json_encode($respuesta);
+        }else{
+           echo json_encode("No existe");
+        }
+        
+    }
 
 }
 
@@ -237,33 +254,44 @@ if(isset($_POST["addunidadValue"])){
 }
 //Valida si existe el tipo de empresa
 if(isset($_POST["nombreAddTipoEmp"])){  
-    $valMarca = new AjaxProducto();
-    $valMarca ->ajaxValidarExisteRegistro("tipoempresa","descripcion",$_POST["nombreAddTipoEmp"]);
+    $valTipoEmpresa = new AjaxProducto();
+    $valTipoEmpresa ->ajaxValidarExisteRegistro("tipoempresa","descripcion",$_POST["nombreAddTipoEmp"]);
 }
 //Valida si existe el tipo de producto
 if(isset($_POST["nombreAddTipoProd"])){  
-    $valMarca = new AjaxProducto();
-    $valMarca ->ajaxValidarExisteRegistro("tipoproducto","descripcion",$_POST["nombreAddTipoProd"]);
+    $valTipoProd = new AjaxProducto();
+    $valTipoProd ->ajaxValidarExisteRegistro("tipoproducto","descripcion",$_POST["nombreAddTipoProd"]);
 }
 //Valida si existe el pais
 if(isset($_POST["nombreAddPais"])){  
-    $valMarca = new AjaxProducto();
-    $valMarca ->ajaxValidarExisteRegistro("pais","nombrePais",$_POST["nombreAddPais"]);
+    $valPais = new AjaxProducto();
+    $valPais ->ajaxValidarExisteRegistro("pais","nombrePais",$_POST["nombreAddPais"]);
 }
 //Valida si existe el perfil
 if(isset($_POST["nombreAddPerfil"])){  
-    $valMarca = new AjaxProducto();
-    $valMarca ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
+    $valPerfil = new AjaxProducto();
+    $valPerfil ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
 }
 //Valida si existe la ciudad
 if(isset($_POST["addCiudadValue"])){  
-    $valMarca = new AjaxProducto();
-    $valMarca ->ajaxValidarExisteRegistro("ciudad","nombreCiudad",$_POST["addCiudadValue"]);
+    $valCiudad = new AjaxProducto();
+    $valCiudad ->ajaxValidarExisteRegistro("ciudad","nombreCiudad",$_POST["addCiudadValue"]);
 }
 //Valida si existe el tipo de pago
 if(isset($_POST["nombreAddtipo_pago"])){  
-    $valMarca = new AjaxProducto();
-    $valMarca ->ajaxValidarExisteRegistro("tipo_pago","Tipo_pago",$_POST["nombreAddtipo_pago"]);
+    $valTipoPago = new AjaxProducto();
+    $valTipoPago ->ajaxValidarExisteRegistro("tipo_pago","Tipo_pago",$_POST["nombreAddtipo_pago"]);
 }
-
+if(isset($_POST["nombreAddDia"])){  
+    $valDia = new AjaxProducto();
+    $valDia ->ajaxValidarExisteRegistro("dia","Descripcion",$_POST["nombreAddDia"]);
+}
+if(isset($_POST["nombreDiaEdit"])){  
+    $valDiaEdit = new AjaxProducto();
+    $valDiaEdit ->ajaxValidarExisteRegistro("dia","Descripcion",$_POST["nombreDiaEdit"]);
+}
+if(isset($_POST["nombreAddCategoria"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("categoria","nombre",$_POST["nombreAddCategoria"],"control",$_POST["nombreAddControl"]);
+}
 
