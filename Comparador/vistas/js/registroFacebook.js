@@ -87,9 +87,79 @@ function textApi(){
                 contentType: false,
                 processData: false,
                 success: function(respuesta){
-                    console.log("Respuesta", respuesta);
+
+                    if(respuesta == "ok"){
+
+                        window.location = localStorage.getItem("rutaActual");
+
+                    }else{
+                        swal({
+                            title: "¡ERROR!",
+                            text: "¡El correo electronico "+email+" ya esta registrado con un metodo diferente a facebook!",
+                            type: "error",
+                            confirmButtonText: "Cerrar",
+                            closeOnConfirm: false
+                            
+                            },
+                            
+                            function(isConfirm){
+                                if(isConfirm){
+                                   FB.getLoginStatus(function(response){
+
+                                       if(response.status === 'connected'){
+
+                                           FB.logout(function(response){
+
+                                                deleteCookie("628429304487987");
+                                                
+                                                setTimeout(function(){
+                                                    window.location = rutaOculta+"salir";
+                                                }, 500)
+                                           });
+
+                                           function deleteCookie(name){
+
+                                               document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+                                           }
+                                       }
+                                   })
+                                }
+                        });
+
+                    }
+
                 }
             })
         }
     })
 }
+/** ==================================================
+ * SALIR DE FACEBOOK
+ * ====================================================
+*/
+$(".salida").click(function(){
+
+    /**e.preventDefault();*/
+
+    FB.getLoginStatus(function(response){
+ 
+         if(response.status === 'connected'){
+ 
+             FB.logout(function(response){
+ 
+                 deleteCookie("628429304487987");
+                 
+                 setTimeout(function(){
+                     window.location = rutaOculta+"salir";
+                 }, 500)
+             });
+ 
+             function deleteCookie(name){
+ 
+                 document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+ 
+             }
+         }
+     })
+})

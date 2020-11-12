@@ -25,10 +25,6 @@ var returnValue ;
                      returnValue = false;
                      //return false;
 		         }
-                /* if(validarUnidades(pesoVolumen,gramos,kilogramos,mililitros,centimetros)!=true){
-                     returnValue = false;
-                     ///return false;
-		         }*/
                  if(validarNombreAndMarca(marca,"No es un nombre de marca v&aacute;lido","marca1")!=true){
                      returnValue = false;
                     // return false;
@@ -88,35 +84,7 @@ var returnValue ;
 		}
  }
 
-  function validarUnidades(valorPesoVolumen,gramos,kilogramos,mililitros,centimetros){
-    
-        if(valorPesoVolumen == "gramos1"){
-            if(gramos == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("grams1").value = "";
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "kilogramos1"){
-            if(kilogramos == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("kilograms1").value = "";
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "mililitros1"){
-            if(mililitros == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("milliliters1").value = "";
-               return false; 
-		    }
-		}else if(valorPesoVolumen == "centimetros1"){
-            if(centimetros == "seleccione"){
-               toastr.error("El valor de peso o volumen no es v&aacute;lido");
-               document.getElementById("centimeters1").value = "";
-               return false; 
-		    }
-		}  
-  return true;
- }
+
 
  function validarNuevaCategoria(categoria,nuevaCategoria){
  
@@ -333,7 +301,7 @@ $(document).ready(function(){
 /*auto completar al agregar nuevo producto*/
 $(document).ready(function(){
        $("#nameProducto1").change(function(){
-            alert("Entra");
+          
             /*var producto = $("#nameProducto1").val();
             var datos = new FormData();
             datos.append("newProduct", producto);
@@ -533,7 +501,7 @@ $(function(){
         })
 });
 
-function mostrarSubCategoriaAdmin(categoria){
+function mostrarSubCategoriaAdmin(categoria,campo){
          
       var datos = new FormData();
       datos.append("findSubCategorias", categoria);
@@ -552,13 +520,13 @@ function mostrarSubCategoriaAdmin(categoria){
 
 
                                
-                                       var x = document.getElementById("subCategoryAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
 
-                                       var select = document.getElementById("subCategoryAdd"); 
+                                       var select = document.getElementById(campo); 
                                        respuesta =respuesta.replace("[","");
                                        respuesta =respuesta.replace("]","");
                                        var auxSplit = respuesta.split("},");
@@ -576,12 +544,12 @@ function mostrarSubCategoriaAdmin(categoria){
 
 			              }else{
                                                              
-                                       var x = document.getElementById("subCategoryAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
-                                      var select = document.getElementById("subCategoryAdd"); 
+                                      var select = document.getElementById(campo); 
                                       var option = document.createElement("option");
                                       option.value = "seleccion";
                                       option.innerHTML = "Seleccione Sub Categor&iacutea";
@@ -595,7 +563,7 @@ function mostrarSubCategoriaAdmin(categoria){
 }
 
  /*Metodo que valida si muestra los campos de unidades y si no los oculta*/
-   function mostrarUnidadNumericaPesoVolumen(id) {
+   function mostrarUnidadNumericaPesoVolumen(id,campo) {
             
       
             var datos = new FormData();
@@ -615,13 +583,13 @@ function mostrarSubCategoriaAdmin(categoria){
 
 
                                
-                                       var x = document.getElementById("unidadNumericaAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
 
-                                       var select = document.getElementById("unidadNumericaAdd"); 
+                                       var select = document.getElementById(campo); 
                                        respuesta =respuesta.replace("[","");
                                        respuesta =respuesta.replace("]","");
                                        var auxSplit = respuesta.split("},");
@@ -639,12 +607,12 @@ function mostrarSubCategoriaAdmin(categoria){
 
 			              }else{
                                                              
-                                       var x = document.getElementById("unidadNumericaAdd");                                    
+                                       var x = document.getElementById(campo);                                    
 
                                       for (let i = x.options.length; i >= 0; i--) {
                                         x.remove(i);
                                       }
-                                      var select = document.getElementById("unidadNumericaAdd"); 
+                                      var select = document.getElementById(campo); 
                                       var option = document.createElement("option");
                                       option.value = "seleccion";
                                       option.innerHTML = "Seleccione unidad de medida";
@@ -665,20 +633,22 @@ function mostrarSubCategoriaAdmin(categoria){
 
      /*Llama el modal de editar producto*/
   $(function(){
-     $(".editarAdmin").click(function(){
+     $(".editarAdminProducto").click(function(){
          //$(".nameProducto1").attr('value',$(this).attr('nombre'));
         //$(".idProduct").attr('value',$(this).attr('id'));
+       
          $("#modificarpp").modal("show");  
-       // alert("Funciona");
+        
       });
   });
 
-  function mostrarDatosEdit(id){
+  function mostrarDatosAdminEdit(id,idsubCategoria){
 
-
+           //alert(idSubCategoria);
             var datos = new FormData();
             datos.append("idProductoFiendValue", id);
-         
+            datos.append("idSubCategoria", idsubCategoria);
+           
             $.ajax({
                     url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
                     method:"POST",
@@ -688,6 +658,8 @@ function mostrarSubCategoriaAdmin(categoria){
                     processData: false,
                     async:false,
                     success: function(respuesta){
+
+                      
                           if(!respuesta.includes("No existe")){
                                   $(".alert").remove();
                                   returnValue = true;   
@@ -695,20 +667,18 @@ function mostrarSubCategoriaAdmin(categoria){
                                        
                                        respuesta =respuesta.replace("[","");
                                        respuesta =respuesta.replace("]","");
-                                       document.getElementById("Reference1").value = JSON.parse(respuesta).Referencia;
-                                       document.getElementById("description1").value = JSON.parse(respuesta).Descripcion; 
-                                       document.getElementById("marca1").value = JSON.parse(respuesta).Marca_idMarca; 
-                                       document.getElementById("nameProducto1").value = JSON.parse(respuesta).Nombre; 
-                                       document.getElementById("tipoProduct").value = JSON.parse(respuesta).tipoProducto_idtipoProducto
-                                       var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
-                                       var aux = nombreMedidda.split(" ");
-                                       document.getElementById("unitt1").value = aux[0]+'1'+'-'+JSON.parse(respuesta).idunidadMedida;
-                                       //document.getElementById("Category1").value = JSON.parse(respuesta).subCategoria_idsubCategoria; 
-                                      /* var nombreMedidda =  JSON.parse(respuesta).nombreMedida;
-                                       var aux = nombreMedidda.split(" ");
-                                      
-                                       mostrar2(aux[0]+'1'+'-'+JSON.parse(respuesta).idunidadMedida);
-                                       document.getElementById(returnUnidad(aux[0]+'1')).value = JSON.parse(respuesta).pesoVolumen;*/
+                                       document.getElementById("Reference1AdminEdit").value = JSON.parse(respuesta).Referencia;
+                                       document.getElementById("description1AdminEdit").value = JSON.parse(respuesta).Descripcion; 
+                                       document.getElementById("marca1AdminEdit").value = JSON.parse(respuesta).Marca_idMarca; 
+                                       document.getElementById("nameProductoAdminEdit").value = JSON.parse(respuesta).Nombre; 
+                                       document.getElementById("tipoProductAdminEdit").value = JSON.parse(respuesta).tipoProducto_idtipoProducto
+                                       document.getElementById("unitt1AdminEdit").value = JSON.parse(respuesta).unidadMedida_idunidadMedida;
+                                       document.getElementById("CategoryAddAdminEdit").value = JSON.parse(respuesta).categoria_idCategoria;
+                                       document.getElementById("idProductValueAdmin").value = JSON.parse(respuesta).idProducto;
+                                       mostrarUnidadNumericaPesoVolumen(JSON.parse(respuesta).unidadMedida_idunidadMedida,'unidadNumericaAddAdminEdit'); 
+                                       document.getElementById("unidadNumericaAddAdminEdit").value = JSON.parse(respuesta).pesoVolumen;
+                                       mostrarSubCategoriaAdmin(JSON.parse(respuesta).categoria_idCategoria,'subCategoryAddAdminEdit');
+                                       document.getElementById("subCategoryAddAdminEdit").value = JSON.parse(respuesta).subCategoria_idsubCategoria;
                                
 			              }
 

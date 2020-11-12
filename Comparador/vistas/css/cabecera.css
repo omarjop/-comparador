@@ -7,9 +7,9 @@
 }
 .registro ul{
     text-align: right;
-    font-size: 12px;
-    padding: 5px;
+    font-size: 10px;
 }
+
 /*===================================================== 
 Cabecera 
 =======================================================*/
@@ -62,7 +62,7 @@ header #buscador input{
     border-radius: 0px;
 }
 header #buscador button{
-    padding: 10px 15px;
+    padding: 9px 15px;
     border: 1px solid silver;
     border-radius: 0;
 }
@@ -103,7 +103,7 @@ VENTANAS MODALES
 }
 /**  ===========================*/
 .form-control {
-    height: 37px;
+    height: 36px;
 }
 .stepwizard-step p {
     margin-top: 5px;
@@ -182,31 +182,13 @@ VENTANAS MODALES
     width:210px !important;
     margin: 0 auto;
 }
-
-
-/*
-.modalFormulario .usuario, .modalFormulario .regTienda{
-    cursor: pointer;
+/*=====================================================================
+ESTILO PARA GOOGLE CANVAS UBICACION
+======================================================================*/
+.form-signin .google_canvas{
+    height: 50vh;
+    width: 80vh;
 }
-.modalFormulario .usuario p{
-    background-color: rgb(223, 141, 49);
-}
-.modalFormulario .regTienda p{
-    background-color: rgb(53, 116, 24);
-}
-.modalFormulario .usuario p, .modalFormulario .regTienda p{
-    color: white;
-    text-align: center;
-    line-height: 35px;
-    font-size: 18px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-.modalFormulario p i{
-    margin-right: 20px;
-    font-size: 20px;
-}*/
-
 /*=====================================================================
 Escritorios Grandes (LG revisamos en 1366px en adelante)
 ======================================================================*/

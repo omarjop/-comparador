@@ -1,5 +1,6 @@
 [2000-07-01T00:00:00+02:00][AdminProducto][INFO]: Se inicia la pagina para administrar productos
 
+<<<<<<< HEAD
 [2000-07-01T00:00:00+02:00][AdminProducto][INFO]: Se inicia la pagina para administrar productos
 
 [2000-07-01T00:00:00+02:00][AdminProducto][INFO]: Se inicia la pagina para administrar productos
@@ -138,3 +139,5 @@
 
 [2000-07-01T00:00:00+02:00][AdminProducto][INFO]: Se inicia la pagina para administrar productos
 
+=======
+>>>>>>> 2720df32df9782e33b2dcfa28d8c8532995fc62a

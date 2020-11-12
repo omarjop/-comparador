@@ -8,16 +8,11 @@
     <div class="container">
         <div class="row">
             <!--- AVISO INFORMATIVO -->
-            <diV class="col-lg-9 col-md-8 col-sm-12 col-xs-12 social">
+            <diV class="col-lg-3 col-md-8 col-sm-12 col-xs-12 social">
                 <ul>
                     <li>
                         <a href="http://facebook.com" target="_blank">
                         <i class="fa fa-facebook redSocial facebookBlanco" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://google.com" target="_blank">
-                        <i class="fa fa-google-plus redSocial facebookBlanco" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li>
@@ -37,8 +32,9 @@
                     </li>
                 </ul>
             </div>
+
             <!--- REGISTRO -->
-            <diV class="col-lg-3 col-md-4 col-sm-8 col-xs-12 registro">
+            <diV class="col-lg-9 col-md-4 col-sm-12 col-xs-12 registro">
                 <ul>
                 <?php 
                     
@@ -46,16 +42,16 @@
 
                         if($_SESSION["validarSesion"] == "ok"){
 
-                            if($_SESSION["modoAcceso"] == "directo"){
+                            if($_SESSION["modoAcceso"] == "directo" || $_SESSION["modoAcceso"] == "facebook"){
                                 echo '
                                     <li>
-                                        <img class="img-circle" src="'.$servidor.'/vistas/img/usuarios/default/anonymous.png" width="10%">
+                                        <img class="img-circle" src="'.$servidor.'/vistas/img/usuarios/default/anonymous.png" width="4%">
                                     </li>
                                 
                                     <li>|</li>
                                     <li><a href="'.$url.'perfil">Ver perfil</a></li>
                                     <li>|</li>
-                                    <li><a href="'.$url.'salir">Salir</a></li>
+                                    <li><a href="'.$url.'salir" class="salida">Salir</a></li>
                                 ';
 
                             }
@@ -89,39 +85,15 @@
                 <a href="<?php echo $url ?>">
                     <img src="http://localhost/AdminComparador/vistas/img/plantilla/logo.png" class="img-responsive">
                 </a>
+               
             </div>
        
             <!-- =======================
             BLOQUE CATEGORIAS Y BUSCADOR
             ==========================-->
             <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                
-                    <!-- ====================
-                    BOTON DE CATEGORIAS
-                    ========================-->
-                    <div class="col-lg-4 col-md-5 col-sm-3 col-xs-5 backColor" id="btnCategorias" >
-                        <ul>
-                            <li class="upper-links dropdown"><a class="links" href="#">TIENDAS<span class="pull-right"><i class="fa fa-bars" aria-hidden="true"></i></span> </a> 
-                                <ul class="dropdown-menu">
-                                    <?php 
-                                        $item = "control";
-                                        $valor = "2";
-                                        $categorias = ControladorProductos::CtrlMostrarCategorias($item, $valor);
-                                        foreach ($categorias as $key => $value) {
-                                            echo '
-                                            <li><a href="'.$value["ruta"].'"  class="pixelCategorias"> '.$value["nombre"].'</a></li>                                 
-                                            ';
-                                        }
-                                    ?>  
-                                </ul>  
-                            </li>
-                        </ul>
-                    </div>
                         
-                    <!-- ====================
-                    BUSCADOR
-                    ========================-->
-                    <div class="input-group col-lg-8 col-md-7 col-sm-9 col-xs-7" id="buscador">
+                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="buscador">
                         <input type="search" name="buscar" class="form-control" placeholder="Que quieres buscar...">
                         <span  class="input-group-btn">
                             <a href="#">
@@ -136,65 +108,53 @@
             <!-- ====================
             MENU DE SERVICIOS
             ========================-->
-            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-12 " id="carrito">
+         <div class="col-lg-3 col-md-3 col-sm-2 col-xs-12 " id="carrito">
                 <li>
-                <?php 
+              <?php 
                     
                 if(isset($_SESSION["validarSesion"])){
                     if($_SESSION["validarSesion"] == "ok"){
                         echo '
-                        
-                        <ul  class="pull-right">
-                        <a href="#">
-                            <span  data-toggle="tooltip" title="Crea tus Listas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive img-thumbnail">
+                        ';
+                     }
+                }
+                    
+                ?>
+                    <ul  class="pull-right">
+                        <a href="<?php echo $url;?>listas">
+                            <span  data-toggle="tooltip" title="Listas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive ">
                             </span>
                            <!-- <h5>Listas</h5> -->
                         </a>
                     </ul>
-                        ';
-                    }
-                }
-                    
-                ?>
                     
 
                     <ul class="pull-right">
-                        <a href="#">
-                            <span data-toggle="tooltip" title="Crea tus Listas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/blogs32.png" class="img-responsive img-thumbnail">
+                        <a href="<?php echo $url;?>blog">
+                            <span data-toggle="tooltip" title="Blog">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/blogs32.png" class="img-responsive ">
                             </span>
                            <!-- <h5>Blogs</h5> -->
                         </a>
                     </ul>
 
                     <ul class="pull-right">
-                        <a href="#">
-                            <span data-toggle="tooltip" title="Crea tus Listas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/tienda32.png" class="img-responsive img-thumbnail">
+                        <a href="<?php echo $url;?>tiendas">
+                            <span data-toggle="tooltip" title="Tiendas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/tienda32.png" class="img-responsive ">
                             </span>
                           <!--  <h5>Tiendas</h5> -->
                         </a>
                     </ul>
-                    <?php 
-                    
-                    if(isset($_SESSION["validarSesion"])){
-                        if($_SESSION["validarSesion"] == "ok"){
-                            echo '
                             <ul class="pull-right">
-                        <a href="#">
-                            <span data-toggle="tooltip" title="Crea tus Listas">
-                                <img src="http://localhost/AdminComparador/vistas/img/iconos/receta32.png" class="img-responsive img-thumbnail">
+                        <a href="<?php echo $url;?>recetas">
+                            <span data-toggle="tooltip" title="Recetas">
+                                <img src="http://localhost/AdminComparador/vistas/img/iconos/receta32.png" class="img-responsive ">
                             </span>
                             <!-- <h5>Recetas</h5>-->
                         </a>
                     </ul>
-                            
-                            ';
-                        }
-                    }
-                        
-                    ?>
                     
                 </li>
             </div>
@@ -202,6 +162,8 @@
         </div>
     </div>
 </header>
+
+
 <!-- ==================================
 VENTANA MODAL PARA EL INICIO DE SESÍON
 ======================================-->
@@ -394,7 +356,7 @@ VENTANA MODAL PARA EL REGISTRO
                                                 <span  class="input-group-addon">
                                                     <i class="glyphicon glyphicon-user"></i>
                                                 </span>
-                                                <input type="text" class="form-control text-uppercase" id="regTienda" name="regTienda" placeholder="Email address" autocomplete="on" required="" autofocus="">
+                                               <!--  <input type="text" class="form-control text-uppercase" id="regTienda" name="regTienda" placeholder="Email address" autocomplete="on" required="" autofocus=""> -->
                                             </div>
                                         </div>
                                     
@@ -403,7 +365,7 @@ VENTANA MODAL PARA EL REGISTRO
                                                 <span  class="input-group-addon">
                                                     <i class="glyphicon glyphicon-envelope"></i>
                                                 </span>
-                                                <input type="password" id="regPasswordTienda" name="regPasswordTienda" class="form-control" placeholder="Password" required="" autocomplete="on">
+                                             <!--   <input type="password" id="regPasswordTienda" name="regPasswordTienda" class="form-control" placeholder="Password" required="" autocomplete="on"> -->
                                             </div>
                                         </div>
                                         
