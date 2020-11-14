@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/productos.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/testimonio.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/blog.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/recetas.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/footer.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/sidemenu.css">
  
@@ -111,6 +112,7 @@ JAVASCRIPT PERSONALIZADO
 <script src="<?php echo $url ?>vistas/js/usuario.js"></script> 
 <script src="<?php echo $url ?>vistas/js/registroFacebook.js"></script> 
 <script src="<?php echo $url ?>vistas/js/listas.js"></script> 
+<script src="<?php echo $url ?>vistas/js/recetas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/plugins/select2.min.js"></script>
 
 <!--=====================================

@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\controladores",
-    "\\vistas\\js"
+    "\\vistas",
+    "\\vistas\\css"
   ],
-  "SelectedNode": "\\controladores\\c_listas.php",
+  "SelectedNode": "\\vistas\\css\\recetas.css",
   "PreviewInSolutionExplorer": false
 }
