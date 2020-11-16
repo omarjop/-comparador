@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/productos.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/testimonio.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/blog.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/recetas.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/footer.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/sidemenu.css">
  
@@ -67,10 +68,12 @@
                     $ruta = $valor;
                 }
            }
-            if($ruta != null){
+            if($ruta != null && $rutaCategoria["control"]!=1){
             
                 include "modulos/productos.php"; 
 
+            }else if($ruta != null && $rutaCategoria["control"]==1){
+                     include "modulos/recetas.php";
             } else{
                 
                 if($rutas[0] == "verificar"|| $rutas[0] == "salir"   || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
@@ -109,6 +112,7 @@ JAVASCRIPT PERSONALIZADO
 <script src="<?php echo $url ?>vistas/js/usuario.js"></script> 
 <script src="<?php echo $url ?>vistas/js/registroFacebook.js"></script> 
 <script src="<?php echo $url ?>vistas/js/listas.js"></script> 
+<script src="<?php echo $url ?>vistas/js/recetas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/plugins/select2.min.js"></script>
 
 <!--=====================================
