@@ -294,4 +294,11 @@ if(isset($_POST["nombreAddCategoria"])){
     $valCategoria = new AjaxProducto();
     $valCategoria ->ajaxValidarExisteDosRegistros("categoria","nombre",$_POST["nombreAddCategoria"],"control",$_POST["nombreAddControl"]);
 }
-
+if(isset($_POST["nombreAdddificultad"])){  
+    $valDificultad = new AjaxProducto();
+    $valDificultad ->ajaxValidarExisteRegistro("dificultad","nombre",$_POST["nombreAdddificultad"]);
+}
+if(isset($_POST["nombredificultadEdit"])){  
+    $valDificultad = new AjaxProducto();
+    $valDificultad ->ajaxValidarExisteRegistro("dificultad","nombre",$_POST["nombredificultadEdit"]);
+}

@@ -19,7 +19,8 @@ if(isset($_POST["btnaddCategoria"])){
     $objAdminAgregar  = new ControladorAdminInsert();
     $valorCategoria = $_POST["addCategoria"]; 
     $valorControl= $_POST["selecontrol"];
-    $objAdminAgregar->agregarCamposCategoria("categoria","nombre",$valorCategoria,"control",$valorControl);
+    $valorRuta=str_replace(' ', '', $valorCategoria);
+    $objAdminAgregar->agregarCamposCategoria("categoria","nombre",$valorCategoria,"control",$valorControl,"ruta",$valorRuta);
    }  
 
 //--Boton del modal de eliminar , crea objeto de la clase controlador
@@ -349,7 +350,7 @@ var returnValue = true;
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnaddCategoria" id = "btnaddCategoria" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                <button type="submit" name = "btnaddCategoria" id = "btnaddCategoria" class="btn btn-secondary colorbotonamarillo"  onclick="window.location.href="addCategorias" style ="width:48%;">Agregar</button>
                           </div>
                     </div>
             </div>

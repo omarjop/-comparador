@@ -20,21 +20,14 @@ if(isset($_POST["btnaddCiudad"])){
 if(isset($_POST["btneliminarCiudad"])){                           
      $objAdminEliminar  = new ControladorAdminEliminar();
      $valorCiudadElim = $_POST["campoOculto2"]; 
-     $objConsultaCiudad= new ControladorAdminSelect();
-     $resultadoConsulta= $objConsultaCiudad->consultaPrevia($valorCiudadElim,'pais','pais_idpais'); 
-     if($resultadoConsulta==null){
-
-        $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorCiudadElim,"ciudad","idciudad");  
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valorCiudadElim,"ciudad","idciudad");  
         if($resultadoEliminar=="Exitoso"){
            echo "<script>toastr.info('Ciudad eliminada exitosamente');</script>";                              
          }else{
            echo "<script>toastr.error('Error al eliminar Ciudad, por favor intente nuevamente);</script>";                             
          }    
 
-       }else{
 
-          echo "<script>toastr.error('La Ciudad tiene un Pais relacionado no se puede eliminar');</script>"; 
-     }
       
     } 
  //--Boton del modal de editar, crea objeto de la clase controlador
