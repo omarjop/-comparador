@@ -42,4 +42,13 @@ require_once "conexion.php";
         $stmt -> execute();
         return  $stmt ->fetchAll(); 
 	 }
+
+      static public function ajaxConsultarProductoXReceta($tabla1,$tabla2,$item3,$idReceta){
+        $stmt = Conexion::conectar()->prepare(" select * from $tabla1  t1 inner join  (select * from $tabla2 where $item3 = :$item3) t2
+                                                on t1.idProducto = t2.Producto_idProducto");
+        $stmt -> bindParam(":".$item3, $idReceta, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+        return  $stmt ->fetchAll(); 
+	 }
  }

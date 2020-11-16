@@ -19,8 +19,9 @@ BANNER
 <div class="container-fluid well well-sm barraProductos">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 organizarProductos">
 
+            <div class="col-xs-12 organizarProductos">
+               <span class="visible-lg visible-md visible-sm pull-left textmenuamarillo"> Recetas</span>
                 <div class="btn-group pull-right">
 
                     <button type="button" class="btn btn-default btnGrid" id="btnGrid0">
@@ -70,24 +71,25 @@ MOSTRAR UNA LISTA DE 6 BLOGS POR CADA PAGINA
                                        echo ' <div class="col-sm-4 col-xs-12">
                                             <div class="single-blog">
                                                 <div class="single-blog-img">
-                                                    <a href="#" class="detalleLista" id="'.$value["idRecetas"].'"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
+                                                    <a href="#" class="detalleLista" id="'.$value["idRecetas"].'"><img src="'.$url.'vistas/img/usuario/pollo-con-jitomates-rostizados.jpg" alt="Blog Image"></a>
                                                 </div>
                                                 <div class="blog-content-box">
                                                     <div class="blog-post-date">
                                                         <span>'.$value["porciones"].'</span>
                                                         <span>Porciones</span>
                                                     </div>
-                                                    <div class="blog-content">
-                                                    <h4><a href="">'.$value["nombreReceta"].'</a></h4>
+                                                    <div class="blog-content ">
+                                                    <h class= "sutitulosubreceta">'.$value["nombreReceta"].'</h>
                                                     </div>
                                                     <div>
                                                         <div class="meta-post">
-                                                           
-                                                            <span data-toggle="tooltip" title="Comentarios"><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                                                            <span><i class="fa fa-clock-o"></i> '.$value["tiempo"].'min</span>
-                                                            <span><i ></i> '.$value["nombre"].'</span>
-                                                            <span data-toggle="tooltip" title="Compartir"><a href="#"><i class="fa fa-share-alt"></i> </a></span>
-                                                        </div>
+                                                             <div class="col-lg-12">
+                                                                <span data-toggle="tooltip" title="Comentarios"><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
+                                                                <span data-toggle="tooltip" title="Tiempo de preparacion"><i class="fa fa-clock-o"></i> '.$value["tiempo"].'min</span>
+                                                                <span data-toggle="tooltip" title="Dificultad"><i ></i> '.$value["nombre"].'</span>
+                                                                <span data-toggle="tooltip" title="Compartir"><a href="#"><i class="fa fa-share-alt"></i> </a></span>
+                                                              </div>
+                                                     </div>
                                                         
 
                                                     </div>

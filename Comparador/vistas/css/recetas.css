@@ -135,13 +135,64 @@
 * BARRA PRODUCTO
 *********************************************/
 .barraProductos .organizarProductos span{
-    margin-left: 5px;;
+    margin-left: 5px;
 }
 
 /*Color amarillo usado en la aplicacion*/
 .colorgrsbarra{
     background-color: #F9DFDA;
 } 
+/*Color verde agua  usado en la aplicacion para el div de descripcion de la receta*/
+.colordivtexto{
+    background-color: #ECFAFA;
+    font-weight: normal;
+    padding: 20px;
+    font-size:17px;
+} 
+.textcaract{
+    font-size:20px;
+    white-space:nowrap;
+}
+.textsub{
+    font-size:17px; 
+    font-weight: normal;    
+}
+.textmenuamarillo{
+    font-family:'Brush Script MT';
+    color: #D0A20E;    
+    font-size:45px;  
+}
+.tamanoicon{
+   font-size:30px; 
+}
+.pasoreceta{
+   padding: 0px;   
+   font-weight: bold;
+   font-family:'Brush Script MT';
+}
+.textodelpaso{
+   padding: 30px; 
+   text-align: justify;
+   text-justify	auto;
+   
+}
+.sutitulosubreceta{
+    font-family:'Brush Script MT';
+    color: #136574;    
+    font-size:27px;  
+}
+
+.textitulo{
+
+    text-align:center;
+       font-family:'Brush Script MT';
+    font-size:50px;
+    color:#136574;
+    font-weight: bold;
+    position:relative;
+    top:-25px;
+
+}
 .colorverdeaplicacion{
     background-color: #FAC99C;
 }
@@ -156,17 +207,22 @@
 .divdescripcionrecetas{
     position:relative;
     height: 300px;
+
+}
+
+.titulocarecetadesc{
+    font-family:'Brush Script MT';
+    font-size:50px;
+    color:#136574;
+    font-weight: bold;
+    position:relative;
+    top:-25px;
+
+} 
+
+.productoscss{
+    font-family:'Lucida Bright';
+    font-size:30px;
 }
 
 
-.box img{
-  width: 100%;
-  height: auto;
-}
-@supports(object-fit: cover){
-    .box img{
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-    }
-}

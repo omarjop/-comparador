@@ -34,4 +34,11 @@ class ControladorRecetas{
         return $respuesta;
 	}
 
+    static public function ajaxConsultarProductoXReceta($item3,$idReceta){
+        $tabla1 = "producto";
+        $tabla2 = "Producto_has_Recetas";
+        $respuesta = ModeloReceta::ajaxConsultarProductoXReceta($tabla1,$tabla2,$item3,$idReceta);
+        return $respuesta;
+	}
+
 }
