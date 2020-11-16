@@ -109,10 +109,22 @@ class ControladorAdminInsert{
                  echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
         }
       }
-    public function agregarCamposCategoria($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2){
+    public function agregarCampodificultad($tabla,$columna,$valorAgregar){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+             $resultado= $objAdminAgregar->insertInTable("dificultad","nombre","'$valorAgregar'");
+    
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar .Codigo: '+".$resultado.");</script>";                             
+        }    
+    }
+
+        public function agregarCamposCategoria($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2,$columna3,$valorAgregar3){
             $objAdminAgregar  = new ControladorInserttAllTables();
 
-            $resultado= $objAdminAgregar->insertInTable("categoria","nombre,control","'$valorAgregar'".",".$valorAgregar2);
+            $resultado= $objAdminAgregar->insertInTable("categoria","nombre,control,ruta","'$valorAgregar'".",".$valorAgregar2.","."'$valorAgregar3'");
       
             if ($resultado!='Fallo') {
                 echo "<script>toastr.info('Se agrego la categor&iacute;a correctamente');</script>";    
