@@ -4,66 +4,65 @@
 $resultado=null;
 
 
-  //--Boton del modal de agregar tipo_pago, crea objeto de la clase controlador
-if(isset($_POST["btnaddTipoPago"])){                           
+  //--Boton del modal de agregar dia, crea objeto de la clase controlador
+if(isset($_POST["btnadddia"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
-    $valortipo_pago = $_POST["addTipoPago"]; 
-	  $valordesc_pago = $_POST["addDescripcionPago"];
-    $objAdminAgregar->agregarCamposTipoPago("tipo_pago","Tipo_pago",$valortipo_pago,"Descripcion_pago",$valordesc_pago);
+    $valordia = $_POST["adddias"]; 
+     $objAdminAgregar->agregarCampoDia("dia","Descripcion",$valordia);
                        
     } 
 
-//--Boton del modal de eliminar tipo_pago, crea objeto de la clase controlador
-if(isset($_POST["btnEliminartipo_pago"])){                           
+//--Boton del modal de eliminar dia, crea objeto de la clase controlador
+if(isset($_POST["btnEliminardia"])){                           
      $objAdminEliminar  = new ControladorAdminEliminar();
-     $valortipo_pago = $_POST["campoOculto2"];  
-     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valortipo_pago,"tipo_pago","idTipo_pago");  
+     $valordia = $_POST["campoOculto2"];  
+     $resultadoEliminar=$objAdminEliminar->eliminarCampo($valordia,"dia","idDia");  
         if($resultadoEliminar=="Exitoso"){
-           echo "<script>toastr.info('Tipo de pago eliminado exitosamente');</script>";                              
+           echo "<script>toastr.info('D&iacute;a eliminado exitosamente');</script>";                              
          }else{
-           echo "<script>toastr.error('Error al eliminar el Tipo de pago, por favor intente nuevamente);</script>";                             
-         }                      
+           echo "<script>toastr.error('Error al eliminar D&iacute;a, por favor intente nuevamente);</script>";                             
+         }                 
+    
     } 
 
- //--Boton del modal de editar tipo_pago, crea objeto de la clase controlador
-if(isset($_POST["btnEditartipo_pago"])){                           
+ //--Boton del modal de editar dia, crea objeto de la clase controlador
+if(isset($_POST["btnEditardia"])){                           
      $objAdminModificar  = new ControladorAdminModificar();
-     $idTipoPagoModif = $_POST["idtipo_pago"];
-     $valortipo_pago = $_POST["tipo_pagoEdit"]; 
-     $valordesc_pago= $_POST["desc_pagoEdit"];       
-     $resultadoModificar=$objAdminModificar->modifDosCampos("tipo_pago","idTipo_pago","Tipo_pago",$valortipo_pago,$idTipoPagoModif,"Descripcion_pago",$valordesc_pago);
+     $idDiaModif = $_POST["idDia"];
+     $valordia = $_POST["diaEdit"];  
+     $resultadoModificar=$objAdminModificar->modificarCampo("dia","idDia","Descripcion",$valordia,$idDiaModif);
+                                                                                                            
+      
         
     } 
-//-- Al entrar se visualizan todas las tipo_pagos existentes
+//-- Al entrar se visualizan todas las dias existentes
  $objAdminSeleccionaTodos  = new ControladorAdminSelect();
-$resultado=$objAdminSeleccionaTodos->buscarAll("tipo_pago");
+$resultado=$objAdminSeleccionaTodos->buscarAll("dia");
 
-//--Boton lupa consulta tipo_pago
+//--Boton lupa consulta dia
 
-if(isset($_POST["lupatipo_pago"])){                           
+if(isset($_POST["lupadia"])){                           
             $objAdminSelecciona  = new ControladorAdminSelect();
-            $valortipo_pago = $_POST["buscatipo_pagos"]; 
-            $resultado=$objAdminSelecciona->buscaTabla($valortipo_pago,"tipo_pago","*","Descripcion");
+            $valordia = $_POST["buscadias"]; 
+            $resultado=$objAdminSelecciona->buscaTabla($valordia,"dia","*","Descripcion");
        
              if ($resultado==null){
-               echo "<script>toastr.warning('El tipo de pago no existe');</script>"; 
+               echo "<script>toastr.warning('El D&iacute;a no existe');</script>"; 
              }
     } 
 
 ?>
 
 <script type="text/javascript">
-/*Validación del campo de texto de agregar tipo_pago*/
+/*Validación del campo de texto de agregar dia*/
   function validarFormulario(formulario){
-       var tipo_pago = formulario.addTipoPago.value;
-       var desc_pago = formulario.addDescripcionPago.value;
-
-        if(validarNombreAndtipo_pago(tipo_pago,"No es un tipo de pago v&aacute;lida","addTipoPago")==true && validartipo_pagoAndRango(tipo_pago,"El nombre del tipo de pago es muy extenso","addTipoPago")==true){
+       var dia = formulario.adddias.value;
+        if(validarNombreAnddia(dia,"No es un d&iacute;a v&aacute;lido","adddias")==true){
              
-           if(validardesc_pagoAndRango(desc_pago,"La descripcion es muy extensa","addDescripcionPago")==true){
-              return true;
+           if(validardiaAndRango(dia,"El nombre del d&icute;a es muy extenso","adddias")!=true){
+              return false;
            }else{
-               return false ;     
+               return true;     
            }
         }else{
             return false;
@@ -76,15 +75,13 @@ if(isset($_POST["lupatipo_pago"])){
      
  //--------------------------------------------------------
    function validarFormulario2(formulario){
-       var tipo_pagoEdita = formulario.tipo_pagoEdit.value;
-       var desc_pagoEditar = formulario.desc_pagoEdit.value;
-
-        if(validarNombreAndtipo_pago(tipo_pagoEdita,"No es un tipo de pago v&aacute;lida","tipo_pagoEdit")==true && validartipo_pagoAndRango(tipo_pagoEdita,"El nombre del tipo de pago es muy extenso","tipo_pagoEdit")==true){
+       var diaEdita = formulario.diaEdit.value;
+        if(validarNombreAnddia(diaEdita,"No es un d&iacute;a v&aacute;lido","diaEdit")==true){
              
-           if(validardesc_pagoAndRango(desc_pagoEditar,"La descripcion es muy extensa","desc_pagoEdit")==true){
-              return true;
+           if(validardiaAndRango(diaEdita,"El nombre del d&icute;a es muy extenso","diaEdit")!=true){
+              return false;
            }else{
-               return false ;     
+               return true;     
            }
         }else{
             return false;
@@ -95,7 +92,7 @@ if(isset($_POST["lupatipo_pago"])){
   return true;
  }       
  //------funciones de validacion de cada uno de los campos
- function validarNombreAndtipo_pago(valor,mensaje,campoForm){
+ function validarNombreAnddia(valor,mensaje,campoForm){
       
          if ((isNaN(parseInt(valor)))&& (valor !="")){
               return true;
@@ -107,7 +104,7 @@ if(isset($_POST["lupatipo_pago"])){
 
  }
   //------funciones de validacion de cada uno de los campos
- function validartipo_pagoAndRango(valor,mensaje,campoForm){
+ function validardiaAndRango(valor,mensaje,campoForm){
       
          if ((valor.length) > 20){
               
@@ -120,31 +117,16 @@ if(isset($_POST["lupatipo_pago"])){
 		 } 
 
  }
-   //------funciones de validacion de cada uno de los campos
- function validardesc_pagoAndRango(valor,mensaje,campoForm){
-      
-         if ((valor.length) > 30){
-              
-              toastr.error(mensaje);
-             /* document.getElementById(campoForm).value = "";*/
-              return false;
-         }else{       
-
-             return true;
-     } 
-
- }
 var returnValue = true;
 //validar que no exista el registro con accion de boton
  $(function(){
-     $("#btnaddTipoPago").click(function(){
+     $("#btnadddia").click(function(){
           
          if(returnValue!=false){
-                          var nombreAddtipo_pago = $("#addTipoPago").val();
+                          var nombreAddDia = $("#adddias").val();
                           var datos = new FormData();
             
-                            datos.append("nombreAddtipo_pago", nombreAddtipo_pago);
-                            datos.append("nombreAddtipo_pago", nombreAddtipo_pago);
+                            datos.append("nombreAddDia", nombreAddDia);
          
                             $.ajax({
                    
@@ -160,7 +142,7 @@ var returnValue = true;
                                              $(".alert").remove();
                                              returnValue =  true;
                                           }else{
-                                            toastr.error("El tipo de pago se encuentra registrado");                             
+                                            toastr.error("El D&iacute;a se encuentra registrado");                             
                                             returnValue = false;                              
                                     }
 
@@ -178,11 +160,62 @@ var returnValue = true;
 
 
 $(document).ready(function(){
-        $("#addTipoPago").on("keydown",function(){
+        $("#adddias").on("keydown",function(){
           returnValue = true;
      });
 });
 //**********************************************************************/
+var returnValue = true;
+//validar que no exista el registro con accion de boton
+ $(function(){
+     $("#btnEditardia").click(function(){
+          
+         if(returnValue!=false){
+                          var nombreDiaEdit = $("#diaEdit").val();
+                          var datos = new FormData();
+            
+                            datos.append("nombreDiaEdit", nombreDiaEdit);
+         
+                            $.ajax({
+                   
+                                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                                    method:"POST",
+                                    data: datos, 
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    async:false,
+                                    success: function(respuesta){
+                                          if(respuesta.includes("No existe")){                          
+                                             $(".alert").remove();
+                                             returnValue =  true;
+                                          }else{
+                                            toastr.error("El D&iacute;a se encuentra registrado");                             
+                                            returnValue = false;                              
+                                    }
+
+
+                                    }
+
+                              })
+                   }
+
+              return returnValue;
+              
+      });     
+
+  });
+
+
+$(document).ready(function(){
+        $("#adddias").on("keydown",function(){
+          returnValue = true;
+     });
+});
+//**********************************************************************/
+
+
+
 </script>
 
 <div class="content-wrapper">
@@ -191,18 +224,18 @@ $(document).ready(function(){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Administraci&oacute;n Tipo de Pago</h1>
+            <h1 class="m-0 text-dark">Administraci&oacute;n Tabla D&iacute;a</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <button type="button" class="btn btn-warning botaddtipo_pago colorbotonamarillo" >Agregar Tipo Pago</button>
+              <button type="button" class="btn btn-warning botadddia colorbotonamarillo" >Agregar D&iacute;a</button>
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-             <div class="input-group col-lg-6 col-md-7 col-sm-9 col-xs-8" id="buscadortipo_pago">
-                        <input type="search" name="buscatipo_pagos" id="buscatipo_pagos" class="form-control"  placeholder="Buscar tipo de pago">
+             <div class="input-group col-lg-6 col-md-7 col-sm-9 col-xs-8" id="buscadordia">
+                        <input type="search" name="buscadias" id="buscadias" class="form-control"  placeholder="Buscar D&iacute;a">
                         <span  class="input-group-btn">
                             <a href="#">
-                                <button class="btn btn-default backColor colorbotonamarillo lupatipo_pago" type="submit" name="lupatipo_pago" id="lupatipo_pago" style ="height:100%;">
+                                <button class="btn btn-default backColor colorbotonamarillo lupadia" type="submit" name="lupadia" id="lupadia" style ="height:100%;">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </a>
@@ -221,9 +254,9 @@ $(document).ready(function(){
             <ul class="list-group list-group-flush">
             <div class="row justify-content-center">
              <div class="col-11">
-              <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Tipo_pago"];?>
-                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span tipo_pago = "<?php echo $resultado[$i]["Tipo_pago"];?>" id ="<?php echo $resultado[$i]["idTipo_pago"];?>" desTipoPago="<?php echo $resultado[$i]["Descripcion_pago"];?>" class="fas fa-pen-alt editar"></span></p>
-                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["Tipo_pago"];?>" id = "<?php echo $resultado[$i]["idTipo_pago"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
+              <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["Descripcion"];?>
+                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span dia = "<?php echo $resultado[$i]["Descripcion"];?>" id ="<?php echo $resultado[$i]["idDia"];?>" class="fas fa-pen-alt editar"></span></p>
+                  <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["Descripcion"];?>" id = "<?php echo $resultado[$i]["idDia"];?>" class="far fa-trash-alt eliminar"></span></p></a>      
               </li>
                </div>
                </div>
@@ -246,60 +279,55 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
 
-/*LLama el modal de adicionar tipo_pago*/ 
+/*LLama el modal de adicionar dia*/ 
  $(function(){
-     $(".botaddtipo_pago").click(function(){
-         $("#modaddtipo_pago").modal("show");  
+     $(".botadddia").click(function(){
+         $("#modadddia").modal("show");  
       });
   });
 
-  /*LLama el modal de editar tipo_pago*/ 
+  /*LLama el modal de editar dia*/ 
  $(function(){
      $(".editar").click(function(){
-         $(".idTipo_pago").attr('value',$(this).attr('id'));
-         $(".tipo_pagoEdit").attr('value',$(this).attr('tipo_pago'));
-         $(".desc_pagoEdit").attr('value',$(this).attr('desTipoPago'));
-         
-         $("#modifitipo_pago").modal("show");
+         $(".idDia").attr('value',$(this).attr('id'));
+         $(".diaEdit").attr('value',$(this).attr('dia'));
+         $("#modifidia").modal("show");
          
       });
   });
 
-  /*LLama el modal de eliminar tipo_pago*/ 
+  /*LLama el modal de eliminar dia*/ 
  $(function(){
      $(".eliminar").click(function(){
          $(".campoOculto").attr('value',$(this).attr('id'));
          document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
-         $("#eliminartipo_pago").modal("show");  
+         $("#eliminardia").modal("show");  
       });
   });
 
 </script>
 
-  <!-- Modal para agregar nueva tipo_pago -->
+  <!-- Modal para agregar nueva dia -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
-        <div class="modal fade" id="modaddtipo_pago" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="modadddia" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Agregar tipo de pago</h5>
+                        <h5  id="staticBackdropLabel" > Agregar D&iacute;a</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
-                   <div class="modal-body mx-3">
+                   <div class="modal-body">
                        
-                         <input   type="text" class="form-control" id="addTipoPago" name ="addTipoPago" placeholder="Nombre de tipo de pago" >  
-                    </div>
-                    <div class="modal-body mx-3">     
-                         <input   type="text" class="form-control" id="addDescripcionPago" name ="addDescripcionPago" placeholder="Descripcion de tipo de pago" >  
+                         <input   type="text" class="form-control" id="adddias" name ="adddias" placeholder="Agregue nombre de d&iacute;a" >  
                    </div>
                   
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnaddTipoPago" id = "btnaddTipoPago" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                <button type="submit" name = "btnadddia" id = "btnadddia" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
                           </div>
                     </div>
             </div>
@@ -309,14 +337,14 @@ $(document).ready(function(){
 
 
 
-  <!-- Modal que muestra el confirmar cuando se elimina un tipo_pago -->
+  <!-- Modal que muestra el confirmar cuando se elimina una dia -->
  <form class="form needs-validation" method="post"  enctype="multipart/form-data">
-        <div class="modal fade" id="eliminartipo_pago" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="eliminardia" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Esta seguro que desea eliminar el tipo de pago? </h5>
+                        <h5  id="staticBackdropLabel" > Esta seguro que desea eliminar el d&iacute;a? </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -341,7 +369,7 @@ $(document).ready(function(){
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEliminartipo_pago" id = "btnEliminartipo_pago" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
+                                <button type="submit" name = "btnEliminardia" id = "btnEliminardia" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
                           </div>
                     </div>
             </div>
@@ -352,35 +380,31 @@ $(document).ready(function(){
 
   <!-- Modal que muestra producto al dar click en el boton de editar -->
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);"novalidate>
-        <div class="modal fade" id="modifitipo_pago" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+        <div class="modal fade" id="modifidia" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
 
           <div class="modal-dialog">
            <div class="modal-content">
                  <div class="modal-header" style ="background-color: #D0A20E;color:#FFFFFF;" >
-                        <h5  id="staticBackdropLabel" > Editar tipo de pago </h5>
+                        <h5  id="staticBackdropLabel" > Editar D&iacute;a </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                   </div>
-                   <div class="modal-body mx-3">
+                   <div class="modal-body">
                         <!-- aqui va el mensaje que se pasa por parametro-->
                         <div class="row">
-
-                   <div class="modal-body mx-3">
-                       
-                         <input   type="text" value ="" class="form-control tipo_pagoEdit" id="tipo_pagoEdit" name ="tipo_pagoEdit" placeholder="Nombre de tipo de pago" required >  
-                    </div>
-                    <div class="modal-body mx-3">     
-                         <input   type="text" value ="" class="form-control desc_pagoEdit" id="desc_pagoEdit" name ="desc_pagoEdit" placeholder="Descripcion de tipo de pago">  
-                   </div>
+                            <div class="modal-body mx-1 ">
+                                <input   type="text" value ="" placeholder="Nombre dia" class="form-control diaEdit" id="diaEdit" name ="diaEdit" required>  
+                             </div>
+                        </div>
                         
-                        <input   style="visibility: hidden;" type="text" value ="" placeholder="ID tipo_pago" class="form-control idTipo_pago" id="idTipo_pago" name ="idtipo_pago">  
+                        <input   style="visibility: hidden;" type="text" value ="" placeholder="ID d&iacute;a" class="form-control idDia" id="idDia" name ="idDia">  
                    </div>
-                   </div>
+                  
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnEditartipo_pago" id = "btnEditartipo_pago" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
+                                <button type="submit" name = "btnEditardia" id = "btnEditardia" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
                           </div>
                     </div>
             </div>

@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/productos.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/testimonio.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/blog.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/recetas.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/footer.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/sidemenu.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/slide.css">
@@ -56,21 +57,24 @@
         $ruta =  null;
 
         if(isset($_GET["ruta"])){
-
-            $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
             
+            $rutas = explode("/", $_GET["ruta"]); /**el explode ayuda a separar la url por / */
+             
             $item = "ruta";
             $valor = $_GET["ruta"];
 
             $rutaCategoria = ControladorProductos::CtrlMostrarCategorias($item, $valor);
-            
-            if($valor == $rutaCategoria["ruta"]){
-                $ruta = $valor;
-            }
-            if($ruta != null){
+           if (is_array ($rutaCategoria)) { 
+                if($valor == $rutaCategoria["ruta"]){
+                    $ruta = $valor;
+                }
+           }
+            if($ruta != null && $rutaCategoria["control"]!=1){
             
                 include "modulos/productos.php"; 
 
+            }else if($ruta != null && $rutaCategoria["control"]==1){
+                     include "modulos/recetas.php";
             } else{
                 
                 if($rutas[0] == "verificar"|| $rutas[0] == "salir"   || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
@@ -109,6 +113,7 @@ JAVASCRIPT PERSONALIZADO
 <script src="<?php echo $url ?>vistas/js/usuario.js"></script> 
 <script src="<?php echo $url ?>vistas/js/registroFacebook.js"></script> 
 <script src="<?php echo $url ?>vistas/js/listas.js"></script> 
+<script src="<?php echo $url ?>vistas/js/recetas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/plugins/select2.min.js"></script>
 
 <!--=====================================

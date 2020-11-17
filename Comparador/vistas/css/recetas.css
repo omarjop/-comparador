@@ -1,0 +1,228 @@
+.single-blog-img {
+    overflow: hidden;
+}
+
+.single-blog-img a img {
+    width: 100%;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -ms-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s;
+}
+
+.single-blog:hover .single-blog-img a img {
+    -webkit-transform: scale(1.09);
+    -moz-transform: scale(1.09);
+    -ms-transform: scale(1.09);
+    -o-transform: scale(1.09);
+    transform: scale(1.09);
+}
+.single-blog-img img {
+    width: 100%;
+}
+
+.blog-content-box {
+    padding-left: 25px;
+    padding-top: 27px;
+    margin-left: 34px;
+    -webkit-transform: translateY(-30px);
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -o-transform: translateY(-30px);
+    transform: translateY(-30px);
+    background: #fff;
+    padding-bottom: 30px;
+}
+.blog-content-box-list {
+    padding-top: 15px;
+    padding-bottom: 80px;
+}
+.blog-post-date {
+    display: table;
+    float: left;
+    margin-right: 30px;
+}
+.blog-post-date span:first-child {
+    color: #ffca00;
+    display: block;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: -11px;
+    margin-bottom: -4px;
+    text-align: center;
+}
+.blog-post-date span:last-child {
+    font-size: 14px;
+    color: #212121;
+    font-weight: 600;
+}
+.blog-content {
+    display: table;
+}
+.blog-content h4 {
+    color: #212121;
+}
+.blog-content h4 a {
+    color: #212121;
+    text-decoration: none;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+.blog-content h4 a:hover {
+    color: #FFCA00;
+}
+.meta-post {
+    margin: 10px 0 13px;
+}
+.meta-post span {
+    color: #696969;
+    font-size: 15px;
+    position: relative;
+    padding-right: 23px;
+}
+.author {
+    margin-bottom: 60px;
+}
+.meta-post span a {
+    color: #696969;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+:after, :before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.meta-post span:last-child {
+    padding-right: 0;
+}
+.exerpt {
+    line-height: 28px;
+    color: #696969;
+    margin-bottom: 20px;
+}
+/********************************************
+* TITULO DE CABECERA
+*********************************************/
+.banner{
+    position: relative;
+    overflow: hidden;
+    height: 50px;
+    margin-bottom: 10px;
+}
+.banner .textoBanner{
+    position: absolute;
+    font-family: 'ubuntu Condensed', sans-serif;
+}
+.banner .textoDer{
+    top:35px;
+    right: 50px;
+    text-align: right;
+}
+.banner .textoIzq{
+    top: -5px;
+    left: 100px;
+    text-align: left;
+}
+.textoBanner h1{
+    font-size: 20px;
+    line-height: 25px;
+} 
+
+/********************************************
+* BARRA PRODUCTO
+*********************************************/
+.barraProductos .organizarProductos span{
+    margin-left: 5px;
+}
+
+/*Color amarillo usado en la aplicacion*/
+.colorgrsbarra{
+    background-color: #F9DFDA;
+} 
+/*Color verde agua  usado en la aplicacion para el div de descripcion de la receta*/
+.colordivtexto{
+    background-color: #ECFAFA;
+    font-weight: normal;
+    padding: 20px;
+    font-size:17px;
+} 
+.textcaract{
+    font-size:20px;
+    white-space:nowrap;
+}
+.textsub{
+    font-size:17px; 
+    font-weight: normal;    
+}
+.textmenuamarillo{
+    font-family:'Brush Script MT';
+    color: #D0A20E;    
+    font-size:45px;  
+}
+.tamanoicon{
+   font-size:30px; 
+}
+.pasoreceta{
+   padding: 0px;   
+   font-weight: bold;
+   font-family:'Brush Script MT';
+}
+.textodelpaso{
+   padding: 30px; 
+   text-align: justify;
+   text-justify	auto;
+   
+}
+.sutitulosubreceta{
+    font-family:'Brush Script MT';
+    color: #136574;    
+    font-size:27px;  
+}
+
+.textitulo{
+
+    text-align:center;
+       font-family:'Brush Script MT';
+    font-size:50px;
+    color:#136574;
+    font-weight: bold;
+    position:relative;
+    top:-25px;
+
+}
+.colorverdeaplicacion{
+    background-color: #FAC99C;
+}
+.titulocategoriaenrecetas{
+    font-family:'Brush Script MT';
+    font-size:50px;
+    color:#136574;
+    font-weight: bold;
+    position:relative;
+    top:-35px;
+} 
+.divdescripcionrecetas{
+    position:relative;
+    height: 300px;
+
+}
+
+.titulocarecetadesc{
+    font-family:'Brush Script MT';
+    font-size:50px;
+    color:#136574;
+    font-weight: bold;
+    position:relative;
+    top:-25px;
+
+} 
+
+.productoscss{
+    font-family:'Lucida Bright';
+    font-size:30px;
+}
+
+
