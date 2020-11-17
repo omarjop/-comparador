@@ -2,7 +2,7 @@
 .footer {
     position: relative;
     padding-top: 45px;
-    background: #121518;
+    background:#047576;
 }
 
 .footer .footer-blog,
@@ -20,9 +20,9 @@
     position: relative;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 400;
-    color: #ffffff;
+    color: #f0ba10;
 }
 
 .footer .footer-blog h3::after,
@@ -53,7 +53,7 @@
 }
 
 .footer .footer-blog div a:hover {
-    color: #0085ff;
+    color: #f0ba10;
 }
 
 .footer .footer-blog div p {
@@ -97,8 +97,8 @@
 
 .footer .footer-tags a:hover {
     color: #ffffff;
-    background: #0085ff;
-    border-color: #0085ff;
+    background: #f0ba10;
+    border-color: #f0ba10;
 }
 
 .footer .footer-newsletter .form {
@@ -152,7 +152,7 @@
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 1px;
-    color: #ffffff;
+    color: #f0ba10;
 }
 
 .footer .footer-contact p {

@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/blog.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/footer.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/sidemenu.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/slide.css">
  
     <script src="<?php echo $url ?>vistas/js/plugins/jquery.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/bootstrap.min.js"></script>
@@ -73,8 +74,7 @@
             } else{
                 
                 if($rutas[0] == "verificar"|| $rutas[0] == "salir"   || $rutas[0] == "blog" || $rutas[0] == "tiendas" ||
-                   $rutas[0] == "listas"   || $rutas[0] == "recetas" || $rutas[0] == "listas-compartidas" || $rutas[0] == "listas-de-recetas" ||
-                   $rutas[0] == "papelera" ){
+                   $rutas[0] == "listas"   || $rutas[0] == "recetas"){
                  
                     include "modulos/".$rutas[0].".php";
 
@@ -90,7 +90,8 @@
 
             include "modulos/slide.php";
             include "modulos/v_servicios.php";
-            include "modulos/ofertas.php";
+            include "modulos/mrecetas.php";
+            include "modulos/empresas.php";
             include "modulos/testimonio.php";
             include "modulos/footer.php";
             

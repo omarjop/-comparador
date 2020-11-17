@@ -61,3 +61,21 @@
                     </div>
     </div>
 </div>
+
+<section class="newsletter">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="content">
+                    <h2>SUSCRÍBETE A NUESTRO BOLETÍN</h2>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Ingresa tu email">
+                        <span class="input-group-btn">
+                            <button class="btn" type="submit"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i> Suscribete</button>
+                        </span>                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

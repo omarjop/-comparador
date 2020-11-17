@@ -6,7 +6,7 @@ require_once "conexion.php";
 
     static public function mdlAgregarLista($tabla1, $tabla2, $datos){
 
-        $pdo=Conexion::conectar();
+        $pdo = Conexion::conectar();
         $stmt = $pdo->prepare("INSERT INTO $tabla1(nombreLista, estado)
         VALUES  (:nombreLista, :estado)");
 

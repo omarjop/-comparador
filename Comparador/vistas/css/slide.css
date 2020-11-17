@@ -1,178 +1,122 @@
 /*=============================================
 SLIDE
 =============================================*/
-
-#slide{
-	position:relative;
-	margin:auto;
-	width:100%;
-	overflow: hidden;
-	padding:0;
+.carousel {
+    margin-bottom: 0;
+    padding: -1px 40px 30px 40px;
+}
+/* Idicadores del Slider Principal */
+.carousel-control {
+	left: 8px;
+    height: 00px;
+	width: 40px;
+	margin-top: 200px;
+	font-size: 26px;
+}
+.carousel-control.right {
+	right: 35px;
+}
+/* Idicador de slide principal */
+.carousel-indicators {
+	right: 50%;
+	top: auto;
+	bottom: 20px;
+	margin-right: -19px;
+}
+/* The colour of the indicators */
+.carousel-indicators li {
+	background: #cecece;
 }
 
-#slide ul{
-	position:relative;
-	left:0%;
-	margin:auto;
-	height:auto;
-	width:400%;
-	clear:both;
-	display: table;
-}
-#slide ul li{
-	position: relative;
-	float:left;
-	width:25%;
-}	
-
-#slide ul li img{
-	width:100%;
+.carousel-caption {
+    right: 20%;
+    left: 20%;
+    padding-bottom: 60px;
 }
 
-#slide .slideOpcion1 img{
-	position:absolute;
-	opacity:1;
-	/*top:15%;
-	right:10%;
-	width:45%;*/
+/* Idicador de ofertas */
+.carousel-indicators-oferta {
+	right: 50%;
+	top: auto;
+	bottom: -10px;
+	margin-right: -19px;
+}
+.carousel-indicators-oferta li {
+	background: #cecece;
+}
+.carousel-indicators-oferta .active {
+	background: #428bca;
 }
 
-#slide .slideOpcion1 .textosSlide{
-	position:absolute;
-	/*width:40%;
-	top:20%;
-	left:10%;*/
+.carousel-indicators .active {
+    background-color:  #f0ba10;
 }
-
-
-#slide .slideOpcion2 img{
-	position:absolute;
-	opacity:1;
-	/*top:5%;
-	left:15%;
-	width:25%;*/
-}
-
-#slide .slideOpcion2 .textosSlide{
-	position:absolute;
-	text-align:right;
-	/*width:40%;
-	top:15%;
-	right:15%;*/
-}
-
-#slide .slideOpciones h1{	
-	text-transform: uppercase;
-	font-family: 'Ubuntu Condensed', sans-serif;
-	opacity:1;
-	top:-10%;
-	/*color:#333;*/
-}
-
-#slide .slideOpciones h2{
-	text-transform: uppercase;
-	font-family: 'Ubuntu Condensed', sans-serif;
-	opacity:1;
-	top:-10%;
-	/*color:#777;*/
-}
-
-#slide .slideOpciones h3{
-	text-transform: uppercase;
-	font-family: 'Ubuntu Condensed', sans-serif;
-	opacity:1;
-	top:-10%;
-	/*color:#888;*/
-}
-
-#slide .slideOpciones button{
-	border:0px;
-	margin-top:10px;
-	
-	opacity:1;
-	top:-10%;
-}
-
-#slide .slideOpciones button:hover{
-	background:black;
-	color:white;
-	border:0px;
-}
-
-#slide .slideOpciones button span{
-	margin-left:10px;
-}
-
-/**-----------------------------------------------
-FLECHAS   D EL SLIDE
-------------------------------------------------*/
-#slide  .flechas{
+/*Estilos del texto y botones */
+.header-text-centro {
     position: absolute;
-    font-size: 2em;
-    color: white;
-    cursor: pointer;
-    z-index: 2;
-}
-#slide #retroceder{
-    background: #0b8cac;
-    padding: 40px 10px 40px 5px;
-    top: 30%;
-    left: 0;
-    font-size: 20px;
-    opacity: 1;
-}
-#slide #retroceder span{
-    color:#f5af02;
-}
-#slide #avanzar span{
-    color:#f5af02;
-}
-#slide #avanzar{
-    background: #0b8cac;
-    padding: 40px 5px 40px 10px;
-    top: 30%;
-    right: 0;
-    font-size: 20px;
-    opacity: 1;
-}
-#slide #retroceder:hover, #slide #avanzar:hover{
-     background: #013a67;
-}
-#slide #retroceder:active, #slide #avanzar:active{
-    background: #013a67;
-}
-/**-----------------------------------------------
-PAGINACION
-------------------------------------------------*/
-#slide #paginacion{
-    position: absolute;
+    top: 20%;
+    left: auto;
+    right: auto;
     width: 100%;
-    margin: auto;
-    text-align:center;
-    line-height: 40px;
-    font-size: 12px;
-    bottom: 0px;
-    left: 0px;
-    z-index: 1;
-    background: rgba(0, 0, 0, .05);
+    color:#fff;
 }
-#slide #paginacion li{
-    display:inline-block;
-    margin: 0px 5px;
-    cursor: pointer;
-    opacity: 5;
-    color: white;
-    text-shadow: 0px 0px 5px #333333;
+.header-text-derecha {
+    position: absolute;
+    top: 20%;
+    left: 0%;
+    right: auto;
+    width: 90%;
+    color: rgb(253, 249, 249);
+}
+.header-text-izquierda {
+    position: absolute;
+    top: 20%;
+    left: auto;
+    right: 0px;
+    width: 90%;
+    color: rgb(253, 249, 249);
+}
+.header-text-derecha h2 strong, .header-text-izquierda h2 strong  {
+   color: #f0ba10;
+}
+.header-text-centro h2 strong {
+    color: #0d5f5f;
+ }
+.header-text-centro h2, .header-text-derecha h2 {
+    font-size: 40px;
+}
+.header-text-centro h2 span {
+    background-color: #f0ba10;
+    padding: 10px;
+    border-radius: 5px;
+}
+.header-text-centro h3 span {
+	background-color: #0d5f5f;
+    padding: 15px;
+    border-radius: 5px;
+}
+.btn-min-block {
+    min-width: 170px;
+    line-height: 26px;
+}
+
+.btn-theme {
+    color:  #fff;
+    background-color: transparent;
+    border: 2px solid #f0ba10;
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.btn-theme:hover {
+    color: #050505;
+    background-color:#fff;
+    border-color: #f0ba10;
 }
 
 
-
-
-
-
-
-
-/*search box css start here*/
+/*Estilos para la ubicacion dentro del slider*/
+/*search box css start here
 .search-sec{
     padding: 2rem;
 }
@@ -208,4 +152,4 @@ PAGINACION
     .search-sec{
         background: #1A4668;
     }
-}
+}*/
