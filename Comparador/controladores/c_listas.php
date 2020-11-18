@@ -21,7 +21,7 @@ class ControladorListas{
                                 "estado"=>1);
 
                     $respuesta = ModeloLista::mdlAgregarLista($tabla1, $tabla2, $datos);
-
+  
                     if($respuesta == "ok"){
                         echo '<script> 
                         swal({

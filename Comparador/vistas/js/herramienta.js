@@ -31,6 +31,23 @@ for (var i = 0 ; i < btnList.length ; i++ ) {
         $("#btnGrid"+numero).addClass("backColor");
         $("#btnList"+numero).removeClass("backColor");
     })
-
-   
 }
+//************************************************** */
+//FUNCION PARA AUBIR AO INICIO DE LA PAGINA 
+//************************************************** */
+$(document).ready(function(){
+    $(window).scroll(function(){
+        if($(this).scrollTop() > 100){
+            $('#scroll').fadeIn();
+        }else{
+            $('#scroll').fadeOut();
+        }
+    });
+    $('#scroll').click(function(){
+        $("html, body").animate({ scrollTop: 0 }, 600);
+        return false;
+    });
+});
+//************************************************** */
+//FIN FUNCION PARA AUBIR AO INICIO DE LA PAGINA 
+//************************************************** */
