@@ -21,7 +21,7 @@ BANNER
         <div class="row">
 
             <div class="col-xs-12 organizarProductos">
-               <span class="visible-lg visible-md visible-sm pull-left textmenuamarillo"> Recetas</span>
+               
                 <div class="btn-group pull-right">
 
                     <button type="button" class="btn btn-default btnGrid" id="btnGrid0">
