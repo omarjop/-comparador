@@ -177,13 +177,13 @@ class   AjaxProducto{
         $objSelect = new ControladorSelectsInTables();
         $valorComparar1 = "'".$valorComparar1."'";
         $valorComparar2 = "'".$valorComparar2."'";
-        
+        $respuesta = null;
         $sql = "SELECT * FROM  ".$tabla." where ".$columnaComparar1." = ".$valorComparar1. " and ".$columnaComparar2." = ".$valorComparar2;
         $respuesta = $objSelect->selectARowsInDb($sql);
-        echo "<script>toastr.warning('$respuesta');</script>"; 
-        if ($respuesta!= null ) {
+
+        if ($respuesta!= null ) {            
             echo json_encode($respuesta);
-        }else{
+        }else{            
            echo json_encode("No existe");
         }
         
@@ -272,11 +272,6 @@ if(isset($_POST["nombreAddPerfil"])){
     $valPerfil = new AjaxProducto();
     $valPerfil ->ajaxValidarExisteRegistro("perfil","Descripcion",$_POST["nombreAddPerfil"]);
 }
-//Valida si existe la ciudad
-if(isset($_POST["addCiudadValue"])){  
-    $valCiudad = new AjaxProducto();
-    $valCiudad ->ajaxValidarExisteRegistro("ciudad","nombreCiudad",$_POST["addCiudadValue"]);
-}
 //Valida si existe el tipo de pago
 if(isset($_POST["nombreAddtipo_pago"])){  
     $valTipoPago = new AjaxProducto();
@@ -301,4 +296,16 @@ if(isset($_POST["nombreAdddificultad"])){
 if(isset($_POST["nombredificultadEdit"])){  
     $valDificultad = new AjaxProducto();
     $valDificultad ->ajaxValidarExisteRegistro("dificultad","nombre",$_POST["nombredificultadEdit"]);
+}
+if(isset($_POST["nombreAddCiudad"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("ciudad","nombreCiudad",$_POST["nombreAddCiudad"],"pais_idpais",$_POST["nombreAddControl"]);
+}
+if(isset($_POST["nombreEditCiudad"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("ciudad","nombreCiudad",$_POST["nombreEditCiudad"],"pais_idpais",$_POST["nombreEditControl"]);
+}
+if(isset($_POST["addpesovolumen"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("pesovolumen","unidadMedida_idUnidadMedida",$_POST["nombreAddControl"],"medida",$_POST["addpesovolumen"]);
 }
