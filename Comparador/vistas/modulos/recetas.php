@@ -4,13 +4,12 @@ BANNER
 <?php
     $url = Ruta::ctrlRuta();   
 ?>
-
 <figure class="banner">
-    <img src="http://localhost/AdminComparador/vistas/img/blog/portada.jpg" class="img-responsive" width="100%">
+    <img src="http://localhost/AdminComparador/vistas/img/recetas/cocina.jpg" class="img-responsive" width="100%">
   
     <div class="textoBanner textoIzq">
 
-        <h1 style="color:#fff">BLOG</h1>
+        <h1 style="color:#fff">RECETAS</h1>
 
     </div>
 
@@ -21,7 +20,7 @@ BANNER
         <div class="row">
 
             <div class="col-xs-12 organizarProductos">
-               <span class="visible-lg visible-md visible-sm pull-left textmenuamarillo"> Recetas</span>
+               
                 <div class="btn-group pull-right">
 
                     <button type="button" class="btn btn-default btnGrid" id="btnGrid0">
@@ -54,12 +53,13 @@ MOSTRAR UNA LISTA DE 6 BLOGS POR CADA PAGINA
                
                <!--Inicia cuadro de receta categoria-->
                   <?php
-
+                      
                        $item1 = "idCategoria";
                        $item2 = "categoria_idCategoria";
                        $mostrarRecetas = ControladorRecetas::ctrlMostrarRecetas($item1, $item2);
                        
                        if(isset($ruta)){
+                       
                            $item1 = "categoria_idCategoria";
                            $item2 = "idCategoria";
                            $item3 = "ruta";
@@ -99,6 +99,7 @@ MOSTRAR UNA LISTA DE 6 BLOGS POR CADA PAGINA
                                  }
 
                        }else{
+                       
                                foreach ($mostrarRecetas as $key => $value) {
                                        echo ' <div class="col-sm-4 col-xs-12">
                                                     <div class="single-blog">
@@ -127,12 +128,58 @@ MOSTRAR UNA LISTA DE 6 BLOGS POR CADA PAGINA
                                  </div>
 
                                  <div>
-                                      <h1 class= "titulocategoriaenrecetas"></h1>                              
+                                      <h1 class= "titulocategoriaenrecetas"></h1>  
+                                      <div class="col-sm-6 col-xs-12" id="comentarioReceta">
+                                            <div id="comentario">
+                                                  <form method="post" class="form-signin">
+                                                         <div class="row">
+                                                             <div class="col-sm-10 col-xs-12">
+                                                             <input style="visibility: hidden;"  type="text" value ="" class="form-control idReceta" id="idReceta" name ="idReceta">  
+                                                                   <input type="text" class="form-control" id="comentarioReceta" name="comentarioReceta" placeholder="Enviar un comentario">                                                                  
+                                                                        <?php  
+                                                                                if(isset($_POST["enviaComentario"])){
+                                                                                                                                                                              
+                                                                                        if(isset($_SESSION["validarSesion"])){
+                                                                                            $registro  = new ControladorRecetas();
+                                                                                            $registro ->ctrlRegistroComentarios();
+																						}else{
+                                                                                            echo  '<script>   
+                                                                                                                $(function(){
+                                                                                                                     
+                                                                                                                     $(".enviaComentario").click(function(){
+                                                                                                                     
+                                                                                                                     $("#modalIngreso").modal("show");
+                                                                                                                     return false;
+                                                                                                                     
+                                                                                                                  });
+                                                                                                                });                              
+                                                                                                          </script>'; 
+																						}
+                                                                              
+                                                                                }
+                                                                        ?>
+                                                                   <button class="btn btn-success btn-block botonComentario enviaComentario"  type="submit" name = "enviaComentario" id = "enviaComentario"><i class="fa fa-sign-in"></i> Enviar</button>
+                                                                   
+                                                             </div>
+                                                         </div>
+                                                      <br>
+                                                 </form>
+                                            </div>
+                                          <div class="single-blog-img" id="comentariosXReceta">                                     
+                                          </div> 
+                                      </div>
                                  </div>
+
                               </div>
                         </div>
                 </ul>
             <!--Finaliza cuadro descripcion receta -->
+            
 	    </div>
     </div>
 </div>
+
+
+
+
+
