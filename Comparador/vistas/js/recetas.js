@@ -1,6 +1,7 @@
 /********************************************** 
  * Controlando el detalle de la lista
  **********************************************/
+ $("#comentarioReceta").hide();
 $(".detalleLista").click(function(e){
     e.preventDefault();
 
@@ -8,8 +9,10 @@ $(".detalleLista").click(function(e){
     $("#recetasPorCategoria").hide();
     var idReceta = $(this).attr('id');
     var idReceta2 = $(this).attr('id');
+    var idReceta3 = $(this).attr('id');
     var datos = new FormData();
     var datos2 = new FormData();
+    var datos3 = new FormData();
     datos.append("idReceta", idReceta);
     let plantilla = " ";
     let plantilla2 = " ";
@@ -62,13 +65,7 @@ $(".detalleLista").click(function(e){
                                         plantilla +=                '<div class="textcaract"><i class="fa fa-clock-o tamanoicon"></i> Cocci&oacute;n: <h class="textsub"> '+obj.tiempo+' min</h></div>'
                                         plantilla +=                '<div class="card-text textcaract"><i class="fa fa-pie-chart tamanoicon " aria-hidden="true"></i> Porciones:  <h class="textsub">'+obj.porciones+'</h></div>'
                                         plantilla +=                '<div class="card-text textcaract"><i class="fa fa-tachometer tamanoicon" aria-hidden="true"></i> Dificultad:  <h class="textsub">'+obj.nombre+'</h></div><br>'
-                                        plantilla +=                '<div class="card-text textcaract"><ul  class="pull-left">'
-                                        plantilla +=                    '<a href="'+rutaOculta+'listas">'
-                                        plantilla +=                        '<span  data-toggle="tooltip" title="Compara precio de receta">'
-                                        plantilla +=                            '<img src="http://localhost/AdminComparador/vistas/img/iconos/lista32.png" class="img-responsive ">'
-                                        plantilla +=                        '</span>'
-                                        plantilla +=                     '</a>'
-                                        plantilla +=                 '</ul></div>'
+                                        plantilla +=                '<div class="card-text textcaract"><a href="#"><i class="fa fa-share-alt tamanoicon" aria-hidden="true"></i> </a></div><br>'
                                         plantilla +=         '</div>'
                                         plantilla +=    '</div>'
                                         plantilla +='</div>'
@@ -83,7 +80,7 @@ $(".detalleLista").click(function(e){
                                                       auxSplit[i] = auxSplit[i]+"}";
 							                      }
                                                   var res = JSON.parse(auxSplit[i]);
-                                                  plantilla +='<div class="col-lg-4">'
+                                                  plantilla +='<div class="col-lg-3">'
                                                   plantilla +='<p class="card-text colordivtexto">'+'('+res.cantidad+') '+res.Nombre+'</p>'
                                                   plantilla +='</div>'
                                             }
@@ -94,14 +91,49 @@ $(".detalleLista").click(function(e){
                                         plantilla +=      '<p class="card-text colordivtexto">'+obj.contenido+'</p>'
                                         plantilla +='</div>'
 
-
+                                        $(".idReceta").attr('value',idReceta);
+                                        $("#comentarioReceta").show();
                                         $("#recetaDesc").html(plantilla);
 
                           }
                      })
 
 
+                    datos3.append("idComentarioXReceta", idReceta3);
+                    $.ajax({
+                        url:rutaOculta+"ajax/recetas.ajax.php",
+                        method:"POST",
+                        data: datos3, 
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(respuesta3){
+                              
+                              
+                              if(respuesta3){
+                                      respuesta3 =respuesta3.replace("[","");
+                                      respuesta3 =respuesta3.replace("]","");
+                                      var auxSplit2 = respuesta3.split("},");
 
+                                       plantilla2 +='<div class="col-lg-12">'
+                                            for(var i=0;i<auxSplit2.length;i++){
+                                                  if(!auxSplit2[i].includes("}")){
+                                                      auxSplit2[i] = auxSplit2[i]+"}";
+							                      }
+                                                  var res2 = JSON.parse(auxSplit2[i]);
+                                                  plantilla2 +='<div class="col-lg-13">'
+                                                  plantilla2 +='<ul>'
+                                                  plantilla2 +=res2.descripcion
+                                                  plantilla2 +='</ul>'
+                                                  plantilla2 +='</div>'
+                                            }
+                                         plantilla2 +='</div>'
+                                         $("#comentariosXReceta").html(plantilla2);
+                               }
+                              
+
+                          }
+                     })
                             
       
 
@@ -110,3 +142,9 @@ $(".detalleLista").click(function(e){
     }) 
 
 })
+
+function validarsiesactivo(){
+  // $('#modalDebeSesion').modal('show');
+  alert();
+}
+

@@ -41,4 +41,23 @@ class ControladorRecetas{
         return $respuesta;
 	}
 
+// metodos para rgistro y consulta de comentarios por receta
+    static public function ctrlRegistroComentarios(){
+
+          $datos = array(
+             "idPersona"=>$_SESSION["id"],
+             "idReceta"=>$_POST["idReceta"],
+             "comentario"=>'<ul>'.$_POST["comentarioReceta"].'</ul>');
+
+          $tabla= "comentariosrecetas";
+          $respuesta = ModeloReceta::ctrlRegistroComentarios($tabla , $datos);
+
+    }
+
+    static public function ajaxConsultarComentariosXReceta($item3,$idReceta){
+        $tabla1 = "comentariosRecetas";
+        $respuesta = ModeloReceta::ajaxConsultarComentariosXReceta($tabla1,$item3,$idReceta);
+        return $respuesta;
+	}
+   
 }

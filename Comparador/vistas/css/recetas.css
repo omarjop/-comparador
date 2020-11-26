@@ -178,15 +178,14 @@
    
 }
 .sutitulosubreceta{
-    font-family:'Brush Script MT';
-    color: #136574;    
-    font-size:27px;  
+    font-family:'Ubuntu Condensed';   
+    font-size:18px;  
 }
 
 .textitulo{
 
     text-align:center;
-       font-family:'Brush Script MT';
+    font-family:'Brush Script MT';
     font-size:50px;
     color:#D0A20E;
     font-weight: bold;
@@ -228,3 +227,19 @@
 }
 
 
+/*Area de comentarios*/
+
+#comentarioReceta{
+    /*background-color: #EAEAEA;*/
+    font-weight: normal;
+    padding: 20px;
+    font-size:17px;    
+    position:relative;
+    top:-25px;
+} 
+.botonComentario{
+    width:100px;
+    float:right;
+    position:relative;
+    top:-15px;
+}

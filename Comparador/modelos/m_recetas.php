@@ -51,4 +51,35 @@ require_once "conexion.php";
         $stmt -> execute();
         return  $stmt ->fetchAll(); 
 	 }
+
+
+
+    //**************************************************************** 
+    // Registra los comentarios hechos en la receta
+    //**************************************************************** 
+    static public function ctrlRegistroComentarios($tabla , $datos){
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Persona_idPersona, Recetas_idRecetas , 	descripcion)
+                 VALUES  (:idPersona, :idReceta, :comentario)");
+        
+        $stmt->bindParam(":idPersona", $datos["idPersona"], PDO::PARAM_INT);
+        $stmt->bindParam(":idReceta", $datos["idReceta"], PDO::PARAM_STR);
+        $stmt->bindParam(":comentario", $datos["comentario"], PDO::PARAM_STR);
+
+        if($stmt->execute()){
+            return "ok";
+        }else{
+            return"Error";
+        }
+        $stmt->close();
+        $stmt=null;
+    }
+
+    static public function ajaxConsultarComentariosXReceta($tabla1,$item3,$idReceta){
+        $stmt = Conexion::conectar()->prepare("select * from $tabla1 where $item3 = :$item3");
+        $stmt -> bindParam(":".$item3, $idReceta, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+        return  $stmt ->fetchAll(); 
+	 }
  }
