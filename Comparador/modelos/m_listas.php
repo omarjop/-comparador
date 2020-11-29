@@ -58,7 +58,7 @@ require_once "conexion.php";
     //**************************************************************** 
     static public function mdlMostrarProductosListas($tabla, $item1, $item2, $datos){
 
-        $stmt = Conexion::conectar()->prepare(" SELECT nombreProducto, cantidad FROM $tabla WHERE $item1 = :$item1 AND $item2 = :$item2");
+        $stmt = Conexion::conectar()->prepare(" SELECT nombreProducto, cantidad, idproductosLista FROM $tabla WHERE $item1 = :$item1 AND $item2 = :$item2");
         $stmt -> bindParam(":".$item1, $datos["idList"], PDO::PARAM_STR);
         $stmt -> bindParam(":".$item2, $datos["estadoProducto"], PDO::PARAM_INT);
         $stmt -> execute();
@@ -117,16 +117,80 @@ require_once "conexion.php";
     //******************************************************************** 
      // Consulta si existe un producto que desea agregar sino lo agrega  *
     //******************************************************************** 
-    static public function mdlAgregarProductosLista($tabla, $item, $datos){
+    static public function mdlAgregarProductosLista($tabla, $item1, $item2, $item3, $datos){
 
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+        $pdo = Conexion::conectar();
+        if($datos["idProducto"] !=0){
+            $stmt = $pdo->prepare("SELECT * FROM $tabla WHERE $item1 = :$item1 AND $item2 = :$item2");
         
-        $stmt -> bindParam(":".$item, $datos["idProducto"], PDO::PARAM_INT);
-        $stmt -> execute();
-        if($stmt-> fetch()){
+            $stmt -> bindParam(":".$item1, $datos["idProducto"], PDO::PARAM_INT);
+            $stmt -> bindParam(":".$item2, $datos["idListaP"], PDO::PARAM_INT);
+            $stmt -> execute();
+            if($stmt-> fetch()){
+                return "ok1";  //Producto ya existe en la Lista
+            }else{
+                $stmt = $pdo->prepare("INSERT INTO $tabla(listaCompra_idListaCompra, nombreProducto, cantidad, estado, idUsuario, idProducto) VALUES  (:listaCompra_idListaCompra, :nombreProducto, :cantidad, :estado, :idUsuario, :idProducto)");
+    
+                $stmt->bindParam(":listaCompra_idListaCompra",$datos["idListaP"], PDO::PARAM_INT);
+                $stmt->bindParam(":nombreProducto", $datos["namePrdouct"], PDO::PARAM_STR);
+                $stmt->bindParam(":cantidad", $datos["cantidadProduct"], PDO::PARAM_INT);
+                $stmt->bindParam(":estado", $datos["estadoP"], PDO::PARAM_INT);
+                $stmt->bindParam(":idUsuario", $datos["idUsu"], PDO::PARAM_INT);
+                $stmt->bindParam(":idProducto", $datos["idProducto"], PDO::PARAM_INT);
+    
+                if($stmt->execute()){
+                    return"ok2"; //Producto agregadoa exitosamente
+                }else{
+                    return"Error";
+                }
+            }
+        }else{
+            $stmt = $pdo->prepare("SELECT * FROM $tabla WHERE $item2 = :$item2 AND $item3 = :$item3");
+            $stmt -> bindParam(":".$item2, $datos["idListaP"], PDO::PARAM_INT);
+            $stmt -> bindParam(":".$item3, $datos["namePrdouct"], PDO::PARAM_STR);
+            $stmt -> execute();
+            if($stmt-> fetch()){
+                return "ok1";  //Producto ya existe en la Lista
+            }else{
+            
+                $stmt = $pdo->prepare("INSERT INTO $tabla(listaCompra_idListaCompra, nombreProducto, cantidad, estado, idUsuario, idProducto) VALUES  (:listaCompra_idListaCompra, :nombreProducto, :cantidad, :estado, :idUsuario, :idProducto)");
+            
+                $stmt->bindParam(":listaCompra_idListaCompra",$datos["idListaP"], PDO::PARAM_INT);
+                $stmt->bindParam(":nombreProducto", $datos["namePrdouct"], PDO::PARAM_STR);
+                $stmt->bindParam(":cantidad", $datos["cantidadProduct"], PDO::PARAM_INT);
+                $stmt->bindParam(":estado", $datos["estadoP"], PDO::PARAM_INT);
+                $stmt->bindParam(":idUsuario", $datos["idUsu"], PDO::PARAM_INT);
+                $stmt->bindParam(":idProducto", $datos["idProducto"], PDO::PARAM_INT);
+
+                if($stmt->execute()){
+                    return"ok2";
+                }else{
+                    return"Error";
+                }
+            }
+
+        }
+        
+    }
+
+    //**************************************************************** 
+    // CAMBIAR EL ESTADO DE UN PRODUCTO DE UNA LISTA                 *
+    //****************************************************************
+    static public function mdlCambiarEstadoProductoLista($tabla, $item1, $item2, $item3, $datos){
+
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item2 = :$item2 WHERE $item1 = :$item1 AND  $item3 = :$item3");
+        $stmt -> bindParam(":".$item1, $datos["idproductoComprado"], PDO::PARAM_INT);
+        $stmt -> bindParam(":".$item2, $datos["estadoProductoComprado"], PDO::PARAM_INT);
+        $stmt -> bindParam(":".$item3, $datos["idListaProductoComprado"], PDO::PARAM_INT);
+
+        if($stmt -> execute()){
             return "ok";
         }else{
             return"Error";
         }
+
+        $stmt -> close();
+        $stmt = null;
     }
+
  }

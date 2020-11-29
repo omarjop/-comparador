@@ -167,8 +167,18 @@ class ControladorListas{
      *==========================================================*/
     static public function ctrlAgregarProductosLista($datos){
         $tabla = "productoslista";
-        $item = "idProducto";
-        $respuesta = ModeloLista::mdlAgregarProductosLista($tabla, $item, $datos);
+        $item1 = "idProducto";
+        $item2 = "listaCompra_idListaCompra";
+        $item3 = "nombreProducto";
+        $respuesta = ModeloLista::mdlAgregarProductosLista($tabla, $item1, $item2, $item3, $datos);
+        return $respuesta;
+    }
+    static public function ctrlCambiarEstadoProductoLista($datos){
+        $tabla = "productoslista"; //tabla que se va a actualizar
+        $item1 = "idproductosLista"; //campo que se va a comparar
+        $item2 = "estado"; //campo que se va a modificar
+        $item3 = "listaCompra_idListaCompra"; //campo que se va a comparar
+        $respuesta = ModeloLista::mdlCambiarEstadoProductoLista($tabla, $item1, $item2, $item3, $datos);
         return $respuesta;
     }
 

@@ -1,39 +1,54 @@
 <?php
     $url = Ruta::ctrlRuta();    
+    $urlServ= Ruta::ctrlRutaServidor();
     if(isset($_SESSION["id"])){
         $idUsu = $_SESSION["id"];
     }else{
         $idUsu = 10;
     }
 ?>
-<div class="container-fluid" >
+<!--<figure class="banner">
+    <img src="http://localhost/AdminComparador/vistas/img/blog/portada.jpg" class="img-responsive" width="100%">
+  
+    <div class="textoBanner textoIzq">
+
+        <h1 style="color:#fff">LISTAS</h1>
+
+    </div>
+
+</figure>-->
+<div class="container-fluid" > 
     <div class="container">
     
         
         <div class=" colorFondo col-lg-3 col-md-3 col-sm-2 col-xs-12" >   
         
             <div class=" mt-3 pb-3 mb-3 d-flex text-center">
-                <img src="<?php echo $url ?>vistas/img/usuario/listas-de-verificacion.png" class="img-rounded elevation-2" alt="">
+              <img src="<?php echo $urlServ ?>vistas/img/principal/lista1.png" class="img-rounded elevation-2" alt="">
             </div>
             <ul class="nav flex-column ">
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link " href="#modalListaCompra" data-toggle="modal"> <i class="fa fa-plus-circle"></i> Crear nueva lista</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasFull" href="#"> <i class="fa fa-list"></i>Mis listas creadas</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasComp" href="#"> <i class="fa fa-share-alt"></i> Listas compartidas</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasRecetas" href="#"> <i class="fa fa-cutlery"></i> Listas de recetas</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasBorradas" href="#"> <i class="fa fa-trash"></i> Papelera</a>
                 </li>
-                <h3> Mis Listas</h3>
-                
-                <div class="scrollLista">
+                <hr>
+               
                     <?php  
                         if(isset($_SESSION["id"])){
                             $item1 = "Persona_idPersona";
@@ -42,24 +57,8 @@
                             $valor2 = "1";
                             $mostrarListas = ControladorListas::ctrlMostrarListas($item1, $item2, $valor1, $valor2); 
                             $cantidadLista = sizeof($mostrarListas);
-                            foreach ($mostrarListas as $key => $value) {
-                                echo '
-                                    <li class="nav-item">
-                                        <a class="listEditView" href="#" id="'.$value["idListaCompra"].'"> <img src="'.$url.'vistas/img/usuario/memorandum.png">'.$value["nombreLista"].'</a>
-                                    </li>
-                                ';
-                           }
-                        }else{/*.$_COOKIE['lista-compra'].*/
-                            echo' 
-                            <li class="nav-item">
-                                <a class="nav-link " href="#"> <img src="'.$url.'vistas/img/usuario/memorandum.png" class="img-rounded" alt="">Preubas</a>
-                            </li>
-                            
-                            ';
-
                         }
                     ?>
-                </div>
             </ul>
         </div>
         <!---========================================  
@@ -298,7 +297,7 @@
         ===========================================-->
         <ul class="listaEditViewC" style="display:none">
             <div class="col-lg-9 col-md-9 col-sm-10 col-xs-12" id="infoListas"> 
-                <div class="table-responsive">
+                <div class="table-responsive ">
                     <div class="table-wrapper table-striped  table-hover">
                         <div class="table-title">
                             <div class="row">
@@ -319,22 +318,22 @@
                         </div>
                         <!-- ------ -->
 
-                        <table class="table">
-                            <thead>
+                        <table class="table table-hover">
+                            <thead class="fondo_cabecera">
                                 <tr>
-                                <th scope="col">
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="selectAll">
-                                        <label for="selectAll"></label>
-                                    </span>
-                                </th>
+                                <th scope="col"></th>
                                 <th scope="col">Nombre del producto</th>
                                 <th scope="col">Cantidad</th>
+                                <th scope="col">Unidad</th>
                                 <th scope="col">Acción</th>
                                 </tr>
                             </thead>
                             <tbody id="productos"></tbody>
-                        </table>
+                        </table> 
+                        <ul class="productosComprados"></ul>
+                        <table class="table table-hover">
+                            <tbody id="productosCompradosList"></tbody>
+                        </table> 
                      <!--   <div class="clearfix">
                             <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                             <ul class="pagination">

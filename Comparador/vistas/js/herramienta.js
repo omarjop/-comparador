@@ -51,3 +51,18 @@ $(document).ready(function(){
 //************************************************** */
 //FIN FUNCION PARA AUBIR AO INICIO DE LA PAGINA 
 //************************************************** */
+
+
+/*$(document).ready(function() {
+    var $magic = $(".magic"), magicWHalf = $magic.width() / 2;
+    
+   $(document).on("mousemove", function(e) {
+        if(e.pageY > 1300 && e.pageY < 1400){
+            console.log(e.pageY);
+            $magic.css({"left": e.pageX -80 , "top": e.pageY - 1300});
+        }
+      
+     // console.log( e.pageX);
+    });
+    
+  });*/
