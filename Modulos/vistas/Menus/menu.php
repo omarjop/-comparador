@@ -200,7 +200,13 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Productos</p>
                 </a>
-              </li>          
+              </li>   
+              <li class="nav-item">
+                <a href="addSubCategoria" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Subcategoria</p>
+                </a>
+              </li>        
               <li class="nav-item">
                 <a href="addTipoEmpresa" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

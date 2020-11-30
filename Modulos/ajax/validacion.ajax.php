@@ -309,3 +309,7 @@ if(isset($_POST["addpesovolumen"])){
     $valCategoria = new AjaxProducto();
     $valCategoria ->ajaxValidarExisteDosRegistros("pesovolumen","unidadMedida_idUnidadMedida",$_POST["nombreAddControl"],"medida",$_POST["addpesovolumen"]);
 }
+if(isset($_POST["nombreAddCategoria"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","categoria_idCategoria",$_POST["nombreAddCategoria"],"nombre",$_POST["nombreAddsubcategoria"]);
+}
