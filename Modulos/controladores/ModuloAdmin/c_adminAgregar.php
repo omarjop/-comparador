@@ -146,6 +146,19 @@ class ControladorAdminInsert{
 
               }    
     }
+      public function agregarCampossubcategoria($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2,$columna3,$valorAgregar3){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("subcategoria","categoria_idCategoria,nombre,ruta",$valorAgregar.","."'$valorAgregar2'".","."'$valorAgregar3'");
+      
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar.Codigo: '+".$resultado.");</script>";                             
+
+              }    
+    }
+    
 
  //--------inicia administraci+on de producto---------------------------
     public function agregarProducto($rutaImagen){   
