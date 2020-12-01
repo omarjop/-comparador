@@ -415,7 +415,8 @@ var returnValue = true;
                         <div class="modal-body mx-3 ">
                             <input   type="text" value ="" placeholder="Nombre Unidad" class="form-control categoriaEdit" id="categoriaEdit" name ="categoriaEdit" required>  
                        </div> 
-                      </div>      
+                      </div> 
+                    <div class="modal-body mx-3">     
                       <div class="modal-body mx-3">       
                       <select class="form-control" onChange="mostrar(this.value);" id ="selecontrol2" name="selecontrol2"  required><option value = "seleccion">Seleccione Control</option>
                                <?php for($i=0;$i<count($controlNumerico);$i++){?>
@@ -423,7 +424,8 @@ var returnValue = true;
                                <?php }?> 
                        </select>                                             
                     <input   style="visibility: hidden;" type="text" value ="" placeholder="ID" class="form-control idCategoria" id="idCategoria" name ="idCategoria"> 
-                   </div>  
+                   </div>
+                  </div>   
                     <div class="form-group">  
                           <div class="modal-footer d-flex justify-content-center">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            

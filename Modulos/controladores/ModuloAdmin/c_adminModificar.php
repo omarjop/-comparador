@@ -25,6 +25,7 @@ class ControladorAdminModificar{
         $valor1 = "'$valor1'";
         $valor2 = "'$valor2'";
         $sql ="update ".$tabla." set ".$columnaModificar1." = ".$valor1."," .$columnaModificar2. "=" .$valor2. " where ".$columnaCompara." = ".$id; 
+         echo "<script>toastr.info('$sql');</script>";
         $resultado = $objUpdate->UpdateInTable($sql);
         if($resultado=="Exitoso"){
            echo "<script>toastr.info('Registro modificado exitosamente');</script>";                              
