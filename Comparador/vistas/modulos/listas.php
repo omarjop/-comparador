@@ -1,39 +1,54 @@
 <?php
     $url = Ruta::ctrlRuta();    
+    $urlServ= Ruta::ctrlRutaServidor();
     if(isset($_SESSION["id"])){
         $idUsu = $_SESSION["id"];
     }else{
         $idUsu = 10;
     }
 ?>
-<div class="container-fluid" >
+<!--<figure class="banner">
+    <img src="http://localhost/AdminComparador/vistas/img/blog/portada.jpg" class="img-responsive" width="100%">
+  
+    <div class="textoBanner textoIzq">
+
+        <h1 style="color:#fff">LISTAS</h1>
+
+    </div>
+
+</figure>-->
+<div class="container-fluid" > 
     <div class="container">
     
         
         <div class=" colorFondo col-lg-3 col-md-3 col-sm-2 col-xs-12" >   
         
             <div class=" mt-3 pb-3 mb-3 d-flex text-center">
-                <img src="<?php echo $url ?>vistas/img/usuario/listas-de-verificacion.png" class="img-rounded elevation-2" alt="">
+              <img src="<?php echo $urlServ ?>vistas/img/principal/lista1.png" class="img-rounded elevation-2" alt="">
             </div>
             <ul class="nav flex-column ">
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link " href="#modalListaCompra" data-toggle="modal"> <i class="fa fa-plus-circle"></i> Crear nueva lista</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasFull" href="#"> <i class="fa fa-list"></i>Mis listas creadas</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasComp" href="#"> <i class="fa fa-share-alt"></i> Listas compartidas</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasRecetas" href="#"> <i class="fa fa-cutlery"></i> Listas de recetas</a>
                 </li>
+                <hr>
                 <li class="nav-item">
                     <a class="nav-link listasBorradas" href="#"> <i class="fa fa-trash"></i> Papelera</a>
                 </li>
-                <h3> Mis Listas</h3>
-                
-                <div class="scrollLista">
+                <hr>
+               
                     <?php  
                         if(isset($_SESSION["id"])){
                             $item1 = "Persona_idPersona";
@@ -42,24 +57,8 @@
                             $valor2 = "1";
                             $mostrarListas = ControladorListas::ctrlMostrarListas($item1, $item2, $valor1, $valor2); 
                             $cantidadLista = sizeof($mostrarListas);
-                            foreach ($mostrarListas as $key => $value) {
-                                echo '
-                                    <li class="nav-item">
-                                        <a class="listEditView" href="#" id="'.$value["idListaCompra"].'"> <img src="'.$url.'vistas/img/usuario/memorandum.png">'.$value["nombreLista"].'</a>
-                                    </li>
-                                ';
-                           }
-                        }else{/*.$_COOKIE['lista-compra'].*/
-                            echo' 
-                            <li class="nav-item">
-                                <a class="nav-link " href="#"> <img src="'.$url.'vistas/img/usuario/memorandum.png" class="img-rounded" alt="">Preubas</a>
-                            </li>
-                            
-                            ';
-
                         }
                     ?>
-                </div>
             </ul>
         </div>
         <!---========================================  
@@ -298,7 +297,7 @@
         ===========================================-->
         <ul class="listaEditViewC" style="display:none">
             <div class="col-lg-9 col-md-9 col-sm-10 col-xs-12" id="infoListas"> 
-                <div class="table-responsive">
+                <div class="table-responsive ">
                     <div class="table-wrapper table-striped  table-hover">
                         <div class="table-title">
                             <div class="row">
@@ -319,22 +318,24 @@
                         </div>
                         <!-- ------ -->
 
-                        <table class="table">
-                            <thead>
+                        <table class="table table-hover">
+                            <thead class="fondo_cabecera">
                                 <tr>
-                                <th scope="col">
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="selectAll">
-                                        <label for="selectAll"></label>
-                                    </span>
-                                </th>
+                                <th scope="col"></th>
                                 <th scope="col">Nombre del producto</th>
                                 <th scope="col">Cantidad</th>
+                                <th scope="col">Unidad</th>
                                 <th scope="col">Acción</th>
                                 </tr>
                             </thead>
                             <tbody id="productos"></tbody>
-                        </table>
+                        </table> 
+
+                        <ul class="productosComprados"></ul>
+                        
+                        <table class="table table-hover">
+                            <tbody id="productosCompradosList" class="check-listo"></tbody>
+                        </table> 
                      <!--   <div class="clearfix">
                             <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                             <ul class="pagination">
@@ -393,59 +394,51 @@ VENTANA MODAL PARA CREAR LISTAS DE COMPRA
     </div>
 </div>
 
-<!-- Edit Modal HTML -->
-<div id="addEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Add Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<textarea class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div>					
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-success" value="Add">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Delete Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					<p>Are you sure you want to delete these Records?</p>
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
-				</div>
-			</form>
-		</div>
-	</div>
+<!-- =======================================
+VENTANA MODAL PARA CREAR LISTAS DE COMPRA
+============================================-->
+<div class="modal fade modalFormulario" id="editProducto" tabindex="-1" role="dialog" aria-labelledby="modalListaCompra" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modalTitulo">
+
+            <h3 class="colorbarra"><i class="fa fa-list-alt " aria-hidden="true"></i> Editar Producto</h3>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            <div class="controlar">
+            <div class="col-xs-12 espacio">
+                <div class="col-md-12 espacio">
+                    <form method="post" class="form-signin">
+                        <div id="logreg-forms">    
+                            <div class="col-md-12"> 
+                                <div class="form-group">
+                                        <label for="formGroupExampleInput">Nombre del Producto</label>
+                                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Cantidad</label>
+                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput2">Unidad</label>
+                                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <button type="submit" class="btn btn-success btn-block" ><i class="fa fa-refresh"></i> Modificar Producto</button>
+                            </div>
+                            <div class="col-md-6"> 
+                                <button type="submit" class="btn btn-danger btn-block" ><i class="fa fa-refresh"></i> Cancelar</button>
+                            </div>
+                        </div>
+                    </form>  
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer"> </div>
+        </div>
+    </div>
 </div>

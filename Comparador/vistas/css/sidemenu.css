@@ -3,12 +3,11 @@
 *https://www.youtube.com/watch?v=qYFkQa0Bbq0
 *******************************/
 
-.scrollLista{
-    height: 180px;
+/*.scrollLista{
+    height: 450px;
     overflow-y: scroll;
     width: auto;
-    border: solid 1px rgba(211, 210, 210, 0.897);
-}
+}*/
 ::-webkit-scrollbar{
     width: 12px;
 }
@@ -23,15 +22,16 @@
 .colorFondo, .colorFondo a{
     font-size: 14px;
     color:rgba(29, 28, 28, 0.781);
-	
+	padding-bottom: 50px;
 }
-.colorFondo{
-	border: solid 2px rgba(241, 240, 240, 0.836);	
+.colorFondo hr{
+	border-top: 1px solid #c8c8c8;
 }
 .colorFondo i{
     font-size: 20px;
     margin-right: 20px;
-    color:#008089;
+	color: #FFCA00;
+	text-shadow: 1px 1px 1px #1f1e1eb8;
 }
 .colorFondo li a:hover{
     background-color: rgb(228, 226, 226);
@@ -102,12 +102,12 @@
 *ESTILOS DE LAS LISTAS
 */
 #infoListas .titiloInf {
-    height: 50px;
-    background-color:#435d7d;
+    height: 58px;
+    background-color: #047576;
     padding: 15px;
-    margin-bottom: 15px;
-    font-size: 15px;
-    color: white;
+    margin-bottom: 20px;
+    font-size: 23px;
+    color: #f0ba10;
     text-transform: uppercase;
 }
 #infoListas .cnt-block:hover {
@@ -118,7 +118,7 @@
 #infoListas .cnt-block{ 
     float:left; 
     width:100%; 
-    padding:0px; 
+    padding:13px; 
     text-align:center; 
    /* border:1px solid #d5d5d5;*/
     margin: 0 0 28px;
@@ -139,7 +139,7 @@
     font-size:15px; 
     font-weight:500; 
     padding:6px 0;
-    text-transform:uppercase;
+   /* text-transform:uppercase;*/
  }
  #infoListas .cnt-block h3 a{
     text-decoration:none;
@@ -184,18 +184,27 @@ ESTILO PARA EDITAR LA LISTA
 }
 .table-title {        
 	padding-bottom: 15px;
-	background: #435d7d;
+	background: #047576;
 	color: #fff;
 	padding: 16px 30px;
 	min-width: 100%;
 	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
+.comprado {
+    padding-bottom: 15px;
+    background: #e8e8e88f;
+	color: #7d837e;
+	padding: 0px 15px;
+	margin-top: 8px;
+    min-width: 20%;
+    margin: -11px 0px 7px;
+}
 .agragaProduct{
 	padding-bottom: 15px;
 	background: #d8d8da;
 	color: rgb(138, 137, 118);
-	padding: 16px 30px;
+	padding: 20px 30px;
 	min-width: 100%;
 	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
@@ -208,9 +217,18 @@ ESTILO PARA EDITAR LA LISTA
 	border: none;
     padding-top: 9px;
     padding-bottom: 8px;
-
 }
-
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 15px 15px;
+}
+#botonesCabecera .btn-success{
+	background-color: #f0ba10;
+}
+/*.input-group-btn .btn-success{
+	background-color: #f0ba10;
+}.*/
 .agragaProduct legend{
 	color: #807f7b;
 }
@@ -237,11 +255,19 @@ ESTILO PARA EDITAR LA LISTA
 .table-title .btn span {
 	float: left;
 	margin-top: 2px;
+	color: black;
 }
 table.table tr th, table.table tr td {
 	border-color: #e9e9e9;
 	padding: 12px 15px;
 	vertical-align: middle;
+}
+table.table .fondo_cabecera{
+	background:#FFC107 ;
+}
+table.table #productosCompradosList tr th, table.table #productosCompradosList tr td {
+	color: #acabab;
+	border-color: #ffffff;
 }
 table.table tr th:first-child {
 	width: 60px;
@@ -260,6 +286,10 @@ table.table th i {
 	margin: 0 5px;
 	cursor: pointer;
 }	
+#productosCompradosList th i{
+	color: rgb(39, 190, 84);
+	font-size: 22px;
+}
 table.table td:last-child i {
 	opacity: 0.9;
 	font-size: 22px;
@@ -327,7 +357,7 @@ table.table .avatar {
 	font-size: 13px;
 }   
 
-/*Custom checkbox 
+Custom checkbox 
 .custom-checkbox {
 	position: relative;
 }
@@ -336,6 +366,7 @@ table.table .avatar {
 	position: absolute;
 	margin: 5px 0 0 3px;
 	z-index: 9;
+	cursor: pointer;
 }
 .custom-checkbox label:before{
 	width: 18px;
@@ -343,7 +374,6 @@ table.table .avatar {
 }
 .custom-checkbox label:before {
 	content: '';
-	margin-right: 10px;
 	display: inline-block;
 	vertical-align: text-top;
 	background: white;
@@ -355,15 +385,15 @@ table.table .avatar {
 .custom-checkbox input[type="checkbox"]:checked + label:after {
 	content: '';
 	position: absolute;
-	left: 6px;
-	top: 3px;
-	width: 6px;
-	height: 11px;
+	left: 60px;
+	width: 7px;
+	height: 16px;
 	border: solid #000;
 	border-width: 0 3px 3px 0;
 	transform: inherit;
 	z-index: 3;
-	transform: rotateZ(45deg);
+	transform: rotateZ(50deg);
+	
 }
 .custom-checkbox input[type="checkbox"]:checked + label:before {
 	border-color: #03A9F4;
@@ -372,13 +402,7 @@ table.table .avatar {
 .custom-checkbox input[type="checkbox"]:checked + label:after {
 	border-color: #fff;
 }
-.custom-checkbox input[type="checkbox"]:disabled + label:before {
-	color: #b8b8b8;
-	cursor: auto;
-	box-shadow: none;
-	background: #ddd;
-}
- Modal styles 
+ /*Modal styles 
 .modal .modal-dialog {
 	max-width: 400px;
 }
