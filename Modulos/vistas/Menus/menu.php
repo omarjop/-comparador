@@ -182,7 +182,13 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pais</p>
                 </a>
-              </li>         
+              </li>  
+              <li class="nav-item">
+                <a href="addPesoVolum" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Peso/Volumen</p>
+                </a>
+              </li>        
               <li class="nav-item">
                 <a href="addPerfil" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

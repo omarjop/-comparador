@@ -16,6 +16,12 @@ class   AjaxRecetas{
            $respuesta = ControladorRecetas::ajaxConsultarProductoXReceta($item3,$idRecetaValue);
            echo  json_encode ($respuesta);
 	}
+    public function ajaxConsultarComentariosXReceta($idRecetaValue){
+           $item3 = "Recetas_idRecetas";
+           $respuesta = ControladorRecetas::ajaxConsultarComentariosXReceta($item3,$idRecetaValue);
+           echo  json_encode ($respuesta);
+	}
+
 }
 
 
@@ -29,4 +35,10 @@ if(isset($_POST["idRecetaDos"])){
     $idReceta = new AjaxRecetas();
     $idRecetaValue = $_POST["idRecetaDos"];
     $idReceta ->ajaxConsultarProductoXReceta($idRecetaValue);
+}
+
+if(isset($_POST["idComentarioXReceta"])){  
+    $idReceta = new AjaxRecetas();
+    $idRecetaValue = $_POST["idComentarioXReceta"];
+    $idReceta ->ajaxConsultarComentariosXReceta($idRecetaValue);
 }

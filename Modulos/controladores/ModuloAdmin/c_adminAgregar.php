@@ -90,10 +90,10 @@ class ControladorAdminInsert{
             $resultado= $objAdminAgregar->insertInTable("ciudad","nombreCiudad,pais_idpais","'$valorAgregar'".",".$valorAgregar2);
       
             if ($resultado!='Fallo') {
-                echo "<script>toastr.info('Se agrego la unidad correctamente');</script>";    
+                echo "<script>toastr.info('Se agrego la Ciudad correctamente');</script>";    
          
             }else{
-                 echo "<script>toastr.error('Error al agregar la unidad.Codigo: '+".$resultado.");</script>";                             
+                 echo "<script>toastr.error('Error al agregar la Ciudad.Codigo: '+".$resultado.");</script>";                             
 
               }    
     }
@@ -131,6 +131,18 @@ class ControladorAdminInsert{
          
             }else{
                  echo "<script>toastr.error('Error al agregar la categor&iacute;.Codigo: '+".$resultado.");</script>";                             
+
+              }    
+    }
+            public function agregarCampospesovolumen($tabla,$columna,$valorAgregar,$columna2,$valorAgregar2){
+            $objAdminAgregar  = new ControladorInserttAllTables();
+            $resultado= $objAdminAgregar->insertInTable("pesovolumen","unidadMedida_idunidadMedida,medida",$valorAgregar2.",".$valorAgregar);
+      
+            if ($resultado!='Fallo') {
+                echo "<script>toastr.info('Se agrego correctamente');</script>";    
+         
+            }else{
+                 echo "<script>toastr.error('Error al agregar.Codigo: '+".$resultado.");</script>";                             
 
               }    
     }

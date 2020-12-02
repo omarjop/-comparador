@@ -169,6 +169,7 @@
    padding: 0px;   
    font-weight: bold;
    font-family:'Brush Script MT';
+   color: #D0A20E;  
 }
 .textodelpaso{
    padding: 30px; 
@@ -177,17 +178,16 @@
    
 }
 .sutitulosubreceta{
-    font-family:'Brush Script MT';
-    color: #136574;    
-    font-size:27px;  
+    font-family:'Ubuntu Condensed';   
+    font-size:18px;  
 }
 
 .textitulo{
 
     text-align:center;
-       font-family:'Brush Script MT';
+    font-family:'Brush Script MT';
     font-size:50px;
-    color:#136574;
+    color:#D0A20E;
     font-weight: bold;
     position:relative;
     top:-25px;
@@ -197,12 +197,13 @@
     background-color: #FAC99C;
 }
 .titulocategoriaenrecetas{
-    font-family:'Brush Script MT';
-    font-size:50px;
+    font-family:'Ubuntu Condensed';
+    font-size:30px;
     color:#136574;
     font-weight: bold;
     position:relative;
-    top:-35px;
+    text-align:center;
+    top:-20px;
 } 
 .divdescripcionrecetas{
     position:relative;
@@ -226,3 +227,19 @@
 }
 
 
+/*Area de comentarios*/
+
+#comentarioReceta{
+    /*background-color: #EAEAEA;*/
+    font-weight: normal;
+    padding: 20px;
+    font-size:17px;    
+    position:relative;
+    top:-25px;
+} 
+.botonComentario{
+    width:100px;
+    float:right;
+    position:relative;
+    top:-15px;
+}

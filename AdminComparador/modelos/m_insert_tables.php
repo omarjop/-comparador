@@ -11,7 +11,8 @@ private $servicio;
     public function insertInTables($tabla,$into,$values){
            try{
                    $this->db = Conexion::conectar();
-                    $sql = "INSERT INTO ".$tabla."(".$into.") VALUES (".$values.")";
+
+                    $sql = "INSERT INTO ".$tabla."(".$into.") VALUES (".$values.")"; 
                     $result = $this->db->query($sql);
                 
                     if ($result) {                        
