@@ -195,6 +195,12 @@
                   <p>Perfil</p>
                 </a>
               </li>  
+                <li class="nav-item">
+                <a href="addPersona" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Personas</p>
+                </a>
+              </li>  
               <li class="nav-item">
                 <a href="addNewProductAdmin" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

@@ -317,3 +317,11 @@ if(isset($_POST["nombreEditSubCat"])){
     $valCategoria = new AjaxProducto();
     $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","nombre",$_POST["nombreEditSubCat"],"categoria_idCategoria",$_POST["nombreEditControl"]);
 }
+if(isset($_POST["nombreAddUsuario"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("usuario","correo",$_POST["nombreAddUsuario"],"Perfil_idPerfil",$_POST["nombreAddControl"]);
+}
+if(isset($_POST["nombreEditUsuario"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","correo",$_POST["nombreEditUsuario"],"Perfil_idPerfil",$_POST["nombreEditControl"]);
+}
