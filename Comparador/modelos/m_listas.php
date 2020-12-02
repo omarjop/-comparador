@@ -193,4 +193,23 @@ require_once "conexion.php";
         $stmt = null;
     }
 
+
+    //**************************************************************** 
+    // ELIMINAR PRODUCTO DE UNA LISTA                                *
+    //****************************************************************
+    static public function mdlEliminarProductoLista($tabla, $item1, $datos){
+
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item1 = :$item1");
+        $stmt -> bindParam(":".$item1, $datos["idproductolistaeliminar"], PDO::PARAM_INT);
+
+        if($stmt -> execute()){
+            return "ok";
+        }else{
+            return"Error";
+        }
+
+        $stmt -> close();
+        $stmt = null;
+    }
+
  }

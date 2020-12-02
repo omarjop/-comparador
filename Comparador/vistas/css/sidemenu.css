@@ -255,6 +255,7 @@ ESTILO PARA EDITAR LA LISTA
 .table-title .btn span {
 	float: left;
 	margin-top: 2px;
+	color: black;
 }
 table.table tr th, table.table tr td {
 	border-color: #e9e9e9;
@@ -285,6 +286,10 @@ table.table th i {
 	margin: 0 5px;
 	cursor: pointer;
 }	
+#productosCompradosList th i{
+	color: rgb(39, 190, 84);
+	font-size: 22px;
+}
 table.table td:last-child i {
 	opacity: 0.9;
 	font-size: 22px;

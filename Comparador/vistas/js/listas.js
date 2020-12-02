@@ -221,7 +221,6 @@ function agregarProductoLista(idLis){
         return false;
     }else{
         $("#cantidadProducto").css({"border":'1px solid #d8d8da'});
-      //  console.log(idLis+" "+namePrdouct+" "+idProducto+" "+cantidadProduct);
         var datos = new FormData();
         datos.append("idListaP", idLis);
         datos.append("nameProducto", namePrdouct);
@@ -236,10 +235,15 @@ function agregarProductoLista(idLis){
              contentType: false,
              processData: false,
              success: function(respuesta){
-               // console.log(respuesta);
-                $("#inputEntidadesLst").trigger("click");
-                $("#cantidadProducto").trigger("click");
-                pintarProductosLista(idLis);
+                 if(respuesta=="ok1"){
+                    $("#AgregaProducto").parent().before('<div class="alert alert-danger"><strong>ERROR:</strong>¡El Producto ya existe en tu Lista!</div>');
+                 }else{
+                   // toastr.info("hola");
+                    $("#AgregaProducto").parent().before('<div class="alert alert-success"><strong>ERROR:</strong>¡El producto fue agregado a tu lista!</div>');
+                    pintarProductosLista(idLis);
+                    setTimeout(activarFormularioProducto,4000, idLis);
+                 }
+                
              }
         })
     }
@@ -305,26 +309,19 @@ function pintarProductosLista(idLista2){
                     plantilla +='   <td>'+obj.cantidad+'</td>'
                     plantilla +='   <td>KG</td>'
                     plantilla +='   <td>'
-                    plantilla +='       <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" title="Edit"></i></a>'
-                    plantilla +='       <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="fa fa-trash-o" aria-hidden="true" data-toggle="tooltip" title="Delete"></i></a>'
+                    plantilla +='       <a href="#editProducto"  data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" title="Editar"></i></a>'
+                    plantilla +='       <a onclick="eliminarProductoLista('+obj.idproductosLista+','+idLista2+')" class="delete" ><i class="fa fa-trash-o" aria-hidden="true" data-toggle="tooltip" title="Eliminar"></i></a>'
                     plantilla +='   </td>'
                     plantilla +='</tr>'
                    
                 }); 
                 $("#productos").html(plantilla);        
+            }else{
+             
+                $("#productos").html(plantilla);   
             }
         }
     })
-
-    let plantilla2 = " ";
-    plantilla2 +='<div class="comprado">'
-    plantilla2 +='  <div class="row">'
-    plantilla2 +='    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">'
-    plantilla2 +='        <h4>Productos comprados</h4>'
-    plantilla2 +='   </div> '
-    plantilla2 +='  </div>'
-    plantilla2 +='</div>'
-    $(".productosComprados").html(plantilla2); 
 
     var datos = new FormData();
     datos.append("idLista2", idLista2);
@@ -340,26 +337,30 @@ function pintarProductosLista(idLista2){
         success: function(respuesta){
             let obj = JSON.parse(respuesta);
             let plantilla3 = " ";
-           
+            let plantilla2 = " ";
             if(obj.length > 0){
+                
+                plantilla2 +='<div class="comprado">'
+                plantilla2 +='  <div class="row">'
+                plantilla2 +='    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">'
+                plantilla2 +='        <h4>Productos comprados</h4>'
+                plantilla2 +='   </div> '
+                plantilla2 +='  </div>'
+                plantilla2 +='</div>'
+                $(".productosComprados").html(plantilla2); 
                 obj.forEach(obj =>{
                    
                     plantilla3 +='<tr>'
                     plantilla3 +='   <th scope="row">'
-                    plantilla3 +='       <span class="custom-checkbox">'
-                    plantilla3 +='           <input type="checkbox" id="checkbox1" onclick="productoComprado('+obj.idproductosLista+','+idLista2+', 1)" name="options[]" value='+obj.idproductosLista+'>'
-                    plantilla3 +='           <label for="checkbox1"></label>'
-                    plantilla3 +='       </span>'
+                    plantilla3 +='      <a onclick="productoComprado('+obj.idproductosLista+','+idLista2+', 1)" ><i class="fa fa-check-square-o" aria-hidden="true" data-toggle="tooltip" title="Regresa a: ¡Por comprar!"></i></a>'
                     plantilla3 +='   </th>'
                     plantilla3 +='   <td>'+obj.nombreProducto+'</td>'
-                    plantilla3 +='   <td>'+obj.cantidad+'</td>'
-                    plantilla3 +='   <td>KG</td>'
-                    plantilla +='   <td>sdsd</td>'
                     plantilla3 +='</tr>'
                    
                 }); 
                 $("#productosCompradosList").html(plantilla3);        
             }else{
+                $(".productosComprados").html(plantilla2); 
                 $("#productosCompradosList").html(plantilla3); 
             }
         }
@@ -368,8 +369,32 @@ function pintarProductosLista(idLista2){
 /********************************************************* 
  * METODO PARA CAMBIAR EL ESTADO DE UN PRODUCTO DE UNA LISTA 
  *********************************************************/
+function eliminarProductoLista(idproductolistaeliminar, idLista2Actualizar){
+
+    var datos = new FormData();
+    datos.append("idproductolistaeliminar", idproductolistaeliminar);
+    $.ajax({
+        url:rutaOculta+"ajax/lista.ajax.php",
+        method:"POST",
+        data: datos, 
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(respuesta){
+            if(respuesta == "ok"){
+                swal("Producto eliminado con éxito.", "")
+                    setTimeout(function () {             
+                }, 100);
+                pintarProductosLista(idLista2Actualizar)
+            }
+        }
+    })
+}
+/********************************************************* 
+ * METODO PARA CAMBIAR EL ESTADO DE UN PRODUCTO DE UNA LISTA 
+ *********************************************************/
 function productoComprado(idproductoComprado, idListaProductoComprado, estadoProductoComprado){
-    console.log(idproductoComprado, idListaProductoComprado, estadoProductoComprado);
+
     var datos = new FormData();
     datos.append("idproductoComprado", idproductoComprado);
     datos.append("idListaProductoComprado", idListaProductoComprado);

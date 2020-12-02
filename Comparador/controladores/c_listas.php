@@ -182,4 +182,15 @@ class ControladorListas{
         return $respuesta;
     }
 
+    /**==========================================================
+    * METODO PARA ELIMINAR UN PRODUCTO DE UNA LISTA             *
+    *==========================================================*/
+    static public function ctrlEliminarProductoLista($datos){
+        $tabla = "productoslista";
+        $item1 = "idproductosLista";
+        $respuesta = ModeloLista::mdlEliminarProductoLista($tabla, $item1,$datos);
+        return $respuesta;
+    }
+
 }
+

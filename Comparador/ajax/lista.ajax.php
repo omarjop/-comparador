@@ -71,6 +71,12 @@ class   AjaxListas{
         $respuesta = ControladorListas::ctrlCambiarEstadoProductoLista($datos);
         echo ($respuesta); 
     }
+    public $idproductolistaeliminar;
+    public function ajaxEliminarProductoLista(){
+        $datos = array("idproductolistaeliminar"=>$this->idproductolistaeliminar);
+        $respuesta = ControladorListas::ctrlEliminarProductoLista($datos);
+        echo ($respuesta); 
+    }
 }
 
 //para consultar una lista segun su ID
@@ -129,3 +135,10 @@ if(isset($_POST["idListaProductoComprado"])){
     $agregaProducto  -> estadoProductoComprado = $_POST["estadoProductoComprado"];
     $agregaProducto  ->ajaxCambiarEstadoProductoLista();
 }
+//Metodo para eliminar un producto de una lista
+if(isset($_POST["idproductolistaeliminar"])){  
+    $agregaProducto = new AjaxListas();
+    $agregaProducto  -> idproductolistaeliminar = $_POST["idproductolistaeliminar"];
+    $agregaProducto  ->ajaxEliminarProductoLista();
+}
+

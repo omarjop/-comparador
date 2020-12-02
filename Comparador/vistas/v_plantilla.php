@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/sweetalert.css">
+    <link rel="stylesheet" href="<?php echo $url ?>vistas/css/plugins/toastr.min.css">
     
     <!--  Hojas de Estilos personalizadas-->
 
@@ -42,6 +43,7 @@
     <script src="<?php echo $url ?>vistas/js/plugins/jquery.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/bootstrap.min.js"></script>
     <script src="<?php echo $url ?>vistas/js/plugins/sweetalert.min.js"></script>
+    <script src="<?php echo $url ?>vistas/js/plugins/toastr.min.js"></script>
 
 </head>
 <body>
