@@ -127,48 +127,7 @@ if(isset($_POST["lupapesovolumen"])){
 
  }
 
-var returnValue = true;
-//validar que no exista el registro con accion de boton
- $(function(){
-     $("#btnaddpesovolumen").click(function(){
-    
-            var nombreAddPesoVol = $("#addpesovolumen").val();
-            var nombreAddControl = $("#selecontrol").val();
-            //alert(addCategoriaValue);
-            var datos = new FormData();
-            datos.append("nombreAddPesoVol",nombreAddPesoVol);
-            datos.append("nombreAddControl",nombreAddControl);
-         
-            $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    async:false,
-                    success: function(respuesta){
-                          if(respuesta.includes("No existe")){
-                              $(".alert").remove();
-                              returnValue = true;    
-                      
-                          }else{
-                              
-                              toastr.error("El valor ya existe para esta unidad");
-                              returnValue = false;             
-                          }
-
-
-                    }
-
-              })
-
-            return returnValue;
-
-        })
-});
-
-//**********************************************************************/
+//********************************************************************/
 
 
 </script>
