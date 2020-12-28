@@ -207,6 +207,12 @@
                   <p>Productos</p>
                 </a>
               </li>   
+               <li class="nav-item">
+                <a href="addRecetas" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Recetas</p>
+                </a>
+              </li>  
               <li class="nav-item">
                 <a href="addSubCategoria" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -238,7 +244,7 @@
                 </a>
               </li>         
                <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="addUsuario" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Usuarios</p>
                 </a>

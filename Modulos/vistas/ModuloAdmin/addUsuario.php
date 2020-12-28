@@ -10,7 +10,7 @@ if(isset($_POST["btnaddusuario"])){
     $valorusuario = $_POST["addusuario"]; 
     $valorCategoria= $_POST["selectPerfil"];
     $valorclave=str_replace(' ', '', $valorusuario);
-    $objAdminAgregar->agregarCamposusuario("usuario","Perfil_idPerfil",$valorCategoria,"correo",$valorusuario,"clave",$valorclave);
+    /*$objAdminAgregar->agregarCamposusuario("usuario","Perfil_idPerfil",$valorCategoria,"correo",$valorusuario,"clave",$valorclave);*/
    }  
 
 //--Boton del modal de eliminar , crea objeto de la clase Perfil_idPerfilador
@@ -55,179 +55,7 @@ if(isset($_POST["lupaUsuario"])){
     } 
 ?>
 
-<script type="text/javascript">
-/*Validación del campo de texto de agregar */
-  function validarFormulario(formulario){
-       var usuarioval = formulario.addusuario.value;
-       var selePerfil_idPerfilCat = formulario.selectPerfil.value;
-        if(validarcorreoAndUnidad(usuarioval,"No es un Usuario v&aacute;lido","addusuario")==true &&
-           validarUnidadAndRango(usuarioval,"El correo del Usuario es muy extenso","addusuario")==true){
-              
-               if(validarcorreoAndSelec(selePerfil_idPerfilCat,"Seleccione una opci&oacute;n de Perfil","selectPerfil")==true ){
-                  return true;
-               }else{
-                   return false;     
-               }
-        }else{
-            return false;
-        }
- 
-        
-        
-  return true;
- }
- //---------------------------------------------------------
-   function validarFormulario2(formulario){
-       var usuariovalEdi = formulario.usuarioEdit.value;
-       var seleusuarioEditar = formulario.selectPerfil2.value;
-        if(validarcorreoAndUnidad(usuariovalEdi,"No es un Usuario v&aacute;lido","usuarioEdit")==true &&
-           validarUnidadAndRango(usuariovalEdi,"El correo del Usuario es muy extenso","usuarioEdit")==true){
-              
-               if(validarcorreoAndSelec(seleusuarioEditar,"Seleccione una opci&oacute;n de Perfil","selectPerfil2")==true ){
-                  return true;
-               }else{
-                   return false;     
-               }
-        }else{
-            return false;
-        }
- 
-        
-        
-  return true;
- }       
- //------funciones de validacion de cada uno de los campos
- function validarcorreoAndUnidad(valor,mensaje,campoForm){
-      
-         if ((isNaN(parseInt(valor)))&& (valor !="")){
-              return true;
-         }else{       
-             toastr.error(mensaje);
-             document.getElementById(campoForm).value = "";
-             return false;
-     } 
 
- }
-  //------funciones de validacion de cada uno de los campos
- function validarUnidadAndRango(valor,mensaje,campoForm){
-      
-         if ((valor.length) > 50){
-              
-              toastr.error(mensaje);
-              return false;
-         }else{       
-
-             return true;
-     } 
-
- }
- //**********************************************************************/
-    
- //------funciones de validacion del select Perfil_idPerfil al adicionar
- function validarcorreoAndSelec(valor,mensaje,campoForm){
-      
-         if (valor !="seleccion"){
-              return true;
-         }else{       
-             toastr.error(mensaje);
-             
-             return false;
-     } 
-
- }
-//--------------------------------------------------------------------------------
-
-var returnValue = true;
-//validar que no exista el registro con accion de boton al agregar
- $(function(){
-     $("#btnaddusuario").click(function(){
-    
-            var nombreAddUsuario = $("#addusuario").val();
-            var nombreAddControl = $("#selectPerfil").val();
-            //alert(addCategoriaValue);
-            var datos = new FormData();
-            datos.append("nombreAddUsuario",nombreAddUsuario);
-            datos.append("nombreAddControl",nombreAddControl);
-         
-            $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    async:false,
-                    success: function(respuesta){
-                          if(respuesta.includes("No existe")){
-                              $(".alert").remove();
-                              returnValue = true;    
-                      
-                          }else{
-                              
-                              toastr.error("El usuario se encuentra registrado");
-                              returnValue = false;             
-                          }
-
-
-                    }
-
-              })
-
-            return returnValue;
-
-        })
-})
-
-
-//----------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------
-
-var returnValue = true;
-//validar que no exista el registro con accion de boton al editar
- $(function(){
-     $("#btnEditarusuario").click(function(){
-    
-            var nombreEditUsuario = $("#usuarioEdit").val();
-            var nombreEditControl = $("#selectPerfil2").val();
-            //alert(addCategoriaValue);
-            var datos = new FormData();
-            datos.append("nombreEditUsuario",nombreEditUsuario);
-            datos.append("nombreEditControl",nombreEditControl);
-         
-            $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    async:false,
-                    success: function(respuesta){
-                          if(respuesta.includes("No existe")){
-                              $(".alert").remove();
-                              returnValue = true;    
-                      
-                          }else{
-                              
-                              toastr.error("El usuario se encuentra registrado");
-                              returnValue = false;             
-                          }
-
-
-                    }
-
-              })
-
-            return returnValue;
-
-        })
-})
-
-
-//----------------------------------------------------------------------------------
-
-
-</script>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -235,12 +63,15 @@ var returnValue = true;
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Admin. Usuarios</h1>
+            <h1 class="m-0 text-dark">Administraci&oacute;n Usuarios</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <button type="button" class="btn btn-warning botaddusuario colorbotonamarillo" >Agregar usuario 
-                </button>
+              
+
+                  <a href="" class="btn btn-default btn-rounded colorbotonamarillo" data-toggle="modal" data-target="#modaddusuarios" >
+                                Agregar Usuario</a>
+
             </ol>
             <form class="form needs-validation" method="post"  enctype="multipart/form-data">
              <div class="input-group col-lg-5 col-md-7 col-sm-9 col-xs-8 " id="buscadormarca"  >
@@ -291,40 +122,10 @@ var returnValue = true;
   
 </div>
 
-<script type="text/javascript">
 
-/*LLama el modal de adicionar*/ 
- $(function(){
-     $(".botaddusuario").click(function(){
-
-         $("#modaddusuario").modal("show");  
-      });
- });
-  /*LLama el modal de editar */ 
- $(function(){
-     $(".editar").click(function(){
-         $(".idUsuario").attr('value',$(this).attr('id'));
-         $(".usuarioEdit").attr('value',$(this).attr('nombusuario'));   
-         $("#modifiusuario").modal("show");
-             document.getElementById("selectPerfil2").value=$(this).attr('idCategoria');
-         
-      });
-  });  
-
-  $(function(){
-    $(".eliminar").click(function(){
-         $(".campoOculto").attr('value',$(this).attr('id'));
-         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
-         $("#eliminarCateg").modal("show");  
-
-      });
-  });
-
-</script>
-
-  <!-- Modal para agregar nueva ciudad -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
-        <div class="modal fade" id="modaddusuario" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- Modal para agregar -->
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return registrousuarioadmin(this);"novalidate>
+        <div class="modal fade" id="modaddusuarios" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
           <div class="modal-dialog">
            <div class="modal-content">
@@ -336,19 +137,23 @@ var returnValue = true;
                   </div>
                    <div class="modal-body">
                        
-                         <input   type="text" class="form-control" id="addusuario" name ="addusuario" placeholder="Agregue usuario" >  
+                         <input   type="text" class="form-control" id="addusuario" name ="addusuario" placeholder="Agregar correo usuario" required>  
+
+                   </div>
+                   <div class="modal-body">
+                      <input   type="password" class="form-control" id="addPassusuario" name ="addPassusuario" placeholder="Agregar contraseña" required>
                    </div>
                    <div class="modal-body">
                     <select class="form-control" onChange="mostrar(this.value);" id ="selectPerfil" name="selectPerfil"  required><option value = "seleccion">Seleccione Perfil</option>
                                <?php for($i=0;$i<count($result);$i++){?>
-                               <option value="<?php echo $result[$i]["idPerfil"]; ?>"><?php echo $result[$i]["nombre"]; ?></option> 
+                               <option value="<?php echo $result[$i]["idPerfil"]; ?>"><?php echo $result[$i]["Descripcion"]; ?></option> 
                                <?php }?> 
                        </select>
                      </div>                  
                     <div class="form-group">  
                           <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                <button type="submit" name = "btnaddusuario" id = "btnaddusuario" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Agregar</button>
+                                <button type="submit" name = "btnaddusuario" id = "btnaddusuario" class="btn btn-primary colorbotonamarillo"style ="width:48%;">Agregar</button>
                           </div>
                     </div>
             </div>
@@ -421,7 +226,7 @@ var returnValue = true;
                        <div class="modal-body mx-3">      
                       <select class="form-control" onChange="mostrar(this.value);" id ="selectPerfil2" name="selectPerfil2"  required><option value = "seleccion">Seleccione Perfil</option>
                                <?php for($i=0;$i<count($result);$i++){?>
-                               <option value="<?php echo $result[$i]["idPerfil"];?>"><?php echo $result[$i]["usuario"]; ?></option> 
+                               <option value="<?php echo $result[$i]["idPerfil"];?>"><?php echo $result[$i]["Descripcion"]; ?></option> 
                                <?php }?> 
                        </select>                        
                         <input   style="visibility: hidden;" type="text" value ="" placeholder="ID usuario" class="form-control idUsuario" id="idUsuario" name ="idUsuario">  

@@ -41,5 +41,8 @@ class ControladorEstructuras{
           public function returnControlUnidad(){
                return   array('1-Unidad de peso','2-Unidad de volumen');
     }
+          public function returnListaSexo(){
+               return   array('F-Femenino','M-Masculino','O-Otro');
+    }    
 
 }
