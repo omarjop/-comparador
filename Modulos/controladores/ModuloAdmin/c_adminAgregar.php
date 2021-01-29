@@ -185,8 +185,8 @@ class ControladorAdminInsert{
            $objLog->escribirEnLogAdmin("AdminProducto","INFO","Se inicia el metodo (registrarProducto) para el registro de producto");
            $ruta = "../AdminComparador/imagenes_productos/".$_FILES[$rutaImagen]["name"];
 
-           $into = "Marca_idMarca,tipoProducto_idtipoProducto,unidadMedida_idunidadMedida,subCategoria_idsubCategoria,Nombre,Referencia,	Descripcion,FotoPrincipal,pesoVolumen";      
-           $value ="'$datosDelProducto[5]'".","."'$datosDelProducto[1]'".","."'$datosDelProducto[2]'".","."'$datosDelProducto[7]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[8]'".","."'$ruta'".","."'$datosDelProducto[3]'";
+           $into = "Marca_idMarca,tipoProducto_idtipoProducto,clasificacion_idclasificacion,subCategoria_idsubCategoria,Nombre,Referencia,	Descripcion,FotoPrincipal";      
+           $value ="'$datosDelProducto[5]'".","."'$datosDelProducto[1]'".","."'$datosDelProducto[3]'".","."'$datosDelProducto[7]'".","."'$datosDelProducto[0]'".","."'$datosDelProducto[4]'".","."'$datosDelProducto[8]'".","."'$ruta'";
            $this->SubirArchivoImagen($rutaImagen);
            $resultado= $objAdminAgregar->insertInTable("producto",$into, $value);
 

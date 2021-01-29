@@ -107,7 +107,7 @@ var returnValue ;
          if(returnValue!=false){
             
                           var nombreAddP = $("#nameProducto1").val();
-                          var unitAddP = $("#unitt1").val();
+                          var unitAddP = $("#unidadNumericaAdd").val();
                           var aux  = unitAddP.split("-");
                           unitAddP = aux[1];
 
@@ -599,8 +599,8 @@ function mostrarSubCategoriaAdmin(categoria,campo){
 							               }
                                              var res = JSON.parse(auxSplit[i]);
                                              var option = document.createElement("option");
-                                              option.value = res.medida;
-                                              option.innerHTML = res.medida;
+                                              option.value = res.idclasificacion;
+                                              option.innerHTML =res.equivalencia+' '+res.simbolo;
                                               select.appendChild(option);
                                                               
 							           }
@@ -676,7 +676,7 @@ function mostrarSubCategoriaAdmin(categoria,campo){
                                        document.getElementById("CategoryAddAdminEdit").value = JSON.parse(respuesta).categoria_idCategoria;
                                        document.getElementById("idProductValueAdmin").value = JSON.parse(respuesta).idProducto;
                                        mostrarUnidadNumericaPesoVolumen(JSON.parse(respuesta).unidadMedida_idunidadMedida,'unidadNumericaAddAdminEdit'); 
-                                       document.getElementById("unidadNumericaAddAdminEdit").value = JSON.parse(respuesta).pesoVolumen;
+                                       document.getElementById("unidadNumericaAddAdminEdit").value = JSON.parse(respuesta).idclasificacion;
                                        mostrarSubCategoriaAdmin(JSON.parse(respuesta).categoria_idCategoria,'subCategoryAddAdminEdit');
                                        document.getElementById("subCategoryAddAdminEdit").value = JSON.parse(respuesta).subCategoria_idsubCategoria;
                                

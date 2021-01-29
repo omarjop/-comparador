@@ -2,7 +2,7 @@
 BANNER
 -->
 <?php
-    $url = Ruta::ctrlRuta();   
+    $url = Ruta::ctrlRuta();
 ?>
 <figure class="banner">
     <img src="http://localhost/AdminComparador/vistas/img/recetas/cocina.jpg" class="img-responsive" width="100%">

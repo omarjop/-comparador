@@ -61,7 +61,7 @@ class ControladorAdminModificar{
            
            $objUpdate = new ControladorUpdateDeleteInTables();
            $sql ="update producto set Marca_idMarca = "."'$datosDelProducto[5]'".",tipoProducto_idtipoProducto =" ."'$datosDelProducto[1]'"
-           .",unidadMedida_idunidadMedida ="."'$datosDelProducto[2]'".",subCategoria_idsubCategoria ="."'$datosDelProducto[7]'".",Nombre ="."'$datosDelProducto[0]'"
+           .",clasificacion_idclasificacion ="."'$datosDelProducto[3]'".",subCategoria_idsubCategoria ="."'$datosDelProducto[7]'".",Nombre ="."'$datosDelProducto[0]'"
            .",Referencia ="."'$datosDelProducto[4]'".",Descripcion ="."'$datosDelProducto[8]'"; 
 
            

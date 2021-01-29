@@ -193,7 +193,7 @@
            $idSub = $resultado[$i]["idsubCategoria"];
             $idSub =  "'".$idSub."'";
            //$squl1 = "SELECT * FROM Producto_has_empresa t5 INNER JOIN  (SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria FROM subcategoria  where Categoria_idCategoria = ".$idCategoria."  and ruta = ".$ruta.") t2 ON t1.subCategoria_idsubCategoria  = t2.idsubCategoria)t4 ON t3.Producto_idProducto  = t4.idProducto) t6 ON t5.Producto_idProducto = t6.Producto_idProducto";
-           $squl1 = "SELECT * FROM unidadMedida t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria,ruta FROM subcategoria where idsubCategoria = ".$idSub.")     t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.idunidadMedida = t4.unidadMedida_idunidadMedida";	  
+           $squl1 = "SELECT * FROM clasificacion t3 INNER JOIN (SELECT * FROM producto t1 INNER JOIN ( SELECT idsubCategoria,ruta FROM subcategoria where idsubCategoria = ".$idSub.")     t2 ON t1.subCategoria_idsubCategoria = t2.idsubCategoria)t4 ON t3.idclasificacion = t4.clasificacion_idclasificacion";	  
            $valorResult = $objFinP->returnXSubCategoria($squl1);
            $mensaje = "Categoria  ".$resultado[$i]["nombre"];   
     
@@ -228,8 +228,8 @@
                                                            nombreproducto ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                            descripcion ="<?php echo $valorResult[$j]["Descripcion"];?>" 
                                                            pesovolumen = "<?php  
-                                                              $unidad = returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
-                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" 
+                                                              $unidad = ($valorResult[$j]["simbolo"]);
+                                                              echo $valorResult[$j]["equivalencia"].$unidad;?>" 
                                                               referencia = "<?php if($valorResult[$j]["Referencia"]!=""){echo $valorResult[$j]["Referencia"];}else {echo "Sin referencia";}?>"
                                                               marca ="<?php
                                                                   $marcaDes = $objSelect->selectARowsInDb("select Descripcion from marca where idMarca = ".$valorResult[$j]["Marca_idMarca"]);
@@ -244,15 +244,15 @@
                                                    <!-- <h6 class="card-title textoprecioproducto" style="color:#D0A20E;font-weight: bold;font-size:19px;font-family:sans-serif;"><?php echo "$".$valorResult[$j]["precioReal"];?></h6>-->
                                                     <!--Unidad de medida-->
                                                     <p class="card-text textounidad" style="color:#136574;font-weight: bold;"><?php  
-                                                              $unidad = returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
-                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>
+                                                              $unidad = ($valorResult[$j]["simbolo"]);
+                                                              echo $valorResult[$j]["equivalencia"].$unidad;?>
                                                     </p>
                                                        <a href="#"><p style ="position: absolute; right: 10;" onclick="mostrarDatosAdminEdit(this.id,'<?php echo $valorResult[$j]["subCategoria_idsubCategoria"];?>');" id ="<?php echo $valorResult[$j]["idProducto"];?>" data-placement="top" data-toggle="tooltip" title="Editar"><span nombre = "<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                    id = "<?php echo $valorResult[$j]["idProducto"];?>" class="fas fa-pen-alt"></span></p></a>
                                                         <a href="#"><p style ="position: absolute; right: 40;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span id = "<?php echo $valorResult[$j]["idProducto"];?>" etiqueta ="<?php echo $valorResult[$j]["Nombre"];?>" 
                                                                                                                                                                             unidad = "<?php  
-                                                             $unidad =returnUnidadLimpia($valorResult[$j]["nombreMedida"]);
-                                                              echo $valorResult[$j]["pesoVolumen"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
+                                                             $unidad =($valorResult[$j]["simbolo"]);
+                                                              echo $valorResult[$j]["equivalencia"].$unidad;?>" class="far fa-trash-alt eliminar" src="<?php echo $imagen;?>"></span></p></a>      
                                                                                                               
                                               </div>
 

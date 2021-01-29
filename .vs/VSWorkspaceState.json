@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Modulos",
-    "\\Modulos\\vistas",
-    "\\Modulos\\vistas\\estilos"
+    "\\Modulos\\controladores",
+    "\\Modulos\\controladores\\ModuloAdmin"
   ],
-  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
+  "SelectedNode": "\\Modulos\\controladores\\ModuloAdmin\\c_adminAgregar.php",
   "PreviewInSolutionExplorer": false
 }

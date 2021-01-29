@@ -56,7 +56,7 @@ class   AjaxProducto{
         $nombre = "'".$nombre."'";
         $unidad = "'".$unidad."'";
         
-        $sql = "SELECT * FROM producto where Nombre = $nombre AND unidadMedida_idunidadMedida = $unidad";
+        $sql = "SELECT * FROM producto where Nombre = $nombre AND clasificacion_idclasificacion = $unidad";
         $respuesta = $objSelect->selectARowsInDb($sql);
         if ($respuesta!= null ) {
 	        echo json_encode($respuesta);
@@ -108,7 +108,8 @@ class   AjaxProducto{
         $objSelect = new ControladorSelectsInTables();
         $respuesta = null; 
         $sql = "select * from producto  t4 INNER JOIN (select categoria_idCategoria,idsubCategoria from subcategoria where idsubCategoria = ".$idSubCategoria.") t2 
-                on t4.subCategoria_idsubCategoria  = t2.idsubCategoria and  t4.idProducto = ".$idProduct;
+                inner join (select * from clasificacion) t3
+                on t4.subCategoria_idsubCategoria  = t2.idsubCategoria and  t4.idProducto = ".$idProduct." and t4.clasificacion_idclasificacion = t3.idclasificacion";
 
                 
         //$sql = "SELECT * FROM producto where idProducto = ".$idProduct;
@@ -239,7 +240,7 @@ if(isset($_POST["findSubCategorias"])){
 if(isset($_POST["findUnidadMedida"])){  
     $valProducto = new AjaxProducto();
     $aux = $_POST["findUnidadMedida"];
-    $valProducto ->ajaxReturnAllRegistros("pesovolumen","unidadMedida_idunidadMedida",$_POST["findUnidadMedida"]);
+    $valProducto ->ajaxReturnAllRegistros("clasificacion","unidadMedida_idunidadMedida",$_POST["findUnidadMedida"]);
 }
 
 //Valida si la marca existe
