@@ -190,6 +190,17 @@ class   AjaxProducto{
         
     }
 
+    public function ajaxValidarExistePersonaRelacionada($correo){
+        $objSelect = new ControladorSelectsInTables();
+        $correoComparar = "'".$correo."'";
+        $respuesta = null;
+        $sql = "select * from persona t3 inner join (select * from Usuario   t1 inner join (select * from Perfil) t2 
+                 on t1.Perfil_idPerfil = t2.idPerfil and t1.correo = ".$correoComparar.")t4 on t3.Usuario_idUsuario = t4.idUsuario ";
+        $respuesta = $objSelect->selectARowsInDb($sql);                 
+
+
+    }
+
 }
 
 
@@ -310,7 +321,29 @@ if(isset($_POST["addpesovolumen"])){
     $valCategoria = new AjaxProducto();
     $valCategoria ->ajaxValidarExisteDosRegistros("pesovolumen","unidadMedida_idUnidadMedida",$_POST["nombreAddControl"],"medida",$_POST["addpesovolumen"]);
 }
-if(isset($_POST["nombreAddCategoria"])){  
+if(isset($_POST["nombreAddSubCat"])){  
     $valCategoria = new AjaxProducto();
-    $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","categoria_idCategoria",$_POST["nombreAddCategoria"],"nombre",$_POST["nombreAddsubcategoria"]);
+    $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","nombre",$_POST["nombreAddSubCat"],"categoria_idCategoria",$_POST["nombreAddControl"]);
+}
+if(isset($_POST["nombreEditSubCat"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","nombre",$_POST["nombreEditSubCat"],"categoria_idCategoria",$_POST["nombreEditControl"]);
+}
+if(isset($_POST["correoUsuario"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteRegistro("usuario","correo",$_POST["correoUsuario"]);
+}
+if(isset($_POST["nombreEditUsuario"])){  
+    $valCategoria = new AjaxProducto();
+    $valCategoria ->ajaxValidarExisteDosRegistros("subcategoria","correo",$_POST["nombreEditUsuario"],"Perfil_idPerfil",$_POST["nombreEditControl"]);
+}
+
+if(isset($_POST["addCorreoPersona"])){  
+    $valAddPersona = new AjaxProducto();
+    $valAddPersona ->ajaxValidarExistePersonaRelacionada($_POST["addCorreoPersona"]);
+}
+//Consulta las ciudades del pais seleccionado en addPersona
+if(isset($_POST["BuscaCiudadPais"])){  
+    $valCiudadPersona = new AjaxProducto();
+    $valCiudadPersona ->ajaxReturnAllRegistros("ciudad","pais_idpais",$_POST["BuscaCiudadPais"]);
 }

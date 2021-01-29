@@ -8,9 +8,9 @@ $resultado=null;
 if(isset($_POST["btnaddsubcategoria"])){                           
     $objAdminAgregar  = new ControladorAdminInsert();
     $valorsubcategoria = $_POST["addsubcategoria"]; 
-    $valorcategoria_idCategoria= $_POST["selectCategoria"];
+    $valorCategoria= $_POST["selectCategoria"];
     $valorRuta=str_replace(' ', '', $valorsubcategoria);
-    $objAdminAgregar->agregarCampossubcategoria("subcategoria","categoria_idCategoria",$valorcategoria_idCategoria,"nombre",$valorsubcategoria,"ruta",$valorRuta);
+    $objAdminAgregar->agregarCampossubcategoria("subcategoria","categoria_idCategoria",$valorCategoria,"nombre",$valorsubcategoria,"ruta",$valorRuta);
    }  
 
 //--Boton del modal de eliminar , crea objeto de la clase categoria_idCategoriaador
@@ -29,9 +29,9 @@ if(isset($_POST["btneliminarCateg"])){
 if(isset($_POST["btnEditarsubcategoria"])){                           
      $objAdminModificar  = new ControladorAdminModificar();
      $idUnidadModif = $_POST["idsubCategoria"];
-     $valorsubcategoriaes = $_POST["subcategoriaEdit"];  
-     $valorcategoria_idCategoriaModif = $_POST["selecategoria_idCategoria2"]; 
-     $resultadoModificar=$objAdminModificar->modifDosCampos("subcategoria","idsubCategoria","nombre",$valorsubcategoriaes,$idUnidadModif,"categoria_idCategoria",$valorcategoria_idCategoriaModif);
+     $valorsubcategorias = $_POST["subcategoriaEdit"];  
+     $valorCategoriaEdit = $_POST["selectCategoria2"]; 
+     $resultadoModificar=$objAdminModificar->modifDosCampos("subcategoria","idsubCategoria","nombre",$valorsubcategorias,$idUnidadModif,"categoria_idCategoria",$valorCategoriaEdit);
                                                                                                             
       
         
@@ -136,17 +136,18 @@ if(isset($_POST["lupaCategoria"])){
 
  }
 //--------------------------------------------------------------------------------
+
 var returnValue = true;
-//validar que no exista el registro con accion de boton
+//validar que no exista el registro con accion de boton al agregar
  $(function(){
      $("#btnaddsubcategoria").click(function(){
     
-            var nombreAddsubcategoria = $("#addciudad").val();
-            var nombreAddCategoria = $("#selectCategoria").val();
+            var nombreAddSubCat = $("#addsubcategoria").val();
+            var nombreAddControl = $("#selectCategoria").val();
             //alert(addCategoriaValue);
             var datos = new FormData();
-            datos.append("nombreAddsubcategoria",nombreAddsubcategoria);
-            datos.append("nombreAddCategoria",nombreAddCategoria);
+            datos.append("nombreAddSubCat",nombreAddSubCat);
+            datos.append("nombreAddControl",nombreAddControl);
          
             $.ajax({
                     url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
@@ -163,7 +164,7 @@ var returnValue = true;
                       
                           }else{
                               
-                              toastr.error("La ciudad se encuentra registrada");
+                              toastr.error("La Subcategoria se encuentra registrada");
                               returnValue = false;             
                           }
 
@@ -175,12 +176,56 @@ var returnValue = true;
             return returnValue;
 
         })
-});
+})
 
-//**********************************************************************/
-//
-//**********************************************************************/
-//--------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
+
+var returnValue = true;
+//validar que no exista el registro con accion de boton al editar
+ $(function(){
+     $("#btnEditarsubcategoria").click(function(){
+    
+            var nombreEditSubCat = $("#subcategoriaEdit").val();
+            var nombreEditControl = $("#selectCategoria2").val();
+            //alert(addCategoriaValue);
+            var datos = new FormData();
+            datos.append("nombreEditSubCat",nombreEditSubCat);
+            datos.append("nombreEditControl",nombreEditControl);
+         
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          if(respuesta.includes("No existe")){
+                              $(".alert").remove();
+                              returnValue = true;    
+                      
+                          }else{
+                              
+                              toastr.error("La Subcategoria se encuentra registrada");
+                              returnValue = false;             
+                          }
+
+
+                    }
+
+              })
+
+            return returnValue;
+
+        })
+})
+
+
+//----------------------------------------------------------------------------------
+
 
 </script>
 
@@ -219,7 +264,7 @@ var returnValue = true;
         ?> 
             <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-light"><?php echo $resultado[$i]["nombre"];?>
-                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span nombsubcategoria = "<?php echo $resultado[$i]["nombre"];?>" id = "<?php echo $resultado[$i]["idsubCategoria"];?>" idcategoria_idCategoria="<?php echo $resultado[$i]["categoria_idCategoria"];?>" class="fas fa-pen-alt editar"></span></p></a> 
+                  <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span nombsubcategoria = "<?php echo $resultado[$i]["nombre"];?>" id = "<?php echo $resultado[$i]["idsubCategoria"];?>" idcategoria ="<?php echo $resultado[$i]["categoria_idCategoria"];?>" class="fas fa-pen-alt editar"></span></p></a> 
                   <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "<?php echo $resultado[$i]["nombre"];?>" id = "<?php echo $resultado[$i]["idsubCategoria"];?>" class="far fa-trash-alt eliminar"></span></p></a>          
               </li>
 
@@ -261,10 +306,11 @@ var returnValue = true;
          $(".idsubCategoria").attr('value',$(this).attr('id'));
          $(".subcategoriaEdit").attr('value',$(this).attr('nombsubcategoria'));   
          $("#modifisubcategoria").modal("show");
-         document.getElementById("selecategoria_idCategoria2").value=$(this).attr('idcategoria_idCategoria');
+             document.getElementById("selectCategoria2").value=$(this).attr('idCategoria');
          
       });
-  });    
+  });  
+
   $(function(){
     $(".eliminar").click(function(){
          $(".campoOculto").attr('value',$(this).attr('id'));
@@ -353,6 +399,8 @@ var returnValue = true;
   </form> 
 
     <!-- Modal que muestra la unidad de medida al dar click en el boton de editar -->
+
+
   <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario2(this);"novalidate>
         <div class="modal fade" id="modifisubcategoria" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
           <div class="modal-dialog">
@@ -362,28 +410,31 @@ var returnValue = true;
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                  </div>           
+                  </div>
+                   <div class="modal-body mx-3">
                         <!-- aqui va el mensaje que se pasa por parametro-->
-                    <div class="modal-body mx-3">
-                        <div class="modal-body mx-3 ">
-                            <input   type="text" value ="" placeholder="Nombre Unidad" class="form-categoria_idCategoria subcategoriaEdit" id="subcategoriaEdit" name ="subcategoriaEdit" required>  
-                       </div> 
-                      </div>      
-                      <div class="modal-body mx-3">       
-                      <select class="form-categoria_idCategoria" onChange="mostrar(this.value);" id ="selecategoria_idCategoria2" name="selecategoria_idCategoria2"  required><option value = "seleccion">Seleccione categoria_idCategoria</option>
-                               <?php for($i=0;$i<count($categoria_idCategoriaNumerico);$i++){?>
-                               <option value="<?php echo $categoria_idCategoriaNumerico[$i]; ?>"><?php echo $categoria_idCategoriaCaracter[$i]; ?></option> 
+                            <div class="modal-body mx-3 ">
+                                <input   type="text" value ="" placeholder="Nombre ciudad" class="form-control subcategoriaEdit" id="subcategoriaEdit" name ="subcategoriaEdit" required>  
+                             </div>
+                        </div>
+                      <div class="modal-body mx-3">  
+                       <div class="modal-body mx-3">      
+                      <select class="form-control" onChange="mostrar(this.value);" id ="selectCategoria2" name="selectCategoria2"  required><option value = "seleccion">Seleccione Pais</option>
+                               <?php for($i=0;$i<count($result);$i++){?>
+                               <option value="<?php echo $result[$i]["idCategoria"];?>"><?php echo $result[$i]["nombre"]; ?></option> 
                                <?php }?> 
-                       </select>                                             
-                    <input   style="visibility: hidden;" type="text" value ="" placeholder="ID" class="form-categoria_idCategoria idsubCategoria" id="idsubCategoria" name ="idsubCategoria"> 
-                   </div>  
+                       </select>                        
+                        <input   style="visibility: hidden;" type="text" value ="" placeholder="ID ciudad" class="form-control idsubCategoria" id="idsubCategoria" name ="idsubCategoria">  
+                   </div>
+                   </div>
                     <div class="form-group">  
-                          <div class="modal-footer d-flex justify-content-center">         
+                          <div class="modal-footer">         
                                 <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
                                 <button type="submit" name = "btnEditarsubcategoria" id = "btnEditarsubcategoria" class="btn btn-secondary colorbotonamarillo"style ="width:48%;">Guardar</button>
                           </div>
-                    </div>         
+                    </div>
+            </div>
           </div>   
         </div>
-      </div> 
   </form>
+

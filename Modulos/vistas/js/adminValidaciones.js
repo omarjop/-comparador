@@ -690,3 +690,279 @@ function mostrarSubCategoriaAdmin(categoria,campo){
      $("#modificarpp").modal("show");  
   }
   
+
+  //-----------------------------------Validaciones de administración------------------------
+
+  /*LLama el modal de editar */ 
+ /*$(function(){
+     $(".editar").click(function(){
+         $(".idUsuario").attr('value',$(this).attr('id'));
+         $(".usuarioEdit").attr('value',$(this).attr('nombusuario'));   
+         $("#modifiusuario").modal("show");
+             document.getElementById("selectPerfil2").value=$(this).attr('idCategoria');
+         
+      });
+  });  
+
+  $(function(){
+    $(".eliminar").click(function(){
+         $(".campoOculto").attr('value',$(this).attr('id'));
+         document.getElementById("etiquetaEliminar").innerHTML= $(this).attr('etiqueta'); 
+         $("#eliminarCateg").modal("show");  
+
+      });
+  });*/
+
+
+
+//----------------------------------------------------------------------------------
+//-------------Inicio Validacion Administracion usuario-----------------------------
+
+//------Valida formulario registro de usuario
+function registrousuarioadmin(formulario){
+    var email = $("#addusuario").val();
+    var contrasena = $("#addPassusuario").val();
+
+    /*if(validarPasswordUsuario(contrasena) != true){
+      return false;
+    }*/
+    
+    
+
+
+    return true;
+}
+//---------------Funcion que valida la estructura de correo  con expresión regular y que elñ campo sea diligenciado
+
+var returnValue = true;
+ $(document).ready(function(){
+     $("#addusuario").change(function(){
+   
+           var email = $("#addusuario").val();        
+            if(email != ""){
+
+                var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;   
+        
+            if(!expresion.test(email)){
+             
+            //$("#addusuario").parent().before('<div class="alert alert-warning "><strong>ERROR:</strong> Escriba correctamente el correo electrónico</div>');   
+                 toastr.error("Escriba correctamente el correo electrónico");
+                 returnValue = false;
+              }
+         
+    } else{
+        //$("#addusuario").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong> Este campo es obligatorio</div>');
+        toastr.error("El correo es obligatorio");
+         returnValue = false;
+
+    } 
+
+
+            return returnValue;
+
+        })
+})
+//------------------------ Valida que el correo no exista
+
+var returnValue = true;
+ $(document).ready(function(){
+     $("#addusuario").change(function(){
+   
+           var correoUsuario = $("#addusuario").val();        
+            
+            var datos = new FormData();
+            datos.append("correoUsuario",correoUsuario);
+            
+         
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          if(respuesta.includes("No existe")){
+                              $(".alert").remove();
+                              returnValue = true;    
+                      
+                          }else{
+                              
+                              toastr.error("El correo se encuentra registrado");
+                              returnValue = false;             
+                          }
+
+
+                    }
+
+              })
+
+            return returnValue;
+
+        })
+})
+ //-----------Valida Contraseña caracteres especiales con expresion regular y que no este vacio
+
+function validarPasswordUsuario(passUsuario){
+     var passWord = $("#addPassusuario").val();
+        
+    if(passWord != ""){
+
+        var expresion = /^[a-zA-Z0-9]*$/;   
+
+        if(!expresion.test(passWord)){
+
+            //$("#addPassusuario").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong> No se aceptan caracteres especiales</div>');
+            toastr.error("No se aceptan caracteres especiales");
+            return false;
+        }
+    } else{
+        //$("#addPassusuario").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong> Este campo es obligatorio</div>');
+        toastr.error("La contraseña es obligatorio");
+        return false;
+
+    }
+}  
+
+var returnValue = true;
+ $(document).ready(function(){
+     $("#addPassusuario").change(function(){
+   
+           var passWord = $("#addPassusuario").val();
+        
+    if(passWord != ""){
+
+              var expresion = /^[a-zA-Z0-9]*$/;  
+
+              if(!expresion.test(passWord)){
+
+                  //$("#addPassusuario").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong> No se aceptan caracteres especiales</div>');
+                  toastr.error("No se aceptan caracteres especiales");
+                  returnValue =  false;
+              }
+          } else{
+              //$("#addPassusuario").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong> Este campo es obligatorio</div>');
+              toastr.error("La contraseña es obligatorio");
+              returnValue = false;
+
+          }
+
+            return returnValue;
+
+
+
+        })
+})  
+//-------------Fin Validacion Administracion usuario--------------------------------
+ //----------------------------------------------------------------------------------
+ 
+
+
+ //----------------------------------------------------------------------------------
+//-------------Inicio Validacion Administracion Persona------------------------------
+
+//----------Valida si el correo diligenciado esta registrado y trae los datos de la persona
+
+ $(document).ready(function(){
+     $("#addCorreoPersona").change(function(){
+   
+           var correoPersona = $("#addCorreoPersona").val();        
+            
+            var datos = new FormData();
+            datos.append("correoPersona",correoPersona);
+            
+         
+            $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          if(respuesta.includes("No existe")){
+                              $(".alert").remove();  
+                      
+                          }else{
+                              
+                              toastr.error("El correo se encuentra registrado");           
+                          }
+
+
+                    }
+
+              })
+
+            return returnValue;
+
+        })
+})
+
+  /*Función que muestra las ciudades del pais seleccionado*/
+   function mostrarCiudadPais(idpais,nombreSelectCiudad) {
+            
+      
+      var datos = new FormData();
+      datos.append("BuscaCiudadPais", idpais);
+      $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/validacion.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                         alert(respuesta);
+                          if(!respuesta.includes("No existe")){
+                                          $(".alert").remove();
+                                          returnValue = true;    
+                                         
+
+                               
+                                       var x = document.getElementById(nombreSelectCiudad);                                    
+
+                                      for (let i = x.options.length; i >= 0; i--) {
+                                        x.remove(i);
+                                      }
+                                          
+                                       var select = document.getElementById(nombreSelectCiudad); 
+                                       respuesta =respuesta.replace("[","");
+                                       respuesta =respuesta.replace("]","");
+                                       var auxSplit = respuesta.split("},");
+                                       for(var i=0;i<auxSplit.length;i++){
+                                           if(!auxSplit[i].includes("}")){
+                                               auxSplit[i] = auxSplit[i]+"}";
+                             }
+                                             var res = JSON.parse(auxSplit[i]);
+                                             var option = document.createElement("option");
+                                              option.value = res.idciudad;
+                                              option.innerHTML = res.nombreCiudad;
+                                              select.appendChild(option);
+                                                              
+                         }
+
+                    }else{
+                                                             
+                                       var x = document.getElementById(nombreSelectCiudad);                                    
+
+                                      for (let i = x.options.length; i >= 0; i--) {
+                                        x.remove(i);
+                                      }
+                                      var select = document.getElementById(nombreSelectCiudad); 
+                                      var option = document.createElement("option");
+                                      option.value = "seleccione";
+                                      option.innerHTML = "Seleccione Ciudad";
+                                      select.appendChild(option);
+              }
+
+
+                    }
+
+              })
+
+    }
+//-------------Fin Validacion Administracion Persona-----------------------------
+//----------------------------------------------------------------------------------
