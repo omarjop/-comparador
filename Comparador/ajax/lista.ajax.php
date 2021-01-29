@@ -52,30 +52,14 @@ class   AjaxListas{
         echo  json_encode ($respuesta);
     }
 
-    public $idListaP, $namePrdouct, $idProducto, $cantidadProduct, $idUsu;
+    public $idListaP, $namePrdouct, $idProducto, $cantidadProduct;
     public function ajaxAgregaProductoLista(){
         $datos = array("idListaP"=>$this->idListaP,
                         "namePrdouct"=>$this->namePrdouct, 
                         "idProducto"=>$this->idProducto, 
-                        "cantidadProduct"=>$this->cantidadProduct, 
-                        "idUsu"=>$this->idUsu,
-                        "estadoP"=>1);
+                        "cantidadProduct"=>$this->cantidadProduct);
         $respuesta = ControladorListas::ctrlAgregarProductosLista($datos);
         echo ($respuesta);
-    }
-    public $idproductoComprado, $idListaProductoComprado, $estadoProductoComprado;
-    public function ajaxCambiarEstadoProductoLista(){
-        $datos = array("idproductoComprado"=>$this->idproductoComprado,
-                        "idListaProductoComprado"=>$this->idListaProductoComprado, 
-                        "estadoProductoComprado"=>$this->estadoProductoComprado);
-        $respuesta = ControladorListas::ctrlCambiarEstadoProductoLista($datos);
-        echo ($respuesta); 
-    }
-    public $idproductolistaeliminar;
-    public function ajaxEliminarProductoLista(){
-        $datos = array("idproductolistaeliminar"=>$this->idproductolistaeliminar);
-        $respuesta = ControladorListas::ctrlEliminarProductoLista($datos);
-        echo ($respuesta); 
     }
 }
 
@@ -124,21 +108,5 @@ if(isset($_POST["cantidadProduct"])){
     $agregaProducto  -> namePrdouct = $_POST["nameProducto"];
     $agregaProducto  -> idProducto = $_POST["idProcduto"];
     $agregaProducto  -> cantidadProduct = $_POST["cantidadProduct"];
-    $agregaProducto  -> idUsu = $_POST["idusu"];
     $agregaProducto  ->ajaxAgregaProductoLista();
 }
-//Metodo para cambiar el estado de un producto de una lista 
-if(isset($_POST["idListaProductoComprado"])){  
-    $agregaProducto = new AjaxListas();
-    $agregaProducto  -> idproductoComprado = $_POST["idproductoComprado"];
-    $agregaProducto  -> idListaProductoComprado = $_POST["idListaProductoComprado"];
-    $agregaProducto  -> estadoProductoComprado = $_POST["estadoProductoComprado"];
-    $agregaProducto  ->ajaxCambiarEstadoProductoLista();
-}
-//Metodo para eliminar un producto de una lista
-if(isset($_POST["idproductolistaeliminar"])){  
-    $agregaProducto = new AjaxListas();
-    $agregaProducto  -> idproductolistaeliminar = $_POST["idproductolistaeliminar"];
-    $agregaProducto  ->ajaxEliminarProductoLista();
-}
-

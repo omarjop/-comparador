@@ -240,6 +240,37 @@
 .botonComentario{
     width:100px;
     float:right;
-    position:relative;
-    top:-15px;
+    position:relative;    
+    top:5px;
+}
+.comentarioText{
+   font-size:13px; 
+   background-color: #EEEEEE;
+   position: relative;
+   text-align: justify;
+}
+
+.scrollComentario{
+    height: 350px;
+    overflow-y: scroll;
+    width: auto;
+    /*border: solid 1px rgba(211, 210, 210, 0.897);*/
+}
+.imagenComentario{
+   width: -400px;
+   height: -400px;
+}
+.informacionComment{
+   position: relative;
+   left:10px;
+}
+.positionImagen{
+   position: relative;
+   top:-12px;
+}
+.fechaComentario{
+    font-size:10px;
+}
+.textoComentarioTitulo{
+      color: #BDBDBD;
 }

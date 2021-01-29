@@ -5,10 +5,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
-                <img src="http://localhost/AdminComparador/vistas/img/principal/logo_exito100x100.png" class="img-responsive">
+                <img src="http://localhost/AdminComparador/vistas/img/principal/logo_exito.png" class="img-responsive">
             </div>
             <div class="col-sm-2">
-                <img src="http://localhost/AdminComparador/vistas/img/principal/logo_carulla100x100.png" class="img-responsive">
+                <img src="http://localhost/AdminComparador/vistas/img/principal/logo_carulla.png" class="img-responsive">
             </div>
             <div class="col-sm-2">
                 <img src="http://localhost/AdminComparador/vistas/img/principal/logo_justo_y_bueno.png" class="img-responsive">

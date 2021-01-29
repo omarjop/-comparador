@@ -1,4 +1,5 @@
 <div class="container-fluid" >
+	
 	<div class="fondo">
 		<p class="text-center "><b>Las mejores <br>recetas</b></p>
 		<img src="http://localhost/AdminComparador/vistas/img/principal/fondo-recetas.jpg" class="img-responsive">

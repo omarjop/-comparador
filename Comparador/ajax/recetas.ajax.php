@@ -21,6 +21,14 @@ class   AjaxRecetas{
            $respuesta = ControladorRecetas::ajaxConsultarComentariosXReceta($item3,$idRecetaValue);
            echo  json_encode ($respuesta);
 	}
+    public function ajaxAddComentario($comentario,$idRecetaComment,$idPersona){
+           $respuesta = ControladorRecetas::ctrlRegistroComentarios($comentario,$idRecetaComment,$idPersona);
+           echo ($respuesta);
+	}
+    public function ajaxValidarPalabraObcena($comentario){
+        $respuesta = ControladorRecetas::ajaxValidarPalabraObcena($comentario);
+        echo  json_encode ($respuesta);
+	}
 
 }
 
@@ -41,4 +49,18 @@ if(isset($_POST["idComentarioXReceta"])){
     $idReceta = new AjaxRecetas();
     $idRecetaValue = $_POST["idComentarioXReceta"];
     $idReceta ->ajaxConsultarComentariosXReceta($idRecetaValue);
+}
+
+if(isset($_POST["addComentario"])){  
+    $idReceta = new AjaxRecetas();
+    $comentario = $_POST["addComentario"];
+    $idRecetaComment = $_POST["idRecetaComment"];
+    $idPersona = $_POST["idPersona"];
+    $idReceta ->ajaxAddComentario($comentario,$idRecetaComment,$idPersona);
+}
+
+if(isset($_POST["palabraObcena"])){
+    $objReceta = new AjaxRecetas();
+    $comentario = $_POST["palabraObcena"];
+    $objReceta ->ajaxValidarPalabraObcena($comentario);
 }

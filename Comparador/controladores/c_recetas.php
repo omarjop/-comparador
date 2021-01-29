@@ -42,22 +42,32 @@ class ControladorRecetas{
 	}
 
 // metodos para rgistro y consulta de comentarios por receta
-    static public function ctrlRegistroComentarios(){
+    static public function ctrlRegistroComentarios($comentario,$idRecetaComment,$idPersona){
 
           $datos = array(
-             "idPersona"=>$_SESSION["id"],
-             "idReceta"=>$_POST["idReceta"],
-             "comentario"=>'<ul>'.$_POST["comentarioReceta"].'</ul>');
+             "idPersona"=>$idPersona,
+             "idReceta"=>$idRecetaComment,
+             "comentario"=>'<ul>'.$comentario.'</ul>');
 
           $tabla= "comentariosrecetas";
           $respuesta = ModeloReceta::ctrlRegistroComentarios($tabla , $datos);
-
+          return $respuesta;
     }
 
     static public function ajaxConsultarComentariosXReceta($item3,$idReceta){
         $tabla1 = "comentariosRecetas";
         $respuesta = ModeloReceta::ajaxConsultarComentariosXReceta($tabla1,$item3,$idReceta);
         return $respuesta;
+	}
+
+    //Metodo que valida las palabras obcenas en el comentario antes de registrar
+
+    static public function ajaxValidarPalabraObcena($comentario){
+      $palabrasObcenas = ModeloReceta::ajaxValidarPalabraObcena();
+      $palabrasComentario = explode(" ", $comentario);
+      foreach ($palabrasComentario as $palabra) {
+         
+      }
 	}
    
 }

@@ -59,7 +59,7 @@ require_once "conexion.php";
     //**************************************************************** 
     static public function ctrlRegistroComentarios($tabla , $datos){
 
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Persona_idPersona, Recetas_idRecetas , 	descripcion)
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Persona_idPersona, Recetas_idRecetas ,descripcion)
                  VALUES  (:idPersona, :idReceta, :comentario)");
         
         $stmt->bindParam(":idPersona", $datos["idPersona"], PDO::PARAM_INT);
@@ -76,9 +76,16 @@ require_once "conexion.php";
     }
 
     static public function ajaxConsultarComentariosXReceta($tabla1,$item3,$idReceta){
-        $stmt = Conexion::conectar()->prepare("select * from $tabla1 where $item3 = :$item3");
+        $stmt = Conexion::conectar()->prepare("select * from Persona t1 inner join(select * from $tabla1 where $item3 = :$item3) t2
+                                               ON t1.Usuario_idUsuario = t2.Persona_idPersona order by t2.idcomentariosRecetas desc");
         $stmt -> bindParam(":".$item3, $idReceta, PDO::PARAM_STR);
         
+        $stmt -> execute();
+        return  $stmt ->fetchAll(); 
+	 }
+
+     static public function ajaxValidarPalabraObcena(){
+        $stmt = Conexion::conectar()->prepare("select * from palabras_obcenas");
         $stmt -> execute();
         return  $stmt ->fetchAll(); 
 	 }
