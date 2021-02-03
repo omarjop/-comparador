@@ -2,6 +2,7 @@
  * Controlando el detalle de la lista
  **********************************************/
  $("#comentarioReceta").hide();
+  var aux = true;
 $(".detalleLista").click(function(e){
     e.preventDefault();
 
@@ -65,7 +66,7 @@ $(".detalleLista").click(function(e){
                                         plantilla +=                '<div class="textcaract"><i class="fa fa-clock-o tamanoicon"></i> Cocci&oacute;n: <h class="textsub"> '+obj.tiempo+' min</h></div>'
                                         plantilla +=                '<div class="card-text textcaract"><i class="fa fa-pie-chart tamanoicon " aria-hidden="true"></i> Porciones:  <h class="textsub">'+obj.porciones+'</h></div>'
                                         plantilla +=                '<div class="card-text textcaract"><i class="fa fa-tachometer tamanoicon" aria-hidden="true"></i> Dificultad:  <h class="textsub">'+obj.nombre+'</h></div><br>'
-                                        plantilla +=                '<div class="card-text textcaract"><a href="#"><i class="fa fa-share-alt tamanoicon" aria-hidden="true"></i> </a></div><br>'
+                                        plantilla +=                '<div class="card-text textcaract"><i class="fa fa-share-alt tamanoicon" aria-hidden="true"></i>  Compartir</div><br>'
                                         plantilla +=         '</div>'
                                         plantilla +=    '</div>'
                                         plantilla +='</div>'
@@ -136,7 +137,7 @@ $(".detalleLista").click(function(e){
                                                   plantilla2 +='        </td>'
                                                   plantilla2 +='        <td>'
                                                   plantilla2 +='            <div class="informacionComment">'
-                                                  plantilla2 +='                <strong>'+''+res2.Nombres+' '+res2.Apellidos+'</strong>'+' '+'<h class="fechaComentario">'+res2.fechaComentario+'<h>'
+                                                  plantilla2 +='                <strong>'+''+res2.Nombres+' '+res2.Apellidos+'</strong>'
                                                   plantilla2 +='                <h class="comentarioText">'+''+res2.descripcion+'</h>'                                                  
                                                   plantilla2 +='            </div>'
                                                   plantilla2 +='        <br>'
@@ -176,29 +177,34 @@ function validarsiesactivo(sesion,idPersona){
              var comentario = $("#comentarioRecetaValue").val();
              var idReceta = $("#idReceta").val();
              
-                  if(comentario!=""){ 
-                        var datos = new FormData();
-                        datos.append("addComentario", comentario);
-                        datos.append("idRecetaComment", idReceta);
-                        datos.append("idPersona", idPersona);
-                        let plantilla = " ";
-                        let obj
-                        $.ajax({
-                            url:rutaOculta+"ajax/recetas.ajax.php",
-                            method:"POST",
-                            data: datos, 
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            success: function(respuesta){
-                                       if(respuesta == "ok"){
-                                            verCommentForReceta(idReceta);
-                                            document.getElementById("comentarioRecetaValue").value = "";
-                                       }     
+                  if(aux !=false){
+                          if(comentario!=""){ 
+                                var datos = new FormData();
+                                datos.append("addComentario", comentario);
+                                datos.append("idRecetaComment", idReceta);
+                                datos.append("idPersona", idPersona);
+                                let plantilla = " ";
+                                let obj
+                                $.ajax({
+                                    url:rutaOculta+"ajax/recetas.ajax.php",
+                                    method:"POST",
+                                    data: datos, 
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    async:false,
+                                    success: function(respuesta){
+                                               if(respuesta == "ok"){
+                                                    verCommentForReceta(idReceta);
+                                                    document.getElementById("comentarioRecetaValue").value = "";
+                                               }     
 
-                                  }
-                             })
-                  }
+                                          }
+                                     })
+                          }
+                  }else{
+                      return false;        
+				  }
 	}
   
 }
@@ -241,7 +247,7 @@ function verCommentForReceta(idReceta){
                                                   plantilla2 +='        </td>'
                                                   plantilla2 +='        <td>'
                                                   plantilla2 +='            <div class="informacionComment">'
-                                                  plantilla2 +='                <strong>'+''+res2.Nombres+' '+res2.Apellidos+'</strong>'+' '+'<h class="fechaComentario">'+res2.fechaComentario+'<h>'
+                                                  plantilla2 +='                <strong>'+''+res2.Nombres+' '+res2.Apellidos+'</strong>'
                                                   plantilla2 +='                <h class="comentarioText">'+''+res2.descripcion+'</h>'                                                  
                                                   plantilla2 +='            </div>'
                                                   plantilla2 +='        <br>'
@@ -262,12 +268,13 @@ function verCommentForReceta(idReceta){
 }
 
     
-   var aux = true;
+
    $(document).ready(function(){
         $("input#comentarioRecetaValue").on("keyup",function(){
                var valor = $(this).val();
-               if(valor.includes(" ")){
-                  //$("div#mensaje p").html("Mandar a validar");
+              // alert(valor);
+              // if(valor.includes(" ")){
+                  
                         var datos = new FormData();
                         datos.append("palabraObcena", valor);
                         $.ajax({
@@ -277,17 +284,25 @@ function verCommentForReceta(idReceta){
                             cache: false,
                             contentType: false,
                             processData: false,
+                            async:false,
                             success: function(respuesta){
-                                       if(respuesta == "Palabra no valida"){
-                                            
-                                       }     
+                             respuesta =respuesta.replace('"','');
+                             respuesta =respuesta.replace('"','');
+                             $(".alert").remove();
+                                       if(respuesta != 'Correcto'){                                          
+                                          $("#comentarioRecetaValue").parent().after('<div class="alert alert-danger"><strong>CUIDADO:</strong> En el comentario se encuentran palabras obcenas como lo son ('+respuesta+') !</div>');
+                                          aux = false;
+                                       } else{
+                                           $(".alert").remove();
+                                          aux = true;
+                                         
+									   }    
 
                                   }
                              })
-			   }else{
-                         $("div#mensaje p").html(valor);
-			   }
- 
+			 //  }else{
+                        // $("div#mensaje p").html(valor);
+			   //} 
         });
    	
    });

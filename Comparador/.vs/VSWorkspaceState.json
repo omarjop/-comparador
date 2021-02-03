@@ -1,4 +1,9 @@
 {
-  "ExpandedNodes": [],
+  "ExpandedNodes": [
+    "",
+    "\\vistas",
+    "\\vistas\\modulos"
+  ],
+  "SelectedNode": "\\vistas\\modulos\\cabezote.php",
   "PreviewInSolutionExplorer": false
 }

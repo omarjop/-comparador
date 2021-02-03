@@ -84,8 +84,9 @@ require_once "conexion.php";
         return  $stmt ->fetchAll(); 
 	 }
 
-     static public function ajaxValidarPalabraObcena(){
-        $stmt = Conexion::conectar()->prepare("select * from palabras_obcenas");
+     static public function ajaxValidarPalabraObcena($item,$palabras){
+        $stmt = Conexion::conectar()->prepare("select * from palabrasobscena where $item in(:$item)");
+        $stmt -> bindParam(":".$item, $palabras, PDO::PARAM_STR);
         $stmt -> execute();
         return  $stmt ->fetchAll(); 
 	 }

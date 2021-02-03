@@ -1,10 +1,6 @@
 {
   "ExpandedNodes": [
-    "\\Comparador",
-    "\\Comparador\\vistas",
-    "\\Comparador\\vistas\\modulos",
-    "\\Modulos\\controladores\\ModuloAdmin",
-    "\\Modulos\\vistas"
+    "\\Comparador"
   ],
   "PreviewInSolutionExplorer": false
 }

@@ -63,11 +63,32 @@ class ControladorRecetas{
     //Metodo que valida las palabras obcenas en el comentario antes de registrar
 
     static public function ajaxValidarPalabraObcena($comentario){
-      $palabrasObcenas = ModeloReceta::ajaxValidarPalabraObcena();
-      $palabrasComentario = explode(" ", $comentario);
-      foreach ($palabrasComentario as $palabra) {
-         
-      }
+      
+      
+     $palabraobcenaReturn;
+      if(strpos($comentario, ' ') !== false){
+          $palabrasComentario = explode(' ', $comentario);
+           foreach ($palabrasComentario as $valor) {
+                $palabrasObcenas = ModeloReceta::ajaxValidarPalabraObcena("Descripcion",$valor);
+                if($palabrasObcenas){
+                   $palabraobcenaReturn = $valor;
+                   break;
+				}
+           }           
+      }else{
+          $palabras = $comentario;
+          $palabrasObcenas = ModeloReceta::ajaxValidarPalabraObcena("Descripcion",$palabras);
+                 if($palabrasObcenas){
+                   $palabraobcenaReturn = $palabras;
+				}
+	  }
+      
+
+      if($palabrasObcenas){
+         return $palabraobcenaReturn;
+	  }else{
+          return "Correcto";
+       }
 	}
    
 }

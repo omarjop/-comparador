@@ -132,14 +132,14 @@ MOSTRAR UNA LISTA DE 6 BLOGS POR CADA PAGINA
                                       <h1 class= "titulocategoriaenrecetas"></h1>  
                                       <div class="col-sm-12 col-xs-12" id="comentarioReceta">
                                             <div id="comentario">
-                                                     </form>
+                                                     <form >
                                                          <div class="row">
                                                              <div class="col-sm-12 col-xs-12">
                                                              <input style="visibility: hidden;"  type="text" value ="" class="form-control idReceta" id="idReceta" name ="idReceta">  
                                                                    <input type="text" class="form-control" id="comentarioRecetaValue" name="comentarioRecetaValue" placeholder="Enviar un comentario" required>                                                                  
                                                                         
                                                                   <div class="input-group-append"> 
-                                                                   <a onclick="validarsiesactivo(<?php  if(isset($_SESSION["validarSesion"])){
+                                                                   <a onclick="return validarsiesactivo(<?php  if(isset($_SESSION["validarSesion"])){
                                                                                                              if($_SESSION["validarSesion"] == "ok"){
                                                                                                                   $persona = $_SESSION["id"];
                                                                                                                   $variable = '1';
