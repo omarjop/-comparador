@@ -66,7 +66,38 @@ $(".detalleLista").click(function(e){
                                         plantilla +=                '<div class="textcaract"><i class="fa fa-clock-o tamanoicon"></i> Cocci&oacute;n: <h class="textsub"> '+obj.tiempo+' min</h></div>'
                                         plantilla +=                '<div class="card-text textcaract"><i class="fa fa-pie-chart tamanoicon " aria-hidden="true"></i> Porciones:  <h class="textsub">'+obj.porciones+'</h></div>'
                                         plantilla +=                '<div class="card-text textcaract"><i class="fa fa-tachometer tamanoicon" aria-hidden="true"></i> Dificultad:  <h class="textsub">'+obj.nombre+'</h></div><br>'
-                                        plantilla +=                '<div class="card-text textcaract"><i class="fa fa-share-alt tamanoicon" aria-hidden="true"></i>  Compartir</div><br>'
+                                        plantilla +=                '<div class="card-text textcaract"><i class="fa fa-share-alt tamanoicon" aria-hidden="true"></i>  Compartir en Redes</div><br>'
+
+                                        plantilla +=             '<div class="container">'
+                                        plantilla +=                '<div class="row">'
+                                        
+                                        plantilla +=                      '<ul>'
+                                       
+                                        plantilla +=                           '<li>'
+                                        plantilla +=                                '<a href="http://facebook.com" target="_blank">'
+                                        plantilla +=                                '<i class="fa fa-facebook fa-5x redSocial facebookBlanco a" aria-hidden="true" ></i>'
+                                        plantilla +=                                '&nbsp;'
+                                        plantilla +=                                '&nbsp;'
+                                        plantilla +=                                '<a href="https://www.instagram.com" target="_blank">'
+                                        plantilla +=                                '<i class="fa fa-instagram  redSocial facebookBlanco a" aria-hidden="true"></i>'
+                                        plantilla +=                                '&nbsp;'
+                                        plantilla +=                                '&nbsp;'
+                                        plantilla +=                                '<a href="https://twitter.com/" target="_blank">'
+                                        plantilla +=                                '<i class="fa fa-twitter redSocial facebookBlanco a" aria-hidden="true"></i>'
+                                        plantilla +=                                '&nbsp;'
+                                        plantilla +=                                '&nbsp;'
+                                        plantilla +=                                '<a href="https://www.youtube.com" target="_blank">'
+                                        plantilla +=                                '<i class="fa fa-youtube redSocial facebookBlanco a" aria-hidden="true"></i>'
+                                        plantilla +=                                '</a>'
+                                        plantilla +=                           '</li>'
+
+                                        
+                                        plantilla +=                      '</ul>'
+                                        plantilla +=                    '</div>'
+                                        plantilla +=                 '</div>'
+                                        plantilla +=              '</div>'
+
+
                                         plantilla +=         '</div>'
                                         plantilla +=    '</div>'
                                         plantilla +='</div>'

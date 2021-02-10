@@ -274,3 +274,12 @@
 .textoComentarioTitulo{
       color: #BDBDBD;
 }
+.a {
+
+  height: 80 px;
+  weight:20 px;
+  /* no relevante */
+  color: #D0A20E; 
+  font-size:50px;
+  padding: 20 px;
+}
