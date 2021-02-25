@@ -1,8 +1,11 @@
 <!--  
 BANNER
 -->
+<?php
+    $url2 = Ruta::ctrlRutaServidor();     
+?>
 <figure class="banner">
-    <img src="http://localhost/AdminComparador/vistas/img/blog/portada.jpg" class="img-responsive" width="100%">
+    <img src="http://localhost/AdminComparador/vistas/img/blog/blog.jpg" class="img-responsive" width="100%">
   
     <div class="textoBanner textoIzq">
 
@@ -17,19 +20,7 @@ BANNER
         <div class="row">
             <div class="col-xs-12 organizarProductos">
 
-                <div class="btn-group pull-right">
-
-                    <button type="button" class="btn btn-default btnGrid" id="btnGrid0">
-                        <i class="fa fa-th" aria-hidden="true"></i>
-                        <span class="visible-lg visible-md visible-sm pull-right"> GRID</span>
-                    </button>
-
-                    <button type="button" class="btn btn-default btnList" id="btnList0">
-                        <i class="fa fa-list" aria-hidden="true"></i>
-                        <span class="visible-lg visible-md visible-sm pull-right"> Lista</span>
-                    </button>
-
-                </div>
+                
             </div>
         </div>
     </div>
@@ -45,200 +36,124 @@ MOSTRAR UNA LISTA DE 6 BLOGS POR CADA PAGINA
     <!---========================================  
     BLOG EN CUADRICULA
     ===========================================-->
-            <ul class="grid0">
+    
+    <ul class="grid0" id="listaBlogs">
             
-                <div class="col-sm-4 col-xs-12">
-                    <div class="single-blog">
-                        <div class="single-blog-img">
-                            <a href="blog_single.html"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content-box">
-                            <div class="blog-post-date">
-                                <span>10</span>
-                                <span>FEB 2020</span>
-                            </div>
-                            <div class="blog-content">
-                            <h4><a href="blog_single.html">Dramaticaly simplify user friendly</a></h4>
-                            </div>
-                            <div>
-                                <div class="meta-post">
-                                    <span><a href="#"><i class="fa fa-user "></i> Parra Omar Jose</a></span>
-                                    <span><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                                    <span><i class="fa fa-thumbs-o-up"></i> 1</span>
-                                </div>
-                                <div class="exerpt">
-                                    Namnec tellus odio tincidunt auctor ornare that odio.
-                                    vitae erat consequat auctor eu in aelit. Class aptent 
-                                    sociosqu ad litora torquent per conubia nostra.
-                                </div>
-                                <a href="blog_single.html" class="btn-two">Read More</a>
+            <?php
+                        $blogsValue = ControladorBlogs::ctrlMostrarBlogs();  
+                               if($blogsValue!=null){
+                                    foreach ($blogsValue as $key => $value) {
+                                              if($value["estado"]==2){
+                                                     $blogsFecha = ControladorBlogs::ctrlReturnFechaForm($value["fechaCreacion"]);  
+                                                   echo ' <div class="col-sm-4 col-xs-12">
+                                                        <div class="single-blog">
+                                                            <div class="single-blog-img">
+                                                                <a href="#"  class="click" id="'.$value["idblog"].'" ruta = "'.$url2.'"><img src="'.$url2.'vistas/img/blog/'.$value["imageDestacada"].'" alt="Blog Image"></a>
+                                                            </div>
+                                                            <div class="blog-content-box">
+                                                                <div class="blog-post-date">
+                                                                    <span>'.$blogsFecha.'</span>
+                                                                </div>
+                                                                <div class="blog-content">
+                                                                <h4><a href="#" class="click">'.$value["titulo"].'</a></h4>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="meta-post">
+                                                                        <span><a href="#"><i class="fa fa-user usuario"></i>'.$value["Nombres"].' '.$value["Apellidos"].'</a></span>
+                                                                       </div>
+                                                                    <div class="exerpt">
+                                                                       '.$value["descripcion"].'
+                                                                    </div>
+                                                                    <a href="#" class="btn-two click"  id="'.$value["idblog"].'" ruta = "'.$url2.'">Ver mas</a>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>     
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>';
+                                                 }
+                                        }
+                                  }
                 
-                <!---========================================  
-                BLOG 2
-                ===========================================-->
-                <div class="col-sm-4 col-xs-12">
-                    <div class="single-blog">
-                        <div class="single-blog-img">
-                            <a href="blog_single.html"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content-box">
-                            <div class="blog-post-date">
-                                <span>12</span>
-                                <span>MAR 2020</span>
-                            </div>
-                            <div class="blog-content">
-                            <h4><a href="blog_single.html">Dramaticaly simplify user friendly</a></h4>
-                            </div>
-                            <div>
-                                <div class="meta-post">
-                                    <span><a href="#"><i class="fa fa-user "></i> Parra Omar Jose</a></span>
-                                    <span><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                                    <span><i class="fa fa-thumbs-o-up"></i> 1</span>
-                                </div>
-                                <div class="exerpt">
-                                    Namnec tellus odio tincidunt auctor ornare that odio.
-                                    vitae erat consequat auctor eu in aelit. Class aptent 
-                                    sociosqu ad litora torquent per conubia nostra.
-                                </div>
-                                <a href="blog_single.html" class="btn-two">Read More</a>
+                ?>
+                
 
-                            </div>
-                        </div>
-                    </div>
-                </div>     
 
-                <!---========================================  
-                BLOG 3
-                ===========================================-->
-                <div class="col-sm-4 col-xs-12">
-                    <div class="single-blog">
-                        <div class="single-blog-img">
-                            <a href="blog_single.html"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content-box">
-                            <div class="blog-post-date">
-                                <span>12</span>
-                                <span>JUN 2020</span>
-                            </div>
-                            <div class="blog-content">
-                            <h4><a href="blog_single.html">Dramaticaly simplify user friendly</a></h4>
-                            </div>
-                            <div>
-                                <div class="meta-post">
-                                    <span><a href="#"><i class="fa fa-user "></i> Parra Omar Jose</a></span>
-                                    <span><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                                    <span><i class="fa fa-thumbs-o-up"></i> 1</span>
-                                </div>
-                                <div class="exerpt">
-                                    Namnec tellus odio tincidunt auctor ornare that odio.
-                                    vitae erat consequat auctor eu in aelit. Class aptent 
-                                    sociosqu ad litora torquent per conubia nostra.
-                                </div>
-                                <a href="blog_single.html" class="btn-two">Read More</a>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+
             </ul>  
 
-    <!---========================================  
-     BLOG EN lISTA
-     ===========================================-->
 
-            <ul class="list0" style="display:none">
-                <!---========================================  
-                BLOG EN lISTA 1
-                ===========================================-->
-                <div class="single-blog-img col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                    <a href="blog_single.html"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
-                </div>
-                <div class="blog-content-box-list col-lg-8 col-md-6 col-sm-6 col-xs-12">
-                    <div class="blog-post-date">
-                        <span>10</span>
-                        <span>FEB 2020</span>
-                    </div>
-                    <div class="blog-content">
-                        <h4><a href="blog_single.html">Dramaticaly simplify user friendly</a></h4>
-                    </div>
-                    <div>
-                        <div class="meta-post">
-                            <span><a href="#"><i class="fa fa-user "></i> Parra Omar Jose</a></span>
-                            <span><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                            <span><i class="fa fa-thumbs-o-up"></i> 9999</span>
+<!--Inicio cuadro descripcion receta -->
+                <ul class="grid0" id="descripcionBlog">
+                        <div class="col-sm-12 col-xs-12">
+                             <div class="single-blog">
+                                 <div class="single-blog-img" id="blogDesc">                                     
+                                 </div>
+                             </div>
+
+                             <div>
+                                      <h1 class= "titulocategoriaenrecetas"></h1>  
+                                      <div class="col-sm-12 col-xs-12" id="comentarioBlog">
+                                            <div id="comentario">
+                                                     <form >
+                                                         <div class="row">
+                                                             <div class="col-sm-12 col-xs-12">
+                                                             <input style="visibility: hidden;"  type="text" value ="" class="form-control idBlog" id="idBlog" name ="idBlog">  
+                                                                   <input type="text" class="form-control" id="comentarioBlogValue" name="comentarioBlogValue" placeholder="Enviar un comentario" required>                                                                  
+                                                                        
+                                                                  <div class="input-group-append"> 
+                                                                   <a onclick="return validarsiesactivoBlog(<?php  if(isset($_SESSION["validarSesion"])){
+                                                                                                             if($_SESSION["validarSesion"] == "ok"){
+                                                                                                                  $persona = $_SESSION["id"];
+                                                                                                                  $variable = '1';
+                                                                                                             }else{
+                                                                                                                $variable = '0';
+                                                                                                                $persona = '0';
+																											 }
+                                                                                                         }else{
+                                                                                                            $variable = '0';
+																										 }
+                                                                                                         echo $variable;?>,<?php 
+                                                                                                         if(isset($_SESSION["validarSesion"])){
+                                                                                                             if($_SESSION["validarSesion"] == "ok"){
+                                                                                                                  $persona = $_SESSION["id"];
+                                                                                                                  $variable = '1';
+                                                                                                             }else{
+                                                                                                                $variable = '0';
+                                                                                                                $persona = '0';
+																											 }
+                                                                                                         }else{
+                                                                                                            $variable = '0';
+                                                                                                             $persona = '0';
+																										 }
+                                                                                                            
+                                                                                                      echo $persona;?>);" id = "1"  class="btn btn-success botonComentario "><i class="fa fa-plus-circle" aria-hidden="true"></i> <span id = "1" class="enviaComentario">Enviar</span></a>
+                                                                </div>
+                                                             </div>
+                                                         </div>
+                                                      <br>
+                                                </form>
+                                            </div>
+                                            <div id="mensaje">
+                                                 <h class="textoComentarioTitulo" >Comentarios</h>
+                                                 <p></p>
+                                            </div>
+                                             <br></br>
+                                             <div class="row">
+                                                  <div class="single-blog-img col-sm-12 col-xs-12" id="comentariosXBlog" name="comentariosXBlog">                                     
+                                                  </div> 
+                                              </div> 
+                                      </div>
+                                 </div>
+                                 
                         </div>
-                        <div class="exerpt">
-                        Namnec tellus odio tincidunt auctor ornare that odio.
-                        vitae erat consequat auctor eu in aelit. Class aptent 
-                        sociosqu ad litora torquent per conubia nostra.
-                        </div>
-                        <a href="blog_single.html" class="btn-two">Read More</a>
-                    </div>
-                </div>
-                <!---========================================  
-                BLOG EN lISTA 2
-                ===========================================-->
-                <div class="single-blog-img col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                    <a href="blog_single.html"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
-                </div>
-                <div class="blog-content-box-list col-lg-8 col-md-6 col-sm-6 col-xs-12">
-                    <div class="blog-post-date">
-                        <span>10</span>
-                        <span>FEB 2020</span>
-                    </div>
-                    <div class="blog-content">
-                        <h4><a href="blog_single.html">Dramaticaly simplify user friendly</a></h4>
-                    </div>
-                    <div>
-                        <div class="meta-post">
-                            <span><a href="#"><i class="fa fa-user "></i> Parra Omar Jose</a></span>
-                            <span><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                            <span><i class="fa fa-thumbs-o-up"></i> 9999</span>
-                        </div>
-                        <div class="exerpt">
-                        Namnec tellus odio tincidunt auctor ornare that odio.
-                        vitae erat consequat auctor eu in aelit. Class aptent 
-                        sociosqu ad litora torquent per conubia nostra.
-                        </div>
-                        <a href="blog_single.html" class="btn-two">Read More</a>
-                    </div>
-                </div>
-                <!---========================================  
-                BLOG EN lISTA 3
-                ===========================================-->
-                <div class="single-blog-img col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                    <a href="blog_single.html"><img src="http://demos.codexcoder.com/labartisan/html/heaven-hands-demo/images/home-blog-01.jpg" alt="Blog Image"></a>
-                </div>
-                <div class="blog-content-box-list col-lg-8 col-md-6 col-sm-6 col-xs-12">
-                    <div class="blog-post-date">
-                        <span>10</span>
-                        <span>FEB 2020</span>
-                    </div>
-                    <div class="blog-content">
-                        <h4><a href="blog_single.html">Dramaticaly simplify user friendly</a></h4>
-                    </div>
-                    <div>
-                        <div class="meta-post">
-                            <span><a href="#"><i class="fa fa-user "></i> Parra Omar Jose</a></span>
-                            <span><a href="#"><i class="fa fa-commenting-o"></i> 12 M</a></span>
-                            <span><i class="fa fa-thumbs-o-up"></i> 9999</span>
-                        </div>
-                        <div class="exerpt">
-                        Namnec tellus odio tincidunt auctor ornare that odio.
-                        vitae erat consequat auctor eu in aelit. Class aptent 
-                        sociosqu ad litora torquent per conubia nostra.
-                        </div>
-                        <a href="blog_single.html" class="btn-two">Read More</a>
-                    </div>
-                </div>
-                       
-            </ul>
-       
-	    </div>
+                </ul>
+            <!--Finaliza cuadro descripcion receta -->
+
+           
+         </div>
     </div>
 </div>
+
+

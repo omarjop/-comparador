@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\vistas\\css"
+    "\\ajax",
+    "\\vistas"
   ],
-  "SelectedNode": "\\vistas",
+  "SelectedNode": "\\ajax\\blog.ajax.php",
   "PreviewInSolutionExplorer": false
 }

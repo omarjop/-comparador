@@ -69,6 +69,10 @@
                     $ruta = $valor;
                 }
            }
+
+           $rutaBlog = ControladorBlogs::CtrlMostrarBlogsForRuta($item, $valor);
+
+
             if($ruta != null && $rutaCategoria["control"]!=1){
             
                 include "modulos/productos.php"; 
@@ -114,8 +118,8 @@ JAVASCRIPT PERSONALIZADO
 <script src="<?php echo $url ?>vistas/js/registroFacebook.js"></script> 
 <script src="<?php echo $url ?>vistas/js/listas.js"></script> 
 <script src="<?php echo $url ?>vistas/js/recetas.js"></script> 
+<script src="<?php echo $url ?>vistas/js/blog.js"></script> 
 <script src="<?php echo $url ?>vistas/js/plugins/select2.min.js"></script>
-
 <!--=====================================
 INICIO SE SESION CON FACEBOOK 
 ======================================--> 
