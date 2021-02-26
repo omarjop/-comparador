@@ -70,7 +70,7 @@
                 }
            }
 
-           $rutaBlog = ControladorBlogs::CtrlMostrarBlogsForRuta($item, $valor);
+           
 
 
             if($ruta != null && $rutaCategoria["control"]!=1){
