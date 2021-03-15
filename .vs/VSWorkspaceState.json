@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Modulos",
+    "\\Modulos\\vistas",
+    "\\Modulos\\vistas\\ModuloAdmin"
   ],
-  "SelectedNode": "\\Comparador",
+  "SelectedNode": "\\Modulos\\vistas\\ModuloAdmin\\addCiudad.php",
   "PreviewInSolutionExplorer": false
 }

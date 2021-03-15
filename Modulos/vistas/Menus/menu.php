@@ -1,4 +1,4 @@
- <!-- Main Sidebar Container -->
+x <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4 colormenuprincipal">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -146,6 +146,13 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+               <li class="nav-item">
+                <a href="addBlog" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Blog</p>
+                </a>
+              </li>
+              
               <li class="nav-item">
                 <a href="addCategorias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
