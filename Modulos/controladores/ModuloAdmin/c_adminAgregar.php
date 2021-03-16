@@ -281,4 +281,13 @@ class ControladorAdminInsert{
 
     //----------------------Finaliza administración producto--------------------------------------------------
 
+    //----------------------Inicio Administración Recetas-----------------------------------------------------
+    static public function ctrlMostrarRecetas(){
+
+        $tabla = "recetas";
+        $respuesta = ModeloAdminReceta::mdlMostrarRecetas($tabla);
+        return $respuesta;
+
+    }
+    //----------------------Fin Administración Recetas--------------------------------------------------------
 }
