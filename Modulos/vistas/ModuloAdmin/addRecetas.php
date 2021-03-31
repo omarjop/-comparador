@@ -53,7 +53,7 @@
 
 
 <!-- Modal para agregar nueva  -->
-  <form class="form needs-validation" method="post"  enctype="multipart/form-data" onSubmit="return validarFormulario(this);"novalidate>
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" novalidate>
         <div class="modal fade" id="modaddReceta" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                   <div class="modal-dialog">
@@ -64,7 +64,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                          </div>
-
+                                         <div class="modal-body mx-3">
                                                   <div class="modal-body">
                                                            <select class="form-control"  id ="dificultadReceta" name="dificultadReceta"  required><option value = "seleccion">Seleccione Dificultad</option>
                                                                    <?php 
@@ -87,22 +87,33 @@
                                                                    <?php }}?> 
                                                            </select>
                                                   </div>
-
                                                   <div class="modal-body">                       
-                                                        <input   type="text" class="form-control" id="timeReceta" name ="timeReceta" placeholder="Tiempo en minutos de preparacion">  
-                                                  </div>
-                                                  <div class="modal-body">                       
-                                                        <input   type="text" class="form-control" id="porcionesReceta" name ="porcionesReceta" placeholder="Porciones">  
-                                                  </div>
-                                                  <div class="modal-body">                       
-                                                        <textarea class="form-control" id="contenidoReceta" name="contenidoReceta" rows="3" placeholder="Contenido de la receta"></textarea>
+                                                        <input   type="text" class="form-control" id="nameReceta" name ="nameReceta" placeholder="Nombre de Receta" required>  
                                                   </div>
 
+                                                  <div class="modal-body">                       
+                                                        <input   type="text" class="form-control" id="timeReceta" name ="timeReceta" placeholder="Tiempo en minutos de preparacion" required>  
+                                                  </div>
+                                                  <div class="modal-body">                       
+                                                        <input   type="text" class="form-control" id="porcionesReceta" name ="porcionesReceta" placeholder="Porciones" required>  
+                                                  </div>
+                                                  <div class="modal-body">                       
+                                                        <textarea class="form-control" id="contenidoReceta" name="contenidoReceta" rows="3" placeholder="Contenido de la receta" required></textarea>
+                                                  </div>
+                                                  <div class="md-form mb-4 custom-file">
+                                                         <input type="file" class="custom-file-input" id="imgReceta" name="imgReceta" lang="es"  >
+                                                         <label class="custom-file-label" for="customFileLang">Seleccione Imagen Receta</label>
+                                                  </div>
+                                                  <div class="md-form mb-4 custom-file">
+                                                         <input type="file" class="custom-file-input" id="videoReceta" name="videoReceta" lang="es"  >
+                                                         <label class="custom-file-label" for="customFileLang">Seleccione Video Receta</label>
+                                                  </div>
+                                            </div>
 
                                          <div class="form-group">  
                                                <div class="modal-footer">         
-                                                     <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>            
-                                                     <button type="submit" name = "btnaddCategoria" id = "btnaddCategoria" class="btn btn-secondary colorbotonamarillo"  onclick="window.location.href="addCategorias" style ="width:48%;">Agregar</button>
+                                                     <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>                                                                 
+                                                     <a onclick="return validarDataFormulario();" style ="width:48%;" name = "btnaddReceta" id = "btnaddReceta"  class="btn btn-success colorbotonamarillo "><i class="fa fa-plus-circle" aria-hidden="true"></i> <span id = "1" class="">Agregar recetas</span></a>
                                                 </div>
                                          </div>
                             </div>

@@ -965,17 +965,88 @@ var returnValue = true;
 
     }
 //-------------Fin Validacion Administracion Receta---------------------------------
+//----------------------------------------------------------------------------------
+/*------LLama el modal de adicionar receta*/ 
+var auxTimeReceta = false;
+var auxPorcionesReceta = false;
 
-/*function mostrarFormulario(){
-     $(".listaRecetasView").hide();
-     $(".formularioAddRecetas").show();
-     return true;
-}*/
-
-/*LLama el modal de adicionar receta*/ 
  $(function(){
      $(".botonAddReceta").click(function(){
          $("#modaddReceta").modal("show");  
       });
  });
+
+ /*------Metodo que valida la data del formulario*/
+function validarDataFormulario(){     
+     var tiempoReceta = $("#timeReceta").val();
+     // validarNumericoDecimal(tiempoReceta,"#timeReceta");
+     if(auxTimeReceta && auxPorcionesReceta){
+          $("#modaddReceta").modal("hide");  
+	 }else{
+           $(".alert").remove();
+           $("#dificultadReceta").parent().before('<div class="alert alert-danger" role="alert">Revisar que todos los campos esten diligenciados, o existen valores incorrectos en los mismos</div>');
+	 }
+     return true;
+}
+ /*------Metodo que  valida que el valor dado sea numerico con decimales con delimitador la (,)*/
+ function validarNumericoDecimal(valor,campoMensaje){
+   var valoresAceptados = /^\d*\.?\d*$/;
+       if (!valor.match(valoresAceptados)){
+            $(campoMensaje).parent().after('<div class="alert alert-danger" role="alert">Valor no num&eacute;rico, los decimales con el caracter(.)</div>');
+            return false;
+       } else {
+            return true;
+      }
+ }
+  /*------Metodo que  valida que el valor dado sea numerico con decimales con delimitador la (,)*/
+ function validarNumericoEntero(valor,campoMensaje,mensaje){
+   var valoresAceptados = /^\d*$/;
+       if (!valor.match(valoresAceptados)){
+            $(campoMensaje).parent().after('<div class="alert alert-danger" role="alert">'+mensaje+'</div>');
+            return false;
+       } else {
+            return true;
+      }
+ }
+ /*------Ajax que valida en tiempo real el valor que se va ingresando en el campo de tiempo receta*/
+  $(document).ready(function(){
+        $("input#timeReceta").on("keyup",function(){
+             $(".alert").remove();
+              var valorTimaReceta = $(this).val();
+                  if(valorTimaReceta!=''){
+                          var resultado = validarNumericoDecimal(valorTimaReceta,"#timeReceta");                          
+                          if(resultado == true){
+                             $(".alert").remove();
+                             auxTimeReceta = true;
+			              }else{
+                               auxTimeReceta = false;              
+						  }
+                  }else{
+                     auxTimeReceta = false; 
+				  }
+        });
+   	
+   });
+
+    /*------Ajax que valida las porciones en la receta receta*/
+  $(document).ready(function(){
+        $("input#porcionesReceta").on("keyup",function(){
+             $(".alert").remove();
+              var valorTimaReceta = $(this).val();
+                  if(valorTimaReceta!=''){
+                          var resultado = validarNumericoEntero(valorTimaReceta,"#porcionesReceta","El valor de las porciones debe ser num&eacute;rico");                          
+                          if(resultado == true){
+                             $(".alert").remove();
+                             auxPorcionesReceta = true;
+			              }else{
+                             auxPorcionesReceta = false;              
+						  }
+                  }else{                         
+                      auxPorcionesReceta = false;   
+				  }
+        });
+   	
+   });
+
+
 //----------------------------------------------------------------------------------

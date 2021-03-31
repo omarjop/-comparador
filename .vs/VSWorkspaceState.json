@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Modulos",
+    "\\Modulos\\modelos",
     "\\Modulos\\vistas",
-    "\\Modulos\\vistas\\estilos"
+    "\\Modulos\\vistas\\ModuloAdmin"
   ],
-  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
+  "SelectedNode": "\\Modulos\\vistas\\ModuloAdmin\\addNewProductAdmin.php",
   "PreviewInSolutionExplorer": false
 }
