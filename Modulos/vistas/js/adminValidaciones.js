@@ -3,7 +3,7 @@
 
 var returnValue ;
  var returnValueDelete ;
-
+ $(".formularioAddRecetas").hide();
 
 /*Metodo que valda la información del formulario al dar clic en el boton de agregar*/
     function validarFormulario2(formulario){
@@ -964,5 +964,18 @@ var returnValue = true;
               })
 
     }
-//-------------Fin Validacion Administracion Persona-----------------------------
+//-------------Fin Validacion Administracion Receta---------------------------------
+
+/*function mostrarFormulario(){
+     $(".listaRecetasView").hide();
+     $(".formularioAddRecetas").show();
+     return true;
+}*/
+
+/*LLama el modal de adicionar receta*/ 
+ $(function(){
+     $(".botonAddReceta").click(function(){
+         $("#modaddReceta").modal("show");  
+      });
+ });
 //----------------------------------------------------------------------------------

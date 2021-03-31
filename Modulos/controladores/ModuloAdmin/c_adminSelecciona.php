@@ -29,4 +29,28 @@ class ControladorAdminSelect{
             return $resultado;
          }
 
+
+
+     
+
+    //----------------------Inicio Administración Recetas-----------------------------------------------------
+    static public function ctrlConsultaDificultad(){
+
+        $tabla = "dificultad";
+        $respuesta = ModeloAdminReceta::mdlMostrarRecetas($tabla);
+        return $respuesta;
+
+    }
+
+    static public function ctrlConsultaCategoriaReceta(){
+
+        $tabla = "categoria";
+        $control = 1;
+        $campo = "control";
+        $respuesta = ModeloAdminReceta::mdlMostrarCategoriaRecetas($tabla,$campo,$control);
+        return $respuesta;
+
+    }
+    //----------------------Fin Administración Recetas--------------------------------------------------------
+
 }

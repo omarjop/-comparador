@@ -135,6 +135,11 @@ position: relative;
   min-height: 3000vh;
 }
 
+  .formulario{
+    position: relative;
+	top:-300px;
+}
+
 
 
 

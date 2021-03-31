@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AdminComparador",
-    "\\Modulos"
+    "\\Modulos",
+    "\\Modulos\\vistas",
+    "\\Modulos\\vistas\\estilos"
   ],
-  "SelectedNode": "\\AdminComparador\\modelos",
+  "SelectedNode": "\\Modulos\\vistas\\estilos\\Stilos.css",
   "PreviewInSolutionExplorer": false
 }
