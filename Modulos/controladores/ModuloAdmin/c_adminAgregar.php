@@ -289,5 +289,15 @@ class ControladorAdminInsert{
         return $respuesta;
 
     }
+    /*Metodo que registra una receta en base de datos*/
+    static public function ctlRegitrarRecetasInDB($datos){
+        $respuesta = ModeloAdminReceta::mdlRegitrarRecetasInDB("recetas",$datos);
+        return $respuesta;
+	}
+        /*Metodo que asocia un producto a una recetas*/
+    static public function ctlAsociarProductInReceta($datos,$tabla){
+        $respuesta = ModeloAdminReceta::mdlAsociarProductInReceta($datos,$tabla);
+        return $respuesta;
+	}
     //----------------------Fin Administración Recetas--------------------------------------------------------
 }

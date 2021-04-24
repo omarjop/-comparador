@@ -1,8 +1,9 @@
 //--------------------------------------------------------------------------------------------------------
 
 
-var returnValue ;
- var returnValueDelete ;
+ var returnValue ;
+ var returnValueDelete;
+ var idRecetaDelette;
  $(".formularioAddRecetas").hide();
 
 /*Metodo que valda la información del formulario al dar clic en el boton de agregar*/
@@ -976,18 +977,251 @@ var auxPorcionesReceta = false;
       });
  });
 
+
+
  /*------Metodo que valida la data del formulario*/
-function validarDataFormulario(){     
-     var tiempoReceta = $("#timeReceta").val();
-     // validarNumericoDecimal(tiempoReceta,"#timeReceta");
-     if(auxTimeReceta && auxPorcionesReceta){
-          $("#modaddReceta").modal("hide");  
+function validarDataFormulario(){    
+    if(!validarOpcionTipoLista($("#dificultadReceta").val(),"seleccion")){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">El campo Dificultad de la receta no pude estar vacio</div>');         
+     }else if(!validarOpcionTipoLista($("#categoriaReceta").val(),"seleccion")){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">El campo Categoria de la receta no pude estar vacio</div>');         
+     }else if($("#nameReceta").val()==''){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">El campo Nombre de la receta no pude estar vacio</div>');    
+     }else if(!auxTimeReceta){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">Formato invalido, solo numeros en  campo tiempo de preparacion o campo se encuentra vacio</div>');
+	 }else if(!auxPorcionesReceta){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">Formato invalido, solo numeros en campo porciones o campo se encuentra vacio</div>');     
+	 }else if($("#contenidoReceta").val()==''){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">El campo Contenido de la receta no pude estar vacio</div>');     
+     }else if($("#imgReceta").val()==''){
+              $(".alert").remove();
+              $("#videoReceta").parent().after('<div class="alert alert-danger" role="alert">El campo Imagen de la receta no pude estar vacio</div>');     
 	 }else{
-           $(".alert").remove();
-           $("#dificultadReceta").parent().before('<div class="alert alert-danger" role="alert">Revisar que todos los campos esten diligenciados, o existen valores incorrectos en los mismos</div>');
+              RegistrarReceta();              
 	 }
-     return true;
+
 }
+//--Inicia ergistro en base---
+ /*------Metodo que registra en base de datos la receta*/
+ function RegistrarReceta(){
+      var datos = new FormData();
+      datos.append("dificultadReceta", $("#dificultadReceta").val());
+      datos.append("categoriaReceta", $("#categoriaReceta").val());
+      datos.append("nameReceta", $("#nameReceta").val());
+      datos.append("timeReceta", $("#timeReceta").val());
+      datos.append("porcionesReceta", $("#porcionesReceta").val());
+      datos.append("contenidoReceta", $("#contenidoReceta").val());
+      datos.append("videoReceta", $("#videoReceta").val());
+      datos.append("imgRecetaAdd", $("#imgReceta").val());
+      $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          if(!respuesta.includes("ok")){
+                               toastr.error("Error al intentar registrar la receta");                               
+                          }else{
+                                //toastr.error("Registro exitoso"); 
+                                $("#modaddReceta").modal("hide");
+                                consultarAllRecetas();
+                                limpiarCampos();
+						  }
+
+                     }                 
+
+              })
+ }
+/*------Cuando carga la pagina de recetas consulta las recetas registradas*/
+$(document).ready(function(){ 
+     rutaActual = window.location.toString();
+     if(rutaActual.includes("addRecetas")){    
+     $('#descripcionRecetasView').hide();
+        consultarAllRecetas();
+     }
+});
+ /*------consulta todas las recetas registradas*/
+ function consultarAllRecetas(){
+     var datos = new FormData();
+     datos.append("recetas", "nulo");
+            
+            let plantilla2 = " ";
+            let obj
+            $.ajax({
+                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                method:"POST",
+                data: datos, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta3){
+                                 if(respuesta3){
+                                      respuesta3 =respuesta3.replace("[","");
+                                      respuesta3 =respuesta3.replace("]","");
+                                      var auxSplit2 = respuesta3.split("},");
+
+                                       plantilla2 +='<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12" id="">'
+                                            for(var i=0;i<auxSplit2.length;i++){
+                                                  if(!auxSplit2[i].includes("}")){
+                                                      auxSplit2[i] = auxSplit2[i]+"}";
+							                      }
+                                                  var res2 = JSON.parse(auxSplit2[i]);
+                                                  plantilla2 +='<div>'
+                                                  plantilla2 +='        <ul class="list-group list-group-flush" >'
+                                                  plantilla2 +='               <div class="row justify-content-center" >'
+                                                  plantilla2 +='                    <div class="col-12">'
+
+                                                  plantilla2 +='                         <li class="list-group-item list-group-item-light"><a href="javascript:descriptReceta('+res2.idRecetas+')">'+res2.nombreReceta+'</a>'
+                                                  plantilla2 +='                            <a href="javascript:eliminarRecetaAdm('+res2.idRecetas+')"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span  id = "'+res2.idRecetas+'" class="far fa-trash-alt eliminarrecetaf"></span></p></a>  '                                                  
+                                                  plantilla2 +='                          </li>'
+                                                  plantilla2 +='                     </div>'
+                                                  plantilla2 +='                </div>'
+                                                  plantilla2 +='         </ul>'
+                                                  plantilla2 +='</div>'
+    
+                                            }
+                                         plantilla2 +='</div>'
+                                         $("#listaRecetasView").html(plantilla2);  
+                                   }
+
+                      }
+                 })
+ }
+ /*------Metodo que muestra la descripcion de la receta*/
+ function descriptReceta(idReceta){
+
+      let plantilla22 = " ";
+      var datoss = new FormData();
+      datoss.append("idRecetaFindProduct", idReceta);
+
+$.ajax({
+                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                method:"POST",
+                data: datoss, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuestaFinal){
+                
+                                 if(respuestaFinal.length >6){
+                                      respuestaFinal =respuestaFinal.replace("[","");
+                                      respuestaFinal =respuestaFinal.replace("]","");
+                                      var auxSplit2 = respuestaFinal.split("},");
+
+                                       plantilla22 +='<div class="row">'
+                                            for(var i=0;i<auxSplit2.length;i++){
+                                                  if(!auxSplit2[i].includes("}")){
+                                                      auxSplit2[i] = auxSplit2[i]+"}";
+							                      }
+                                                  var res22 = JSON.parse(auxSplit2[i]);
+                                                  plantilla22 +='<div >'
+                                                  
+                                                  
+                                                  plantilla22 +='                    <div >'                                                            
+                                                  plantilla22 +='                         <li class="list-group-item list-group-item-light">'+res22.Nombre
+                                                  plantilla22 +='                         </li>'
+                                                  plantilla22 +='                     </div>'                      
+                                                 
+                                                  plantilla22 +='</div>'
+                                                  
+                                            }
+                                            
+                                         plantilla22 +='</div>'                                         
+                                         
+                                   }
+
+                      }
+                 })
+
+
+
+
+     $('#listaRecetasView').hide();
+     var datos = new FormData();
+      datos.append("idRecetaFindAdmin", idReceta);
+      
+        let plantilla2 = " ";      
+            let obj
+            $.ajax({
+                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                method:"POST",
+                data: datos, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta3){
+                //alert(respuesta3);
+                          if(respuesta3){        
+                                      respuesta3 =respuesta3.replace("[","");
+                                      respuesta3 =respuesta3.replace("]","");
+                                      var res2 = JSON.parse(respuesta3);
+
+                                        plantilla2 +='<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12" id="">'
+                                           
+                                                  
+                                                  plantilla2 +='<div class="card">'
+                                                  plantilla2 +='  <h5 class="card-header textituloAdmin">'+res2.nombreReceta+'</h5>'
+                                                  plantilla2 +='  <div class="card-body">'
+                                                  plantilla2 +=''
+                                                  plantilla2 +='     <p class="card-text "><h class="texSubTitulo">Cocci&oacute;n:</h> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+res2.tiempo+' min</p> '
+                                                  plantilla2 +='     <p class="card-text "><h class="texSubTitulo">Porciones:</h>&nbsp;&nbsp;&nbsp;'+res2.porciones+'</p>'
+                                                  plantilla2 +='     <p class="card-text "><h class="texSubTitulo">Dificultad:</h>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+res2.nombre+'</p>'
+                                                  plantilla2 +='     '                                                  
+                                                  plantilla2 +='   </div>'
+                                                  plantilla2 +='</div>'
+
+                                                  plantilla2 +='<div class="card">'
+                                                  plantilla2 +='  <h5 class="card-header textituloAdmin">Ingredientes</h5>'
+                                                  plantilla2 +='  <div class="card-body">'                                                  
+                                                  plantilla2 +='     <p class="card-text">'+plantilla22+'</p>'
+                                                                                                   
+                                                  plantilla2 +='   </div>'
+                                                  plantilla2 +='</div>'
+
+                                                  plantilla2 +='<div class="card">'
+                                                  plantilla2 +='  <h5 class="card-header textituloAdmin">Contenido</h5>'
+                                                  plantilla2 +='  <div class="card-body">'                                                  
+                                                  plantilla2 +='     <p class="card-text">'+res2.contenido+'</p>'
+                                                  plantilla2 +='     <a href="javascript:modalEditarReceta('+res2.idRecetas+')" class="btn btn-primary colorbotonamarillo">Editar receta</a>'
+                                                  plantilla2 +='     <a href="javascript:addProducts('+res2.idRecetas+')" class="btn btn-primary colorbotonamarillo">Agregar o eliminar producto</a>'
+                                                  plantilla2 +='   </div>'
+                                                  plantilla2 +='</div>'    
+                                          
+                                         plantilla2 +='</div>'
+                                         $("#descripcionRecetasView").html(plantilla2);                                           
+                                         $('#descripcionRecetasView').show();
+                                                                                 
+                          }
+
+                      }
+                 })
+ }
+ /*------Metodo que limpia los campos del formulario de registro de receta*/
+ function limpiarCampos(){
+    document.getElementById("nameReceta").value = null;
+    document.getElementById("dificultadReceta").value = "seleccion";
+    document.getElementById("categoriaReceta").value = "seleccion";
+    document.getElementById("timeReceta").value = null;
+    document.getElementById("porcionesReceta").value = null;
+    document.getElementById("contenidoReceta").value = null;
+ }
+ /*------Metodo que valida un campo de tipo lista no selecciones la opcion por defecto*/
+ function validarOpcionTipoLista(valorDeCampo,opcion){
+   var valorReturn = true;  
+        if(valorDeCampo == opcion){
+            valorReturn = false;
+		}
+   return valorReturn;
+ }
  /*------Metodo que  valida que el valor dado sea numerico con decimales con delimitador la (,)*/
  function validarNumericoDecimal(valor,campoMensaje){
    var valoresAceptados = /^\d*\.?\d*$/;
@@ -1048,5 +1282,270 @@ function validarDataFormulario(){
    	
    });
 
+//--Inicio  Rergistro de producto por receta---
+function addProducts(idReceta){ 
 
-//----------------------------------------------------------------------------------
+        let plantilla2 = " ";
+        let plantilla22 = " ";
+
+        var datos = new FormData();
+        datos.append("productos", idReceta);
+
+        var datoss = new FormData();
+        datoss.append("idRecetaFindProduct", idReceta);
+
+
+            $.ajax({
+                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                method:"POST",
+                data: datos, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta3){
+
+                                 if(respuesta3){
+                                      respuesta3 =respuesta3.replace("[","");
+                                      respuesta3 =respuesta3.replace("]","");
+                                      var auxSplit2 = respuesta3.split("},");
+
+                                       plantilla2 +='<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12 scrollComentario" id="">'
+                                            for(var i=0;i<auxSplit2.length;i++){
+                                                  if(!auxSplit2[i].includes("}")){
+                                                      auxSplit2[i] = auxSplit2[i]+"}";
+							                      }
+                                                  var res2 = JSON.parse(auxSplit2[i]);/*-- aquie se muestra los productos con la cantidad y boton de agregar*/
+                                                  plantilla2 +='<div>'
+                                                  plantilla2 +='        <ul class="list-group list-group-flush" >'
+                                                  plantilla2 +='               <div class="row" >'
+                                                  plantilla2 +='                    <div class="col-12">'
+
+                                                  plantilla2 +='                         <li class="list-group-item list-group-item-light">'+res2.Nombre
+                                                  plantilla2 +='                            <a href="javascript:addCantidadProducts('+res2.idProducto+')"><p style ="position: absolute; right: 70; top:20;" data-placement="top" data-toggle="tooltip" title="Agregar productos"><span   class="	fas fa-plus-square addProducts"></span></p></a>'
+                                                  plantilla2 +='                            <div class="row" >'
+                                                  plantilla2 +='                                <div class="col-4" >'
+                                                  plantilla2 +='                                    <input  style="display: none;"  type="text" class="form-control" id = "'+res2.idProducto+'" name ="'+res2.idProducto+'" placeholder="Cantidad">'                                                  
+                                                  plantilla2 +='                                </div>'
+                                                  plantilla2 +='                                <div class="col-4" >'
+                                                  plantilla2 +='                                    <a href="javascript:agregarProductosReceta('+res2.idProducto+','+idReceta+')" style="display: none;  color: white; background:#2996D3;width:90px; height:36px" style ="width:10%;" id = "'+res2.idProducto+"btn"+'" name = "'+res2.idProducto+'"   class="btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> <span id = "'+res2.idProducto+'" class="">Add</span></a>'                           
+                                                  plantilla2 +='                                </div>'
+                                                  plantilla2 +='                            </div>'
+                                                  plantilla2 +='                          </li>'
+                                                  plantilla2 +='                     </div>'
+                                                  plantilla2 +='                </div>'
+                                                  plantilla2 +='         </ul>'
+                                                  plantilla2 +='</div>'
+                                                  
+                                            }
+                                            
+                                         plantilla2 +='</div>'
+                                         
+                                         $("#listaProductXReceta").html(plantilla2);
+                                   }
+
+                      }
+                 })
+
+var titulo = "Productos en receta";
+
+        $.ajax({
+                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                method:"POST",
+                data: datoss, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuestaFinal){
+                                 if(respuestaFinal.length >6){
+                                      respuestaFinal =respuestaFinal.replace("[","");
+                                      respuestaFinal =respuestaFinal.replace("]","");
+                                      var auxSplit2 = respuestaFinal.split("},");
+                                       
+                                       
+                                       plantilla22 +='<div class="card">'
+                                       plantilla22 +='  <h5 class="card-header textituloAdmin">'+titulo+'</h5>'                   
+                                       plantilla22 +='</div>'
+                                       plantilla22 +='<div class="row" >'
+
+                                            for(var i=0;i<auxSplit2.length;i++){
+                                                  if(!auxSplit2[i].includes("}")){
+                                                      auxSplit2[i] = auxSplit2[i]+"}";
+							                      }
+                                                  var res22 = JSON.parse(auxSplit2[i]);
+                                                  plantilla22 +='<div >'
+                                           
+                                                  plantilla22 +='                    <div >'                                                            
+                                                  plantilla22 +='                         <li class="list-group-item list-group-item-light">'+res22.Nombre
+                                                  plantilla22 +='                         <a href="#"><span class="fas fa-pen-alt "  data-toggle="tooltip" title="Editar cantidad de producto"></span></a> '
+                                                  plantilla22 +='                         <a href="javascript:desasociarProductXReceta('+res22.idProducto+','+idReceta+')"><span   class="far fa-trash-alt " data-toggle="tooltip" title="Quitar producto de receta"></span></a>          '
+                                                  plantilla22 +='                         </li>'
+                                                  plantilla22 +='                     </div>' 
+                                                  
+                     
+                                                 
+                                                  plantilla22 +='</div>'
+                                                  
+                                            }
+                                         
+                                         plantilla22 +='</div>'
+                                         
+                                         $("#listaProductAddXReceta").html(plantilla22);                                           
+                                         $("#modaddProductReceta").modal("show");                                   }else{
+                                         
+					               }
+                                   if(respuestaFinal.length < 7){
+                                            $("#modaddProductReceta").modal("show");                   
+								   }
+
+                 }
+        })
+
+         
+   return true;
+}
+
+function addCantidadProducts(id){
+if ($("#"+id).is (':hidden')){
+   $("#"+id).css("display", "block");
+   document.getElementById(id).value = null;
+   $("#"+id+"btn").css("display", "block");   
+}else{
+   $("#"+id).css("display", "none");
+   document.getElementById(id).value = null;
+   $("#"+id+"btn").css("display", "none");   
+}
+
+
+}
+
+function cargar(id){
+
+   $("#"+id).css("display", "none");
+   $("#"+id+"btn").css("display", "none");   
+}
+//--Finaliza Rergistro de producto por receta---
+
+//--Finaliza ergistro en base---
+
+//--Inicia edicion en base---
+function modalEditarReceta(id){
+     var datos = new FormData();
+      datos.append("idRecetaFind", id);
+            
+            let obj
+            $.ajax({
+                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                method:"POST",
+                data: datos, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuestaReceta){
+                          if(respuestaReceta){                          
+                               
+                                      respuestaReceta =respuestaReceta.replace("[","");
+                                      respuestaReceta =respuestaReceta.replace("]","");
+                                      
+                                           var res2 = JSON.parse(respuestaReceta);
+                                           document.getElementById("dificultadRecetaUpdate").value = res2.categoria_idCategoria;
+                                           document.getElementById("categoriaRecetaUpdate").value = res2.categoria_idCategoria;
+                                           document.getElementById("nameRecetaUpdate").value = res2.nombreReceta;
+                                           document.getElementById("timeRecetaUpdate").value = res2.tiempo;
+                                           document.getElementById("porcionesRecetaUpdate").value = res2.porciones;
+                                           document.getElementById("contenidoRecetaUpdate").value = res2.contenido; 
+                                           
+                                       $("#moduppReceta").modal("show");
+                                        
+                          }
+
+                      }
+                 })
+	  }
+//--Finaliza edicion en base---
+
+//--Inicio eliminar receta-----
+function eliminarRecetaAdm(idReceta){
+    $("#eliminarReceta").modal("show");
+    idRecetaDelette = idReceta; 
+}
+function aceptarDeletteReceta(){
+    
+      var datos = new FormData();
+      datos.append("idRecetaDeleteAdmin", idRecetaDelette);
+      $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          consultarAllRecetas();
+                          $("#eliminarReceta").modal("hide"); 
+                     }                 
+
+              })
+    // idRecetaDelette id receta a eliminar
+       
+}
+//--Fin eliminar receta
+
+//--Inicio de desasociar producto de Receta
+function desasociarProductXReceta($idProducto,$idReceta){
+      var datos = new FormData();
+      datos.append("idRecetaDeleteProductAdmin", $idReceta);
+      datos.append("idProductDeleteProductAdmin", $idProducto);
+      $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          addProducts($idReceta); 
+                          descriptReceta($idReceta);
+                     }                 
+
+              })
+}
+
+//--Fin de desasociar producto de Receta
+
+
+//--Inicio asociar producto a receta
+function agregarProductosReceta(idProducto,idReceta){
+      
+      var datos = new FormData();
+      var cantidad = document.getElementById(idProducto).value;
+
+      datos.append("idRecetaAsocProductAdmin", idReceta);
+      datos.append("idProductAsocProductAdmin", idProducto);
+      datos.append("cantidadProducto",cantidad);
+
+      $.ajax({
+                    url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                    method:"POST",
+                    data: datos, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async:false,
+                    success: function(respuesta){
+                          if(respuesta.includes("ok")){
+                                cargar(idProducto);
+                                addProducts(idReceta); 
+                                descriptReceta(idReceta);                                
+                                
+						  }
+
+                     }                 
+
+              })
+              
+}
+
+
+//--Fin asociar producto a receta

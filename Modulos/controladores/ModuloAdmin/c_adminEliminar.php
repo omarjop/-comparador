@@ -28,4 +28,14 @@ class ControladorAdminEliminar{
                 // }
 		 }
 
+         public function ctrlDeleeRecetaInDBXId($idReceta,$tabla,$columna){
+              $respuesta = ModeloAdminReceta::ctrlDeleeRecetaInDBXId($idReceta,$tabla,$columna);
+              return $respuesta;             
+		 }
+
+         public function ctrlDeleeProductFromReceta($idReceta,$idProducto,$tabla,$columna,$columna1){
+              $respuesta = ModeloAdminReceta::mdlDeleeProductFromReceta($idReceta,$idProducto,$tabla,$columna,$columna1);
+              return $respuesta;             
+		 }
+
 }

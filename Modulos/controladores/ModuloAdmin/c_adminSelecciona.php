@@ -51,6 +51,46 @@ class ControladorAdminSelect{
         return $respuesta;
 
     }
+
+    static public function ctrlMostrarRecetaXId($idReceta){
+        $tabla = "recetas";
+        $campo = "idRecetas";
+        $respuesta = ModeloAdminReceta::mdlMostrarRecetaXId($tabla,$campo,$idReceta);
+        return $respuesta;          
+	}
+
+    static public function ctrlFindRecetaInDBXIdJoin($idReceta){
+        $tabla = "recetas";
+        $campo = "idRecetas";
+        $tabla2 = "dificultad";
+        $campo2 = "iddificultad";
+        $respuesta = ModeloAdminReceta::mdlFindRecetaInDBXIdJoin($tabla,$campo,$tabla2,$campo2,$idReceta);
+        return $respuesta;          
+	}
+
+
+    static public function ctrlMostrarProductos($idReceta){
+        $tabla = "producto";
+        $columna = "idProducto";
+        $tabla2 = "producto_has_recetas";
+        $columna2 = "Producto_idProducto";
+        $columna3 = "Recetas_idRecetas";
+
+        $respuesta = ModeloAdminReceta::mdlMostrarProductos($tabla,$columna,$tabla2,$columna2,$columna3,$idReceta);
+        return $respuesta;       
+	}
+
+
+    static public function ctrlFindProductsRecetaInDBXId($idReceta){
+        $tabla = "producto";
+        $columna = "idProducto";
+        $tabla2 = "producto_has_recetas";
+        $columna2 = "Producto_idProducto";
+        $columna3 = "Recetas_idRecetas";
+
+        $respuesta = ModeloAdminReceta::mdlFindProductsRecetaInDBXId($idReceta,$tabla,$columna,$tabla2,$columna2,$columna3);
+        return $respuesta;       
+	}
     //----------------------Fin Administración Recetas--------------------------------------------------------
 
 }

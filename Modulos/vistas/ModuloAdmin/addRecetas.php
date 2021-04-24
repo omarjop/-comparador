@@ -14,33 +14,14 @@
                   </div>
              </div>  <!-- Fin row -->
                 
-                 <ul class="listaRecetasView" style=""> 
-                    <div class="col-lg-9 col-md-9 col-sm-10 col-xs-12" id=""> <!-- Inicio mostrar recetas -->
-                           <?php
-                           $resultado = ControladorAdminInsert::ctrlMostrarRecetas();
-
-                               if ($resultado!= null){
-                                     foreach ($resultado as $key => $value) {            
-         
-        
-                                        echo' 
-                                                <div >    
-                                                      <ul class="list-group list-group-flush" >
-                                                        <div class="row justify-content-center" >
-                                                                 <div class="col-11">
-                                                                      <li class="list-group-item list-group-item-light">'.$value["nombreReceta"].'
-                                                                          <a href="#"><p style ="position: absolute; right: 10; top:20;" data-placement="top" data-toggle="tooltip" title="Editar"><span recetas = "'.$value["nombreReceta"].'" id ="'.$value["idRecetas"].'" iddificultad="'.$value["dificultad_iddificultad"].'"class="fas fa-pen-alt editar"></span></p>
-                                                                          <a href="#"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span etiqueta = "'.$value["nombreReceta"].'" id = "'.$value["idRecetas"].'" class="far fa-trash-alt eliminar"></span></p></a>   
-                                                                      </li>
-                                                                 </div>
-                                                        </div>
-                                                    </ul>
-                                                </div>';
-       
-                                     } 
-                               }?> 
-                    </div><!-- Fin mostrar recetas -->
+                <!-- Inicio mostrar la lista de las recetas existentes se muestra con ajax-->
+                 <ul class="listaRecetasView" id="listaRecetasView" > 
+                    
                  </ul>
+                  <ul class="descripcionRecetasView" id="descripcionRecetasView" > 
+                    
+                 </ul>
+                 <!-- Fin mostrar la lista de las recetas existentes -->
 
          </div> <!-- Fin container -->
      </div> <!-- Fin container-fluid -->
@@ -91,6 +72,7 @@
                                                         <input   type="text" class="form-control" id="nameReceta" name ="nameReceta" placeholder="Nombre de Receta" required>  
                                                   </div>
 
+
                                                   <div class="modal-body">                       
                                                         <input   type="text" class="form-control" id="timeReceta" name ="timeReceta" placeholder="Tiempo en minutos de preparacion" required>  
                                                   </div>
@@ -120,3 +102,124 @@
                   </div>   
         </div>
   </form>
+
+  <!-- Modal para editar receta  -->
+  <form class="form needs-validation" name = "modaleDeEditar" method="post"  enctype="multipart/form-data" novalidate>
+        <div class="modal fade" id="moduppReceta" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                  <div class="modal-dialog">
+                           <div class="modal-content">
+                                         <div class="modal-header " style ="background-color: #D0A20E;color:#FFFFFF; >
+                                                    <h5  id="staticBackdropLabel"> Editar Receta</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                         </div>
+                                         <div class="modal-body mx-3">
+                                                  <div class="modal-body">
+                                                           <select class="form-control"  id ="dificultadRecetaUpdate" name="dificultadRecetaUpdate"  required><option value = "seleccion">Seleccione Dificultad</option>
+                                                                   <?php 
+                                                                            $resultadoDificultad = ControladorAdminSelect::ctrlConsultaDificultad();
+                                                                            if($resultadoDificultad!=null){
+                                                                            foreach ($resultadoDificultad as $key => $value) {                                                                   
+                                                                   ?>
+                                                                   <option value="<?php echo $value['iddificultad']; ?>"><?php echo $value['nombre']; ?></option> 
+                                                                   <?php }}?> 
+                                                           </select>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                           <select class="form-control"  id ="categoriaRecetaUpdate" name="categoriaRecetaUpdate"  required><option value = "seleccion">Seleccione Categor&iacute;a</option>
+                                                                   <?php 
+                                                                            $resultadoCategoria = ControladorAdminSelect::ctrlConsultaCategoriaReceta();
+                                                                            if($resultadoCategoria!=null){
+                                                                            foreach ($resultadoCategoria as $key => $value) {                                                                   
+                                                                   ?>
+                                                                   <option value="<?php echo $value['idCategoria']; ?>"><?php echo $value['nombre']; ?></option> 
+                                                                   <?php }}?> 
+                                                           </select>
+                                                  </div>
+                                                  <div class="modal-body">                       
+                                                        <input   type="text" class="form-control" id="nameRecetaUpdate" name ="nameRecetaUpdate" value = "" placeholder="Nombre de Receta" required>  
+                                                  </div>
+
+                                                  <div class="modal-body">                       
+                                                        <input   type="text" class="form-control" id="timeRecetaUpdate" name ="timeRecetaUpdate" placeholder="Tiempo en minutos de preparacion" required>  
+                                                  </div>
+                                                  <div class="modal-body">                       
+                                                        <input   type="text" class="form-control" id="porcionesRecetaUpdate" name ="porcionesRecetaUpdate" placeholder="Porciones" required>  
+                                                  </div>
+                                                  <div class="modal-body">                       
+                                                        <textarea class="form-control" id="contenidoRecetaUpdate" name="contenidoRecetaUpdate" rows="3" placeholder="Contenido de la receta" required></textarea>
+                                                  </div>
+                                                 
+                                            </div>
+
+                                         <div class="form-group">  
+                                               <div class="modal-footer">         
+                                                     <button type="submit" class="btn btn-secondary " style ="width:48%;"data-dismiss="modal">Cancelar</button>                                                                 
+                                                     <a onclick="return modalExtra();" style ="width:48%;" name = "btneditReceta" id = "btneditReceta"  class="btn btn-success colorbotonamarillo "><i class="fa fa-plus-circle" aria-hidden="true"></i> <span id = "1" class="">Editar receta</span></a>
+                                                </div>
+                                         </div>
+                            </div>
+                  </div>   
+        </div>
+  </form>
+
+
+
+<!-- Modal para agregar productos a receta  -->
+  <form class="form needs-validation" method="post"  enctype="multipart/form-data" novalidate>
+        <div class="modal fade" id="modaddProductReceta" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                  <div class="modal-dialog modal-lg">
+                           <div class="modal-content">
+                                         <div class="modal-header " style ="background-color: #D0A20E;color:#FFFFFF; >
+                                                    <h5  id="staticBackdropLabel"> Agregar productos a receta</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                         </div>
+                                         <div class="modal-body ">
+                                                    <ul class="listaProductXReceta" id="listaProductXReceta" > 
+                    
+                                                    </ul>  
+                                                    <ul class="listaProductAddXReceta" id="listaProductAddXReceta" > 
+                                                       
+                                                    </ul> 
+                                         </div>
+
+                                         <div class="form-group">  
+                                               <div class="modal-footer">         
+                                                     <button type="submit" class="btn btn-secondary " style ="width:100%;"data-dismiss="modal">Salir</button>                                                                 
+                                                     
+                                                </div>
+                                         </div>
+                            </div>
+                  </div>   
+        </div>
+  </form>
+
+
+  <!-- Modal que muestra el confirmar cuando se elimina  -->
+ <form class="form needs-validation" method="post"  enctype="multipart/form-data">
+        <div class="modal fade" id="eliminarReceta" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+          <div class="modal-dialog">
+           <div class="modal-content">
+                 <div class="modal-header" style ="background-color: #D64646;color:#FFFFFF;" >
+                        <h5  id="staticBackdropLabel" > Esta seguro que desea eliminar la receta? </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+                  
+                    <div class="form-group">  
+                          <div class="modal-footer">         
+                                <button type="submit" class="btn btn-secondary" style ="width:48%;"data-dismiss="modal">Cancelar</button>            
+                                <button type="button" onclick="aceptarDeletteReceta()" name = "btneliminarReceta" id = "btneliminarReceta" class="btn btn-secondary"style ="background-color: #D64646;width:48%;">Aceptar</button>
+                          </div>
+                    </div>
+            </div>
+          </div>   
+        </div>
+  </form> 
