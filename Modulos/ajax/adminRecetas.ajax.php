@@ -4,6 +4,7 @@
 require_once "../controladores/ModuloAdmin/c_adminAgregar.php";
 require_once "../controladores/ModuloAdmin/c_adminEliminar.php";
 require_once "../controladores/ModuloAdmin/c_adminSelecciona.php";
+require_once "../controladores/ModuloAdmin/c_adminModificar.php";
 require_once "../modelos/m_recetas.php";
 
 class   AjaxRecetAll{
@@ -52,6 +53,11 @@ class   AjaxRecetAll{
          $respuesta =  ControladorAdminInsert::ctlAsociarProductInReceta($datos,$tabla);
          echo  json_encode ($respuesta);     
 	}
+    public function ajaxEditarCantidadProductoReceta($datos,$tabla){
+         $respuesta =  ControladorAdminModificar::ctlEditarCantidadProductoReceta($datos,$tabla);
+         echo  json_encode ($respuesta);     
+	}
+
 
 }
 
@@ -142,4 +148,18 @@ if(isset($_POST["idRecetaAsocProductAdmin"])){
              "cantproducto"    =>$cantidadProducto);
 
     $adminReceta->ajaxAsociarProductoDeReceta($datos,"producto_has_recetas");
+}
+//Llama el metodo que asocia productos a una receta
+if(isset($_POST["idRecetaEditCantProductAdmin"])){ 
+    $adminReceta = new AjaxRecetAll();
+    $idReceta = $_POST["idRecetaEditCantProductAdmin"];   
+    $idProducto = $_POST["idProductoEditCantProductAdmin"];
+    $cantidadProducto = $_POST["cantidad"];
+
+    $datos = array(
+             "idreceta"        =>$idReceta,
+             "idproducto"      =>$idProducto,
+             "cantproducto"    =>$cantidadProducto);
+
+    $adminReceta->ajaxEditarCantidadProductoReceta($datos,"producto_has_recetas");
 }

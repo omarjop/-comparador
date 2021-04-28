@@ -99,7 +99,8 @@ require_once "conexion2.php";
     // Metodo que consulta todos los productos relacionados a una receta
     //**
     static public function mdlFindProductsRecetaInDBXId($idReceta,$tabla,$columna,$tabla2,$columna2,$columna3){
-            $stmt = Conexion2::conectar2()->prepare("select * from $tabla where $columna in (select $columna2 from $tabla2 where $columna3 = :$columna3)");   
+            $stmt = Conexion2::conectar2()->prepare("select * from $tabla t3 inner join (select * from $tabla2 where $columna3 = :$columna3) t4
+                                                     on t3.$columna = t4.$columna2 ");   
             $stmt -> bindParam(":".$columna3, $idReceta,  PDO::PARAM_INT);
             $stmt -> execute();
             return  $stmt ->fetchAll();   
@@ -124,6 +125,25 @@ require_once "conexion2.php";
              $stmt = Conexion2::conectar2()->prepare("INSERT INTO $tabla(Producto_idProducto,Recetas_idRecetas,cantidad)
                                                     VALUES  (:producto, :receta, :cantidad)");
                                                    
+        
+            $stmt->bindParam(":producto", $datos["idproducto"], PDO::PARAM_INT);
+            $stmt->bindParam(":receta", $datos["idreceta"], PDO::PARAM_INT);
+            $stmt->bindParam(":cantidad", $datos["cantproducto"], PDO::PARAM_STR);
+
+            if($stmt->execute()){
+                return "ok";
+            }else{
+                return"Error"+$datos;
+            }
+            $stmt->close();
+            $stmt=null;
+      }
+    //**************************************************************** 
+    // Metodo que edita la cantidad de producto de una receta
+    //**
+      static public function mdlEditarCantidadProductoReceta($datos,$tabla){
+
+             $stmt = Conexion2::conectar2()->prepare("UPDATE $tabla SET cantidad = :cantidad WHERE Producto_idProducto = :producto AND Recetas_idRecetas = :receta");                                                   
         
             $stmt->bindParam(":producto", $datos["idproducto"], PDO::PARAM_INT);
             $stmt->bindParam(":receta", $datos["idreceta"], PDO::PARAM_INT);

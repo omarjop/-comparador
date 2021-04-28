@@ -1080,7 +1080,7 @@ $(document).ready(function(){
                                                   plantilla2 +='               <div class="row justify-content-center" >'
                                                   plantilla2 +='                    <div class="col-12">'
 
-                                                  plantilla2 +='                         <li class="list-group-item list-group-item-light"><a href="javascript:descriptReceta('+res2.idRecetas+')">'+res2.nombreReceta+'</a>'
+                                                  plantilla2 +='                         <li class="list-group-item list-group-item-light"><a href="javascript:descriptReceta('+res2.idRecetas+')" data-toggle="tooltip" title="Ver descripcion de receta">'+res2.nombreReceta+'</a>'
                                                   plantilla2 +='                            <a href="javascript:eliminarRecetaAdm('+res2.idRecetas+')"><p style ="position: absolute; right: 40; top:20;" data-placement="top" data-toggle="tooltip" title="Eliminar"><span  id = "'+res2.idRecetas+'" class="far fa-trash-alt eliminarrecetaf"></span></p></a>  '                                                  
                                                   plantilla2 +='                          </li>'
                                                   plantilla2 +='                     </div>'
@@ -1376,7 +1376,15 @@ var titulo = "Productos en receta";
                                            
                                                   plantilla22 +='                    <div >'                                                            
                                                   plantilla22 +='                         <li class="list-group-item list-group-item-light">'+res22.Nombre
-                                                  plantilla22 +='                         <a href="#"><span class="fas fa-pen-alt "  data-toggle="tooltip" title="Editar cantidad de producto"></span></a> '
+                                                  plantilla22 +='                            <div class="row" >'
+                                                  plantilla22 +='                                <div class="col-4" >'
+                                                  plantilla22 +='                                    <input  style="display: none;"  type="text" class="form-control" id = "'+res22.idProducto+"cant"+ '" name ="'+res22.idProducto+'" value="'+res22.cantidad+'" placeholder="Cantidad">'                                                  
+                                                  plantilla22 +='                                </div>'
+                                                  plantilla22 +='                                <div class="col-4" >'
+                                                  plantilla22 +='                                    <a href="javascript:editaCantidad('+res22.idProducto+','+idReceta+')" style="display: none;  color: white; background:#2996D3;width:90px; height:36px" style ="width:10%;" id = "'+res22.idProducto+"btnEdit"+'" name = "'+res22.idProducto+'"   class="btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> <span id = "'+res22.idProducto+'" class="">Editar</span></a>'                           
+                                                  plantilla22 +='                                </div>'
+                                                  plantilla22 +='                            </div>'
+                                                  plantilla22 +='                         <a href="javascript:editarCantProductXReceta('+res22.idProducto+','+idReceta+')"><span class="fas fa-pen-alt "  data-toggle="tooltip" title="Editar cantidad de producto"></span></a> '
                                                   plantilla22 +='                         <a href="javascript:desasociarProductXReceta('+res22.idProducto+','+idReceta+')"><span   class="far fa-trash-alt " data-toggle="tooltip" title="Quitar producto de receta"></span></a>          '
                                                   plantilla22 +='                         </li>'
                                                   plantilla22 +='                     </div>' 
@@ -1385,8 +1393,8 @@ var titulo = "Productos en receta";
                                                  
                                                   plantilla22 +='</div>'
                                                   
-                                            }
-                                         
+                                            }                                         
+
                                          plantilla22 +='</div>'
                                          
                                          $("#listaProductAddXReceta").html(plantilla22);                                           
@@ -1405,6 +1413,7 @@ var titulo = "Productos en receta";
 }
 
 function addCantidadProducts(id){
+$(".alert").remove();
 if ($("#"+id).is (':hidden')){
    $("#"+id).css("display", "block");
    document.getElementById(id).value = null;
@@ -1418,10 +1427,30 @@ if ($("#"+id).is (':hidden')){
 
 }
 
-function cargar(id){
+function reAddCantidadProducts2(id){
+$(".alert").remove();
+if ($("#"+id+"cant").is (':hidden')){
+   $("#"+id+"cant").css("display", "block");
+   //document.getElementById(id+"cant").value = null;
+   $("#"+id+"btnEdit").css("display", "block");   
+}else{
+   $("#"+id+"cant").css("display", "none");
+  //document.getElementById(id+"cant").value = null;
+   $("#"+id+"btnEdit").css("display", "none");   
+}
+}
 
+
+function cargar(id){
+   $(".alert").remove();
    $("#"+id).css("display", "none");
    $("#"+id+"btn").css("display", "none");   
+}
+
+function reCargar2(id){
+   $(".alert").remove();
+   $("#"+id+"cant").css("display", "none");
+   $("#"+id+"btnEdit").css("display", "none");   
 }
 //--Finaliza Rergistro de producto por receta---
 
@@ -1511,41 +1540,80 @@ function desasociarProductXReceta($idProducto,$idReceta){
 
               })
 }
-
 //--Fin de desasociar producto de Receta
 
 
 //--Inicio asociar producto a receta
 function agregarProductosReceta(idProducto,idReceta){
-      
+      $(".alert").remove();
       var datos = new FormData();
       var cantidad = document.getElementById(idProducto).value;
 
-      datos.append("idRecetaAsocProductAdmin", idReceta);
-      datos.append("idProductAsocProductAdmin", idProducto);
-      datos.append("cantidadProducto",cantidad);
+      if(cantidad!=""){
+      $(".alert").remove();
+                  datos.append("idRecetaAsocProductAdmin", idReceta);
+                  datos.append("idProductAsocProductAdmin", idProducto);
+                  datos.append("cantidadProducto",cantidad);
 
-      $.ajax({
-                    url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
-                    method:"POST",
-                    data: datos, 
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    async:false,
-                    success: function(respuesta){
-                          if(respuesta.includes("ok")){
-                                cargar(idProducto);
-                                addProducts(idReceta); 
-                                descriptReceta(idReceta);                                
+                  $.ajax({
+                                url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                                method:"POST",
+                                data: datos, 
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                async:false,
+                                success: function(respuesta){
+                                      if(respuesta.includes("ok")){
+                                            cargar(idProducto);
+                                            addProducts(idReceta); 
+                                            descriptReceta(idReceta);                                
                                 
-						  }
+						              }
 
-                     }                 
+                                 }                 
 
-              })
+                          })
+                }else{
+                      $("#"+idProducto).parent().after('<div class="alert alert-danger" role="alert">El campo cantidad no pude estar vacio</div>');             
+				}
               
 }
-
-
 //--Fin asociar producto a receta
+
+//--Inicio de editar cantidad de producto asociado a Receta
+function editarCantProductXReceta(idProducto,idReceta){
+   reAddCantidadProducts2(idProducto); 
+}
+
+function editaCantidad($idProducto,$idReceta){
+$(".alert").remove();
+   var datos = new FormData();
+      var cantidad = document.getElementById($idProducto+"cant").value;
+      if(cantidad!=""){
+      $(".alert").remove();
+              datos.append("idRecetaEditCantProductAdmin", $idReceta);
+              datos.append("idProductoEditCantProductAdmin", $idProducto);
+              datos.append("cantidad", cantidad);
+              $.ajax({
+                            url:"http://localhost/-comparador/Modulos/ajax/adminRecetas.ajax.php",
+                            method:"POST",
+                            data: datos, 
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            async:false,
+                            success: function(respuesta){
+                                  if(respuesta.includes("ok")){
+                                      reCargar2($idProducto);
+                                  }
+                          
+                         
+                             }                 
+
+                      })
+          }else{
+             $("#"+$idProducto+"cant").parent().after('<div class="alert alert-danger" role="alert">El campo cantidad no pude estar vacio</div>');     
+		  }
+}
+//--Fin de editar cantidad de producto asociado a Receta

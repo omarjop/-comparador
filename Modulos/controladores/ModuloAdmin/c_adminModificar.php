@@ -115,4 +115,12 @@ class ControladorAdminModificar{
 
     }
     //-----------------------Finaliza la modificacion de la data de producto------------------------
+
+    //-----------------Inicio Editar cantidad de producto asociado a receta--------------------------------
+   /*Metodo que edita cantidad de producto de una recetas*/
+    static public function ctlEditarCantidadProductoReceta($datos,$tabla){
+        $respuesta = ModeloAdminReceta::mdlEditarCantidadProductoReceta($datos,$tabla);
+        return $respuesta;
+	}
+    //-----------------Fin Editar cantidad de producto asociado a receta--------------------------------
 }
